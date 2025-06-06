@@ -9,12 +9,16 @@ tokens = (
     "BOOLEANO",
     "IGUAL",
     "PUNTOYCOMA",
+    "INCREMENTO",
+    "DECREMENTO",
 )
 
 # Tokens
 t_ID = r"[a-zA-Z_][a-zA-Z0-9_]*"
 t_IGUAL = r"="
 t_PUNTOYCOMA = r";"
+t_INCREMENTO = r"\+\+"
+t_DECREMENTO = r"--"
 
 
 def t_BOOLEANO(t):
@@ -49,13 +53,23 @@ def t_ENTERO(t):
 t_ignore = " \t"
 
 
+def t_COMMENT_SINGLELINE(t):
+    r"//.*"
+    pass
+
+
+def t_COMENTARIO_MULTILINEA(t):
+    r"/\*(.|\n)*?\*/"
+    pass
+
+
 def t_newline(t):
     r"\n+"
-    t.lexer.lineno += t.value.count("\n")
+    t.lexer.lineno += len(t.value)
 
 
 def t_error(t):
-    print("Error de sintaxis")
+    print(f"Carácter ilegal '{t.value[0]}'")
     t.lexer.skip(1)
 
 
@@ -77,6 +91,16 @@ def p_asignaciones(t):
 def p_asignacion(t):
     "asignacion : ID IGUAL valor PUNTOYCOMA"
     print(f"Variable '{t[1]}' asignada con valor {t[3]}")
+
+
+def p_incremento(t):
+    "asignacion : ID INCREMENTO PUNTOYCOMA"
+    print(f"Variable '{t[1]}' incrementada")
+
+
+def p_decremento(t):
+    "asignacion : ID DECREMENTO PUNTOYCOMA"
+    print(f"Variable '{t[1]}' decrementada")
 
 
 def p_valor(t):

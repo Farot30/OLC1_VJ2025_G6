@@ -4,3 +4,20 @@ z = true;
 w = false;
 
 w = TRUE;
+
+A = -8;
+//sda
+
+A++;
+A--;
+/*
+
+paco
+
+sadfad
+
+lff
+s*/
+
+
+//comen

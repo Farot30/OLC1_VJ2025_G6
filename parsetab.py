@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'BOOLEANO DECIMAL ENTERO ID IGUAL PUNTOYCOMAinicial : asignacionesasignaciones : asignaciones asignacion\n    | asignacionasignacion : ID IGUAL valor PUNTOYCOMAvalor : ENTERO\n    | DECIMAL\n    | BOOLEANO'
+_lr_signature = 'BOOLEANO DECIMAL DECREMENTO ENTERO ID IGUAL INCREMENTO PUNTOYCOMAinicial : asignacionesasignaciones : asignaciones asignacion\n    | asignacionasignacion : ID IGUAL valor PUNTOYCOMAasignacion : ID INCREMENTO PUNTOYCOMAasignacion : ID DECREMENTO PUNTOYCOMAvalor : ENTERO\n    | DECIMAL\n    | BOOLEANO'
     
-_lr_action_items = {'ID':([0,2,3,5,11,],[4,4,-3,-2,-4,]),'$end':([1,2,3,5,11,],[0,-1,-3,-2,-4,]),'IGUAL':([4,],[6,]),'ENTERO':([6,],[8,]),'DECIMAL':([6,],[9,]),'BOOLEANO':([6,],[10,]),'PUNTOYCOMA':([7,8,9,10,],[11,-5,-6,-7,]),}
+_lr_action_items = {'ID':([0,2,3,5,13,14,15,],[4,4,-3,-2,-5,-6,-4,]),'$end':([1,2,3,5,13,14,15,],[0,-1,-3,-2,-5,-6,-4,]),'IGUAL':([4,],[6,]),'INCREMENTO':([4,],[7,]),'DECREMENTO':([4,],[8,]),'ENTERO':([6,],[10,]),'DECIMAL':([6,],[11,]),'BOOLEANO':([6,],[12,]),'PUNTOYCOMA':([7,8,9,10,11,12,],[13,14,15,-7,-8,-9,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'inicial':([0,],[1,]),'asignaciones':([0,],[2,]),'asignacion':([0,2,],[3,5,]),'valor':([6,],[7,]),}
+_lr_goto_items = {'inicial':([0,],[1,]),'asignaciones':([0,],[2,]),'asignacion':([0,2,],[3,5,]),'valor':([6,],[9,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,11 +27,13 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> inicial","S'",1,None,None,None),
-  ('inicial -> asignaciones','inicial',1,'p_inicial','gramaticas.py',67),
-  ('asignaciones -> asignaciones asignacion','asignaciones',2,'p_asignaciones','gramaticas.py',72),
-  ('asignaciones -> asignacion','asignaciones',1,'p_asignaciones','gramaticas.py',73),
-  ('asignacion -> ID IGUAL valor PUNTOYCOMA','asignacion',4,'p_asignacion','gramaticas.py',78),
-  ('valor -> ENTERO','valor',1,'p_valor','gramaticas.py',83),
-  ('valor -> DECIMAL','valor',1,'p_valor','gramaticas.py',84),
-  ('valor -> BOOLEANO','valor',1,'p_valor','gramaticas.py',85),
+  ('inicial -> asignaciones','inicial',1,'p_inicial','gramaticas.py',81),
+  ('asignaciones -> asignaciones asignacion','asignaciones',2,'p_asignaciones','gramaticas.py',86),
+  ('asignaciones -> asignacion','asignaciones',1,'p_asignaciones','gramaticas.py',87),
+  ('asignacion -> ID IGUAL valor PUNTOYCOMA','asignacion',4,'p_asignacion','gramaticas.py',92),
+  ('asignacion -> ID INCREMENTO PUNTOYCOMA','asignacion',3,'p_incremento','gramaticas.py',97),
+  ('asignacion -> ID DECREMENTO PUNTOYCOMA','asignacion',3,'p_decremento','gramaticas.py',102),
+  ('valor -> ENTERO','valor',1,'p_valor','gramaticas.py',107),
+  ('valor -> DECIMAL','valor',1,'p_valor','gramaticas.py',108),
+  ('valor -> BOOLEANO','valor',1,'p_valor','gramaticas.py',109),
 ]
