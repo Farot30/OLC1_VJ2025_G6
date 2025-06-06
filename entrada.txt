@@ -1,23 +1,52 @@
-x = 5;
-y = -3.14;
-z = true;
-w = false;
+// Declaraciones de variables
+int a;
+int b = 10;
+float c = 3.5;
+bool d = true;
+char e = 'x';
+str f = "Hola mundo";
 
-w = TRUE;
+// Asignaciones
+a = 5;
+//b = b + 2;
+//c = c * 2.0;
+d = false;
+f = "Nuevo texto";
 
-A = -8;
-//sda
+// Incremento y decremento
+a++;
+b--;
+c++;
+c--;
 
-A++;
-A--;
+// Operaciones aritméticas
 /*
+a = a + 1;
+b = b - 3;
+c = c * 2;
+c = c / 2;
+*/
 
-paco
+// Booleanos y reasignación
+d = true;
+d = false;
 
-sadfad
+// Prueba de booleanos en mayúsculas y minúsculas
+d = TRUE;
+d = FALSE;
 
-lff
-s*/
+// Prueba de caracteres y cadenas
+e = 'z';
+f = "Texto";
 
+// Comentarios
+// Esto es un comentario de línea
+/* Esto es un
+   comentario multilinea */
 
-//comen
+// Asignación de variables
+int j = 5;
+//b = b + 2;
+//c = c * 2.0;
+bool h = false;
+str p = "Nuevo";
