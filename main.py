@@ -22,16 +22,14 @@ def main():
             elif resultado is not None:
                 print("Prueba:", resultado)
 
-        # Imprimir consola
         print(ast.getConsola())
-        return ast  # <-- Retorna el árbol
+        return ast
 
     except Exception as e:
         print(f"Error durante la ejecución: {e}")
         return None
 
 
-# Puedes poner esto en main.py o en una utilidad
 def imprimir_tabla_simbolos(tabla: tablaSimbolo):
     print("#\tID\tTIPO\t\tTIPO2\tENTORNO\tVALOR\tLINEA\tCOLUMNA")
     for idx, simbolo in enumerate(tabla.getTabla().values(), 1):

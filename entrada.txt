@@ -44,7 +44,7 @@ f = "Texto";
 /* Esto es un
    comentario multilinea */
 
-// Asignación de variables
+// Asignacion de variables
 int j = 5;
 //b = b + 2;
 //c = c * 2.0;

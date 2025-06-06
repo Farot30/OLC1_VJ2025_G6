@@ -63,6 +63,7 @@ def t_COMMENT_SINGLELINE(t):
 
 def t_COMMENT_MULTILINE(t):
     r"/\*(.|\n)*?\*/"
+    t.lexer.lineno += t.value.count("\n")
     pass
 
 
@@ -225,14 +226,25 @@ def p_instruccion(t):
     t[0] = t[1]
 
 
+def find_column(input, token):
+    last_cr = input.rfind("\n", 0, token.lexpos)
+    if last_cr < 0:
+        last_cr = -1
+    return token.lexpos - last_cr
+
+
 def p_declaracion_cvalor(t):
     "declaracion : tipos ID IGUAL expresion"
-    t[0] = Declaracion(t[1], 0, 0, t[2], t[4])
+    t[0] = Declaracion(
+        t[1], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]), t[2], t[4]
+    )
 
 
 def p_declaracion_sinval(t):
     "declaracion : tipos ID"
-    t[0] = Declaracion(t[1], 0, 0, t[2], None)
+    t[0] = Declaracion(
+        t[1], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]), t[2], None
+    )
 
 
 def p_expresion_binaria(t):
