@@ -28,6 +28,9 @@ tokens = [
     "INCREMENTO",
     "DECREMENTO",
     "BOOLEANO",
+    "MENOR_IGUAL",
+    "MAYOR_QUE",
+    "MAYOR_IGUAL",
 ]
 
 # Simbolos
@@ -36,7 +39,7 @@ t_MAS = r"\+"
 t_MENOS = r"-"
 t_MULT = r"\*"
 t_DIVISION = r"/"
-t_POTENCIA = r"\^"
+t_POTENCIA = r"\*\*"
 t_MODULO = r"%"
 t_PAR1 = r"\("
 t_PAR2 = r"\)"
@@ -44,6 +47,9 @@ t_IGUAL = r"="
 t_ignore = " \t\r\f"
 t_INCREMENTO = r"\+\+"
 t_DECREMENTO = r"--"
+t_MENOR_IGUAL = r"<="
+t_MAYOR_QUE = r">"
+t_MAYOR_IGUAL = r">="
 
 reservadas = {
     "int": "INT",
@@ -74,7 +80,7 @@ def t_BOOLEANO(t):
 
 
 def t_ID(t):
-    r"[a-z][a-z0-9_]*"
+    r"[a-zA-Z][a-zA-Z0-9_]*"
     t.type = reservadas.get(t.value, "ID")
     return t
 
@@ -160,6 +166,9 @@ from src.simbolo.CTipo import Tipo, tipoDato
 from src.instrucciones.CAsignacion import Asignacion
 from src.instrucciones.CIncremento import Incremento, Decremento
 from src.expresiones.CUnitario import Unario
+from src.expresiones.CRelacionales import Relacional, OperadoresRel
+from src.expresiones.CNativo import Nativo
+from src.simbolo.CTipo import Tipo, tipoDato
 
 lexer = lex.lex()
 
@@ -169,10 +178,10 @@ precedence = (
     ("left", "MULT", "DIVISION", "MODULO"),
     ("right", "POTENCIA"),
     ("right", "UMENOS"),
+    ("left", "MENOR_IGUAL", "MAYOR_QUE", "MAYOR_IGUAL"),
 )
 
 #### DEFINICION DE GRAMATICA (ANALISIS SINTACTICO) ----------------------------------------------------------------------------
-# Importar tus clases
 
 
 def p_inicio(t):
@@ -182,11 +191,9 @@ def p_inicio(t):
 
 def p_expresion_id(t):
     "expresion : ID"
-    from src.expresiones.CNativo import Nativo
-    from src.simbolo.CTipo import Tipo, tipoDato
-
-    # El tipo real se resuelve en tiempo de ejecución, aquí puedes dejarlo como None o un tipo genérico
-    t[0] = Nativo(Tipo(None), t[1], t.lineno(1), 0)
+    t[0] = Nativo(
+        Tipo(None), t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+    )
 
 
 def p_instrucciones(t):
@@ -201,12 +208,7 @@ def p_instrucciones(t):
 
 def p_instruccion_asignacion(t):
     "instruccion : ID IGUAL expresion PUNTOCOMA"
-    t[0] = Asignacion(
-        t[1],
-        t[3],
-        t.lineno(1),
-        find_column(t.lexer.lexdata, t.slice[1]),  # <-- columna real del ID
-    )
+    t[0] = Asignacion(t[1], t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
 def p_instruccion_incremento(t):
@@ -269,14 +271,20 @@ def p_expresion_binaria(t):
         operador = Operadores.MULTIPLICACION
     elif t[2] == "/":
         operador = Operadores.DIVISION
-    elif t[2] == "^":
+    elif t[2] == "**":
         operador = Operadores.POTENCIA
     elif t[2] == "%":
         operador = Operadores.MODULO
     else:
         raise SyntaxError(f"Operador no esperado: {t[2]}")
 
-    t[0] = Aritmeticas(operador, 0, 0, t[1], t[3])
+    t[0] = Aritmeticas(
+        operador,
+        t.lineno(2),  # línea del operador
+        find_column(t.lexer.lexdata, t.slice[2]),  # columna del operador
+        t[1],
+        t[3],
+    )
 
 
 def p_expresion_unaria(t):
@@ -342,6 +350,27 @@ def p_expresion_caracter(t):
     "expresion : CARACTER"
     t[0] = Nativo(
         Tipo(tipoDato.CHAR), t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+    )
+
+
+def p_expresion_relacional(t):
+    """expresion : expresion MENOR_IGUAL expresion
+    | expresion MAYOR_QUE expresion
+    | expresion MAYOR_IGUAL expresion"""
+    if t[2] == "<=":
+        operador = OperadoresRel.MENOR_IGUAL
+    elif t[2] == ">":
+        operador = OperadoresRel.MAYOR_QUE
+    elif t[2] == ">=":
+        operador = OperadoresRel.MAYOR_IGUAL
+    else:
+        raise SyntaxError(f"Operador no esperado: {t[2]}")
+    t[0] = Relacional(
+        operador,
+        t.lineno(2),
+        find_column(t.lexer.lexdata, t.slice[2]),
+        t[1],
+        t[3],
     )
 
 

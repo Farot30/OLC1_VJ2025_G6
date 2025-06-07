@@ -15,6 +15,9 @@ class Unario(Instruccion):
         valor = self.expresion.interpretar(arbol, tabla)
         if isinstance(valor, Errores):
             return valor
+
+        # Copia el tipo de la expresión interna
+        self.tipoDato = self.expresion.tipoDato
         if self.operador == "-":
             if isinstance(valor, (int, float)):
                 return -valor
