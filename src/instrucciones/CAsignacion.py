@@ -19,6 +19,21 @@ class Asignacion(Instruccion):
         val = self.valor.interpretar(arbol, tabla)
         if isinstance(val, Errores):
             return val
+
+        # --- Validación de tipo ---
+        tipo_var = simbolo.getTipo().tipo
+        tipo_val = (
+            self.valor.tipoDato.getTipo() if hasattr(self.valor, "tipoDato") else None
+        )
+        if tipo_var != tipo_val:
+            return Errores(
+                "SEMANTICO",
+                f"No se puede asignar un valor de tipo {tipo_val.name if tipo_val else 'desconocido'} a la variable '{self.id}' de tipo {tipo_var.name}",
+                self.linea,
+                self.col,
+            )
+        # --------------------------
+
         simbolo.setValor(val)
         tipo = simbolo.getTipo().tipo.name if simbolo.getTipo() else "desconocido"
         arbol.setConsola(

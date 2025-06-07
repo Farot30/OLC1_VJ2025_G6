@@ -1,0 +1,54 @@
+// Declaraciones de variables
+int a;
+int b = 10;
+float c = 3.5;
+bool d = true;
+char e = 'x';
+str f = "Hola mundo";
+
+// Asignaciones
+a = 5;
+//b = b + 2;
+//c = c * 2.0;
+d = false;
+f = "Nuevo texto";
+
+// Incremento y decremento
+a++;
+b--;
+c++;
+c--;
+
+// Operaciones aritméticas
+/*
+a = a + 1;
+b = b - 3;
+c = c * 2;
+c = c / 2;
+*/
+
+// Booleanos y reasignación
+d = true;
+d = false;
+
+// Prueba de booleanos en mayúsculas y minúsculas
+d = TRUE;
+d = FALSE;
+
+// Prueba de caracteres y cadenas
+e = 'z';
+f = "Texto";
+
+// Comentarios
+// Esto es un comentario de línea
+/* Esto es un
+   comentario multilinea */
+
+// Asignacion de variables
+int j = 5;
+//b = b + 2;
+//c = c * 2.0;
+bool h = false;
+str p = "Nuevo";
+
+ j = false;

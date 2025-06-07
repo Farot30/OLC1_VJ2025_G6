@@ -201,23 +201,29 @@ def p_instrucciones(t):
 
 def p_instruccion_asignacion(t):
     "instruccion : ID IGUAL expresion PUNTOCOMA"
-    # Debes crear la clase Asignacion y devolver una instancia aquí
-    t[0] = Asignacion(t[1], t[3], t.lineno(1), 0)
+    t[0] = Asignacion(
+        t[1],
+        t[3],
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),  # <-- columna real del ID
+    )
 
 
 def p_instruccion_incremento(t):
     "instruccion : ID INCREMENTO PUNTOCOMA"
-    t[0] = Incremento(t[1], t.lineno(1), 0)
+    t[0] = Incremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
 def p_instruccion_decremento(t):
     "instruccion : ID DECREMENTO PUNTOCOMA"
-    t[0] = Decremento(t[1], t.lineno(1), 0)
+    t[0] = Decremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
 def p_expresion_booleano(t):
     "expresion : BOOLEANO"
-    t[0] = Nativo(Tipo(tipoDato.BOOL), t[1], t.lineno(1), 0)
+    t[0] = Nativo(
+        Tipo(tipoDato.BOOL), t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+    )
 
 
 def p_instruccion(t):
@@ -275,7 +281,7 @@ def p_expresion_binaria(t):
 
 def p_expresion_unaria(t):
     "expresion : MENOS expresion %prec UMENOS"
-    t[0] = Unario("-", t[2], t.lineno(1), 0)
+    t[0] = Unario("-", t[2], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
 def p_expresion_par(t):
@@ -285,34 +291,58 @@ def p_expresion_par(t):
 
 def p_expresion_entero(t):
     "expresion : ENTERO"
-    t[0] = Nativo(Tipo(tipoDato.ENTERO), t[1], t.lineno(1), 0)
+    t[0] = Nativo(
+        Tipo(tipoDato.ENTERO),
+        t[1],
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
 
 
 def p_expresion_decimal(t):
     "expresion : DECIMAL"
-    t[0] = Nativo(Tipo(tipoDato.DECIMAL), t[1], t.lineno(1), 0)
+    t[0] = Nativo(
+        Tipo(tipoDato.DECIMAL),
+        t[1],
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
 
 
 def p_expresion_cadena(t):
     "expresion : CADENA"
-    t[0] = Nativo(Tipo(tipoDato.STRING), t[1], t.lineno(1), 0)
+    t[0] = Nativo(
+        Tipo(tipoDato.STRING),
+        t[1],
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
 
 
 def p_expresion_bool(t):
     """expresion : TRUE
     | FALSE"""
     valor = True if t.slice[1].type == "TRUE" else False
-    t[0] = Nativo(Tipo(tipoDato.BOOL), valor, t.lineno(1), 0)
+    t[0] = Nativo(
+        Tipo(tipoDato.BOOL),
+        valor,
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
 
 
 def p_expresion_char(t):
     "expresion : CHAR"
-    t[0] = Nativo(Tipo(tipoDato.CHAR), t[1], t.lineno(1), 0)
+    t[0] = Nativo(
+        Tipo(tipoDato.CHAR), t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+    )
 
 
 def p_expresion_caracter(t):
     "expresion : CARACTER"
-    t[0] = Nativo(Tipo(tipoDato.CHAR), t[1], t.lineno(1), 0)
+    t[0] = Nativo(
+        Tipo(tipoDato.CHAR), t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+    )
 
 
 def p_tipos(t):

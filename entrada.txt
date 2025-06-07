@@ -50,3 +50,5 @@ int j = 5;
 //c = c * 2.0;
 bool h = false;
 str p = "Nuevo";
+
+ j = false;
