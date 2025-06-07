@@ -1,0 +1,1021 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> instrucciones
+Rule 1     instrucciones -> instruccion instrucciones
+Rule 2     instrucciones -> instruccion
+Rule 3     instruccion -> REVALUAR CORIZQ expresion CORDER PTCOMA
+Rule 4     expresion -> expresion MAS expresion
+Rule 5     expresion -> expresion MENOS expresion
+Rule 6     expresion -> expresion POR expresion
+Rule 7     expresion -> expresion DIVIDIDO expresion
+Rule 8     expresion -> MENOS expresion
+Rule 9     expresion -> PARIZQ expresion PARDER
+Rule 10    expresion -> ENTERO
+Rule 11    expresion -> DECIMAL
+Rule 12    expresion -> CARACTER
+Rule 13    expresion -> expresion MENOR_IGUAL expresion
+Rule 14    expresion -> expresion MAYOR_IGUAL expresion
+Rule 15    expresion -> expresion MENOR_QUE expresion
+Rule 16    expresion -> expresion MAYOR_QUE expresion
+Rule 17    expresion -> expresion IGUAL_IGUAL expresion
+Rule 18    expresion -> expresion DIFERENTE expresion
+
+Terminals, with rules where they appear
+
+CARACTER             : 12
+CORDER               : 3
+CORIZQ               : 3
+DECIMAL              : 11
+DIFERENTE            : 18
+DIVIDIDO             : 7
+ENTERO               : 10
+IGUAL_IGUAL          : 17
+MAS                  : 4
+MAYOR_IGUAL          : 14
+MAYOR_QUE            : 16
+MENOR_IGUAL          : 13
+MENOR_QUE            : 15
+MENOS                : 5 8
+PARDER               : 9
+PARIZQ               : 9
+POR                  : 6
+PTCOMA               : 3
+REVALUAR             : 3
+error                : 
+
+Nonterminals, with rules where they appear
+
+expresion            : 3 4 4 5 5 6 6 7 7 8 9 13 13 14 14 15 15 16 16 17 17 18 18
+instruccion          : 1 2
+instrucciones        : 1 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . instrucciones
+    (1) instrucciones -> . instruccion instrucciones
+    (2) instrucciones -> . instruccion
+    (3) instruccion -> . REVALUAR CORIZQ expresion CORDER PTCOMA
+
+    REVALUAR        shift and go to state 3
+
+    instrucciones                  shift and go to state 1
+    instruccion                    shift and go to state 2
+
+state 1
+
+    (0) S' -> instrucciones .
+
+
+
+state 2
+
+    (1) instrucciones -> instruccion . instrucciones
+    (2) instrucciones -> instruccion .
+    (1) instrucciones -> . instruccion instrucciones
+    (2) instrucciones -> . instruccion
+    (3) instruccion -> . REVALUAR CORIZQ expresion CORDER PTCOMA
+
+    $end            reduce using rule 2 (instrucciones -> instruccion .)
+    REVALUAR        shift and go to state 3
+
+    instruccion                    shift and go to state 2
+    instrucciones                  shift and go to state 4
+
+state 3
+
+    (3) instruccion -> REVALUAR . CORIZQ expresion CORDER PTCOMA
+
+    CORIZQ          shift and go to state 5
+
+
+state 4
+
+    (1) instrucciones -> instruccion instrucciones .
+
+    $end            reduce using rule 1 (instrucciones -> instruccion instrucciones .)
+
+
+state 5
+
+    (3) instruccion -> REVALUAR CORIZQ . expresion CORDER PTCOMA
+    (4) expresion -> . expresion MAS expresion
+    (5) expresion -> . expresion MENOS expresion
+    (6) expresion -> . expresion POR expresion
+    (7) expresion -> . expresion DIVIDIDO expresion
+    (8) expresion -> . MENOS expresion
+    (9) expresion -> . PARIZQ expresion PARDER
+    (10) expresion -> . ENTERO
+    (11) expresion -> . DECIMAL
+    (12) expresion -> . CARACTER
+    (13) expresion -> . expresion MENOR_IGUAL expresion
+    (14) expresion -> . expresion MAYOR_IGUAL expresion
+    (15) expresion -> . expresion MENOR_QUE expresion
+    (16) expresion -> . expresion MAYOR_QUE expresion
+    (17) expresion -> . expresion IGUAL_IGUAL expresion
+    (18) expresion -> . expresion DIFERENTE expresion
+
+    MENOS           shift and go to state 7
+    PARIZQ          shift and go to state 8
+    ENTERO          shift and go to state 9
+    DECIMAL         shift and go to state 10
+    CARACTER        shift and go to state 11
+
+    expresion                      shift and go to state 6
+
+state 6
+
+    (3) instruccion -> REVALUAR CORIZQ expresion . CORDER PTCOMA
+    (4) expresion -> expresion . MAS expresion
+    (5) expresion -> expresion . MENOS expresion
+    (6) expresion -> expresion . POR expresion
+    (7) expresion -> expresion . DIVIDIDO expresion
+    (13) expresion -> expresion . MENOR_IGUAL expresion
+    (14) expresion -> expresion . MAYOR_IGUAL expresion
+    (15) expresion -> expresion . MENOR_QUE expresion
+    (16) expresion -> expresion . MAYOR_QUE expresion
+    (17) expresion -> expresion . IGUAL_IGUAL expresion
+    (18) expresion -> expresion . DIFERENTE expresion
+
+    CORDER          shift and go to state 12
+    MAS             shift and go to state 13
+    MENOS           shift and go to state 14
+    POR             shift and go to state 15
+    DIVIDIDO        shift and go to state 16
+    MENOR_IGUAL     shift and go to state 17
+    MAYOR_IGUAL     shift and go to state 18
+    MENOR_QUE       shift and go to state 19
+    MAYOR_QUE       shift and go to state 20
+    IGUAL_IGUAL     shift and go to state 21
+    DIFERENTE       shift and go to state 22
+
+
+state 7
+
+    (8) expresion -> MENOS . expresion
+    (4) expresion -> . expresion MAS expresion
+    (5) expresion -> . expresion MENOS expresion
+    (6) expresion -> . expresion POR expresion
+    (7) expresion -> . expresion DIVIDIDO expresion
+    (8) expresion -> . MENOS expresion
+    (9) expresion -> . PARIZQ expresion PARDER
+    (10) expresion -> . ENTERO
+    (11) expresion -> . DECIMAL
+    (12) expresion -> . CARACTER
+    (13) expresion -> . expresion MENOR_IGUAL expresion
+    (14) expresion -> . expresion MAYOR_IGUAL expresion
+    (15) expresion -> . expresion MENOR_QUE expresion
+    (16) expresion -> . expresion MAYOR_QUE expresion
+    (17) expresion -> . expresion IGUAL_IGUAL expresion
+    (18) expresion -> . expresion DIFERENTE expresion
+
+    MENOS           shift and go to state 7
+    PARIZQ          shift and go to state 8
+    ENTERO          shift and go to state 9
+    DECIMAL         shift and go to state 10
+    CARACTER        shift and go to state 11
+
+    expresion                      shift and go to state 23
+
+state 8
+
+    (9) expresion -> PARIZQ . expresion PARDER
+    (4) expresion -> . expresion MAS expresion
+    (5) expresion -> . expresion MENOS expresion
+    (6) expresion -> . expresion POR expresion
+    (7) expresion -> . expresion DIVIDIDO expresion
+    (8) expresion -> . MENOS expresion
+    (9) expresion -> . PARIZQ expresion PARDER
+    (10) expresion -> . ENTERO
+    (11) expresion -> . DECIMAL
+    (12) expresion -> . CARACTER
+    (13) expresion -> . expresion MENOR_IGUAL expresion
+    (14) expresion -> . expresion MAYOR_IGUAL expresion
+    (15) expresion -> . expresion MENOR_QUE expresion
+    (16) expresion -> . expresion MAYOR_QUE expresion
+    (17) expresion -> . expresion IGUAL_IGUAL expresion
+    (18) expresion -> . expresion DIFERENTE expresion
+
+    MENOS           shift and go to state 7
+    PARIZQ          shift and go to state 8
+    ENTERO          shift and go to state 9
+    DECIMAL         shift and go to state 10
+    CARACTER        shift and go to state 11
+
+    expresion                      shift and go to state 24
+
+state 9
+
+    (10) expresion -> ENTERO .
+
+    CORDER          reduce using rule 10 (expresion -> ENTERO .)
+    MAS             reduce using rule 10 (expresion -> ENTERO .)
+    MENOS           reduce using rule 10 (expresion -> ENTERO .)
+    POR             reduce using rule 10 (expresion -> ENTERO .)
+    DIVIDIDO        reduce using rule 10 (expresion -> ENTERO .)
+    MENOR_IGUAL     reduce using rule 10 (expresion -> ENTERO .)
+    MAYOR_IGUAL     reduce using rule 10 (expresion -> ENTERO .)
+    MENOR_QUE       reduce using rule 10 (expresion -> ENTERO .)
+    MAYOR_QUE       reduce using rule 10 (expresion -> ENTERO .)
+    IGUAL_IGUAL     reduce using rule 10 (expresion -> ENTERO .)
+    DIFERENTE       reduce using rule 10 (expresion -> ENTERO .)
+    PARDER          reduce using rule 10 (expresion -> ENTERO .)
+
+
+state 10
+
+    (11) expresion -> DECIMAL .
+
+    CORDER          reduce using rule 11 (expresion -> DECIMAL .)
+    MAS             reduce using rule 11 (expresion -> DECIMAL .)
+    MENOS           reduce using rule 11 (expresion -> DECIMAL .)
+    POR             reduce using rule 11 (expresion -> DECIMAL .)
+    DIVIDIDO        reduce using rule 11 (expresion -> DECIMAL .)
+    MENOR_IGUAL     reduce using rule 11 (expresion -> DECIMAL .)
+    MAYOR_IGUAL     reduce using rule 11 (expresion -> DECIMAL .)
+    MENOR_QUE       reduce using rule 11 (expresion -> DECIMAL .)
+    MAYOR_QUE       reduce using rule 11 (expresion -> DECIMAL .)
+    IGUAL_IGUAL     reduce using rule 11 (expresion -> DECIMAL .)
+    DIFERENTE       reduce using rule 11 (expresion -> DECIMAL .)
+    PARDER          reduce using rule 11 (expresion -> DECIMAL .)
+
+
+state 11
+
+    (12) expresion -> CARACTER .
+
+    CORDER          reduce using rule 12 (expresion -> CARACTER .)
+    MAS             reduce using rule 12 (expresion -> CARACTER .)
+    MENOS           reduce using rule 12 (expresion -> CARACTER .)
+    POR             reduce using rule 12 (expresion -> CARACTER .)
+    DIVIDIDO        reduce using rule 12 (expresion -> CARACTER .)
+    MENOR_IGUAL     reduce using rule 12 (expresion -> CARACTER .)
+    MAYOR_IGUAL     reduce using rule 12 (expresion -> CARACTER .)
+    MENOR_QUE       reduce using rule 12 (expresion -> CARACTER .)
+    MAYOR_QUE       reduce using rule 12 (expresion -> CARACTER .)
+    IGUAL_IGUAL     reduce using rule 12 (expresion -> CARACTER .)
+    DIFERENTE       reduce using rule 12 (expresion -> CARACTER .)
+    PARDER          reduce using rule 12 (expresion -> CARACTER .)
+
+
+state 12
+
+    (3) instruccion -> REVALUAR CORIZQ expresion CORDER . PTCOMA
+
+    PTCOMA          shift and go to state 25
+
+
+state 13
+
+    (4) expresion -> expresion MAS . expresion
+    (4) expresion -> . expresion MAS expresion
+    (5) expresion -> . expresion MENOS expresion
+    (6) expresion -> . expresion POR expresion
+    (7) expresion -> . expresion DIVIDIDO expresion
+    (8) expresion -> . MENOS expresion
+    (9) expresion -> . PARIZQ expresion PARDER
+    (10) expresion -> . ENTERO
+    (11) expresion -> . DECIMAL
+    (12) expresion -> . CARACTER
+    (13) expresion -> . expresion MENOR_IGUAL expresion
+    (14) expresion -> . expresion MAYOR_IGUAL expresion
+    (15) expresion -> . expresion MENOR_QUE expresion
+    (16) expresion -> . expresion MAYOR_QUE expresion
+    (17) expresion -> . expresion IGUAL_IGUAL expresion
+    (18) expresion -> . expresion DIFERENTE expresion
+
+    MENOS           shift and go to state 7
+    PARIZQ          shift and go to state 8
+    ENTERO          shift and go to state 9
+    DECIMAL         shift and go to state 10
+    CARACTER        shift and go to state 11
+
+    expresion                      shift and go to state 26
+
+state 14
+
+    (5) expresion -> expresion MENOS . expresion
+    (4) expresion -> . expresion MAS expresion
+    (5) expresion -> . expresion MENOS expresion
+    (6) expresion -> . expresion POR expresion
+    (7) expresion -> . expresion DIVIDIDO expresion
+    (8) expresion -> . MENOS expresion
+    (9) expresion -> . PARIZQ expresion PARDER
+    (10) expresion -> . ENTERO
+    (11) expresion -> . DECIMAL
+    (12) expresion -> . CARACTER
+    (13) expresion -> . expresion MENOR_IGUAL expresion
+    (14) expresion -> . expresion MAYOR_IGUAL expresion
+    (15) expresion -> . expresion MENOR_QUE expresion
+    (16) expresion -> . expresion MAYOR_QUE expresion
+    (17) expresion -> . expresion IGUAL_IGUAL expresion
+    (18) expresion -> . expresion DIFERENTE expresion
+
+    MENOS           shift and go to state 7
+    PARIZQ          shift and go to state 8
+    ENTERO          shift and go to state 9
+    DECIMAL         shift and go to state 10
+    CARACTER        shift and go to state 11
+
+    expresion                      shift and go to state 27
+
+state 15
+
+    (6) expresion -> expresion POR . expresion
+    (4) expresion -> . expresion MAS expresion
+    (5) expresion -> . expresion MENOS expresion
+    (6) expresion -> . expresion POR expresion
+    (7) expresion -> . expresion DIVIDIDO expresion
+    (8) expresion -> . MENOS expresion
+    (9) expresion -> . PARIZQ expresion PARDER
+    (10) expresion -> . ENTERO
+    (11) expresion -> . DECIMAL
+    (12) expresion -> . CARACTER
+    (13) expresion -> . expresion MENOR_IGUAL expresion
+    (14) expresion -> . expresion MAYOR_IGUAL expresion
+    (15) expresion -> . expresion MENOR_QUE expresion
+    (16) expresion -> . expresion MAYOR_QUE expresion
+    (17) expresion -> . expresion IGUAL_IGUAL expresion
+    (18) expresion -> . expresion DIFERENTE expresion
+
+    MENOS           shift and go to state 7
+    PARIZQ          shift and go to state 8
+    ENTERO          shift and go to state 9
+    DECIMAL         shift and go to state 10
+    CARACTER        shift and go to state 11
+
+    expresion                      shift and go to state 28
+
+state 16
+
+    (7) expresion -> expresion DIVIDIDO . expresion
+    (4) expresion -> . expresion MAS expresion
+    (5) expresion -> . expresion MENOS expresion
+    (6) expresion -> . expresion POR expresion
+    (7) expresion -> . expresion DIVIDIDO expresion
+    (8) expresion -> . MENOS expresion
+    (9) expresion -> . PARIZQ expresion PARDER
+    (10) expresion -> . ENTERO
+    (11) expresion -> . DECIMAL
+    (12) expresion -> . CARACTER
+    (13) expresion -> . expresion MENOR_IGUAL expresion
+    (14) expresion -> . expresion MAYOR_IGUAL expresion
+    (15) expresion -> . expresion MENOR_QUE expresion
+    (16) expresion -> . expresion MAYOR_QUE expresion
+    (17) expresion -> . expresion IGUAL_IGUAL expresion
+    (18) expresion -> . expresion DIFERENTE expresion
+
+    MENOS           shift and go to state 7
+    PARIZQ          shift and go to state 8
+    ENTERO          shift and go to state 9
+    DECIMAL         shift and go to state 10
+    CARACTER        shift and go to state 11
+
+    expresion                      shift and go to state 29
+
+state 17
+
+    (13) expresion -> expresion MENOR_IGUAL . expresion
+    (4) expresion -> . expresion MAS expresion
+    (5) expresion -> . expresion MENOS expresion
+    (6) expresion -> . expresion POR expresion
+    (7) expresion -> . expresion DIVIDIDO expresion
+    (8) expresion -> . MENOS expresion
+    (9) expresion -> . PARIZQ expresion PARDER
+    (10) expresion -> . ENTERO
+    (11) expresion -> . DECIMAL
+    (12) expresion -> . CARACTER
+    (13) expresion -> . expresion MENOR_IGUAL expresion
+    (14) expresion -> . expresion MAYOR_IGUAL expresion
+    (15) expresion -> . expresion MENOR_QUE expresion
+    (16) expresion -> . expresion MAYOR_QUE expresion
+    (17) expresion -> . expresion IGUAL_IGUAL expresion
+    (18) expresion -> . expresion DIFERENTE expresion
+
+    MENOS           shift and go to state 7
+    PARIZQ          shift and go to state 8
+    ENTERO          shift and go to state 9
+    DECIMAL         shift and go to state 10
+    CARACTER        shift and go to state 11
+
+    expresion                      shift and go to state 30
+
+state 18
+
+    (14) expresion -> expresion MAYOR_IGUAL . expresion
+    (4) expresion -> . expresion MAS expresion
+    (5) expresion -> . expresion MENOS expresion
+    (6) expresion -> . expresion POR expresion
+    (7) expresion -> . expresion DIVIDIDO expresion
+    (8) expresion -> . MENOS expresion
+    (9) expresion -> . PARIZQ expresion PARDER
+    (10) expresion -> . ENTERO
+    (11) expresion -> . DECIMAL
+    (12) expresion -> . CARACTER
+    (13) expresion -> . expresion MENOR_IGUAL expresion
+    (14) expresion -> . expresion MAYOR_IGUAL expresion
+    (15) expresion -> . expresion MENOR_QUE expresion
+    (16) expresion -> . expresion MAYOR_QUE expresion
+    (17) expresion -> . expresion IGUAL_IGUAL expresion
+    (18) expresion -> . expresion DIFERENTE expresion
+
+    MENOS           shift and go to state 7
+    PARIZQ          shift and go to state 8
+    ENTERO          shift and go to state 9
+    DECIMAL         shift and go to state 10
+    CARACTER        shift and go to state 11
+
+    expresion                      shift and go to state 31
+
+state 19
+
+    (15) expresion -> expresion MENOR_QUE . expresion
+    (4) expresion -> . expresion MAS expresion
+    (5) expresion -> . expresion MENOS expresion
+    (6) expresion -> . expresion POR expresion
+    (7) expresion -> . expresion DIVIDIDO expresion
+    (8) expresion -> . MENOS expresion
+    (9) expresion -> . PARIZQ expresion PARDER
+    (10) expresion -> . ENTERO
+    (11) expresion -> . DECIMAL
+    (12) expresion -> . CARACTER
+    (13) expresion -> . expresion MENOR_IGUAL expresion
+    (14) expresion -> . expresion MAYOR_IGUAL expresion
+    (15) expresion -> . expresion MENOR_QUE expresion
+    (16) expresion -> . expresion MAYOR_QUE expresion
+    (17) expresion -> . expresion IGUAL_IGUAL expresion
+    (18) expresion -> . expresion DIFERENTE expresion
+
+    MENOS           shift and go to state 7
+    PARIZQ          shift and go to state 8
+    ENTERO          shift and go to state 9
+    DECIMAL         shift and go to state 10
+    CARACTER        shift and go to state 11
+
+    expresion                      shift and go to state 32
+
+state 20
+
+    (16) expresion -> expresion MAYOR_QUE . expresion
+    (4) expresion -> . expresion MAS expresion
+    (5) expresion -> . expresion MENOS expresion
+    (6) expresion -> . expresion POR expresion
+    (7) expresion -> . expresion DIVIDIDO expresion
+    (8) expresion -> . MENOS expresion
+    (9) expresion -> . PARIZQ expresion PARDER
+    (10) expresion -> . ENTERO
+    (11) expresion -> . DECIMAL
+    (12) expresion -> . CARACTER
+    (13) expresion -> . expresion MENOR_IGUAL expresion
+    (14) expresion -> . expresion MAYOR_IGUAL expresion
+    (15) expresion -> . expresion MENOR_QUE expresion
+    (16) expresion -> . expresion MAYOR_QUE expresion
+    (17) expresion -> . expresion IGUAL_IGUAL expresion
+    (18) expresion -> . expresion DIFERENTE expresion
+
+    MENOS           shift and go to state 7
+    PARIZQ          shift and go to state 8
+    ENTERO          shift and go to state 9
+    DECIMAL         shift and go to state 10
+    CARACTER        shift and go to state 11
+
+    expresion                      shift and go to state 33
+
+state 21
+
+    (17) expresion -> expresion IGUAL_IGUAL . expresion
+    (4) expresion -> . expresion MAS expresion
+    (5) expresion -> . expresion MENOS expresion
+    (6) expresion -> . expresion POR expresion
+    (7) expresion -> . expresion DIVIDIDO expresion
+    (8) expresion -> . MENOS expresion
+    (9) expresion -> . PARIZQ expresion PARDER
+    (10) expresion -> . ENTERO
+    (11) expresion -> . DECIMAL
+    (12) expresion -> . CARACTER
+    (13) expresion -> . expresion MENOR_IGUAL expresion
+    (14) expresion -> . expresion MAYOR_IGUAL expresion
+    (15) expresion -> . expresion MENOR_QUE expresion
+    (16) expresion -> . expresion MAYOR_QUE expresion
+    (17) expresion -> . expresion IGUAL_IGUAL expresion
+    (18) expresion -> . expresion DIFERENTE expresion
+
+    MENOS           shift and go to state 7
+    PARIZQ          shift and go to state 8
+    ENTERO          shift and go to state 9
+    DECIMAL         shift and go to state 10
+    CARACTER        shift and go to state 11
+
+    expresion                      shift and go to state 34
+
+state 22
+
+    (18) expresion -> expresion DIFERENTE . expresion
+    (4) expresion -> . expresion MAS expresion
+    (5) expresion -> . expresion MENOS expresion
+    (6) expresion -> . expresion POR expresion
+    (7) expresion -> . expresion DIVIDIDO expresion
+    (8) expresion -> . MENOS expresion
+    (9) expresion -> . PARIZQ expresion PARDER
+    (10) expresion -> . ENTERO
+    (11) expresion -> . DECIMAL
+    (12) expresion -> . CARACTER
+    (13) expresion -> . expresion MENOR_IGUAL expresion
+    (14) expresion -> . expresion MAYOR_IGUAL expresion
+    (15) expresion -> . expresion MENOR_QUE expresion
+    (16) expresion -> . expresion MAYOR_QUE expresion
+    (17) expresion -> . expresion IGUAL_IGUAL expresion
+    (18) expresion -> . expresion DIFERENTE expresion
+
+    MENOS           shift and go to state 7
+    PARIZQ          shift and go to state 8
+    ENTERO          shift and go to state 9
+    DECIMAL         shift and go to state 10
+    CARACTER        shift and go to state 11
+
+    expresion                      shift and go to state 35
+
+state 23
+
+    (8) expresion -> MENOS expresion .
+    (4) expresion -> expresion . MAS expresion
+    (5) expresion -> expresion . MENOS expresion
+    (6) expresion -> expresion . POR expresion
+    (7) expresion -> expresion . DIVIDIDO expresion
+    (13) expresion -> expresion . MENOR_IGUAL expresion
+    (14) expresion -> expresion . MAYOR_IGUAL expresion
+    (15) expresion -> expresion . MENOR_QUE expresion
+    (16) expresion -> expresion . MAYOR_QUE expresion
+    (17) expresion -> expresion . IGUAL_IGUAL expresion
+    (18) expresion -> expresion . DIFERENTE expresion
+
+    CORDER          reduce using rule 8 (expresion -> MENOS expresion .)
+    PARDER          reduce using rule 8 (expresion -> MENOS expresion .)
+    MAS             shift and go to state 13
+    MENOS           shift and go to state 14
+    POR             shift and go to state 15
+    DIVIDIDO        shift and go to state 16
+    MENOR_IGUAL     shift and go to state 17
+    MAYOR_IGUAL     shift and go to state 18
+    MENOR_QUE       shift and go to state 19
+    MAYOR_QUE       shift and go to state 20
+    IGUAL_IGUAL     shift and go to state 21
+    DIFERENTE       shift and go to state 22
+
+  ! MAS             [ reduce using rule 8 (expresion -> MENOS expresion .) ]
+  ! MENOS           [ reduce using rule 8 (expresion -> MENOS expresion .) ]
+  ! POR             [ reduce using rule 8 (expresion -> MENOS expresion .) ]
+  ! DIVIDIDO        [ reduce using rule 8 (expresion -> MENOS expresion .) ]
+  ! MENOR_IGUAL     [ reduce using rule 8 (expresion -> MENOS expresion .) ]
+  ! MAYOR_IGUAL     [ reduce using rule 8 (expresion -> MENOS expresion .) ]
+  ! MENOR_QUE       [ reduce using rule 8 (expresion -> MENOS expresion .) ]
+  ! MAYOR_QUE       [ reduce using rule 8 (expresion -> MENOS expresion .) ]
+  ! IGUAL_IGUAL     [ reduce using rule 8 (expresion -> MENOS expresion .) ]
+  ! DIFERENTE       [ reduce using rule 8 (expresion -> MENOS expresion .) ]
+
+
+state 24
+
+    (9) expresion -> PARIZQ expresion . PARDER
+    (4) expresion -> expresion . MAS expresion
+    (5) expresion -> expresion . MENOS expresion
+    (6) expresion -> expresion . POR expresion
+    (7) expresion -> expresion . DIVIDIDO expresion
+    (13) expresion -> expresion . MENOR_IGUAL expresion
+    (14) expresion -> expresion . MAYOR_IGUAL expresion
+    (15) expresion -> expresion . MENOR_QUE expresion
+    (16) expresion -> expresion . MAYOR_QUE expresion
+    (17) expresion -> expresion . IGUAL_IGUAL expresion
+    (18) expresion -> expresion . DIFERENTE expresion
+
+    PARDER          shift and go to state 36
+    MAS             shift and go to state 13
+    MENOS           shift and go to state 14
+    POR             shift and go to state 15
+    DIVIDIDO        shift and go to state 16
+    MENOR_IGUAL     shift and go to state 17
+    MAYOR_IGUAL     shift and go to state 18
+    MENOR_QUE       shift and go to state 19
+    MAYOR_QUE       shift and go to state 20
+    IGUAL_IGUAL     shift and go to state 21
+    DIFERENTE       shift and go to state 22
+
+
+state 25
+
+    (3) instruccion -> REVALUAR CORIZQ expresion CORDER PTCOMA .
+
+    REVALUAR        reduce using rule 3 (instruccion -> REVALUAR CORIZQ expresion CORDER PTCOMA .)
+    $end            reduce using rule 3 (instruccion -> REVALUAR CORIZQ expresion CORDER PTCOMA .)
+
+
+state 26
+
+    (4) expresion -> expresion MAS expresion .
+    (4) expresion -> expresion . MAS expresion
+    (5) expresion -> expresion . MENOS expresion
+    (6) expresion -> expresion . POR expresion
+    (7) expresion -> expresion . DIVIDIDO expresion
+    (13) expresion -> expresion . MENOR_IGUAL expresion
+    (14) expresion -> expresion . MAYOR_IGUAL expresion
+    (15) expresion -> expresion . MENOR_QUE expresion
+    (16) expresion -> expresion . MAYOR_QUE expresion
+    (17) expresion -> expresion . IGUAL_IGUAL expresion
+    (18) expresion -> expresion . DIFERENTE expresion
+
+    CORDER          reduce using rule 4 (expresion -> expresion MAS expresion .)
+    MAS             reduce using rule 4 (expresion -> expresion MAS expresion .)
+    MENOS           reduce using rule 4 (expresion -> expresion MAS expresion .)
+    PARDER          reduce using rule 4 (expresion -> expresion MAS expresion .)
+    POR             shift and go to state 15
+    DIVIDIDO        shift and go to state 16
+    MENOR_IGUAL     shift and go to state 17
+    MAYOR_IGUAL     shift and go to state 18
+    MENOR_QUE       shift and go to state 19
+    MAYOR_QUE       shift and go to state 20
+    IGUAL_IGUAL     shift and go to state 21
+    DIFERENTE       shift and go to state 22
+
+  ! POR             [ reduce using rule 4 (expresion -> expresion MAS expresion .) ]
+  ! DIVIDIDO        [ reduce using rule 4 (expresion -> expresion MAS expresion .) ]
+  ! MENOR_IGUAL     [ reduce using rule 4 (expresion -> expresion MAS expresion .) ]
+  ! MAYOR_IGUAL     [ reduce using rule 4 (expresion -> expresion MAS expresion .) ]
+  ! MENOR_QUE       [ reduce using rule 4 (expresion -> expresion MAS expresion .) ]
+  ! MAYOR_QUE       [ reduce using rule 4 (expresion -> expresion MAS expresion .) ]
+  ! IGUAL_IGUAL     [ reduce using rule 4 (expresion -> expresion MAS expresion .) ]
+  ! DIFERENTE       [ reduce using rule 4 (expresion -> expresion MAS expresion .) ]
+  ! MAS             [ shift and go to state 13 ]
+  ! MENOS           [ shift and go to state 14 ]
+
+
+state 27
+
+    (5) expresion -> expresion MENOS expresion .
+    (4) expresion -> expresion . MAS expresion
+    (5) expresion -> expresion . MENOS expresion
+    (6) expresion -> expresion . POR expresion
+    (7) expresion -> expresion . DIVIDIDO expresion
+    (13) expresion -> expresion . MENOR_IGUAL expresion
+    (14) expresion -> expresion . MAYOR_IGUAL expresion
+    (15) expresion -> expresion . MENOR_QUE expresion
+    (16) expresion -> expresion . MAYOR_QUE expresion
+    (17) expresion -> expresion . IGUAL_IGUAL expresion
+    (18) expresion -> expresion . DIFERENTE expresion
+
+    CORDER          reduce using rule 5 (expresion -> expresion MENOS expresion .)
+    MAS             reduce using rule 5 (expresion -> expresion MENOS expresion .)
+    MENOS           reduce using rule 5 (expresion -> expresion MENOS expresion .)
+    PARDER          reduce using rule 5 (expresion -> expresion MENOS expresion .)
+    POR             shift and go to state 15
+    DIVIDIDO        shift and go to state 16
+    MENOR_IGUAL     shift and go to state 17
+    MAYOR_IGUAL     shift and go to state 18
+    MENOR_QUE       shift and go to state 19
+    MAYOR_QUE       shift and go to state 20
+    IGUAL_IGUAL     shift and go to state 21
+    DIFERENTE       shift and go to state 22
+
+  ! POR             [ reduce using rule 5 (expresion -> expresion MENOS expresion .) ]
+  ! DIVIDIDO        [ reduce using rule 5 (expresion -> expresion MENOS expresion .) ]
+  ! MENOR_IGUAL     [ reduce using rule 5 (expresion -> expresion MENOS expresion .) ]
+  ! MAYOR_IGUAL     [ reduce using rule 5 (expresion -> expresion MENOS expresion .) ]
+  ! MENOR_QUE       [ reduce using rule 5 (expresion -> expresion MENOS expresion .) ]
+  ! MAYOR_QUE       [ reduce using rule 5 (expresion -> expresion MENOS expresion .) ]
+  ! IGUAL_IGUAL     [ reduce using rule 5 (expresion -> expresion MENOS expresion .) ]
+  ! DIFERENTE       [ reduce using rule 5 (expresion -> expresion MENOS expresion .) ]
+  ! MAS             [ shift and go to state 13 ]
+  ! MENOS           [ shift and go to state 14 ]
+
+
+state 28
+
+    (6) expresion -> expresion POR expresion .
+    (4) expresion -> expresion . MAS expresion
+    (5) expresion -> expresion . MENOS expresion
+    (6) expresion -> expresion . POR expresion
+    (7) expresion -> expresion . DIVIDIDO expresion
+    (13) expresion -> expresion . MENOR_IGUAL expresion
+    (14) expresion -> expresion . MAYOR_IGUAL expresion
+    (15) expresion -> expresion . MENOR_QUE expresion
+    (16) expresion -> expresion . MAYOR_QUE expresion
+    (17) expresion -> expresion . IGUAL_IGUAL expresion
+    (18) expresion -> expresion . DIFERENTE expresion
+
+    CORDER          reduce using rule 6 (expresion -> expresion POR expresion .)
+    MAS             reduce using rule 6 (expresion -> expresion POR expresion .)
+    MENOS           reduce using rule 6 (expresion -> expresion POR expresion .)
+    POR             reduce using rule 6 (expresion -> expresion POR expresion .)
+    DIVIDIDO        reduce using rule 6 (expresion -> expresion POR expresion .)
+    PARDER          reduce using rule 6 (expresion -> expresion POR expresion .)
+    MENOR_IGUAL     shift and go to state 17
+    MAYOR_IGUAL     shift and go to state 18
+    MENOR_QUE       shift and go to state 19
+    MAYOR_QUE       shift and go to state 20
+    IGUAL_IGUAL     shift and go to state 21
+    DIFERENTE       shift and go to state 22
+
+  ! MENOR_IGUAL     [ reduce using rule 6 (expresion -> expresion POR expresion .) ]
+  ! MAYOR_IGUAL     [ reduce using rule 6 (expresion -> expresion POR expresion .) ]
+  ! MENOR_QUE       [ reduce using rule 6 (expresion -> expresion POR expresion .) ]
+  ! MAYOR_QUE       [ reduce using rule 6 (expresion -> expresion POR expresion .) ]
+  ! IGUAL_IGUAL     [ reduce using rule 6 (expresion -> expresion POR expresion .) ]
+  ! DIFERENTE       [ reduce using rule 6 (expresion -> expresion POR expresion .) ]
+  ! MAS             [ shift and go to state 13 ]
+  ! MENOS           [ shift and go to state 14 ]
+  ! POR             [ shift and go to state 15 ]
+  ! DIVIDIDO        [ shift and go to state 16 ]
+
+
+state 29
+
+    (7) expresion -> expresion DIVIDIDO expresion .
+    (4) expresion -> expresion . MAS expresion
+    (5) expresion -> expresion . MENOS expresion
+    (6) expresion -> expresion . POR expresion
+    (7) expresion -> expresion . DIVIDIDO expresion
+    (13) expresion -> expresion . MENOR_IGUAL expresion
+    (14) expresion -> expresion . MAYOR_IGUAL expresion
+    (15) expresion -> expresion . MENOR_QUE expresion
+    (16) expresion -> expresion . MAYOR_QUE expresion
+    (17) expresion -> expresion . IGUAL_IGUAL expresion
+    (18) expresion -> expresion . DIFERENTE expresion
+
+    CORDER          reduce using rule 7 (expresion -> expresion DIVIDIDO expresion .)
+    MAS             reduce using rule 7 (expresion -> expresion DIVIDIDO expresion .)
+    MENOS           reduce using rule 7 (expresion -> expresion DIVIDIDO expresion .)
+    POR             reduce using rule 7 (expresion -> expresion DIVIDIDO expresion .)
+    DIVIDIDO        reduce using rule 7 (expresion -> expresion DIVIDIDO expresion .)
+    PARDER          reduce using rule 7 (expresion -> expresion DIVIDIDO expresion .)
+    MENOR_IGUAL     shift and go to state 17
+    MAYOR_IGUAL     shift and go to state 18
+    MENOR_QUE       shift and go to state 19
+    MAYOR_QUE       shift and go to state 20
+    IGUAL_IGUAL     shift and go to state 21
+    DIFERENTE       shift and go to state 22
+
+  ! MENOR_IGUAL     [ reduce using rule 7 (expresion -> expresion DIVIDIDO expresion .) ]
+  ! MAYOR_IGUAL     [ reduce using rule 7 (expresion -> expresion DIVIDIDO expresion .) ]
+  ! MENOR_QUE       [ reduce using rule 7 (expresion -> expresion DIVIDIDO expresion .) ]
+  ! MAYOR_QUE       [ reduce using rule 7 (expresion -> expresion DIVIDIDO expresion .) ]
+  ! IGUAL_IGUAL     [ reduce using rule 7 (expresion -> expresion DIVIDIDO expresion .) ]
+  ! DIFERENTE       [ reduce using rule 7 (expresion -> expresion DIVIDIDO expresion .) ]
+  ! MAS             [ shift and go to state 13 ]
+  ! MENOS           [ shift and go to state 14 ]
+  ! POR             [ shift and go to state 15 ]
+  ! DIVIDIDO        [ shift and go to state 16 ]
+
+
+state 30
+
+    (13) expresion -> expresion MENOR_IGUAL expresion .
+    (4) expresion -> expresion . MAS expresion
+    (5) expresion -> expresion . MENOS expresion
+    (6) expresion -> expresion . POR expresion
+    (7) expresion -> expresion . DIVIDIDO expresion
+    (13) expresion -> expresion . MENOR_IGUAL expresion
+    (14) expresion -> expresion . MAYOR_IGUAL expresion
+    (15) expresion -> expresion . MENOR_QUE expresion
+    (16) expresion -> expresion . MAYOR_QUE expresion
+    (17) expresion -> expresion . IGUAL_IGUAL expresion
+    (18) expresion -> expresion . DIFERENTE expresion
+
+    CORDER          reduce using rule 13 (expresion -> expresion MENOR_IGUAL expresion .)
+    MAS             reduce using rule 13 (expresion -> expresion MENOR_IGUAL expresion .)
+    MENOS           reduce using rule 13 (expresion -> expresion MENOR_IGUAL expresion .)
+    POR             reduce using rule 13 (expresion -> expresion MENOR_IGUAL expresion .)
+    DIVIDIDO        reduce using rule 13 (expresion -> expresion MENOR_IGUAL expresion .)
+    MENOR_IGUAL     reduce using rule 13 (expresion -> expresion MENOR_IGUAL expresion .)
+    MAYOR_IGUAL     reduce using rule 13 (expresion -> expresion MENOR_IGUAL expresion .)
+    MENOR_QUE       reduce using rule 13 (expresion -> expresion MENOR_IGUAL expresion .)
+    MAYOR_QUE       reduce using rule 13 (expresion -> expresion MENOR_IGUAL expresion .)
+    IGUAL_IGUAL     reduce using rule 13 (expresion -> expresion MENOR_IGUAL expresion .)
+    DIFERENTE       reduce using rule 13 (expresion -> expresion MENOR_IGUAL expresion .)
+    PARDER          reduce using rule 13 (expresion -> expresion MENOR_IGUAL expresion .)
+
+  ! MAS             [ shift and go to state 13 ]
+  ! MENOS           [ shift and go to state 14 ]
+  ! POR             [ shift and go to state 15 ]
+  ! DIVIDIDO        [ shift and go to state 16 ]
+  ! MENOR_IGUAL     [ shift and go to state 17 ]
+  ! MAYOR_IGUAL     [ shift and go to state 18 ]
+  ! MENOR_QUE       [ shift and go to state 19 ]
+  ! MAYOR_QUE       [ shift and go to state 20 ]
+  ! IGUAL_IGUAL     [ shift and go to state 21 ]
+  ! DIFERENTE       [ shift and go to state 22 ]
+
+
+state 31
+
+    (14) expresion -> expresion MAYOR_IGUAL expresion .
+    (4) expresion -> expresion . MAS expresion
+    (5) expresion -> expresion . MENOS expresion
+    (6) expresion -> expresion . POR expresion
+    (7) expresion -> expresion . DIVIDIDO expresion
+    (13) expresion -> expresion . MENOR_IGUAL expresion
+    (14) expresion -> expresion . MAYOR_IGUAL expresion
+    (15) expresion -> expresion . MENOR_QUE expresion
+    (16) expresion -> expresion . MAYOR_QUE expresion
+    (17) expresion -> expresion . IGUAL_IGUAL expresion
+    (18) expresion -> expresion . DIFERENTE expresion
+
+    CORDER          reduce using rule 14 (expresion -> expresion MAYOR_IGUAL expresion .)
+    MAS             reduce using rule 14 (expresion -> expresion MAYOR_IGUAL expresion .)
+    MENOS           reduce using rule 14 (expresion -> expresion MAYOR_IGUAL expresion .)
+    POR             reduce using rule 14 (expresion -> expresion MAYOR_IGUAL expresion .)
+    DIVIDIDO        reduce using rule 14 (expresion -> expresion MAYOR_IGUAL expresion .)
+    MENOR_IGUAL     reduce using rule 14 (expresion -> expresion MAYOR_IGUAL expresion .)
+    MAYOR_IGUAL     reduce using rule 14 (expresion -> expresion MAYOR_IGUAL expresion .)
+    MENOR_QUE       reduce using rule 14 (expresion -> expresion MAYOR_IGUAL expresion .)
+    MAYOR_QUE       reduce using rule 14 (expresion -> expresion MAYOR_IGUAL expresion .)
+    IGUAL_IGUAL     reduce using rule 14 (expresion -> expresion MAYOR_IGUAL expresion .)
+    DIFERENTE       reduce using rule 14 (expresion -> expresion MAYOR_IGUAL expresion .)
+    PARDER          reduce using rule 14 (expresion -> expresion MAYOR_IGUAL expresion .)
+
+  ! MAS             [ shift and go to state 13 ]
+  ! MENOS           [ shift and go to state 14 ]
+  ! POR             [ shift and go to state 15 ]
+  ! DIVIDIDO        [ shift and go to state 16 ]
+  ! MENOR_IGUAL     [ shift and go to state 17 ]
+  ! MAYOR_IGUAL     [ shift and go to state 18 ]
+  ! MENOR_QUE       [ shift and go to state 19 ]
+  ! MAYOR_QUE       [ shift and go to state 20 ]
+  ! IGUAL_IGUAL     [ shift and go to state 21 ]
+  ! DIFERENTE       [ shift and go to state 22 ]
+
+
+state 32
+
+    (15) expresion -> expresion MENOR_QUE expresion .
+    (4) expresion -> expresion . MAS expresion
+    (5) expresion -> expresion . MENOS expresion
+    (6) expresion -> expresion . POR expresion
+    (7) expresion -> expresion . DIVIDIDO expresion
+    (13) expresion -> expresion . MENOR_IGUAL expresion
+    (14) expresion -> expresion . MAYOR_IGUAL expresion
+    (15) expresion -> expresion . MENOR_QUE expresion
+    (16) expresion -> expresion . MAYOR_QUE expresion
+    (17) expresion -> expresion . IGUAL_IGUAL expresion
+    (18) expresion -> expresion . DIFERENTE expresion
+
+    CORDER          reduce using rule 15 (expresion -> expresion MENOR_QUE expresion .)
+    MAS             reduce using rule 15 (expresion -> expresion MENOR_QUE expresion .)
+    MENOS           reduce using rule 15 (expresion -> expresion MENOR_QUE expresion .)
+    POR             reduce using rule 15 (expresion -> expresion MENOR_QUE expresion .)
+    DIVIDIDO        reduce using rule 15 (expresion -> expresion MENOR_QUE expresion .)
+    MENOR_IGUAL     reduce using rule 15 (expresion -> expresion MENOR_QUE expresion .)
+    MAYOR_IGUAL     reduce using rule 15 (expresion -> expresion MENOR_QUE expresion .)
+    MENOR_QUE       reduce using rule 15 (expresion -> expresion MENOR_QUE expresion .)
+    MAYOR_QUE       reduce using rule 15 (expresion -> expresion MENOR_QUE expresion .)
+    IGUAL_IGUAL     reduce using rule 15 (expresion -> expresion MENOR_QUE expresion .)
+    DIFERENTE       reduce using rule 15 (expresion -> expresion MENOR_QUE expresion .)
+    PARDER          reduce using rule 15 (expresion -> expresion MENOR_QUE expresion .)
+
+  ! MAS             [ shift and go to state 13 ]
+  ! MENOS           [ shift and go to state 14 ]
+  ! POR             [ shift and go to state 15 ]
+  ! DIVIDIDO        [ shift and go to state 16 ]
+  ! MENOR_IGUAL     [ shift and go to state 17 ]
+  ! MAYOR_IGUAL     [ shift and go to state 18 ]
+  ! MENOR_QUE       [ shift and go to state 19 ]
+  ! MAYOR_QUE       [ shift and go to state 20 ]
+  ! IGUAL_IGUAL     [ shift and go to state 21 ]
+  ! DIFERENTE       [ shift and go to state 22 ]
+
+
+state 33
+
+    (16) expresion -> expresion MAYOR_QUE expresion .
+    (4) expresion -> expresion . MAS expresion
+    (5) expresion -> expresion . MENOS expresion
+    (6) expresion -> expresion . POR expresion
+    (7) expresion -> expresion . DIVIDIDO expresion
+    (13) expresion -> expresion . MENOR_IGUAL expresion
+    (14) expresion -> expresion . MAYOR_IGUAL expresion
+    (15) expresion -> expresion . MENOR_QUE expresion
+    (16) expresion -> expresion . MAYOR_QUE expresion
+    (17) expresion -> expresion . IGUAL_IGUAL expresion
+    (18) expresion -> expresion . DIFERENTE expresion
+
+    CORDER          reduce using rule 16 (expresion -> expresion MAYOR_QUE expresion .)
+    MAS             reduce using rule 16 (expresion -> expresion MAYOR_QUE expresion .)
+    MENOS           reduce using rule 16 (expresion -> expresion MAYOR_QUE expresion .)
+    POR             reduce using rule 16 (expresion -> expresion MAYOR_QUE expresion .)
+    DIVIDIDO        reduce using rule 16 (expresion -> expresion MAYOR_QUE expresion .)
+    MENOR_IGUAL     reduce using rule 16 (expresion -> expresion MAYOR_QUE expresion .)
+    MAYOR_IGUAL     reduce using rule 16 (expresion -> expresion MAYOR_QUE expresion .)
+    MENOR_QUE       reduce using rule 16 (expresion -> expresion MAYOR_QUE expresion .)
+    MAYOR_QUE       reduce using rule 16 (expresion -> expresion MAYOR_QUE expresion .)
+    IGUAL_IGUAL     reduce using rule 16 (expresion -> expresion MAYOR_QUE expresion .)
+    DIFERENTE       reduce using rule 16 (expresion -> expresion MAYOR_QUE expresion .)
+    PARDER          reduce using rule 16 (expresion -> expresion MAYOR_QUE expresion .)
+
+  ! MAS             [ shift and go to state 13 ]
+  ! MENOS           [ shift and go to state 14 ]
+  ! POR             [ shift and go to state 15 ]
+  ! DIVIDIDO        [ shift and go to state 16 ]
+  ! MENOR_IGUAL     [ shift and go to state 17 ]
+  ! MAYOR_IGUAL     [ shift and go to state 18 ]
+  ! MENOR_QUE       [ shift and go to state 19 ]
+  ! MAYOR_QUE       [ shift and go to state 20 ]
+  ! IGUAL_IGUAL     [ shift and go to state 21 ]
+  ! DIFERENTE       [ shift and go to state 22 ]
+
+
+state 34
+
+    (17) expresion -> expresion IGUAL_IGUAL expresion .
+    (4) expresion -> expresion . MAS expresion
+    (5) expresion -> expresion . MENOS expresion
+    (6) expresion -> expresion . POR expresion
+    (7) expresion -> expresion . DIVIDIDO expresion
+    (13) expresion -> expresion . MENOR_IGUAL expresion
+    (14) expresion -> expresion . MAYOR_IGUAL expresion
+    (15) expresion -> expresion . MENOR_QUE expresion
+    (16) expresion -> expresion . MAYOR_QUE expresion
+    (17) expresion -> expresion . IGUAL_IGUAL expresion
+    (18) expresion -> expresion . DIFERENTE expresion
+
+    CORDER          reduce using rule 17 (expresion -> expresion IGUAL_IGUAL expresion .)
+    MAS             reduce using rule 17 (expresion -> expresion IGUAL_IGUAL expresion .)
+    MENOS           reduce using rule 17 (expresion -> expresion IGUAL_IGUAL expresion .)
+    POR             reduce using rule 17 (expresion -> expresion IGUAL_IGUAL expresion .)
+    DIVIDIDO        reduce using rule 17 (expresion -> expresion IGUAL_IGUAL expresion .)
+    MENOR_IGUAL     reduce using rule 17 (expresion -> expresion IGUAL_IGUAL expresion .)
+    MAYOR_IGUAL     reduce using rule 17 (expresion -> expresion IGUAL_IGUAL expresion .)
+    MENOR_QUE       reduce using rule 17 (expresion -> expresion IGUAL_IGUAL expresion .)
+    MAYOR_QUE       reduce using rule 17 (expresion -> expresion IGUAL_IGUAL expresion .)
+    IGUAL_IGUAL     reduce using rule 17 (expresion -> expresion IGUAL_IGUAL expresion .)
+    DIFERENTE       reduce using rule 17 (expresion -> expresion IGUAL_IGUAL expresion .)
+    PARDER          reduce using rule 17 (expresion -> expresion IGUAL_IGUAL expresion .)
+
+  ! MAS             [ shift and go to state 13 ]
+  ! MENOS           [ shift and go to state 14 ]
+  ! POR             [ shift and go to state 15 ]
+  ! DIVIDIDO        [ shift and go to state 16 ]
+  ! MENOR_IGUAL     [ shift and go to state 17 ]
+  ! MAYOR_IGUAL     [ shift and go to state 18 ]
+  ! MENOR_QUE       [ shift and go to state 19 ]
+  ! MAYOR_QUE       [ shift and go to state 20 ]
+  ! IGUAL_IGUAL     [ shift and go to state 21 ]
+  ! DIFERENTE       [ shift and go to state 22 ]
+
+
+state 35
+
+    (18) expresion -> expresion DIFERENTE expresion .
+    (4) expresion -> expresion . MAS expresion
+    (5) expresion -> expresion . MENOS expresion
+    (6) expresion -> expresion . POR expresion
+    (7) expresion -> expresion . DIVIDIDO expresion
+    (13) expresion -> expresion . MENOR_IGUAL expresion
+    (14) expresion -> expresion . MAYOR_IGUAL expresion
+    (15) expresion -> expresion . MENOR_QUE expresion
+    (16) expresion -> expresion . MAYOR_QUE expresion
+    (17) expresion -> expresion . IGUAL_IGUAL expresion
+    (18) expresion -> expresion . DIFERENTE expresion
+
+    CORDER          reduce using rule 18 (expresion -> expresion DIFERENTE expresion .)
+    MAS             reduce using rule 18 (expresion -> expresion DIFERENTE expresion .)
+    MENOS           reduce using rule 18 (expresion -> expresion DIFERENTE expresion .)
+    POR             reduce using rule 18 (expresion -> expresion DIFERENTE expresion .)
+    DIVIDIDO        reduce using rule 18 (expresion -> expresion DIFERENTE expresion .)
+    MENOR_IGUAL     reduce using rule 18 (expresion -> expresion DIFERENTE expresion .)
+    MAYOR_IGUAL     reduce using rule 18 (expresion -> expresion DIFERENTE expresion .)
+    MENOR_QUE       reduce using rule 18 (expresion -> expresion DIFERENTE expresion .)
+    MAYOR_QUE       reduce using rule 18 (expresion -> expresion DIFERENTE expresion .)
+    IGUAL_IGUAL     reduce using rule 18 (expresion -> expresion DIFERENTE expresion .)
+    DIFERENTE       reduce using rule 18 (expresion -> expresion DIFERENTE expresion .)
+    PARDER          reduce using rule 18 (expresion -> expresion DIFERENTE expresion .)
+
+  ! MAS             [ shift and go to state 13 ]
+  ! MENOS           [ shift and go to state 14 ]
+  ! POR             [ shift and go to state 15 ]
+  ! DIVIDIDO        [ shift and go to state 16 ]
+  ! MENOR_IGUAL     [ shift and go to state 17 ]
+  ! MAYOR_IGUAL     [ shift and go to state 18 ]
+  ! MENOR_QUE       [ shift and go to state 19 ]
+  ! MAYOR_QUE       [ shift and go to state 20 ]
+  ! IGUAL_IGUAL     [ shift and go to state 21 ]
+  ! DIFERENTE       [ shift and go to state 22 ]
+
+
+state 36
+
+    (9) expresion -> PARIZQ expresion PARDER .
+
+    CORDER          reduce using rule 9 (expresion -> PARIZQ expresion PARDER .)
+    MAS             reduce using rule 9 (expresion -> PARIZQ expresion PARDER .)
+    MENOS           reduce using rule 9 (expresion -> PARIZQ expresion PARDER .)
+    POR             reduce using rule 9 (expresion -> PARIZQ expresion PARDER .)
+    DIVIDIDO        reduce using rule 9 (expresion -> PARIZQ expresion PARDER .)
+    MENOR_IGUAL     reduce using rule 9 (expresion -> PARIZQ expresion PARDER .)
+    MAYOR_IGUAL     reduce using rule 9 (expresion -> PARIZQ expresion PARDER .)
+    MENOR_QUE       reduce using rule 9 (expresion -> PARIZQ expresion PARDER .)
+    MAYOR_QUE       reduce using rule 9 (expresion -> PARIZQ expresion PARDER .)
+    IGUAL_IGUAL     reduce using rule 9 (expresion -> PARIZQ expresion PARDER .)
+    DIFERENTE       reduce using rule 9 (expresion -> PARIZQ expresion PARDER .)
+    PARDER          reduce using rule 9 (expresion -> PARIZQ expresion PARDER .)
+
