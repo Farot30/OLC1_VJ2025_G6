@@ -1,0 +1,49 @@
+textarea {
+    width: 100%;
+    height: 200px;
+    font-family: monospace;
+    font-size: 1em;
+}
+
+.panel {
+    width: 100%;
+    margin-bottom: 20px;
+    display: block;
+    position: static;
+}
+
+#panel-entrada,
+#panel-salida {
+    position: static;
+    /* Quita el absolute */
+    top: auto;
+    left: auto;
+}
+
+.botones {
+    margin-top: 10px;
+}
+
+.salida {
+    background: #f0f0f0;
+    padding: 10px;
+    min-height: 200px;
+    border: 1px solid #ccc;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #fafafa;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+label {
+    font-weight: bold;
+}
