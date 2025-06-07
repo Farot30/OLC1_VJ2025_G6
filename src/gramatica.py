@@ -43,7 +43,7 @@ def t_ID(t):
 
 def t_CARACTER(t):
     r'\'.\''
-    t.value = t.value[1:-1]  # borrar comillas simples
+    t.value = t.value[1]  # borrar comillas simples
     return t
 
 def t_INT(t):
@@ -200,6 +200,10 @@ def p_expresion_bool(t):
 
 def p_expresion_char(t):
     'expresion : CHAR'
+    t[0] = Nativo(Tipo(tipoDato.CHAR), t[1], t.lineno(1), 0)
+
+def p_expresion_caracter(t):
+    'expresion : CARACTER'
     t[0] = Nativo(Tipo(tipoDato.CHAR), t[1], t.lineno(1), 0)
 
 def p_tipos(t):

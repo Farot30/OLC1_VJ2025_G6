@@ -60,7 +60,7 @@ class Aritmeticas(Instruccion, ABC):
                 return float(op1) + float(op2)
             elif tipo2 == tipoDato.CHAR:
                 self.tipoDato.setTipo(tipoDato.DECIMAL)
-                return float(op1) + float(op2)
+                return float(op1) + ord(op2)
             elif tipo2 == tipoDato.STRING:
                 self.tipoDato.setTipo(tipoDato.STRING)
                 return str(op1) + op2
@@ -76,7 +76,7 @@ class Aritmeticas(Instruccion, ABC):
                 return float(op1) + float(op2)
             elif tipo2 == tipoDato.CHAR:
                 self.tipoDato.setTipo(tipoDato.DECIMAL)
-                return float(op1) + float(op2)
+                return float(op1) + ord(op2)
             elif tipo2 == tipoDato.STRING:
                 self.tipoDato.setTipo(tipoDato.STRING)
                 return str(op1) + op2
@@ -93,16 +93,16 @@ class Aritmeticas(Instruccion, ABC):
         elif tipo1 == tipoDato.CHAR:
             if tipo2 == tipoDato.ENTERO:
                 self.tipoDato.setTipo(tipoDato.ENTERO)
-                return int(op1) + int(op2)
+                return ord(op1) + int(op2)
             elif tipo2 == tipoDato.DECIMAL:
                 self.tipoDato.setTipo(tipoDato.DECIMAL)
-                return float(op1) + float(op2)
+                return ord(op1) + float(op2)
             elif tipo2 == tipoDato.CHAR:
                 self.tipoDato.setTipo(tipoDato.STRING)
-                return float(op1) + float(op2)
+                return ord(op1) + ord(op2)
             elif tipo2 == tipoDato.STRING:
                 self.tipoDato.setTipo(tipoDato.STRING)
-                return str(op1) + op2
+                return str(ord(op1)) + op2
             else:
                 return Errores("SEMANTICO", "Suma entre tipos no iguales", self.linea, self.col)
         
@@ -118,7 +118,7 @@ class Aritmeticas(Instruccion, ABC):
                 return op1 + str(op2)
             elif tipo2 == tipoDato.CHAR:
                 self.tipoDato.setTipo(tipoDato.STRING)
-                return op1 + str(op2)
+                return op1 + str(ord(op2))
             elif tipo2 == tipoDato.STRING:
                 self.tipoDato.setTipo(tipoDato.STRING)
                 return op1 + op2
@@ -140,7 +140,7 @@ class Aritmeticas(Instruccion, ABC):
                 return float(op1) - float(op2)
             elif tipo2 == tipoDato.CHAR:
                 self.tipoDato.setTipo(tipoDato.DECIMAL)
-                return float(op1) - float(op2)
+                return float(op1) - ord(op2)
             else:
                 return Errores("SEMANTICO", "Resta entre tipos no valida", self.linea, self.col)
 
@@ -153,7 +153,7 @@ class Aritmeticas(Instruccion, ABC):
                 return float(op1) - float(op2)
             elif tipo2 == tipoDato.CHAR:
                 self.tipoDato.setTipo(tipoDato.DECIMAL)
-                return float(op1) - float(op2)
+                return float(op1) - ord(op2)
             else:
                 return Errores("SEMANTICO", "Resta entre tipos no valida", self.linea, self.col)
 
@@ -182,7 +182,7 @@ class Aritmeticas(Instruccion, ABC):
                 return float(op1) * float(op2)
             elif tipo2 == tipoDato.CHAR:
                 self.tipoDato.setTipo(tipoDato.ENTERO)
-                return float(op1) * float(op2)
+                return float(op1) * ord(op2)
             else:
                 return Errores("SEMANTICO", "Multiplicación entre tipos no valida", self.linea, self.col)
 
@@ -195,17 +195,17 @@ class Aritmeticas(Instruccion, ABC):
                 return float(op1) * float(op2)
             elif tipo2 == tipoDato.CHAR:
                 self.tipoDato.setTipo(tipoDato.DECIMAL)
-                return float(op1) * float(op2)
+                return float(op1) * ord(op2)
             else:
                 return Errores("SEMANTICO", "Multiplicación entre tipos no valida", self.linea, self.col)
 
         elif tipo1 == tipoDato.CHAR:
             if tipo2 == tipoDato.ENTERO:
                 self.tipoDato.setTipo(tipoDato.ENTERO)
-                return int(op1) * int(op2)
+                return ord(op1) * int(op2)
             elif tipo2 == tipoDato.DECIMAL:
                 self.tipoDato.setTipo(tipoDato.DECIMAL)
-                return float(op1) * float(op2)
+                return ord(op1) * float(op2)
             else:
                 return Errores("SEMANTICO", "Multiplicación entre tipos no valida", self.linea, self.col)
             
@@ -224,7 +224,7 @@ class Aritmeticas(Instruccion, ABC):
                 return float(op1) / float(op2)
             elif tipo2 == tipoDato.CHAR:
                 self.tipoDato.setTipo(tipoDato.DECIMAL)
-                return float(op1) / float(op2)
+                return float(op1) / ord(op2)
             else:
                 return Errores("SEMANTICO", "División entre tipos no valida", self.linea, self.col)
 
@@ -237,17 +237,17 @@ class Aritmeticas(Instruccion, ABC):
                 return float(op1) / float(op2)
             elif tipo2 == tipoDato.CHAR:
                 self.tipoDato.setTipo(tipoDato.DECIMAL)
-                return float(op1) / float(op2)
+                return float(op1) / ord(op2)
             else:
                 return Errores("SEMANTICO", "División entre tipos no valida", self.linea, self.col)
 
         elif tipo1 == tipoDato.CHAR:
             if tipo2 == tipoDato.ENTERO:
                 self.tipoDato.setTipo(tipoDato.DECIMAL)
-                return int(op1) / int(op2)
+                return ord(op1) / int(op2)
             elif tipo2 == tipoDato.DECIMAL:
                 self.tipoDato.setTipo(tipoDato.DECIMAL)
-                return float(op1) / float(op2)
+                return ord(op1) / float(op2)
             else:
                 return Errores("SEMANTICO", "División entre tipos no valida", self.linea, self.col)
             
