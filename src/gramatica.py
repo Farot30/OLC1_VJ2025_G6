@@ -16,7 +16,6 @@ tokens = [
     "MODULO",
     "PUNTOCOMA",
     "MAS",
-    "MENOR",
     "PAR1",
     "PAR2",
     "IGUAL",
