@@ -30,6 +30,8 @@ tokens = [
     "MENOR_IGUAL",
     "MAYOR_QUE",
     "MAYOR_IGUAL",
+    "PRINT",
+    "PRINTLN",
 ]
 
 # Simbolos
@@ -58,6 +60,8 @@ reservadas = {
     "char": "CHAR",
     "true": "TRUE",
     "false": "FALSE",
+    "print": "PRINT",
+    "println": "PRINTLN",
 }
 
 
@@ -166,8 +170,8 @@ from src.instrucciones.CAsignacion import Asignacion
 from src.instrucciones.CIncremento import Incremento, Decremento
 from src.expresiones.CUnitario import Unario
 from src.expresiones.CRelacionales import Relacional, OperadoresRel
-from src.expresiones.CNativo import Nativo
-from src.simbolo.CTipo import Tipo, tipoDato
+from src.instrucciones.CPrint import Print
+from src.instrucciones.CPrintln import Println
 
 lexer = lex.lex()
 
@@ -289,6 +293,17 @@ def p_expresion_binaria(t):
 def p_expresion_unaria(t):
     "expresion : MENOS expresion %prec UMENOS"
     t[0] = Unario("-", t[2], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_instruccion_print(t):
+    "instruccion : PRINT PAR1 expresion PAR2 PUNTOCOMA"
+
+    t[0] = Print(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_instruccion_println(t):
+    "instruccion : PRINTLN PAR1 expresion PAR2 PUNTOCOMA"
+    t[0] = Println(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
 def p_expresion_par(t):

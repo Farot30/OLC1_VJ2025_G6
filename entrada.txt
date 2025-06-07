@@ -96,3 +96,9 @@ b = -5;
 
 bool resultado;
 resultado = a >= b;
+
+print(a + b);
+print("Hola mundo");
+
+println(a + b);
+println("Hola mundo");
