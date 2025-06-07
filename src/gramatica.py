@@ -17,9 +17,9 @@ tokens = [
 t_PUNTOCOMA = r';'
 t_MAS       = r'\+'
 t_MENOS     = r'-'
-t_MULT      = r'\*'
 t_DIVISION  = r'/'
-t_POTENCIA  = r'\^'
+t_POTENCIA  = r'\*\*'
+t_MULT      = r'\*'
 t_MODULO    = r'%'
 t_PAR1      = r'\('
 t_PAR2      = r'\)'
@@ -163,7 +163,7 @@ def p_expresion_binaria(t):
         operador = Operadores.MULTIPLICACION
     elif t[2] == '/':
         operador = Operadores.DIVISION
-    elif t[2] == '^':
+    elif t[2] == '**':
         operador = Operadores.POTENCIA
     elif t[2] == '%':
         operador = Operadores.MODULO

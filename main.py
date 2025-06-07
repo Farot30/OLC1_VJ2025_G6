@@ -5,7 +5,7 @@ from src.excepciones.CErrores import Errores
 
 def main():
     try:
-        entrada = "int a ;"
+        entrada = " 2**2; 2.1**1;"
         instrucciones = parse_input(entrada)
         
         ast = Arbol(instrucciones)
