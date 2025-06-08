@@ -32,6 +32,10 @@ tokens = [
     "MAYOR_IGUAL",
     "PRINT",
     "PRINTLN",
+    "OR",
+    "AND",
+    "XOR",
+    "NOT",
 ]
 
 # Simbolos
@@ -51,6 +55,10 @@ t_DECREMENTO = r"--"
 t_MENOR_IGUAL = r"<="
 t_MAYOR_QUE = r">"
 t_MAYOR_IGUAL = r">="
+t_OR = r"\|\|"
+t_AND = r"&&"
+t_XOR = r"\^"
+t_NOT = r"!"
 
 reservadas = {
     "int": "INT",
@@ -144,8 +152,8 @@ def t_ENTERO(t):
 
 
 def t_CADENA(t):
-    r'"[^"\n]*"'
-    t.value = t.value[1:-1]
+    r'"([^"\\\n]|(\\.))*"'  # Permite secuencias de escape dentro de la cadena
+    t.value = bytes(t.value[1:-1], "utf-8").decode("unicode_escape")
     return t
 
 
@@ -172,11 +180,18 @@ from src.expresiones.CUnitario import Unario
 from src.expresiones.CRelacionales import Relacional, OperadoresRel
 from src.instrucciones.CPrint import Print
 from src.instrucciones.CPrintln import Println
+from src.expresiones.COr import Or
+from src.expresiones.CAnd import And
+from src.expresiones.CXor import Xor
+from src.expresiones.CNot import Not
 
 lexer = lex.lex()
 
 # Asociación de operadores y precedencia
 precedence = (
+    ("left", "OR"),
+    ("left", "AND", "XOR"),
+    ("right", "NOT"),
     ("left", "MAS", "MENOS"),
     ("left", "MULT", "DIVISION", "MODULO"),
     ("right", "POTENCIA"),
@@ -190,6 +205,26 @@ precedence = (
 def p_inicio(t):
     "inicio : instrucciones"
     t[0] = t[1]
+
+
+def p_expresion_or(t):
+    "expresion : expresion OR expresion"
+    t[0] = Or(t[1], t[3], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]))
+
+
+def p_expresion_and(t):
+    "expresion : expresion AND expresion"
+    t[0] = And(t[1], t[3], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]))
+
+
+def p_expresion_xor(t):
+    "expresion : expresion XOR expresion"
+    t[0] = Xor(t[1], t[3], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]))
+
+
+def p_expresion_not(t):
+    "expresion : NOT expresion"
+    t[0] = Not(t[2], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
 def p_expresion_id(t):
