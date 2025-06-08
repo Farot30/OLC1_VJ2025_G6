@@ -1,10 +1,12 @@
 from typing import Dict
 from src.simbolo.CSimbolo import Simbolo
 
+
 class tablaSimbolo:
-    def __init__(self):
+    def __init__(self, padre=None):
         self.tabla_actual: Dict[str, Simbolo] = {}
         self.nombre_dato: str = ""
+        self.padre = padre  # <-- Nuevo
 
     def getTabla(self) -> Dict[str, Simbolo]:
         return self.tabla_actual
@@ -26,4 +28,10 @@ class tablaSimbolo:
         return False
 
     def getVariable(self, id_: str):
-        return self.tabla_actual.get(id_.lower())
+        key = id_.lower()
+        if key in self.tabla_actual:
+            return self.tabla_actual[key]
+        elif self.padre is not None:
+            return self.padre.getVariable(key)
+        else:
+            return None

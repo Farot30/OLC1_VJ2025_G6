@@ -31,12 +31,18 @@ tokens = [
     "MENOR_IGUAL",
     "MAYOR_QUE",
     "MAYOR_IGUAL",
+    "MENOR_QUE",
+    "IGUAL_IGUAL",
+    "DIFERENTE",
     "PRINT",
     "PRINTLN",
     "OR",
     "AND",
     "XOR",
     "NOT",
+    "FOR",
+    "LLAVE1",
+    "LLAVE2",
 ]
 
 # Simbolos
@@ -56,10 +62,15 @@ t_DECREMENTO = r"--"
 t_MENOR_IGUAL = r"<="
 t_MAYOR_QUE = r">"
 t_MAYOR_IGUAL = r">="
+t_MENOR_QUE = r"<"
+t_IGUAL_IGUAL = r"=="
+t_DIFERENTE = r"!="
 t_OR = r"\|\|"
 t_AND = r"&&"
 t_XOR = r"\^"
 t_NOT = r"!"
+t_LLAVE1 = r"\{"
+t_LLAVE2 = r"\}"
 
 reservadas = {
     "int": "INT",
@@ -71,6 +82,7 @@ reservadas = {
     "false": "FALSE",
     "print": "PRINT",
     "println": "PRINTLN",
+    "for": "FOR",
 }
 
 
@@ -88,6 +100,13 @@ def t_COMMENT_MULTILINE(t):
 def t_BOOLEANO(t):
     r"(verdadero|falso|true|false|TRUE|FALSE)"
     t.value = t.value.lower() in ("verdadero", "true")
+    return t
+
+
+def t_CADENA(t):
+    r'"([^"\\\n]|(\\.))*"'
+    t.value = bytes(t.value[1:-1], "utf-8").decode("unicode_escape")
+    print(f"Reconocido CADENA: {t.value}")  # <-- depuración
     return t
 
 
@@ -152,12 +171,6 @@ def t_ENTERO(t):
     return t
 
 
-def t_CADENA(t):
-    r'"([^"\\\n]|(\\.))*"'  # Permite secuencias de escape dentro de la cadena
-    t.value = bytes(t.value[1:-1], "utf-8").decode("unicode_escape")
-    return t
-
-
 def t_newline(t):
     r"\n+"
     t.lexer.lineno += len(t.value)
@@ -196,6 +209,8 @@ from src.expresiones.CAnd import And
 from src.expresiones.CXor import Xor
 from src.expresiones.CNot import Not
 from src.excepciones.CErrores import Errores
+from src.expresiones.CFor import For
+
 
 lexer = lex.lex()
 
@@ -210,6 +225,9 @@ precedence = (
         "MENOR_IGUAL",
         "MAYOR_QUE",
         "MAYOR_IGUAL",
+        "IGUAL_IGUAL",
+        "DIFERENTE",
+        "MENOR_QUE",
     ),  # relacionales
     ("right", "NOT"),  # !
     ("left", "XOR"),  # ^
@@ -223,6 +241,46 @@ precedence = (
 def p_inicio(t):
     "inicio : instrucciones"
     t[0] = t[1]
+
+
+def p_for(t):
+    """instruccion : FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 LLAVE1 instrucciones LLAVE2"""
+    t[0] = For(
+        t[3],  # inicialización (puede ser asignación o incremento)
+        t[5],  # condición (expresión booleana)
+        t[7],  # actualización (puede ser asignación o incremento)
+        t[10],  # instrucciones dentro del for
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
+
+
+def p_for_init(t):
+    """for_init : ID IGUAL expresion
+    | ID INCREMENTO
+    | ID DECREMENTO"""
+    if len(t) == 4:
+        t[0] = Asignacion(
+            t[1], t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+        )
+    elif t[2] == "++":
+        t[0] = Incremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+    elif t[2] == "--":
+        t[0] = Decremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_for_update(t):
+    """for_update : ID IGUAL expresion
+    | ID INCREMENTO
+    | ID DECREMENTO"""
+    if len(t) == 4:
+        t[0] = Asignacion(
+            t[1], t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+        )
+    elif t[2] == "++":
+        t[0] = Incremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+    elif t[2] == "--":
+        t[0] = Decremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
 def p_expresion_or(t):
@@ -247,9 +305,11 @@ def p_expresion_not(t):
 
 def p_expresion_id(t):
     "expresion : ID"
-    t[0] = Nativo(
+    nodo = Nativo(
         Tipo(None), t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
     )
+    nodo.es_identificador = True
+    t[0] = nodo
 
 
 def p_instrucciones(t):
@@ -423,13 +483,23 @@ def p_expresion_caracter(t):
 def p_expresion_relacional(t):
     """expresion : expresion MENOR_IGUAL expresion
     | expresion MAYOR_QUE expresion
-    | expresion MAYOR_IGUAL expresion"""
+    | expresion MAYOR_IGUAL expresion
+    | expresion MENOR_QUE expresion
+    | expresion IGUAL_IGUAL expresion
+    | expresion DIFERENTE expresion"""
+
     if t[2] == "<=":
         operador = OperadoresRel.MENOR_IGUAL
     elif t[2] == ">":
         operador = OperadoresRel.MAYOR_QUE
     elif t[2] == ">=":
         operador = OperadoresRel.MAYOR_IGUAL
+    elif t[2] == "<":
+        operador = OperadoresRel.MENOR_QUE
+    elif t[2] == "==":
+        operador = OperadoresRel.IGUAL_IGUAL
+    elif t[2] == "!=":
+        operador = OperadoresRel.DIFERENTE
     else:
         raise SyntaxError(f"Operador no esperado: {t[2]}")
     t[0] = Relacional(
@@ -459,26 +529,70 @@ def p_tipos(t):
         t[0] = Tipo(tipoDato.BOOL)
 
 
+errores_sintacticos_globales = []
+
+
 def p_error(t):
+    global errores_sintacticos_globales
     if t:
+        try:
+            arbol = getattr(t.lexer, "arbol", None)
+        except Exception:
+            arbol = None
         error = Errores(
-            "Sintáctico", f"Error de sintaxis en '{t.value}'", t.lineno, t.lexpos
+            "Sintáctico",
+            f"Se encontró {t.type} ('{t.value}') y se esperaba una expresión o instrucción válida.",
+            t.lineno,
+            t.lexpos,
         )
-        arbol = getattr(t.lexer, "arbol", None)
-        if arbol:
+        if arbol is not None:
             arbol.errores.append(error)
+        else:
+            errores_sintacticos_globales.append(error)
         print(error)
     else:
-        print("Error de sintaxis al final del archivo")
+        try:
+            lexer = parser.lexer  # type: ignore
+            arbol = getattr(lexer, "arbol", None)
+            lexdata = getattr(lexer, "lexdata", "")
+            lexpos = getattr(lexer, "lexpos", len(lexdata))
+            lineno = lexdata.count("\n", 0, lexpos) + 1
+            last_cr = lexdata.rfind("\n", 0, lexpos)
+            if last_cr < 0:
+                last_cr = -1
+            col = lexpos - last_cr
+        except Exception:
+            arbol = None
+            lineno = 1
+            col = 1
+
+        error = Errores(
+            "Sintáctico",
+            "Error de sintaxis al final del archivo. Se esperaba una expresión o instrucción válida.",
+            lineno,
+            col,
+        )
+        if arbol is not None:
+            arbol.errores.append(error)
+            print("Error agregado a arbol.errores")  # <-- Depuración
+        else:
+            errores_sintacticos_globales.append(error)
+        print(error)
+    parser.restart()
+    return []
 
 
 ## APLICACION ----------------------------------------------------------------------------
 import ply.yacc as yacc
 
-start = "inicio"  # Agrega esto antes de parser = yacc.yacc()
+start = "inicio"
 
 parser = yacc.yacc()
 
 
-def parse_input(input_text):
-    return parser.parse(input_text)
+def parse_input(input_text, arbol):
+    setattr(lexer, "arbol", arbol)
+    result = parser.parse(input_text, lexer=lexer)
+    if result is None:
+        return []
+    return result

@@ -4,22 +4,40 @@ from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
 
 
+from src.gramatica import parse_input, errores_sintacticos_globales
+
+# ...existing code...
+
+
 def main():
     try:
-        f = open("entrada.txt", "r")
+        f = open("pruebas.txt", "r")
         entrada = f.read()
-        instrucciones = parse_input(entrada)
-
-        ast = Arbol(instrucciones)
+        ast = Arbol([])  # Crea el árbol antes de parsear
+        instrucciones = parse_input(entrada, ast)  # Pasa el árbol aquí
+        ast.set_instrucciones(instrucciones)
         tabla = tablaSimbolo()
         ast.setTablaGlobal(tabla)
         ast.setConsola("")
+
+        # Agrega errores sintácticos globales al árbol antes de imprimir
+        if errores_sintacticos_globales:
+            ast.errores.extend(errores_sintacticos_globales)
+            errores_sintacticos_globales.clear()
+
+        # Imprime errores ANTES de ejecutar instrucciones
+        if ast.errores:
+            print("Errores encontrados durante el análisis sintáctico:")
+            for idx, error in enumerate(ast.errores, 1):
+                print(
+                    f"{idx}\t{error.get_tipo_error()}\t{error.get_desc()}\t{error.get_linea()}\t{error.get_col()}"
+                )
 
         for instr in ast.getInstrucciones():
             resultado = instr.interpretar(ast, tabla)
             if isinstance(resultado, Errores):
                 print(resultado)
-                ast.errores.append(resultado)  # <-- AGREGA EL ERROR A LA LISTA
+                ast.errores.append(resultado)
             elif resultado is not None:
                 print("Prueba:", resultado)
 

@@ -18,19 +18,25 @@ def index():
     if request.method == "POST":
         if "interpretar" in request.form:
             entrada = request.form.get("entrada", "")
-            instrucciones = parse_input(entrada)
-            arbol = Arbol(instrucciones)
+            arbol = Arbol([])  # 1. Crea el árbol antes de parsear
+            instrucciones = parse_input(entrada, arbol)  # 2. Pasa el árbol aquí
+            arbol.set_instrucciones(instrucciones)
             tabla = tablaSimbolo()
             arbol.setTablaGlobal(tabla)
             arbol.setConsola("")
-            lista_errores = []
             # Ejecutar instrucciones
             for instr in arbol.getInstrucciones():
                 resultado = instr.interpretar(arbol, tabla)
                 if isinstance(resultado, Errores):
-                    lista_errores.append(str(resultado))
+                    arbol.errores.append(resultado)
             salida = arbol.getConsola()
-            errores = "\n".join(lista_errores) if lista_errores else "Sin errores."
+            # 3. Mostrar todos los errores del árbol
+            if arbol.errores:
+                errores = "#\tTipo\tDescripcion\tLINEA\tCOLUMNA\n"
+                for idx, error in enumerate(arbol.errores, 1):
+                    errores += f"{idx}\t{error.get_tipo_error()}\t{error.get_desc()}\t{error.get_linea()}\t{error.get_col()}\n"
+            else:
+                errores = "Sin errores."
             # Generar tabla de símbolos
             tabla_simbolos = "#\tID\tTIPO\tTIPO2\tENTORNO\tVALOR\tLINEA\tCOLUMNA\n"
             for idx, simbolo in enumerate(tabla.getTabla().values(), 1):
@@ -46,8 +52,7 @@ def index():
                     simbolo.getColumna() if hasattr(simbolo, "getColumna") else "-"
                 )
                 tabla_simbolos += f"{idx}\t{id_}\t{tipo1}\t{tipo2}\t{entorno}\t{valor}\t{linea}\t{columna}\n"
-            # AST (puedes personalizar esto)
-            ast = str(arbol)  # O usa tu propio método para mostrar el AST
+            ast = str(arbol)
         elif "archivo" in request.files:
             archivo = request.files["archivo"]
             if archivo and archivo.filename:

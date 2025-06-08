@@ -93,9 +93,6 @@ b = -5;
 bool resultado;
 resultado = a >= b;
 
-print(a + b);
-print("Hola mundo");
-
 println(a + b);
 println("Hola mundo");
 
@@ -115,3 +112,17 @@ println((true || false) && (5 > 2));
 println((a + b) / (c - w));
 
 int A = ( 5 + 5 ) * 4 ;
+
+println(5 < "hola");         // Error: int y string
+println("abc" > 10);         // Error: string y int
+println(true < 5);           // Error: bool y int
+println('a' == "a");         // Error: char y string
+println(3.5 != 3.5);
+
+println(5.5 < 5);
+println(5.5 < 'a');
+println(5.5 < true);
+println("paco" != "hola");
+println(true != "hola");
+println
+

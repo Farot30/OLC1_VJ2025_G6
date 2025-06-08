@@ -2,20 +2,28 @@ from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.CTipo import Tipo
 from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
+from src.excepciones.CErrores import Errores
 
 
 class Nativo(Instruccion):
     def __init__(self, tipo: Tipo, valor: any, linea: int, col: int):
         super().__init__(tipo, linea, col)
         self.valor = valor
+        self.es_identificador = False  # Por defecto, no es identificador
 
     def interpretar(self, arbol, tabla):
-        # Si es un identificador, busca el valor en la tabla de símbolos
-        if isinstance(self.valor, str) and self.tipoDato.getTipo() is None:
+        # Si es un identificador, busca el valor en la tabla de símbolos SIEMPRE
+        if getattr(self, "es_identificador", False):
             simbolo = tabla.getVariable(self.valor)
             if simbolo is not None:
                 self.tipoDato = simbolo.getTipo()
                 return simbolo.getValor()
             else:
-                return None
+                return Errores(
+                    "SEMANTICO",
+                    f"Variable '{self.valor}' no definida",
+                    self.linea,
+                    self.col,
+                )
+        # Si es una cadena literal, retorna el valor directamente
         return self.valor

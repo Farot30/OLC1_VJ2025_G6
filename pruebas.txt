@@ -1,7 +1,6 @@
-int b;
-b = -(2 - 'a');
-int a;
-a = 2.5 - 3;
-a = 4.5 - 'w';
+int x;
+for(x = 0; x < 3; x++) {
+    println("holas");
+}
 
-b = -5;
+println(x);
