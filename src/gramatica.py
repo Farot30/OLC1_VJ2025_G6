@@ -1,5 +1,6 @@
 ####  DEFINICION DE ANALISIS LEXICO -----------------------------------------------------------------
 
+
 # tokens
 tokens = [
     "INT",
@@ -162,8 +163,18 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 
+# En t_error (léxico)
 def t_error(t):
-    print(f"[LEX ERROR] Carácter ilegal: {t.value[0]}")
+    error = Errores(
+        "Léxico",
+        f"El carácter “{t.value[0]}” no pertenece al lenguaje",
+        t.lineno,
+        t.lexpos,
+    )
+    arbol = getattr(t.lexer, "arbol", None)
+    if arbol:
+        arbol.errores.append(error)
+    print(error)
     t.lexer.skip(1)
 
 
@@ -184,19 +195,26 @@ from src.expresiones.COr import Or
 from src.expresiones.CAnd import And
 from src.expresiones.CXor import Xor
 from src.expresiones.CNot import Not
+from src.excepciones.CErrores import Errores
 
 lexer = lex.lex()
 
 # Asociación de operadores y precedencia
 precedence = (
-    ("left", "OR"),
-    ("left", "AND", "XOR"),
-    ("right", "NOT"),
-    ("left", "MAS", "MENOS"),
+    ("right", "UMENOS"),  # - unario
+    ("right", "POTENCIA"),  # **
     ("left", "MULT", "DIVISION", "MODULO"),
-    ("right", "POTENCIA"),
-    ("right", "UMENOS"),
-    ("left", "MENOR_IGUAL", "MAYOR_QUE", "MAYOR_IGUAL"),
+    ("left", "MAS", "MENOS"),
+    (
+        "left",
+        "MENOR_IGUAL",
+        "MAYOR_QUE",
+        "MAYOR_IGUAL",
+    ),  # relacionales
+    ("right", "NOT"),  # !
+    ("left", "XOR"),  # ^
+    ("left", "AND"),  # &&
+    ("left", "OR"),  # ||
 )
 
 #### DEFINICION DE GRAMATICA (ANALISIS SINTACTICO) ----------------------------------------------------------------------------
@@ -443,7 +461,13 @@ def p_tipos(t):
 
 def p_error(t):
     if t:
-        print(f"Error de sintaxis en '{t.value}' (línea {t.lineno})")
+        error = Errores(
+            "Sintáctico", f"Error de sintaxis en '{t.value}'", t.lineno, t.lexpos
+        )
+        arbol = getattr(t.lexer, "arbol", None)
+        if arbol:
+            arbol.errores.append(error)
+        print(error)
     else:
         print("Error de sintaxis al final del archivo")
 

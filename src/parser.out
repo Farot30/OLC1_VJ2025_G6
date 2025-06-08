@@ -1498,32 +1498,32 @@ state 49
     (36) expresion -> expresion . MAYOR_IGUAL expresion
 
     PUNTOCOMA       reduce using rule 5 (expresion -> NOT expresion .)
-    OR              reduce using rule 5 (expresion -> NOT expresion .)
-    AND             reduce using rule 5 (expresion -> NOT expresion .)
-    XOR             reduce using rule 5 (expresion -> NOT expresion .)
+    MAS             reduce using rule 5 (expresion -> NOT expresion .)
+    MENOS           reduce using rule 5 (expresion -> NOT expresion .)
+    MULT            reduce using rule 5 (expresion -> NOT expresion .)
+    DIVISION        reduce using rule 5 (expresion -> NOT expresion .)
+    POTENCIA        reduce using rule 5 (expresion -> NOT expresion .)
+    MODULO          reduce using rule 5 (expresion -> NOT expresion .)
+    MENOR_IGUAL     reduce using rule 5 (expresion -> NOT expresion .)
+    MAYOR_QUE       reduce using rule 5 (expresion -> NOT expresion .)
+    MAYOR_IGUAL     reduce using rule 5 (expresion -> NOT expresion .)
     PAR2            reduce using rule 5 (expresion -> NOT expresion .)
-    MAS             shift and go to state 33
-    MENOS           shift and go to state 34
-    MULT            shift and go to state 35
-    DIVISION        shift and go to state 36
-    POTENCIA        shift and go to state 37
-    MODULO          shift and go to state 38
-    MENOR_IGUAL     shift and go to state 39
-    MAYOR_QUE       shift and go to state 40
-    MAYOR_IGUAL     shift and go to state 41
+    OR              shift and go to state 30
+    AND             shift and go to state 31
+    XOR             shift and go to state 32
 
-  ! MAS             [ reduce using rule 5 (expresion -> NOT expresion .) ]
-  ! MENOS           [ reduce using rule 5 (expresion -> NOT expresion .) ]
-  ! MULT            [ reduce using rule 5 (expresion -> NOT expresion .) ]
-  ! DIVISION        [ reduce using rule 5 (expresion -> NOT expresion .) ]
-  ! POTENCIA        [ reduce using rule 5 (expresion -> NOT expresion .) ]
-  ! MODULO          [ reduce using rule 5 (expresion -> NOT expresion .) ]
-  ! MENOR_IGUAL     [ reduce using rule 5 (expresion -> NOT expresion .) ]
-  ! MAYOR_QUE       [ reduce using rule 5 (expresion -> NOT expresion .) ]
-  ! MAYOR_IGUAL     [ reduce using rule 5 (expresion -> NOT expresion .) ]
-  ! OR              [ shift and go to state 30 ]
-  ! AND             [ shift and go to state 31 ]
-  ! XOR             [ shift and go to state 32 ]
+  ! OR              [ reduce using rule 5 (expresion -> NOT expresion .) ]
+  ! AND             [ reduce using rule 5 (expresion -> NOT expresion .) ]
+  ! XOR             [ reduce using rule 5 (expresion -> NOT expresion .) ]
+  ! MAS             [ shift and go to state 33 ]
+  ! MENOS           [ shift and go to state 34 ]
+  ! MULT            [ shift and go to state 35 ]
+  ! DIVISION        [ shift and go to state 36 ]
+  ! POTENCIA        [ shift and go to state 37 ]
+  ! MODULO          [ shift and go to state 38 ]
+  ! MENOR_IGUAL     [ shift and go to state 39 ]
+  ! MAYOR_QUE       [ shift and go to state 40 ]
+  ! MAYOR_IGUAL     [ shift and go to state 41 ]
 
 
 state 50
@@ -1543,32 +1543,32 @@ state 50
     (36) expresion -> expresion . MAYOR_IGUAL expresion
 
     PUNTOCOMA       reduce using rule 23 (expresion -> MENOS expresion .)
-    OR              reduce using rule 23 (expresion -> MENOS expresion .)
-    AND             reduce using rule 23 (expresion -> MENOS expresion .)
-    XOR             reduce using rule 23 (expresion -> MENOS expresion .)
-    MAS             reduce using rule 23 (expresion -> MENOS expresion .)
-    MENOS           reduce using rule 23 (expresion -> MENOS expresion .)
-    MULT            reduce using rule 23 (expresion -> MENOS expresion .)
-    DIVISION        reduce using rule 23 (expresion -> MENOS expresion .)
-    POTENCIA        reduce using rule 23 (expresion -> MENOS expresion .)
-    MODULO          reduce using rule 23 (expresion -> MENOS expresion .)
     PAR2            reduce using rule 23 (expresion -> MENOS expresion .)
+    OR              shift and go to state 30
+    AND             shift and go to state 31
+    XOR             shift and go to state 32
+    MAS             shift and go to state 33
+    MENOS           shift and go to state 34
+    MULT            shift and go to state 35
+    DIVISION        shift and go to state 36
+    POTENCIA        shift and go to state 37
+    MODULO          shift and go to state 38
     MENOR_IGUAL     shift and go to state 39
     MAYOR_QUE       shift and go to state 40
     MAYOR_IGUAL     shift and go to state 41
 
+  ! OR              [ reduce using rule 23 (expresion -> MENOS expresion .) ]
+  ! AND             [ reduce using rule 23 (expresion -> MENOS expresion .) ]
+  ! XOR             [ reduce using rule 23 (expresion -> MENOS expresion .) ]
+  ! MAS             [ reduce using rule 23 (expresion -> MENOS expresion .) ]
+  ! MENOS           [ reduce using rule 23 (expresion -> MENOS expresion .) ]
+  ! MULT            [ reduce using rule 23 (expresion -> MENOS expresion .) ]
+  ! DIVISION        [ reduce using rule 23 (expresion -> MENOS expresion .) ]
+  ! POTENCIA        [ reduce using rule 23 (expresion -> MENOS expresion .) ]
+  ! MODULO          [ reduce using rule 23 (expresion -> MENOS expresion .) ]
   ! MENOR_IGUAL     [ reduce using rule 23 (expresion -> MENOS expresion .) ]
   ! MAYOR_QUE       [ reduce using rule 23 (expresion -> MENOS expresion .) ]
   ! MAYOR_IGUAL     [ reduce using rule 23 (expresion -> MENOS expresion .) ]
-  ! OR              [ shift and go to state 30 ]
-  ! AND             [ shift and go to state 31 ]
-  ! XOR             [ shift and go to state 32 ]
-  ! MAS             [ shift and go to state 33 ]
-  ! MENOS           [ shift and go to state 34 ]
-  ! MULT            [ shift and go to state 35 ]
-  ! DIVISION        [ shift and go to state 36 ]
-  ! POTENCIA        [ shift and go to state 37 ]
-  ! MODULO          [ shift and go to state 38 ]
 
 
 state 51
@@ -1670,31 +1670,31 @@ state 54
 
     PUNTOCOMA       reduce using rule 2 (expresion -> expresion OR expresion .)
     OR              reduce using rule 2 (expresion -> expresion OR expresion .)
+    AND             reduce using rule 2 (expresion -> expresion OR expresion .)
+    XOR             reduce using rule 2 (expresion -> expresion OR expresion .)
+    MAS             reduce using rule 2 (expresion -> expresion OR expresion .)
+    MENOS           reduce using rule 2 (expresion -> expresion OR expresion .)
+    MULT            reduce using rule 2 (expresion -> expresion OR expresion .)
+    DIVISION        reduce using rule 2 (expresion -> expresion OR expresion .)
+    POTENCIA        reduce using rule 2 (expresion -> expresion OR expresion .)
+    MODULO          reduce using rule 2 (expresion -> expresion OR expresion .)
+    MENOR_IGUAL     reduce using rule 2 (expresion -> expresion OR expresion .)
+    MAYOR_QUE       reduce using rule 2 (expresion -> expresion OR expresion .)
+    MAYOR_IGUAL     reduce using rule 2 (expresion -> expresion OR expresion .)
     PAR2            reduce using rule 2 (expresion -> expresion OR expresion .)
-    AND             shift and go to state 31
-    XOR             shift and go to state 32
-    MAS             shift and go to state 33
-    MENOS           shift and go to state 34
-    MULT            shift and go to state 35
-    DIVISION        shift and go to state 36
-    POTENCIA        shift and go to state 37
-    MODULO          shift and go to state 38
-    MENOR_IGUAL     shift and go to state 39
-    MAYOR_QUE       shift and go to state 40
-    MAYOR_IGUAL     shift and go to state 41
 
-  ! AND             [ reduce using rule 2 (expresion -> expresion OR expresion .) ]
-  ! XOR             [ reduce using rule 2 (expresion -> expresion OR expresion .) ]
-  ! MAS             [ reduce using rule 2 (expresion -> expresion OR expresion .) ]
-  ! MENOS           [ reduce using rule 2 (expresion -> expresion OR expresion .) ]
-  ! MULT            [ reduce using rule 2 (expresion -> expresion OR expresion .) ]
-  ! DIVISION        [ reduce using rule 2 (expresion -> expresion OR expresion .) ]
-  ! POTENCIA        [ reduce using rule 2 (expresion -> expresion OR expresion .) ]
-  ! MODULO          [ reduce using rule 2 (expresion -> expresion OR expresion .) ]
-  ! MENOR_IGUAL     [ reduce using rule 2 (expresion -> expresion OR expresion .) ]
-  ! MAYOR_QUE       [ reduce using rule 2 (expresion -> expresion OR expresion .) ]
-  ! MAYOR_IGUAL     [ reduce using rule 2 (expresion -> expresion OR expresion .) ]
   ! OR              [ shift and go to state 30 ]
+  ! AND             [ shift and go to state 31 ]
+  ! XOR             [ shift and go to state 32 ]
+  ! MAS             [ shift and go to state 33 ]
+  ! MENOS           [ shift and go to state 34 ]
+  ! MULT            [ shift and go to state 35 ]
+  ! DIVISION        [ shift and go to state 36 ]
+  ! POTENCIA        [ shift and go to state 37 ]
+  ! MODULO          [ shift and go to state 38 ]
+  ! MENOR_IGUAL     [ shift and go to state 39 ]
+  ! MAYOR_QUE       [ shift and go to state 40 ]
+  ! MAYOR_IGUAL     [ shift and go to state 41 ]
 
 
 state 55
@@ -1714,32 +1714,32 @@ state 55
     (36) expresion -> expresion . MAYOR_IGUAL expresion
 
     PUNTOCOMA       reduce using rule 3 (expresion -> expresion AND expresion .)
-    OR              reduce using rule 3 (expresion -> expresion AND expresion .)
     AND             reduce using rule 3 (expresion -> expresion AND expresion .)
     XOR             reduce using rule 3 (expresion -> expresion AND expresion .)
+    MAS             reduce using rule 3 (expresion -> expresion AND expresion .)
+    MENOS           reduce using rule 3 (expresion -> expresion AND expresion .)
+    MULT            reduce using rule 3 (expresion -> expresion AND expresion .)
+    DIVISION        reduce using rule 3 (expresion -> expresion AND expresion .)
+    POTENCIA        reduce using rule 3 (expresion -> expresion AND expresion .)
+    MODULO          reduce using rule 3 (expresion -> expresion AND expresion .)
+    MENOR_IGUAL     reduce using rule 3 (expresion -> expresion AND expresion .)
+    MAYOR_QUE       reduce using rule 3 (expresion -> expresion AND expresion .)
+    MAYOR_IGUAL     reduce using rule 3 (expresion -> expresion AND expresion .)
     PAR2            reduce using rule 3 (expresion -> expresion AND expresion .)
-    MAS             shift and go to state 33
-    MENOS           shift and go to state 34
-    MULT            shift and go to state 35
-    DIVISION        shift and go to state 36
-    POTENCIA        shift and go to state 37
-    MODULO          shift and go to state 38
-    MENOR_IGUAL     shift and go to state 39
-    MAYOR_QUE       shift and go to state 40
-    MAYOR_IGUAL     shift and go to state 41
+    OR              shift and go to state 30
 
-  ! MAS             [ reduce using rule 3 (expresion -> expresion AND expresion .) ]
-  ! MENOS           [ reduce using rule 3 (expresion -> expresion AND expresion .) ]
-  ! MULT            [ reduce using rule 3 (expresion -> expresion AND expresion .) ]
-  ! DIVISION        [ reduce using rule 3 (expresion -> expresion AND expresion .) ]
-  ! POTENCIA        [ reduce using rule 3 (expresion -> expresion AND expresion .) ]
-  ! MODULO          [ reduce using rule 3 (expresion -> expresion AND expresion .) ]
-  ! MENOR_IGUAL     [ reduce using rule 3 (expresion -> expresion AND expresion .) ]
-  ! MAYOR_QUE       [ reduce using rule 3 (expresion -> expresion AND expresion .) ]
-  ! MAYOR_IGUAL     [ reduce using rule 3 (expresion -> expresion AND expresion .) ]
-  ! OR              [ shift and go to state 30 ]
+  ! OR              [ reduce using rule 3 (expresion -> expresion AND expresion .) ]
   ! AND             [ shift and go to state 31 ]
   ! XOR             [ shift and go to state 32 ]
+  ! MAS             [ shift and go to state 33 ]
+  ! MENOS           [ shift and go to state 34 ]
+  ! MULT            [ shift and go to state 35 ]
+  ! DIVISION        [ shift and go to state 36 ]
+  ! POTENCIA        [ shift and go to state 37 ]
+  ! MODULO          [ shift and go to state 38 ]
+  ! MENOR_IGUAL     [ shift and go to state 39 ]
+  ! MAYOR_QUE       [ shift and go to state 40 ]
+  ! MAYOR_IGUAL     [ shift and go to state 41 ]
 
 
 state 56
@@ -1759,32 +1759,32 @@ state 56
     (36) expresion -> expresion . MAYOR_IGUAL expresion
 
     PUNTOCOMA       reduce using rule 4 (expresion -> expresion XOR expresion .)
-    OR              reduce using rule 4 (expresion -> expresion XOR expresion .)
-    AND             reduce using rule 4 (expresion -> expresion XOR expresion .)
     XOR             reduce using rule 4 (expresion -> expresion XOR expresion .)
+    MAS             reduce using rule 4 (expresion -> expresion XOR expresion .)
+    MENOS           reduce using rule 4 (expresion -> expresion XOR expresion .)
+    MULT            reduce using rule 4 (expresion -> expresion XOR expresion .)
+    DIVISION        reduce using rule 4 (expresion -> expresion XOR expresion .)
+    POTENCIA        reduce using rule 4 (expresion -> expresion XOR expresion .)
+    MODULO          reduce using rule 4 (expresion -> expresion XOR expresion .)
+    MENOR_IGUAL     reduce using rule 4 (expresion -> expresion XOR expresion .)
+    MAYOR_QUE       reduce using rule 4 (expresion -> expresion XOR expresion .)
+    MAYOR_IGUAL     reduce using rule 4 (expresion -> expresion XOR expresion .)
     PAR2            reduce using rule 4 (expresion -> expresion XOR expresion .)
-    MAS             shift and go to state 33
-    MENOS           shift and go to state 34
-    MULT            shift and go to state 35
-    DIVISION        shift and go to state 36
-    POTENCIA        shift and go to state 37
-    MODULO          shift and go to state 38
-    MENOR_IGUAL     shift and go to state 39
-    MAYOR_QUE       shift and go to state 40
-    MAYOR_IGUAL     shift and go to state 41
+    OR              shift and go to state 30
+    AND             shift and go to state 31
 
-  ! MAS             [ reduce using rule 4 (expresion -> expresion XOR expresion .) ]
-  ! MENOS           [ reduce using rule 4 (expresion -> expresion XOR expresion .) ]
-  ! MULT            [ reduce using rule 4 (expresion -> expresion XOR expresion .) ]
-  ! DIVISION        [ reduce using rule 4 (expresion -> expresion XOR expresion .) ]
-  ! POTENCIA        [ reduce using rule 4 (expresion -> expresion XOR expresion .) ]
-  ! MODULO          [ reduce using rule 4 (expresion -> expresion XOR expresion .) ]
-  ! MENOR_IGUAL     [ reduce using rule 4 (expresion -> expresion XOR expresion .) ]
-  ! MAYOR_QUE       [ reduce using rule 4 (expresion -> expresion XOR expresion .) ]
-  ! MAYOR_IGUAL     [ reduce using rule 4 (expresion -> expresion XOR expresion .) ]
-  ! OR              [ shift and go to state 30 ]
-  ! AND             [ shift and go to state 31 ]
+  ! OR              [ reduce using rule 4 (expresion -> expresion XOR expresion .) ]
+  ! AND             [ reduce using rule 4 (expresion -> expresion XOR expresion .) ]
   ! XOR             [ shift and go to state 32 ]
+  ! MAS             [ shift and go to state 33 ]
+  ! MENOS           [ shift and go to state 34 ]
+  ! MULT            [ shift and go to state 35 ]
+  ! DIVISION        [ shift and go to state 36 ]
+  ! POTENCIA        [ shift and go to state 37 ]
+  ! MODULO          [ shift and go to state 38 ]
+  ! MENOR_IGUAL     [ shift and go to state 39 ]
+  ! MAYOR_QUE       [ shift and go to state 40 ]
+  ! MAYOR_IGUAL     [ shift and go to state 41 ]
 
 
 state 57
@@ -1804,32 +1804,32 @@ state 57
     (36) expresion -> expresion . MAYOR_IGUAL expresion
 
     PUNTOCOMA       reduce using rule 17 (expresion -> expresion MAS expresion .)
-    OR              reduce using rule 17 (expresion -> expresion MAS expresion .)
-    AND             reduce using rule 17 (expresion -> expresion MAS expresion .)
-    XOR             reduce using rule 17 (expresion -> expresion MAS expresion .)
     MAS             reduce using rule 17 (expresion -> expresion MAS expresion .)
     MENOS           reduce using rule 17 (expresion -> expresion MAS expresion .)
+    MULT            reduce using rule 17 (expresion -> expresion MAS expresion .)
+    DIVISION        reduce using rule 17 (expresion -> expresion MAS expresion .)
+    POTENCIA        reduce using rule 17 (expresion -> expresion MAS expresion .)
+    MODULO          reduce using rule 17 (expresion -> expresion MAS expresion .)
     PAR2            reduce using rule 17 (expresion -> expresion MAS expresion .)
-    MULT            shift and go to state 35
-    DIVISION        shift and go to state 36
-    POTENCIA        shift and go to state 37
-    MODULO          shift and go to state 38
+    OR              shift and go to state 30
+    AND             shift and go to state 31
+    XOR             shift and go to state 32
     MENOR_IGUAL     shift and go to state 39
     MAYOR_QUE       shift and go to state 40
     MAYOR_IGUAL     shift and go to state 41
 
-  ! MULT            [ reduce using rule 17 (expresion -> expresion MAS expresion .) ]
-  ! DIVISION        [ reduce using rule 17 (expresion -> expresion MAS expresion .) ]
-  ! POTENCIA        [ reduce using rule 17 (expresion -> expresion MAS expresion .) ]
-  ! MODULO          [ reduce using rule 17 (expresion -> expresion MAS expresion .) ]
+  ! OR              [ reduce using rule 17 (expresion -> expresion MAS expresion .) ]
+  ! AND             [ reduce using rule 17 (expresion -> expresion MAS expresion .) ]
+  ! XOR             [ reduce using rule 17 (expresion -> expresion MAS expresion .) ]
   ! MENOR_IGUAL     [ reduce using rule 17 (expresion -> expresion MAS expresion .) ]
   ! MAYOR_QUE       [ reduce using rule 17 (expresion -> expresion MAS expresion .) ]
   ! MAYOR_IGUAL     [ reduce using rule 17 (expresion -> expresion MAS expresion .) ]
-  ! OR              [ shift and go to state 30 ]
-  ! AND             [ shift and go to state 31 ]
-  ! XOR             [ shift and go to state 32 ]
   ! MAS             [ shift and go to state 33 ]
   ! MENOS           [ shift and go to state 34 ]
+  ! MULT            [ shift and go to state 35 ]
+  ! DIVISION        [ shift and go to state 36 ]
+  ! POTENCIA        [ shift and go to state 37 ]
+  ! MODULO          [ shift and go to state 38 ]
 
 
 state 58
@@ -1849,32 +1849,32 @@ state 58
     (36) expresion -> expresion . MAYOR_IGUAL expresion
 
     PUNTOCOMA       reduce using rule 18 (expresion -> expresion MENOS expresion .)
-    OR              reduce using rule 18 (expresion -> expresion MENOS expresion .)
-    AND             reduce using rule 18 (expresion -> expresion MENOS expresion .)
-    XOR             reduce using rule 18 (expresion -> expresion MENOS expresion .)
     MAS             reduce using rule 18 (expresion -> expresion MENOS expresion .)
     MENOS           reduce using rule 18 (expresion -> expresion MENOS expresion .)
+    MULT            reduce using rule 18 (expresion -> expresion MENOS expresion .)
+    DIVISION        reduce using rule 18 (expresion -> expresion MENOS expresion .)
+    POTENCIA        reduce using rule 18 (expresion -> expresion MENOS expresion .)
+    MODULO          reduce using rule 18 (expresion -> expresion MENOS expresion .)
     PAR2            reduce using rule 18 (expresion -> expresion MENOS expresion .)
-    MULT            shift and go to state 35
-    DIVISION        shift and go to state 36
-    POTENCIA        shift and go to state 37
-    MODULO          shift and go to state 38
+    OR              shift and go to state 30
+    AND             shift and go to state 31
+    XOR             shift and go to state 32
     MENOR_IGUAL     shift and go to state 39
     MAYOR_QUE       shift and go to state 40
     MAYOR_IGUAL     shift and go to state 41
 
-  ! MULT            [ reduce using rule 18 (expresion -> expresion MENOS expresion .) ]
-  ! DIVISION        [ reduce using rule 18 (expresion -> expresion MENOS expresion .) ]
-  ! POTENCIA        [ reduce using rule 18 (expresion -> expresion MENOS expresion .) ]
-  ! MODULO          [ reduce using rule 18 (expresion -> expresion MENOS expresion .) ]
+  ! OR              [ reduce using rule 18 (expresion -> expresion MENOS expresion .) ]
+  ! AND             [ reduce using rule 18 (expresion -> expresion MENOS expresion .) ]
+  ! XOR             [ reduce using rule 18 (expresion -> expresion MENOS expresion .) ]
   ! MENOR_IGUAL     [ reduce using rule 18 (expresion -> expresion MENOS expresion .) ]
   ! MAYOR_QUE       [ reduce using rule 18 (expresion -> expresion MENOS expresion .) ]
   ! MAYOR_IGUAL     [ reduce using rule 18 (expresion -> expresion MENOS expresion .) ]
-  ! OR              [ shift and go to state 30 ]
-  ! AND             [ shift and go to state 31 ]
-  ! XOR             [ shift and go to state 32 ]
   ! MAS             [ shift and go to state 33 ]
   ! MENOS           [ shift and go to state 34 ]
+  ! MULT            [ shift and go to state 35 ]
+  ! DIVISION        [ shift and go to state 36 ]
+  ! POTENCIA        [ shift and go to state 37 ]
+  ! MODULO          [ shift and go to state 38 ]
 
 
 state 59
@@ -1894,31 +1894,31 @@ state 59
     (36) expresion -> expresion . MAYOR_IGUAL expresion
 
     PUNTOCOMA       reduce using rule 19 (expresion -> expresion MULT expresion .)
-    OR              reduce using rule 19 (expresion -> expresion MULT expresion .)
-    AND             reduce using rule 19 (expresion -> expresion MULT expresion .)
-    XOR             reduce using rule 19 (expresion -> expresion MULT expresion .)
-    MAS             reduce using rule 19 (expresion -> expresion MULT expresion .)
-    MENOS           reduce using rule 19 (expresion -> expresion MULT expresion .)
     MULT            reduce using rule 19 (expresion -> expresion MULT expresion .)
     DIVISION        reduce using rule 19 (expresion -> expresion MULT expresion .)
+    POTENCIA        reduce using rule 19 (expresion -> expresion MULT expresion .)
     MODULO          reduce using rule 19 (expresion -> expresion MULT expresion .)
     PAR2            reduce using rule 19 (expresion -> expresion MULT expresion .)
-    POTENCIA        shift and go to state 37
+    OR              shift and go to state 30
+    AND             shift and go to state 31
+    XOR             shift and go to state 32
+    MAS             shift and go to state 33
+    MENOS           shift and go to state 34
     MENOR_IGUAL     shift and go to state 39
     MAYOR_QUE       shift and go to state 40
     MAYOR_IGUAL     shift and go to state 41
 
-  ! POTENCIA        [ reduce using rule 19 (expresion -> expresion MULT expresion .) ]
+  ! OR              [ reduce using rule 19 (expresion -> expresion MULT expresion .) ]
+  ! AND             [ reduce using rule 19 (expresion -> expresion MULT expresion .) ]
+  ! XOR             [ reduce using rule 19 (expresion -> expresion MULT expresion .) ]
+  ! MAS             [ reduce using rule 19 (expresion -> expresion MULT expresion .) ]
+  ! MENOS           [ reduce using rule 19 (expresion -> expresion MULT expresion .) ]
   ! MENOR_IGUAL     [ reduce using rule 19 (expresion -> expresion MULT expresion .) ]
   ! MAYOR_QUE       [ reduce using rule 19 (expresion -> expresion MULT expresion .) ]
   ! MAYOR_IGUAL     [ reduce using rule 19 (expresion -> expresion MULT expresion .) ]
-  ! OR              [ shift and go to state 30 ]
-  ! AND             [ shift and go to state 31 ]
-  ! XOR             [ shift and go to state 32 ]
-  ! MAS             [ shift and go to state 33 ]
-  ! MENOS           [ shift and go to state 34 ]
   ! MULT            [ shift and go to state 35 ]
   ! DIVISION        [ shift and go to state 36 ]
+  ! POTENCIA        [ shift and go to state 37 ]
   ! MODULO          [ shift and go to state 38 ]
 
 
@@ -1939,31 +1939,31 @@ state 60
     (36) expresion -> expresion . MAYOR_IGUAL expresion
 
     PUNTOCOMA       reduce using rule 20 (expresion -> expresion DIVISION expresion .)
-    OR              reduce using rule 20 (expresion -> expresion DIVISION expresion .)
-    AND             reduce using rule 20 (expresion -> expresion DIVISION expresion .)
-    XOR             reduce using rule 20 (expresion -> expresion DIVISION expresion .)
-    MAS             reduce using rule 20 (expresion -> expresion DIVISION expresion .)
-    MENOS           reduce using rule 20 (expresion -> expresion DIVISION expresion .)
     MULT            reduce using rule 20 (expresion -> expresion DIVISION expresion .)
     DIVISION        reduce using rule 20 (expresion -> expresion DIVISION expresion .)
+    POTENCIA        reduce using rule 20 (expresion -> expresion DIVISION expresion .)
     MODULO          reduce using rule 20 (expresion -> expresion DIVISION expresion .)
     PAR2            reduce using rule 20 (expresion -> expresion DIVISION expresion .)
-    POTENCIA        shift and go to state 37
+    OR              shift and go to state 30
+    AND             shift and go to state 31
+    XOR             shift and go to state 32
+    MAS             shift and go to state 33
+    MENOS           shift and go to state 34
     MENOR_IGUAL     shift and go to state 39
     MAYOR_QUE       shift and go to state 40
     MAYOR_IGUAL     shift and go to state 41
 
-  ! POTENCIA        [ reduce using rule 20 (expresion -> expresion DIVISION expresion .) ]
+  ! OR              [ reduce using rule 20 (expresion -> expresion DIVISION expresion .) ]
+  ! AND             [ reduce using rule 20 (expresion -> expresion DIVISION expresion .) ]
+  ! XOR             [ reduce using rule 20 (expresion -> expresion DIVISION expresion .) ]
+  ! MAS             [ reduce using rule 20 (expresion -> expresion DIVISION expresion .) ]
+  ! MENOS           [ reduce using rule 20 (expresion -> expresion DIVISION expresion .) ]
   ! MENOR_IGUAL     [ reduce using rule 20 (expresion -> expresion DIVISION expresion .) ]
   ! MAYOR_QUE       [ reduce using rule 20 (expresion -> expresion DIVISION expresion .) ]
   ! MAYOR_IGUAL     [ reduce using rule 20 (expresion -> expresion DIVISION expresion .) ]
-  ! OR              [ shift and go to state 30 ]
-  ! AND             [ shift and go to state 31 ]
-  ! XOR             [ shift and go to state 32 ]
-  ! MAS             [ shift and go to state 33 ]
-  ! MENOS           [ shift and go to state 34 ]
   ! MULT            [ shift and go to state 35 ]
   ! DIVISION        [ shift and go to state 36 ]
+  ! POTENCIA        [ shift and go to state 37 ]
   ! MODULO          [ shift and go to state 38 ]
 
 
@@ -1984,32 +1984,32 @@ state 61
     (36) expresion -> expresion . MAYOR_IGUAL expresion
 
     PUNTOCOMA       reduce using rule 21 (expresion -> expresion POTENCIA expresion .)
-    OR              reduce using rule 21 (expresion -> expresion POTENCIA expresion .)
-    AND             reduce using rule 21 (expresion -> expresion POTENCIA expresion .)
-    XOR             reduce using rule 21 (expresion -> expresion POTENCIA expresion .)
-    MAS             reduce using rule 21 (expresion -> expresion POTENCIA expresion .)
-    MENOS           reduce using rule 21 (expresion -> expresion POTENCIA expresion .)
-    MULT            reduce using rule 21 (expresion -> expresion POTENCIA expresion .)
-    DIVISION        reduce using rule 21 (expresion -> expresion POTENCIA expresion .)
-    MODULO          reduce using rule 21 (expresion -> expresion POTENCIA expresion .)
     PAR2            reduce using rule 21 (expresion -> expresion POTENCIA expresion .)
+    OR              shift and go to state 30
+    AND             shift and go to state 31
+    XOR             shift and go to state 32
+    MAS             shift and go to state 33
+    MENOS           shift and go to state 34
+    MULT            shift and go to state 35
+    DIVISION        shift and go to state 36
     POTENCIA        shift and go to state 37
+    MODULO          shift and go to state 38
     MENOR_IGUAL     shift and go to state 39
     MAYOR_QUE       shift and go to state 40
     MAYOR_IGUAL     shift and go to state 41
 
+  ! OR              [ reduce using rule 21 (expresion -> expresion POTENCIA expresion .) ]
+  ! AND             [ reduce using rule 21 (expresion -> expresion POTENCIA expresion .) ]
+  ! XOR             [ reduce using rule 21 (expresion -> expresion POTENCIA expresion .) ]
+  ! MAS             [ reduce using rule 21 (expresion -> expresion POTENCIA expresion .) ]
+  ! MENOS           [ reduce using rule 21 (expresion -> expresion POTENCIA expresion .) ]
+  ! MULT            [ reduce using rule 21 (expresion -> expresion POTENCIA expresion .) ]
+  ! DIVISION        [ reduce using rule 21 (expresion -> expresion POTENCIA expresion .) ]
   ! POTENCIA        [ reduce using rule 21 (expresion -> expresion POTENCIA expresion .) ]
+  ! MODULO          [ reduce using rule 21 (expresion -> expresion POTENCIA expresion .) ]
   ! MENOR_IGUAL     [ reduce using rule 21 (expresion -> expresion POTENCIA expresion .) ]
   ! MAYOR_QUE       [ reduce using rule 21 (expresion -> expresion POTENCIA expresion .) ]
   ! MAYOR_IGUAL     [ reduce using rule 21 (expresion -> expresion POTENCIA expresion .) ]
-  ! OR              [ shift and go to state 30 ]
-  ! AND             [ shift and go to state 31 ]
-  ! XOR             [ shift and go to state 32 ]
-  ! MAS             [ shift and go to state 33 ]
-  ! MENOS           [ shift and go to state 34 ]
-  ! MULT            [ shift and go to state 35 ]
-  ! DIVISION        [ shift and go to state 36 ]
-  ! MODULO          [ shift and go to state 38 ]
 
 
 state 62
@@ -2029,31 +2029,31 @@ state 62
     (36) expresion -> expresion . MAYOR_IGUAL expresion
 
     PUNTOCOMA       reduce using rule 22 (expresion -> expresion MODULO expresion .)
-    OR              reduce using rule 22 (expresion -> expresion MODULO expresion .)
-    AND             reduce using rule 22 (expresion -> expresion MODULO expresion .)
-    XOR             reduce using rule 22 (expresion -> expresion MODULO expresion .)
-    MAS             reduce using rule 22 (expresion -> expresion MODULO expresion .)
-    MENOS           reduce using rule 22 (expresion -> expresion MODULO expresion .)
     MULT            reduce using rule 22 (expresion -> expresion MODULO expresion .)
     DIVISION        reduce using rule 22 (expresion -> expresion MODULO expresion .)
+    POTENCIA        reduce using rule 22 (expresion -> expresion MODULO expresion .)
     MODULO          reduce using rule 22 (expresion -> expresion MODULO expresion .)
     PAR2            reduce using rule 22 (expresion -> expresion MODULO expresion .)
-    POTENCIA        shift and go to state 37
+    OR              shift and go to state 30
+    AND             shift and go to state 31
+    XOR             shift and go to state 32
+    MAS             shift and go to state 33
+    MENOS           shift and go to state 34
     MENOR_IGUAL     shift and go to state 39
     MAYOR_QUE       shift and go to state 40
     MAYOR_IGUAL     shift and go to state 41
 
-  ! POTENCIA        [ reduce using rule 22 (expresion -> expresion MODULO expresion .) ]
+  ! OR              [ reduce using rule 22 (expresion -> expresion MODULO expresion .) ]
+  ! AND             [ reduce using rule 22 (expresion -> expresion MODULO expresion .) ]
+  ! XOR             [ reduce using rule 22 (expresion -> expresion MODULO expresion .) ]
+  ! MAS             [ reduce using rule 22 (expresion -> expresion MODULO expresion .) ]
+  ! MENOS           [ reduce using rule 22 (expresion -> expresion MODULO expresion .) ]
   ! MENOR_IGUAL     [ reduce using rule 22 (expresion -> expresion MODULO expresion .) ]
   ! MAYOR_QUE       [ reduce using rule 22 (expresion -> expresion MODULO expresion .) ]
   ! MAYOR_IGUAL     [ reduce using rule 22 (expresion -> expresion MODULO expresion .) ]
-  ! OR              [ shift and go to state 30 ]
-  ! AND             [ shift and go to state 31 ]
-  ! XOR             [ shift and go to state 32 ]
-  ! MAS             [ shift and go to state 33 ]
-  ! MENOS           [ shift and go to state 34 ]
   ! MULT            [ shift and go to state 35 ]
   ! DIVISION        [ shift and go to state 36 ]
+  ! POTENCIA        [ shift and go to state 37 ]
   ! MODULO          [ shift and go to state 38 ]
 
 
@@ -2074,9 +2074,6 @@ state 63
     (36) expresion -> expresion . MAYOR_IGUAL expresion
 
     PUNTOCOMA       reduce using rule 34 (expresion -> expresion MENOR_IGUAL expresion .)
-    OR              reduce using rule 34 (expresion -> expresion MENOR_IGUAL expresion .)
-    AND             reduce using rule 34 (expresion -> expresion MENOR_IGUAL expresion .)
-    XOR             reduce using rule 34 (expresion -> expresion MENOR_IGUAL expresion .)
     MAS             reduce using rule 34 (expresion -> expresion MENOR_IGUAL expresion .)
     MENOS           reduce using rule 34 (expresion -> expresion MENOR_IGUAL expresion .)
     MULT            reduce using rule 34 (expresion -> expresion MENOR_IGUAL expresion .)
@@ -2087,10 +2084,13 @@ state 63
     MAYOR_QUE       reduce using rule 34 (expresion -> expresion MENOR_IGUAL expresion .)
     MAYOR_IGUAL     reduce using rule 34 (expresion -> expresion MENOR_IGUAL expresion .)
     PAR2            reduce using rule 34 (expresion -> expresion MENOR_IGUAL expresion .)
+    OR              shift and go to state 30
+    AND             shift and go to state 31
+    XOR             shift and go to state 32
 
-  ! OR              [ shift and go to state 30 ]
-  ! AND             [ shift and go to state 31 ]
-  ! XOR             [ shift and go to state 32 ]
+  ! OR              [ reduce using rule 34 (expresion -> expresion MENOR_IGUAL expresion .) ]
+  ! AND             [ reduce using rule 34 (expresion -> expresion MENOR_IGUAL expresion .) ]
+  ! XOR             [ reduce using rule 34 (expresion -> expresion MENOR_IGUAL expresion .) ]
   ! MAS             [ shift and go to state 33 ]
   ! MENOS           [ shift and go to state 34 ]
   ! MULT            [ shift and go to state 35 ]
@@ -2119,9 +2119,6 @@ state 64
     (36) expresion -> expresion . MAYOR_IGUAL expresion
 
     PUNTOCOMA       reduce using rule 35 (expresion -> expresion MAYOR_QUE expresion .)
-    OR              reduce using rule 35 (expresion -> expresion MAYOR_QUE expresion .)
-    AND             reduce using rule 35 (expresion -> expresion MAYOR_QUE expresion .)
-    XOR             reduce using rule 35 (expresion -> expresion MAYOR_QUE expresion .)
     MAS             reduce using rule 35 (expresion -> expresion MAYOR_QUE expresion .)
     MENOS           reduce using rule 35 (expresion -> expresion MAYOR_QUE expresion .)
     MULT            reduce using rule 35 (expresion -> expresion MAYOR_QUE expresion .)
@@ -2132,10 +2129,13 @@ state 64
     MAYOR_QUE       reduce using rule 35 (expresion -> expresion MAYOR_QUE expresion .)
     MAYOR_IGUAL     reduce using rule 35 (expresion -> expresion MAYOR_QUE expresion .)
     PAR2            reduce using rule 35 (expresion -> expresion MAYOR_QUE expresion .)
+    OR              shift and go to state 30
+    AND             shift and go to state 31
+    XOR             shift and go to state 32
 
-  ! OR              [ shift and go to state 30 ]
-  ! AND             [ shift and go to state 31 ]
-  ! XOR             [ shift and go to state 32 ]
+  ! OR              [ reduce using rule 35 (expresion -> expresion MAYOR_QUE expresion .) ]
+  ! AND             [ reduce using rule 35 (expresion -> expresion MAYOR_QUE expresion .) ]
+  ! XOR             [ reduce using rule 35 (expresion -> expresion MAYOR_QUE expresion .) ]
   ! MAS             [ shift and go to state 33 ]
   ! MENOS           [ shift and go to state 34 ]
   ! MULT            [ shift and go to state 35 ]
@@ -2164,9 +2164,6 @@ state 65
     (36) expresion -> expresion . MAYOR_IGUAL expresion
 
     PUNTOCOMA       reduce using rule 36 (expresion -> expresion MAYOR_IGUAL expresion .)
-    OR              reduce using rule 36 (expresion -> expresion MAYOR_IGUAL expresion .)
-    AND             reduce using rule 36 (expresion -> expresion MAYOR_IGUAL expresion .)
-    XOR             reduce using rule 36 (expresion -> expresion MAYOR_IGUAL expresion .)
     MAS             reduce using rule 36 (expresion -> expresion MAYOR_IGUAL expresion .)
     MENOS           reduce using rule 36 (expresion -> expresion MAYOR_IGUAL expresion .)
     MULT            reduce using rule 36 (expresion -> expresion MAYOR_IGUAL expresion .)
@@ -2177,10 +2174,13 @@ state 65
     MAYOR_QUE       reduce using rule 36 (expresion -> expresion MAYOR_IGUAL expresion .)
     MAYOR_IGUAL     reduce using rule 36 (expresion -> expresion MAYOR_IGUAL expresion .)
     PAR2            reduce using rule 36 (expresion -> expresion MAYOR_IGUAL expresion .)
+    OR              shift and go to state 30
+    AND             shift and go to state 31
+    XOR             shift and go to state 32
 
-  ! OR              [ shift and go to state 30 ]
-  ! AND             [ shift and go to state 31 ]
-  ! XOR             [ shift and go to state 32 ]
+  ! OR              [ reduce using rule 36 (expresion -> expresion MAYOR_IGUAL expresion .) ]
+  ! AND             [ reduce using rule 36 (expresion -> expresion MAYOR_IGUAL expresion .) ]
+  ! XOR             [ reduce using rule 36 (expresion -> expresion MAYOR_IGUAL expresion .) ]
   ! MAS             [ shift and go to state 33 ]
   ! MENOS           [ shift and go to state 34 ]
   ! MULT            [ shift and go to state 35 ]

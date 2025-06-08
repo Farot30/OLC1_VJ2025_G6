@@ -7,6 +7,9 @@ class OperadoresRel:
     MENOR_IGUAL = 1
     MAYOR_QUE = 2
     MAYOR_IGUAL = 3
+    IGUAL_IGUAL = 4
+    DIFERENTE = 5
+    MENOR_QUE = 6
 
 
 class Relacional(Instruccion, ABC):

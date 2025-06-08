@@ -19,6 +19,7 @@ def main():
             resultado = instr.interpretar(ast, tabla)
             if isinstance(resultado, Errores):
                 print(resultado)
+                ast.errores.append(resultado)  # <-- AGREGA EL ERROR A LA LISTA
             elif resultado is not None:
                 print("Prueba:", resultado)
 
@@ -43,7 +44,16 @@ def imprimir_tabla_simbolos(tabla: tablaSimbolo):
         print(f"{idx}\t{id_}\t{tipo1}\t{tipo2}\t{entorno}\t{valor}\t{linea}\t{columna}")
 
 
+def imprimir_tabla_errores(errores):
+    print("#\tTipo\t\tDescripcion\t\t\tLINEA\tCOLUMNA")
+    for idx, error in enumerate(errores, 1):
+        print(
+            f"{idx}\t{error.get_tipo_error()}\t{error.get_desc()}\t{error.get_linea()}\t{error.get_col()}"
+        )
+
+
 if __name__ == "__main__":
     ast = main()
     if ast is not None:
         imprimir_tabla_simbolos(ast.get_tabla_global())
+        imprimir_tabla_errores(ast.get_errores())

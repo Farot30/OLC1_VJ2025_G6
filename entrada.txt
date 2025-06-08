@@ -30,10 +30,6 @@ c = c / 2;
 d = true;
 d = false;
 
-// Prueba de booleanos en mayúsculas y minúsculas
-d = TRUE;
-d = FALSE;
-
 // Prueba de caracteres y cadenas
 e = 'z';
 f = "Texto";
@@ -113,3 +109,9 @@ println("\"esto es una cadena\"");
 println("\tEsto es una tabulacion");
 println("\'Estas son comillas simples\'");
 println("Hola\nMundo");
+
+println((2 + 3) * 4);
+println((true || false) && (5 > 2));
+println((a + b) / (c - w));
+
+int A = ( 5 + 5 ) * 4 ;
