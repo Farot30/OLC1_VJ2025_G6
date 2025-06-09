@@ -27,7 +27,7 @@ class Arbol:
         return self.tabla_global
 
     def setTablaGlobal(self, tabla: tablaSimbolo):
-        self.tablaglobal = tabla
+        self.tabla_global = tabla
 
     def get_errores(self) -> list[Errores]:
         return self.errores

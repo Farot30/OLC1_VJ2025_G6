@@ -1,0 +1,9 @@
+int x = 5;
+float y ;
+if (5 > 3) {
+    print(x);
+} else if (1 < 10.0) {
+    println(y);
+} else {
+    print("No cumple");
+}

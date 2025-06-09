@@ -1,0 +1,22 @@
+int x = 5;
+float y = 2.3;
+string mensaje = "Hola mundo"
+char c = 'a';
+int resultado = x + @;       // Error léxico
+int suma = x + y             // Error sintáctico
+z = x + y;                   // Error semántico
+if (x > 3 {                  // Error sintáctico
+    println(x + y);
+} else                      // Error sintáctico
+int a = 2 **;               // Error sintáctico
+println("Todo bien");;
+if (x == 5) {               
+    print(x + 1);           
+} else if x < 3) {          // Error sintáctico
+    println("Menor");
+} else {
+    println("Otro caso");
+}
+
+int str = "Cadena";         // Error semántico
+print(#x);                  // Error léxico
