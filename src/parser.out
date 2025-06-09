@@ -13,63 +13,78 @@ Rule 2     instrucciones -> instrucciones instruccion
 Rule 3     instrucciones -> instruccion
 Rule 4     instruccion -> declaracion PUNTOCOMA
 Rule 5     instruccion -> expresion PUNTOCOMA
-Rule 6     declaracion -> tipos ID IGUAL expresion
-Rule 7     declaracion -> tipos ID
-Rule 8     expresion -> expresion MAS expresion
-Rule 9     expresion -> expresion MENOS expresion
-Rule 10    expresion -> expresion MULT expresion
-Rule 11    expresion -> expresion DIVISION expresion
-Rule 12    expresion -> expresion POTENCIA expresion
-Rule 13    expresion -> expresion MODULO expresion
-Rule 14    expresion -> MENOS expresion
-Rule 15    expresion -> PAR1 expresion PAR2
-Rule 16    expresion -> ENTERO
-Rule 17    expresion -> DECIMAL
-Rule 18    expresion -> CADENA
-Rule 19    expresion -> TRUE
-Rule 20    expresion -> FALSE
-Rule 21    expresion -> CHAR
-Rule 22    expresion -> CARACTER
-Rule 23    tipos -> INT
-Rule 24    tipos -> DOUBLE
-Rule 25    tipos -> STRING
-Rule 26    tipos -> CHAR
+Rule 6     instruccion -> sent_IF
+Rule 7     sent_IF -> if_simple
+Rule 8     sent_IF -> if_else
+Rule 9     sent_IF -> if_elseif
+Rule 10    if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
+Rule 11    if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+Rule 12    if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple
+Rule 13    declaracion -> tipos ID IGUAL expresion
+Rule 14    declaracion -> tipos ID
+Rule 15    expresion -> expresion MAS expresion
+Rule 16    expresion -> expresion MENOS expresion
+Rule 17    expresion -> expresion MULT expresion
+Rule 18    expresion -> expresion DIVISION expresion
+Rule 19    expresion -> expresion POTENCIA expresion
+Rule 20    expresion -> expresion MODULO expresion
+Rule 21    expresion -> MENOS expresion
+Rule 22    expresion -> PAR1 expresion PAR2
+Rule 23    expresion -> ENTERO
+Rule 24    expresion -> DECIMAL
+Rule 25    expresion -> CADENA
+Rule 26    expresion -> TRUE
+Rule 27    expresion -> FALSE
+Rule 28    expresion -> CHAR
+Rule 29    expresion -> CARACTER
+Rule 30    tipos -> INT
+Rule 31    tipos -> DOUBLE
+Rule 32    tipos -> STRING
+Rule 33    tipos -> CHAR
 
 Terminals, with rules where they appear
 
 BOOL                 : 
-CADENA               : 18
-CARACTER             : 22
-CHAR                 : 21 26
-DECIMAL              : 17
-DIVISION             : 11
-DOUBLE               : 24
-ENTERO               : 16
-FALSE                : 20
-ID                   : 6 7
-IGUAL                : 6
-INT                  : 23
-MAS                  : 8
+CADENA               : 25
+CARACTER             : 29
+CHAR                 : 28 33
+DECIMAL              : 24
+DIVISION             : 18
+DOUBLE               : 31
+ELSE                 : 11 12
+ENTERO               : 23
+FALSE                : 27
+ID                   : 13 14
+IF                   : 10 11 12
+IGUAL                : 13
+INT                  : 30
+LLAVE1               : 10 11 11 12
+LLAVE2               : 10 11 11 12
+MAS                  : 15
 MENOR                : 
-MENOS                : 9 14
-MODULO               : 13
-MULT                 : 10
-PAR1                 : 15
-PAR2                 : 15
-POTENCIA             : 12
+MENOS                : 16 21
+MODULO               : 20
+MULT                 : 17
+PAR1                 : 10 11 12 22
+PAR2                 : 10 11 12 22
+POTENCIA             : 19
 PUNTOCOMA            : 4 5
-STRING               : 25
-TRUE                 : 19
+STRING               : 32
+TRUE                 : 26
 error                : 
 
 Nonterminals, with rules where they appear
 
 declaracion          : 4
-expresion            : 5 6 8 8 9 9 10 10 11 11 12 12 13 13 14 15
+expresion            : 5 10 11 12 13 15 15 16 16 17 17 18 18 19 19 20 20 21 22
+if_else              : 8
+if_elseif            : 9
+if_simple            : 7 12
 inicio               : 0
 instruccion          : 2 3
-instrucciones        : 1 2
-tipos                : 6 7
+instrucciones        : 1 2 10 11 11 12
+sent_IF              : 6
+tipos                : 13 14
 
 Parsing method: LALR
 
@@ -81,47 +96,59 @@ state 0
     (3) instrucciones -> . instruccion
     (4) instruccion -> . declaracion PUNTOCOMA
     (5) instruccion -> . expresion PUNTOCOMA
-    (6) declaracion -> . tipos ID IGUAL expresion
-    (7) declaracion -> . tipos ID
-    (8) expresion -> . expresion MAS expresion
-    (9) expresion -> . expresion MENOS expresion
-    (10) expresion -> . expresion MULT expresion
-    (11) expresion -> . expresion DIVISION expresion
-    (12) expresion -> . expresion POTENCIA expresion
-    (13) expresion -> . expresion MODULO expresion
-    (14) expresion -> . MENOS expresion
-    (15) expresion -> . PAR1 expresion PAR2
-    (16) expresion -> . ENTERO
-    (17) expresion -> . DECIMAL
-    (18) expresion -> . CADENA
-    (19) expresion -> . TRUE
-    (20) expresion -> . FALSE
-    (21) expresion -> . CHAR
-    (22) expresion -> . CARACTER
-    (23) tipos -> . INT
-    (24) tipos -> . DOUBLE
-    (25) tipos -> . STRING
-    (26) tipos -> . CHAR
+    (6) instruccion -> . sent_IF
+    (13) declaracion -> . tipos ID IGUAL expresion
+    (14) declaracion -> . tipos ID
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
+    (7) sent_IF -> . if_simple
+    (8) sent_IF -> . if_else
+    (9) sent_IF -> . if_elseif
+    (30) tipos -> . INT
+    (31) tipos -> . DOUBLE
+    (32) tipos -> . STRING
+    (33) tipos -> . CHAR
+    (10) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
+    (11) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple
 
-    MENOS           shift and go to state 7
-    PAR1            shift and go to state 8
-    ENTERO          shift and go to state 9
-    DECIMAL         shift and go to state 10
-    CADENA          shift and go to state 11
-    TRUE            shift and go to state 12
-    FALSE           shift and go to state 13
-    CHAR            shift and go to state 14
-    CARACTER        shift and go to state 15
-    INT             shift and go to state 16
-    DOUBLE          shift and go to state 17
-    STRING          shift and go to state 18
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 15
+    CARACTER        shift and go to state 16
+    INT             shift and go to state 20
+    DOUBLE          shift and go to state 21
+    STRING          shift and go to state 22
+    IF              shift and go to state 23
 
     inicio                         shift and go to state 1
     instrucciones                  shift and go to state 2
     instruccion                    shift and go to state 3
     declaracion                    shift and go to state 4
     expresion                      shift and go to state 5
-    tipos                          shift and go to state 6
+    sent_IF                        shift and go to state 6
+    tipos                          shift and go to state 7
+    if_simple                      shift and go to state 17
+    if_else                        shift and go to state 18
+    if_elseif                      shift and go to state 19
 
 state 1
 
@@ -135,46 +162,58 @@ state 2
     (2) instrucciones -> instrucciones . instruccion
     (4) instruccion -> . declaracion PUNTOCOMA
     (5) instruccion -> . expresion PUNTOCOMA
-    (6) declaracion -> . tipos ID IGUAL expresion
-    (7) declaracion -> . tipos ID
-    (8) expresion -> . expresion MAS expresion
-    (9) expresion -> . expresion MENOS expresion
-    (10) expresion -> . expresion MULT expresion
-    (11) expresion -> . expresion DIVISION expresion
-    (12) expresion -> . expresion POTENCIA expresion
-    (13) expresion -> . expresion MODULO expresion
-    (14) expresion -> . MENOS expresion
-    (15) expresion -> . PAR1 expresion PAR2
-    (16) expresion -> . ENTERO
-    (17) expresion -> . DECIMAL
-    (18) expresion -> . CADENA
-    (19) expresion -> . TRUE
-    (20) expresion -> . FALSE
-    (21) expresion -> . CHAR
-    (22) expresion -> . CARACTER
-    (23) tipos -> . INT
-    (24) tipos -> . DOUBLE
-    (25) tipos -> . STRING
-    (26) tipos -> . CHAR
+    (6) instruccion -> . sent_IF
+    (13) declaracion -> . tipos ID IGUAL expresion
+    (14) declaracion -> . tipos ID
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
+    (7) sent_IF -> . if_simple
+    (8) sent_IF -> . if_else
+    (9) sent_IF -> . if_elseif
+    (30) tipos -> . INT
+    (31) tipos -> . DOUBLE
+    (32) tipos -> . STRING
+    (33) tipos -> . CHAR
+    (10) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
+    (11) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple
 
     $end            reduce using rule 1 (inicio -> instrucciones .)
-    MENOS           shift and go to state 7
-    PAR1            shift and go to state 8
-    ENTERO          shift and go to state 9
-    DECIMAL         shift and go to state 10
-    CADENA          shift and go to state 11
-    TRUE            shift and go to state 12
-    FALSE           shift and go to state 13
-    CHAR            shift and go to state 14
-    CARACTER        shift and go to state 15
-    INT             shift and go to state 16
-    DOUBLE          shift and go to state 17
-    STRING          shift and go to state 18
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 15
+    CARACTER        shift and go to state 16
+    INT             shift and go to state 20
+    DOUBLE          shift and go to state 21
+    STRING          shift and go to state 22
+    IF              shift and go to state 23
 
-    instruccion                    shift and go to state 19
+    instruccion                    shift and go to state 24
     declaracion                    shift and go to state 4
     expresion                      shift and go to state 5
-    tipos                          shift and go to state 6
+    sent_IF                        shift and go to state 6
+    tipos                          shift and go to state 7
+    if_simple                      shift and go to state 17
+    if_else                        shift and go to state 18
+    if_elseif                      shift and go to state 19
 
 state 3
 
@@ -192,226 +231,321 @@ state 3
     INT             reduce using rule 3 (instrucciones -> instruccion .)
     DOUBLE          reduce using rule 3 (instrucciones -> instruccion .)
     STRING          reduce using rule 3 (instrucciones -> instruccion .)
+    IF              reduce using rule 3 (instrucciones -> instruccion .)
     $end            reduce using rule 3 (instrucciones -> instruccion .)
+    LLAVE2          reduce using rule 3 (instrucciones -> instruccion .)
 
 
 state 4
 
     (4) instruccion -> declaracion . PUNTOCOMA
 
-    PUNTOCOMA       shift and go to state 20
+    PUNTOCOMA       shift and go to state 25
 
 
 state 5
 
     (5) instruccion -> expresion . PUNTOCOMA
-    (8) expresion -> expresion . MAS expresion
-    (9) expresion -> expresion . MENOS expresion
-    (10) expresion -> expresion . MULT expresion
-    (11) expresion -> expresion . DIVISION expresion
-    (12) expresion -> expresion . POTENCIA expresion
-    (13) expresion -> expresion . MODULO expresion
+    (15) expresion -> expresion . MAS expresion
+    (16) expresion -> expresion . MENOS expresion
+    (17) expresion -> expresion . MULT expresion
+    (18) expresion -> expresion . DIVISION expresion
+    (19) expresion -> expresion . POTENCIA expresion
+    (20) expresion -> expresion . MODULO expresion
 
-    PUNTOCOMA       shift and go to state 21
-    MAS             shift and go to state 22
-    MENOS           shift and go to state 23
-    MULT            shift and go to state 24
-    DIVISION        shift and go to state 25
-    POTENCIA        shift and go to state 26
-    MODULO          shift and go to state 27
+    PUNTOCOMA       shift and go to state 26
+    MAS             shift and go to state 27
+    MENOS           shift and go to state 28
+    MULT            shift and go to state 29
+    DIVISION        shift and go to state 30
+    POTENCIA        shift and go to state 31
+    MODULO          shift and go to state 32
 
 
 state 6
 
-    (6) declaracion -> tipos . ID IGUAL expresion
-    (7) declaracion -> tipos . ID
+    (6) instruccion -> sent_IF .
 
-    ID              shift and go to state 28
+    MENOS           reduce using rule 6 (instruccion -> sent_IF .)
+    PAR1            reduce using rule 6 (instruccion -> sent_IF .)
+    ENTERO          reduce using rule 6 (instruccion -> sent_IF .)
+    DECIMAL         reduce using rule 6 (instruccion -> sent_IF .)
+    CADENA          reduce using rule 6 (instruccion -> sent_IF .)
+    TRUE            reduce using rule 6 (instruccion -> sent_IF .)
+    FALSE           reduce using rule 6 (instruccion -> sent_IF .)
+    CHAR            reduce using rule 6 (instruccion -> sent_IF .)
+    CARACTER        reduce using rule 6 (instruccion -> sent_IF .)
+    INT             reduce using rule 6 (instruccion -> sent_IF .)
+    DOUBLE          reduce using rule 6 (instruccion -> sent_IF .)
+    STRING          reduce using rule 6 (instruccion -> sent_IF .)
+    IF              reduce using rule 6 (instruccion -> sent_IF .)
+    $end            reduce using rule 6 (instruccion -> sent_IF .)
+    LLAVE2          reduce using rule 6 (instruccion -> sent_IF .)
 
 
 state 7
 
-    (14) expresion -> MENOS . expresion
-    (8) expresion -> . expresion MAS expresion
-    (9) expresion -> . expresion MENOS expresion
-    (10) expresion -> . expresion MULT expresion
-    (11) expresion -> . expresion DIVISION expresion
-    (12) expresion -> . expresion POTENCIA expresion
-    (13) expresion -> . expresion MODULO expresion
-    (14) expresion -> . MENOS expresion
-    (15) expresion -> . PAR1 expresion PAR2
-    (16) expresion -> . ENTERO
-    (17) expresion -> . DECIMAL
-    (18) expresion -> . CADENA
-    (19) expresion -> . TRUE
-    (20) expresion -> . FALSE
-    (21) expresion -> . CHAR
-    (22) expresion -> . CARACTER
+    (13) declaracion -> tipos . ID IGUAL expresion
+    (14) declaracion -> tipos . ID
 
-    MENOS           shift and go to state 7
-    PAR1            shift and go to state 8
-    ENTERO          shift and go to state 9
-    DECIMAL         shift and go to state 10
-    CADENA          shift and go to state 11
-    TRUE            shift and go to state 12
-    FALSE           shift and go to state 13
-    CHAR            shift and go to state 30
-    CARACTER        shift and go to state 15
+    ID              shift and go to state 33
 
-    expresion                      shift and go to state 29
 
 state 8
 
-    (15) expresion -> PAR1 . expresion PAR2
-    (8) expresion -> . expresion MAS expresion
-    (9) expresion -> . expresion MENOS expresion
-    (10) expresion -> . expresion MULT expresion
-    (11) expresion -> . expresion DIVISION expresion
-    (12) expresion -> . expresion POTENCIA expresion
-    (13) expresion -> . expresion MODULO expresion
-    (14) expresion -> . MENOS expresion
-    (15) expresion -> . PAR1 expresion PAR2
-    (16) expresion -> . ENTERO
-    (17) expresion -> . DECIMAL
-    (18) expresion -> . CADENA
-    (19) expresion -> . TRUE
-    (20) expresion -> . FALSE
-    (21) expresion -> . CHAR
-    (22) expresion -> . CARACTER
+    (21) expresion -> MENOS . expresion
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
 
-    MENOS           shift and go to state 7
-    PAR1            shift and go to state 8
-    ENTERO          shift and go to state 9
-    DECIMAL         shift and go to state 10
-    CADENA          shift and go to state 11
-    TRUE            shift and go to state 12
-    FALSE           shift and go to state 13
-    CHAR            shift and go to state 30
-    CARACTER        shift and go to state 15
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 35
+    CARACTER        shift and go to state 16
 
-    expresion                      shift and go to state 31
+    expresion                      shift and go to state 34
 
 state 9
 
-    (16) expresion -> ENTERO .
+    (22) expresion -> PAR1 . expresion PAR2
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
 
-    PUNTOCOMA       reduce using rule 16 (expresion -> ENTERO .)
-    MAS             reduce using rule 16 (expresion -> ENTERO .)
-    MENOS           reduce using rule 16 (expresion -> ENTERO .)
-    MULT            reduce using rule 16 (expresion -> ENTERO .)
-    DIVISION        reduce using rule 16 (expresion -> ENTERO .)
-    POTENCIA        reduce using rule 16 (expresion -> ENTERO .)
-    MODULO          reduce using rule 16 (expresion -> ENTERO .)
-    PAR2            reduce using rule 16 (expresion -> ENTERO .)
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 35
+    CARACTER        shift and go to state 16
 
+    expresion                      shift and go to state 36
 
 state 10
 
-    (17) expresion -> DECIMAL .
+    (23) expresion -> ENTERO .
 
-    PUNTOCOMA       reduce using rule 17 (expresion -> DECIMAL .)
-    MAS             reduce using rule 17 (expresion -> DECIMAL .)
-    MENOS           reduce using rule 17 (expresion -> DECIMAL .)
-    MULT            reduce using rule 17 (expresion -> DECIMAL .)
-    DIVISION        reduce using rule 17 (expresion -> DECIMAL .)
-    POTENCIA        reduce using rule 17 (expresion -> DECIMAL .)
-    MODULO          reduce using rule 17 (expresion -> DECIMAL .)
-    PAR2            reduce using rule 17 (expresion -> DECIMAL .)
+    PUNTOCOMA       reduce using rule 23 (expresion -> ENTERO .)
+    MAS             reduce using rule 23 (expresion -> ENTERO .)
+    MENOS           reduce using rule 23 (expresion -> ENTERO .)
+    MULT            reduce using rule 23 (expresion -> ENTERO .)
+    DIVISION        reduce using rule 23 (expresion -> ENTERO .)
+    POTENCIA        reduce using rule 23 (expresion -> ENTERO .)
+    MODULO          reduce using rule 23 (expresion -> ENTERO .)
+    PAR2            reduce using rule 23 (expresion -> ENTERO .)
 
 
 state 11
 
-    (18) expresion -> CADENA .
+    (24) expresion -> DECIMAL .
 
-    PUNTOCOMA       reduce using rule 18 (expresion -> CADENA .)
-    MAS             reduce using rule 18 (expresion -> CADENA .)
-    MENOS           reduce using rule 18 (expresion -> CADENA .)
-    MULT            reduce using rule 18 (expresion -> CADENA .)
-    DIVISION        reduce using rule 18 (expresion -> CADENA .)
-    POTENCIA        reduce using rule 18 (expresion -> CADENA .)
-    MODULO          reduce using rule 18 (expresion -> CADENA .)
-    PAR2            reduce using rule 18 (expresion -> CADENA .)
+    PUNTOCOMA       reduce using rule 24 (expresion -> DECIMAL .)
+    MAS             reduce using rule 24 (expresion -> DECIMAL .)
+    MENOS           reduce using rule 24 (expresion -> DECIMAL .)
+    MULT            reduce using rule 24 (expresion -> DECIMAL .)
+    DIVISION        reduce using rule 24 (expresion -> DECIMAL .)
+    POTENCIA        reduce using rule 24 (expresion -> DECIMAL .)
+    MODULO          reduce using rule 24 (expresion -> DECIMAL .)
+    PAR2            reduce using rule 24 (expresion -> DECIMAL .)
 
 
 state 12
 
-    (19) expresion -> TRUE .
+    (25) expresion -> CADENA .
 
-    PUNTOCOMA       reduce using rule 19 (expresion -> TRUE .)
-    MAS             reduce using rule 19 (expresion -> TRUE .)
-    MENOS           reduce using rule 19 (expresion -> TRUE .)
-    MULT            reduce using rule 19 (expresion -> TRUE .)
-    DIVISION        reduce using rule 19 (expresion -> TRUE .)
-    POTENCIA        reduce using rule 19 (expresion -> TRUE .)
-    MODULO          reduce using rule 19 (expresion -> TRUE .)
-    PAR2            reduce using rule 19 (expresion -> TRUE .)
+    PUNTOCOMA       reduce using rule 25 (expresion -> CADENA .)
+    MAS             reduce using rule 25 (expresion -> CADENA .)
+    MENOS           reduce using rule 25 (expresion -> CADENA .)
+    MULT            reduce using rule 25 (expresion -> CADENA .)
+    DIVISION        reduce using rule 25 (expresion -> CADENA .)
+    POTENCIA        reduce using rule 25 (expresion -> CADENA .)
+    MODULO          reduce using rule 25 (expresion -> CADENA .)
+    PAR2            reduce using rule 25 (expresion -> CADENA .)
 
 
 state 13
 
-    (20) expresion -> FALSE .
+    (26) expresion -> TRUE .
 
-    PUNTOCOMA       reduce using rule 20 (expresion -> FALSE .)
-    MAS             reduce using rule 20 (expresion -> FALSE .)
-    MENOS           reduce using rule 20 (expresion -> FALSE .)
-    MULT            reduce using rule 20 (expresion -> FALSE .)
-    DIVISION        reduce using rule 20 (expresion -> FALSE .)
-    POTENCIA        reduce using rule 20 (expresion -> FALSE .)
-    MODULO          reduce using rule 20 (expresion -> FALSE .)
-    PAR2            reduce using rule 20 (expresion -> FALSE .)
+    PUNTOCOMA       reduce using rule 26 (expresion -> TRUE .)
+    MAS             reduce using rule 26 (expresion -> TRUE .)
+    MENOS           reduce using rule 26 (expresion -> TRUE .)
+    MULT            reduce using rule 26 (expresion -> TRUE .)
+    DIVISION        reduce using rule 26 (expresion -> TRUE .)
+    POTENCIA        reduce using rule 26 (expresion -> TRUE .)
+    MODULO          reduce using rule 26 (expresion -> TRUE .)
+    PAR2            reduce using rule 26 (expresion -> TRUE .)
 
 
 state 14
 
-    (21) expresion -> CHAR .
-    (26) tipos -> CHAR .
+    (27) expresion -> FALSE .
 
-    PUNTOCOMA       reduce using rule 21 (expresion -> CHAR .)
-    MAS             reduce using rule 21 (expresion -> CHAR .)
-    MENOS           reduce using rule 21 (expresion -> CHAR .)
-    MULT            reduce using rule 21 (expresion -> CHAR .)
-    DIVISION        reduce using rule 21 (expresion -> CHAR .)
-    POTENCIA        reduce using rule 21 (expresion -> CHAR .)
-    MODULO          reduce using rule 21 (expresion -> CHAR .)
-    ID              reduce using rule 26 (tipos -> CHAR .)
+    PUNTOCOMA       reduce using rule 27 (expresion -> FALSE .)
+    MAS             reduce using rule 27 (expresion -> FALSE .)
+    MENOS           reduce using rule 27 (expresion -> FALSE .)
+    MULT            reduce using rule 27 (expresion -> FALSE .)
+    DIVISION        reduce using rule 27 (expresion -> FALSE .)
+    POTENCIA        reduce using rule 27 (expresion -> FALSE .)
+    MODULO          reduce using rule 27 (expresion -> FALSE .)
+    PAR2            reduce using rule 27 (expresion -> FALSE .)
 
 
 state 15
 
-    (22) expresion -> CARACTER .
+    (28) expresion -> CHAR .
+    (33) tipos -> CHAR .
 
-    PUNTOCOMA       reduce using rule 22 (expresion -> CARACTER .)
-    MAS             reduce using rule 22 (expresion -> CARACTER .)
-    MENOS           reduce using rule 22 (expresion -> CARACTER .)
-    MULT            reduce using rule 22 (expresion -> CARACTER .)
-    DIVISION        reduce using rule 22 (expresion -> CARACTER .)
-    POTENCIA        reduce using rule 22 (expresion -> CARACTER .)
-    MODULO          reduce using rule 22 (expresion -> CARACTER .)
-    PAR2            reduce using rule 22 (expresion -> CARACTER .)
+    PUNTOCOMA       reduce using rule 28 (expresion -> CHAR .)
+    MAS             reduce using rule 28 (expresion -> CHAR .)
+    MENOS           reduce using rule 28 (expresion -> CHAR .)
+    MULT            reduce using rule 28 (expresion -> CHAR .)
+    DIVISION        reduce using rule 28 (expresion -> CHAR .)
+    POTENCIA        reduce using rule 28 (expresion -> CHAR .)
+    MODULO          reduce using rule 28 (expresion -> CHAR .)
+    ID              reduce using rule 33 (tipos -> CHAR .)
 
 
 state 16
 
-    (23) tipos -> INT .
+    (29) expresion -> CARACTER .
 
-    ID              reduce using rule 23 (tipos -> INT .)
+    PUNTOCOMA       reduce using rule 29 (expresion -> CARACTER .)
+    MAS             reduce using rule 29 (expresion -> CARACTER .)
+    MENOS           reduce using rule 29 (expresion -> CARACTER .)
+    MULT            reduce using rule 29 (expresion -> CARACTER .)
+    DIVISION        reduce using rule 29 (expresion -> CARACTER .)
+    POTENCIA        reduce using rule 29 (expresion -> CARACTER .)
+    MODULO          reduce using rule 29 (expresion -> CARACTER .)
+    PAR2            reduce using rule 29 (expresion -> CARACTER .)
 
 
 state 17
 
-    (24) tipos -> DOUBLE .
+    (7) sent_IF -> if_simple .
 
-    ID              reduce using rule 24 (tipos -> DOUBLE .)
+    MENOS           reduce using rule 7 (sent_IF -> if_simple .)
+    PAR1            reduce using rule 7 (sent_IF -> if_simple .)
+    ENTERO          reduce using rule 7 (sent_IF -> if_simple .)
+    DECIMAL         reduce using rule 7 (sent_IF -> if_simple .)
+    CADENA          reduce using rule 7 (sent_IF -> if_simple .)
+    TRUE            reduce using rule 7 (sent_IF -> if_simple .)
+    FALSE           reduce using rule 7 (sent_IF -> if_simple .)
+    CHAR            reduce using rule 7 (sent_IF -> if_simple .)
+    CARACTER        reduce using rule 7 (sent_IF -> if_simple .)
+    INT             reduce using rule 7 (sent_IF -> if_simple .)
+    DOUBLE          reduce using rule 7 (sent_IF -> if_simple .)
+    STRING          reduce using rule 7 (sent_IF -> if_simple .)
+    IF              reduce using rule 7 (sent_IF -> if_simple .)
+    $end            reduce using rule 7 (sent_IF -> if_simple .)
+    LLAVE2          reduce using rule 7 (sent_IF -> if_simple .)
 
 
 state 18
 
-    (25) tipos -> STRING .
+    (8) sent_IF -> if_else .
 
-    ID              reduce using rule 25 (tipos -> STRING .)
+    MENOS           reduce using rule 8 (sent_IF -> if_else .)
+    PAR1            reduce using rule 8 (sent_IF -> if_else .)
+    ENTERO          reduce using rule 8 (sent_IF -> if_else .)
+    DECIMAL         reduce using rule 8 (sent_IF -> if_else .)
+    CADENA          reduce using rule 8 (sent_IF -> if_else .)
+    TRUE            reduce using rule 8 (sent_IF -> if_else .)
+    FALSE           reduce using rule 8 (sent_IF -> if_else .)
+    CHAR            reduce using rule 8 (sent_IF -> if_else .)
+    CARACTER        reduce using rule 8 (sent_IF -> if_else .)
+    INT             reduce using rule 8 (sent_IF -> if_else .)
+    DOUBLE          reduce using rule 8 (sent_IF -> if_else .)
+    STRING          reduce using rule 8 (sent_IF -> if_else .)
+    IF              reduce using rule 8 (sent_IF -> if_else .)
+    $end            reduce using rule 8 (sent_IF -> if_else .)
+    LLAVE2          reduce using rule 8 (sent_IF -> if_else .)
 
 
 state 19
+
+    (9) sent_IF -> if_elseif .
+
+    MENOS           reduce using rule 9 (sent_IF -> if_elseif .)
+    PAR1            reduce using rule 9 (sent_IF -> if_elseif .)
+    ENTERO          reduce using rule 9 (sent_IF -> if_elseif .)
+    DECIMAL         reduce using rule 9 (sent_IF -> if_elseif .)
+    CADENA          reduce using rule 9 (sent_IF -> if_elseif .)
+    TRUE            reduce using rule 9 (sent_IF -> if_elseif .)
+    FALSE           reduce using rule 9 (sent_IF -> if_elseif .)
+    CHAR            reduce using rule 9 (sent_IF -> if_elseif .)
+    CARACTER        reduce using rule 9 (sent_IF -> if_elseif .)
+    INT             reduce using rule 9 (sent_IF -> if_elseif .)
+    DOUBLE          reduce using rule 9 (sent_IF -> if_elseif .)
+    STRING          reduce using rule 9 (sent_IF -> if_elseif .)
+    IF              reduce using rule 9 (sent_IF -> if_elseif .)
+    $end            reduce using rule 9 (sent_IF -> if_elseif .)
+    LLAVE2          reduce using rule 9 (sent_IF -> if_elseif .)
+
+
+state 20
+
+    (30) tipos -> INT .
+
+    ID              reduce using rule 30 (tipos -> INT .)
+
+
+state 21
+
+    (31) tipos -> DOUBLE .
+
+    ID              reduce using rule 31 (tipos -> DOUBLE .)
+
+
+state 22
+
+    (32) tipos -> STRING .
+
+    ID              reduce using rule 32 (tipos -> STRING .)
+
+
+state 23
+
+    (10) if_simple -> IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
+    (11) if_else -> IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple
+
+    PAR1            shift and go to state 37
+
+
+state 24
 
     (2) instrucciones -> instrucciones instruccion .
 
@@ -427,10 +561,12 @@ state 19
     INT             reduce using rule 2 (instrucciones -> instrucciones instruccion .)
     DOUBLE          reduce using rule 2 (instrucciones -> instrucciones instruccion .)
     STRING          reduce using rule 2 (instrucciones -> instrucciones instruccion .)
+    IF              reduce using rule 2 (instrucciones -> instrucciones instruccion .)
     $end            reduce using rule 2 (instrucciones -> instrucciones instruccion .)
+    LLAVE2          reduce using rule 2 (instrucciones -> instrucciones instruccion .)
 
 
-state 20
+state 25
 
     (4) instruccion -> declaracion PUNTOCOMA .
 
@@ -446,10 +582,12 @@ state 20
     INT             reduce using rule 4 (instruccion -> declaracion PUNTOCOMA .)
     DOUBLE          reduce using rule 4 (instruccion -> declaracion PUNTOCOMA .)
     STRING          reduce using rule 4 (instruccion -> declaracion PUNTOCOMA .)
+    IF              reduce using rule 4 (instruccion -> declaracion PUNTOCOMA .)
     $end            reduce using rule 4 (instruccion -> declaracion PUNTOCOMA .)
+    LLAVE2          reduce using rule 4 (instruccion -> declaracion PUNTOCOMA .)
 
 
-state 21
+state 26
 
     (5) instruccion -> expresion PUNTOCOMA .
 
@@ -465,486 +603,1074 @@ state 21
     INT             reduce using rule 5 (instruccion -> expresion PUNTOCOMA .)
     DOUBLE          reduce using rule 5 (instruccion -> expresion PUNTOCOMA .)
     STRING          reduce using rule 5 (instruccion -> expresion PUNTOCOMA .)
+    IF              reduce using rule 5 (instruccion -> expresion PUNTOCOMA .)
     $end            reduce using rule 5 (instruccion -> expresion PUNTOCOMA .)
+    LLAVE2          reduce using rule 5 (instruccion -> expresion PUNTOCOMA .)
 
-
-state 22
-
-    (8) expresion -> expresion MAS . expresion
-    (8) expresion -> . expresion MAS expresion
-    (9) expresion -> . expresion MENOS expresion
-    (10) expresion -> . expresion MULT expresion
-    (11) expresion -> . expresion DIVISION expresion
-    (12) expresion -> . expresion POTENCIA expresion
-    (13) expresion -> . expresion MODULO expresion
-    (14) expresion -> . MENOS expresion
-    (15) expresion -> . PAR1 expresion PAR2
-    (16) expresion -> . ENTERO
-    (17) expresion -> . DECIMAL
-    (18) expresion -> . CADENA
-    (19) expresion -> . TRUE
-    (20) expresion -> . FALSE
-    (21) expresion -> . CHAR
-    (22) expresion -> . CARACTER
-
-    MENOS           shift and go to state 7
-    PAR1            shift and go to state 8
-    ENTERO          shift and go to state 9
-    DECIMAL         shift and go to state 10
-    CADENA          shift and go to state 11
-    TRUE            shift and go to state 12
-    FALSE           shift and go to state 13
-    CHAR            shift and go to state 30
-    CARACTER        shift and go to state 15
-
-    expresion                      shift and go to state 32
-
-state 23
-
-    (9) expresion -> expresion MENOS . expresion
-    (8) expresion -> . expresion MAS expresion
-    (9) expresion -> . expresion MENOS expresion
-    (10) expresion -> . expresion MULT expresion
-    (11) expresion -> . expresion DIVISION expresion
-    (12) expresion -> . expresion POTENCIA expresion
-    (13) expresion -> . expresion MODULO expresion
-    (14) expresion -> . MENOS expresion
-    (15) expresion -> . PAR1 expresion PAR2
-    (16) expresion -> . ENTERO
-    (17) expresion -> . DECIMAL
-    (18) expresion -> . CADENA
-    (19) expresion -> . TRUE
-    (20) expresion -> . FALSE
-    (21) expresion -> . CHAR
-    (22) expresion -> . CARACTER
-
-    MENOS           shift and go to state 7
-    PAR1            shift and go to state 8
-    ENTERO          shift and go to state 9
-    DECIMAL         shift and go to state 10
-    CADENA          shift and go to state 11
-    TRUE            shift and go to state 12
-    FALSE           shift and go to state 13
-    CHAR            shift and go to state 30
-    CARACTER        shift and go to state 15
-
-    expresion                      shift and go to state 33
-
-state 24
-
-    (10) expresion -> expresion MULT . expresion
-    (8) expresion -> . expresion MAS expresion
-    (9) expresion -> . expresion MENOS expresion
-    (10) expresion -> . expresion MULT expresion
-    (11) expresion -> . expresion DIVISION expresion
-    (12) expresion -> . expresion POTENCIA expresion
-    (13) expresion -> . expresion MODULO expresion
-    (14) expresion -> . MENOS expresion
-    (15) expresion -> . PAR1 expresion PAR2
-    (16) expresion -> . ENTERO
-    (17) expresion -> . DECIMAL
-    (18) expresion -> . CADENA
-    (19) expresion -> . TRUE
-    (20) expresion -> . FALSE
-    (21) expresion -> . CHAR
-    (22) expresion -> . CARACTER
-
-    MENOS           shift and go to state 7
-    PAR1            shift and go to state 8
-    ENTERO          shift and go to state 9
-    DECIMAL         shift and go to state 10
-    CADENA          shift and go to state 11
-    TRUE            shift and go to state 12
-    FALSE           shift and go to state 13
-    CHAR            shift and go to state 30
-    CARACTER        shift and go to state 15
-
-    expresion                      shift and go to state 34
-
-state 25
-
-    (11) expresion -> expresion DIVISION . expresion
-    (8) expresion -> . expresion MAS expresion
-    (9) expresion -> . expresion MENOS expresion
-    (10) expresion -> . expresion MULT expresion
-    (11) expresion -> . expresion DIVISION expresion
-    (12) expresion -> . expresion POTENCIA expresion
-    (13) expresion -> . expresion MODULO expresion
-    (14) expresion -> . MENOS expresion
-    (15) expresion -> . PAR1 expresion PAR2
-    (16) expresion -> . ENTERO
-    (17) expresion -> . DECIMAL
-    (18) expresion -> . CADENA
-    (19) expresion -> . TRUE
-    (20) expresion -> . FALSE
-    (21) expresion -> . CHAR
-    (22) expresion -> . CARACTER
-
-    MENOS           shift and go to state 7
-    PAR1            shift and go to state 8
-    ENTERO          shift and go to state 9
-    DECIMAL         shift and go to state 10
-    CADENA          shift and go to state 11
-    TRUE            shift and go to state 12
-    FALSE           shift and go to state 13
-    CHAR            shift and go to state 30
-    CARACTER        shift and go to state 15
-
-    expresion                      shift and go to state 35
-
-state 26
-
-    (12) expresion -> expresion POTENCIA . expresion
-    (8) expresion -> . expresion MAS expresion
-    (9) expresion -> . expresion MENOS expresion
-    (10) expresion -> . expresion MULT expresion
-    (11) expresion -> . expresion DIVISION expresion
-    (12) expresion -> . expresion POTENCIA expresion
-    (13) expresion -> . expresion MODULO expresion
-    (14) expresion -> . MENOS expresion
-    (15) expresion -> . PAR1 expresion PAR2
-    (16) expresion -> . ENTERO
-    (17) expresion -> . DECIMAL
-    (18) expresion -> . CADENA
-    (19) expresion -> . TRUE
-    (20) expresion -> . FALSE
-    (21) expresion -> . CHAR
-    (22) expresion -> . CARACTER
-
-    MENOS           shift and go to state 7
-    PAR1            shift and go to state 8
-    ENTERO          shift and go to state 9
-    DECIMAL         shift and go to state 10
-    CADENA          shift and go to state 11
-    TRUE            shift and go to state 12
-    FALSE           shift and go to state 13
-    CHAR            shift and go to state 30
-    CARACTER        shift and go to state 15
-
-    expresion                      shift and go to state 36
 
 state 27
 
-    (13) expresion -> expresion MODULO . expresion
-    (8) expresion -> . expresion MAS expresion
-    (9) expresion -> . expresion MENOS expresion
-    (10) expresion -> . expresion MULT expresion
-    (11) expresion -> . expresion DIVISION expresion
-    (12) expresion -> . expresion POTENCIA expresion
-    (13) expresion -> . expresion MODULO expresion
-    (14) expresion -> . MENOS expresion
-    (15) expresion -> . PAR1 expresion PAR2
-    (16) expresion -> . ENTERO
-    (17) expresion -> . DECIMAL
-    (18) expresion -> . CADENA
-    (19) expresion -> . TRUE
-    (20) expresion -> . FALSE
-    (21) expresion -> . CHAR
-    (22) expresion -> . CARACTER
+    (15) expresion -> expresion MAS . expresion
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
 
-    MENOS           shift and go to state 7
-    PAR1            shift and go to state 8
-    ENTERO          shift and go to state 9
-    DECIMAL         shift and go to state 10
-    CADENA          shift and go to state 11
-    TRUE            shift and go to state 12
-    FALSE           shift and go to state 13
-    CHAR            shift and go to state 30
-    CARACTER        shift and go to state 15
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 35
+    CARACTER        shift and go to state 16
 
-    expresion                      shift and go to state 37
+    expresion                      shift and go to state 38
 
 state 28
 
-    (6) declaracion -> tipos ID . IGUAL expresion
-    (7) declaracion -> tipos ID .
+    (16) expresion -> expresion MENOS . expresion
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
 
-    IGUAL           shift and go to state 38
-    PUNTOCOMA       reduce using rule 7 (declaracion -> tipos ID .)
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 35
+    CARACTER        shift and go to state 16
 
+    expresion                      shift and go to state 39
 
 state 29
 
-    (14) expresion -> MENOS expresion .
-    (8) expresion -> expresion . MAS expresion
-    (9) expresion -> expresion . MENOS expresion
-    (10) expresion -> expresion . MULT expresion
-    (11) expresion -> expresion . DIVISION expresion
-    (12) expresion -> expresion . POTENCIA expresion
-    (13) expresion -> expresion . MODULO expresion
+    (17) expresion -> expresion MULT . expresion
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
 
-    PUNTOCOMA       reduce using rule 14 (expresion -> MENOS expresion .)
-    MAS             reduce using rule 14 (expresion -> MENOS expresion .)
-    MENOS           reduce using rule 14 (expresion -> MENOS expresion .)
-    MULT            reduce using rule 14 (expresion -> MENOS expresion .)
-    DIVISION        reduce using rule 14 (expresion -> MENOS expresion .)
-    POTENCIA        reduce using rule 14 (expresion -> MENOS expresion .)
-    MODULO          reduce using rule 14 (expresion -> MENOS expresion .)
-    PAR2            reduce using rule 14 (expresion -> MENOS expresion .)
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 35
+    CARACTER        shift and go to state 16
 
-  ! MAS             [ shift and go to state 22 ]
-  ! MENOS           [ shift and go to state 23 ]
-  ! MULT            [ shift and go to state 24 ]
-  ! DIVISION        [ shift and go to state 25 ]
-  ! POTENCIA        [ shift and go to state 26 ]
-  ! MODULO          [ shift and go to state 27 ]
-
+    expresion                      shift and go to state 40
 
 state 30
 
-    (21) expresion -> CHAR .
+    (18) expresion -> expresion DIVISION . expresion
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
 
-    MAS             reduce using rule 21 (expresion -> CHAR .)
-    MENOS           reduce using rule 21 (expresion -> CHAR .)
-    MULT            reduce using rule 21 (expresion -> CHAR .)
-    DIVISION        reduce using rule 21 (expresion -> CHAR .)
-    POTENCIA        reduce using rule 21 (expresion -> CHAR .)
-    MODULO          reduce using rule 21 (expresion -> CHAR .)
-    PUNTOCOMA       reduce using rule 21 (expresion -> CHAR .)
-    PAR2            reduce using rule 21 (expresion -> CHAR .)
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 35
+    CARACTER        shift and go to state 16
 
+    expresion                      shift and go to state 41
 
 state 31
 
-    (15) expresion -> PAR1 expresion . PAR2
-    (8) expresion -> expresion . MAS expresion
-    (9) expresion -> expresion . MENOS expresion
-    (10) expresion -> expresion . MULT expresion
-    (11) expresion -> expresion . DIVISION expresion
-    (12) expresion -> expresion . POTENCIA expresion
-    (13) expresion -> expresion . MODULO expresion
+    (19) expresion -> expresion POTENCIA . expresion
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
 
-    PAR2            shift and go to state 39
-    MAS             shift and go to state 22
-    MENOS           shift and go to state 23
-    MULT            shift and go to state 24
-    DIVISION        shift and go to state 25
-    POTENCIA        shift and go to state 26
-    MODULO          shift and go to state 27
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 35
+    CARACTER        shift and go to state 16
 
+    expresion                      shift and go to state 42
 
 state 32
 
-    (8) expresion -> expresion MAS expresion .
-    (8) expresion -> expresion . MAS expresion
-    (9) expresion -> expresion . MENOS expresion
-    (10) expresion -> expresion . MULT expresion
-    (11) expresion -> expresion . DIVISION expresion
-    (12) expresion -> expresion . POTENCIA expresion
-    (13) expresion -> expresion . MODULO expresion
+    (20) expresion -> expresion MODULO . expresion
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
 
-    PUNTOCOMA       reduce using rule 8 (expresion -> expresion MAS expresion .)
-    MAS             reduce using rule 8 (expresion -> expresion MAS expresion .)
-    MENOS           reduce using rule 8 (expresion -> expresion MAS expresion .)
-    PAR2            reduce using rule 8 (expresion -> expresion MAS expresion .)
-    MULT            shift and go to state 24
-    DIVISION        shift and go to state 25
-    POTENCIA        shift and go to state 26
-    MODULO          shift and go to state 27
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 35
+    CARACTER        shift and go to state 16
 
-  ! MULT            [ reduce using rule 8 (expresion -> expresion MAS expresion .) ]
-  ! DIVISION        [ reduce using rule 8 (expresion -> expresion MAS expresion .) ]
-  ! POTENCIA        [ reduce using rule 8 (expresion -> expresion MAS expresion .) ]
-  ! MODULO          [ reduce using rule 8 (expresion -> expresion MAS expresion .) ]
-  ! MAS             [ shift and go to state 22 ]
-  ! MENOS           [ shift and go to state 23 ]
-
+    expresion                      shift and go to state 43
 
 state 33
 
-    (9) expresion -> expresion MENOS expresion .
-    (8) expresion -> expresion . MAS expresion
-    (9) expresion -> expresion . MENOS expresion
-    (10) expresion -> expresion . MULT expresion
-    (11) expresion -> expresion . DIVISION expresion
-    (12) expresion -> expresion . POTENCIA expresion
-    (13) expresion -> expresion . MODULO expresion
+    (13) declaracion -> tipos ID . IGUAL expresion
+    (14) declaracion -> tipos ID .
 
-    PUNTOCOMA       reduce using rule 9 (expresion -> expresion MENOS expresion .)
-    MAS             reduce using rule 9 (expresion -> expresion MENOS expresion .)
-    MENOS           reduce using rule 9 (expresion -> expresion MENOS expresion .)
-    PAR2            reduce using rule 9 (expresion -> expresion MENOS expresion .)
-    MULT            shift and go to state 24
-    DIVISION        shift and go to state 25
-    POTENCIA        shift and go to state 26
-    MODULO          shift and go to state 27
-
-  ! MULT            [ reduce using rule 9 (expresion -> expresion MENOS expresion .) ]
-  ! DIVISION        [ reduce using rule 9 (expresion -> expresion MENOS expresion .) ]
-  ! POTENCIA        [ reduce using rule 9 (expresion -> expresion MENOS expresion .) ]
-  ! MODULO          [ reduce using rule 9 (expresion -> expresion MENOS expresion .) ]
-  ! MAS             [ shift and go to state 22 ]
-  ! MENOS           [ shift and go to state 23 ]
+    IGUAL           shift and go to state 44
+    PUNTOCOMA       reduce using rule 14 (declaracion -> tipos ID .)
 
 
 state 34
 
-    (10) expresion -> expresion MULT expresion .
-    (8) expresion -> expresion . MAS expresion
-    (9) expresion -> expresion . MENOS expresion
-    (10) expresion -> expresion . MULT expresion
-    (11) expresion -> expresion . DIVISION expresion
-    (12) expresion -> expresion . POTENCIA expresion
-    (13) expresion -> expresion . MODULO expresion
+    (21) expresion -> MENOS expresion .
+    (15) expresion -> expresion . MAS expresion
+    (16) expresion -> expresion . MENOS expresion
+    (17) expresion -> expresion . MULT expresion
+    (18) expresion -> expresion . DIVISION expresion
+    (19) expresion -> expresion . POTENCIA expresion
+    (20) expresion -> expresion . MODULO expresion
 
-    PUNTOCOMA       reduce using rule 10 (expresion -> expresion MULT expresion .)
-    MAS             reduce using rule 10 (expresion -> expresion MULT expresion .)
-    MENOS           reduce using rule 10 (expresion -> expresion MULT expresion .)
-    MULT            reduce using rule 10 (expresion -> expresion MULT expresion .)
-    DIVISION        reduce using rule 10 (expresion -> expresion MULT expresion .)
-    MODULO          reduce using rule 10 (expresion -> expresion MULT expresion .)
-    PAR2            reduce using rule 10 (expresion -> expresion MULT expresion .)
-    POTENCIA        shift and go to state 26
+    PUNTOCOMA       reduce using rule 21 (expresion -> MENOS expresion .)
+    MAS             reduce using rule 21 (expresion -> MENOS expresion .)
+    MENOS           reduce using rule 21 (expresion -> MENOS expresion .)
+    MULT            reduce using rule 21 (expresion -> MENOS expresion .)
+    DIVISION        reduce using rule 21 (expresion -> MENOS expresion .)
+    POTENCIA        reduce using rule 21 (expresion -> MENOS expresion .)
+    MODULO          reduce using rule 21 (expresion -> MENOS expresion .)
+    PAR2            reduce using rule 21 (expresion -> MENOS expresion .)
 
-  ! POTENCIA        [ reduce using rule 10 (expresion -> expresion MULT expresion .) ]
-  ! MAS             [ shift and go to state 22 ]
-  ! MENOS           [ shift and go to state 23 ]
-  ! MULT            [ shift and go to state 24 ]
-  ! DIVISION        [ shift and go to state 25 ]
-  ! MODULO          [ shift and go to state 27 ]
+  ! MAS             [ shift and go to state 27 ]
+  ! MENOS           [ shift and go to state 28 ]
+  ! MULT            [ shift and go to state 29 ]
+  ! DIVISION        [ shift and go to state 30 ]
+  ! POTENCIA        [ shift and go to state 31 ]
+  ! MODULO          [ shift and go to state 32 ]
 
 
 state 35
 
-    (11) expresion -> expresion DIVISION expresion .
-    (8) expresion -> expresion . MAS expresion
-    (9) expresion -> expresion . MENOS expresion
-    (10) expresion -> expresion . MULT expresion
-    (11) expresion -> expresion . DIVISION expresion
-    (12) expresion -> expresion . POTENCIA expresion
-    (13) expresion -> expresion . MODULO expresion
+    (28) expresion -> CHAR .
 
-    PUNTOCOMA       reduce using rule 11 (expresion -> expresion DIVISION expresion .)
-    MAS             reduce using rule 11 (expresion -> expresion DIVISION expresion .)
-    MENOS           reduce using rule 11 (expresion -> expresion DIVISION expresion .)
-    MULT            reduce using rule 11 (expresion -> expresion DIVISION expresion .)
-    DIVISION        reduce using rule 11 (expresion -> expresion DIVISION expresion .)
-    MODULO          reduce using rule 11 (expresion -> expresion DIVISION expresion .)
-    PAR2            reduce using rule 11 (expresion -> expresion DIVISION expresion .)
-    POTENCIA        shift and go to state 26
-
-  ! POTENCIA        [ reduce using rule 11 (expresion -> expresion DIVISION expresion .) ]
-  ! MAS             [ shift and go to state 22 ]
-  ! MENOS           [ shift and go to state 23 ]
-  ! MULT            [ shift and go to state 24 ]
-  ! DIVISION        [ shift and go to state 25 ]
-  ! MODULO          [ shift and go to state 27 ]
+    MAS             reduce using rule 28 (expresion -> CHAR .)
+    MENOS           reduce using rule 28 (expresion -> CHAR .)
+    MULT            reduce using rule 28 (expresion -> CHAR .)
+    DIVISION        reduce using rule 28 (expresion -> CHAR .)
+    POTENCIA        reduce using rule 28 (expresion -> CHAR .)
+    MODULO          reduce using rule 28 (expresion -> CHAR .)
+    PUNTOCOMA       reduce using rule 28 (expresion -> CHAR .)
+    PAR2            reduce using rule 28 (expresion -> CHAR .)
 
 
 state 36
 
-    (12) expresion -> expresion POTENCIA expresion .
-    (8) expresion -> expresion . MAS expresion
-    (9) expresion -> expresion . MENOS expresion
-    (10) expresion -> expresion . MULT expresion
-    (11) expresion -> expresion . DIVISION expresion
-    (12) expresion -> expresion . POTENCIA expresion
-    (13) expresion -> expresion . MODULO expresion
+    (22) expresion -> PAR1 expresion . PAR2
+    (15) expresion -> expresion . MAS expresion
+    (16) expresion -> expresion . MENOS expresion
+    (17) expresion -> expresion . MULT expresion
+    (18) expresion -> expresion . DIVISION expresion
+    (19) expresion -> expresion . POTENCIA expresion
+    (20) expresion -> expresion . MODULO expresion
 
-    PUNTOCOMA       reduce using rule 12 (expresion -> expresion POTENCIA expresion .)
-    MAS             reduce using rule 12 (expresion -> expresion POTENCIA expresion .)
-    MENOS           reduce using rule 12 (expresion -> expresion POTENCIA expresion .)
-    MULT            reduce using rule 12 (expresion -> expresion POTENCIA expresion .)
-    DIVISION        reduce using rule 12 (expresion -> expresion POTENCIA expresion .)
-    MODULO          reduce using rule 12 (expresion -> expresion POTENCIA expresion .)
-    PAR2            reduce using rule 12 (expresion -> expresion POTENCIA expresion .)
-    POTENCIA        shift and go to state 26
-
-  ! POTENCIA        [ reduce using rule 12 (expresion -> expresion POTENCIA expresion .) ]
-  ! MAS             [ shift and go to state 22 ]
-  ! MENOS           [ shift and go to state 23 ]
-  ! MULT            [ shift and go to state 24 ]
-  ! DIVISION        [ shift and go to state 25 ]
-  ! MODULO          [ shift and go to state 27 ]
+    PAR2            shift and go to state 45
+    MAS             shift and go to state 27
+    MENOS           shift and go to state 28
+    MULT            shift and go to state 29
+    DIVISION        shift and go to state 30
+    POTENCIA        shift and go to state 31
+    MODULO          shift and go to state 32
 
 
 state 37
 
-    (13) expresion -> expresion MODULO expresion .
-    (8) expresion -> expresion . MAS expresion
-    (9) expresion -> expresion . MENOS expresion
-    (10) expresion -> expresion . MULT expresion
-    (11) expresion -> expresion . DIVISION expresion
-    (12) expresion -> expresion . POTENCIA expresion
-    (13) expresion -> expresion . MODULO expresion
+    (10) if_simple -> IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2
+    (11) if_else -> IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
 
-    PUNTOCOMA       reduce using rule 13 (expresion -> expresion MODULO expresion .)
-    MAS             reduce using rule 13 (expresion -> expresion MODULO expresion .)
-    MENOS           reduce using rule 13 (expresion -> expresion MODULO expresion .)
-    MULT            reduce using rule 13 (expresion -> expresion MODULO expresion .)
-    DIVISION        reduce using rule 13 (expresion -> expresion MODULO expresion .)
-    MODULO          reduce using rule 13 (expresion -> expresion MODULO expresion .)
-    PAR2            reduce using rule 13 (expresion -> expresion MODULO expresion .)
-    POTENCIA        shift and go to state 26
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 35
+    CARACTER        shift and go to state 16
 
-  ! POTENCIA        [ reduce using rule 13 (expresion -> expresion MODULO expresion .) ]
-  ! MAS             [ shift and go to state 22 ]
-  ! MENOS           [ shift and go to state 23 ]
-  ! MULT            [ shift and go to state 24 ]
-  ! DIVISION        [ shift and go to state 25 ]
-  ! MODULO          [ shift and go to state 27 ]
-
+    expresion                      shift and go to state 46
 
 state 38
 
-    (6) declaracion -> tipos ID IGUAL . expresion
-    (8) expresion -> . expresion MAS expresion
-    (9) expresion -> . expresion MENOS expresion
-    (10) expresion -> . expresion MULT expresion
-    (11) expresion -> . expresion DIVISION expresion
-    (12) expresion -> . expresion POTENCIA expresion
-    (13) expresion -> . expresion MODULO expresion
-    (14) expresion -> . MENOS expresion
-    (15) expresion -> . PAR1 expresion PAR2
-    (16) expresion -> . ENTERO
-    (17) expresion -> . DECIMAL
-    (18) expresion -> . CADENA
-    (19) expresion -> . TRUE
-    (20) expresion -> . FALSE
-    (21) expresion -> . CHAR
-    (22) expresion -> . CARACTER
+    (15) expresion -> expresion MAS expresion .
+    (15) expresion -> expresion . MAS expresion
+    (16) expresion -> expresion . MENOS expresion
+    (17) expresion -> expresion . MULT expresion
+    (18) expresion -> expresion . DIVISION expresion
+    (19) expresion -> expresion . POTENCIA expresion
+    (20) expresion -> expresion . MODULO expresion
 
-    MENOS           shift and go to state 7
-    PAR1            shift and go to state 8
-    ENTERO          shift and go to state 9
-    DECIMAL         shift and go to state 10
-    CADENA          shift and go to state 11
-    TRUE            shift and go to state 12
-    FALSE           shift and go to state 13
-    CHAR            shift and go to state 30
-    CARACTER        shift and go to state 15
+    PUNTOCOMA       reduce using rule 15 (expresion -> expresion MAS expresion .)
+    MAS             reduce using rule 15 (expresion -> expresion MAS expresion .)
+    MENOS           reduce using rule 15 (expresion -> expresion MAS expresion .)
+    PAR2            reduce using rule 15 (expresion -> expresion MAS expresion .)
+    MULT            shift and go to state 29
+    DIVISION        shift and go to state 30
+    POTENCIA        shift and go to state 31
+    MODULO          shift and go to state 32
 
-    expresion                      shift and go to state 40
+  ! MULT            [ reduce using rule 15 (expresion -> expresion MAS expresion .) ]
+  ! DIVISION        [ reduce using rule 15 (expresion -> expresion MAS expresion .) ]
+  ! POTENCIA        [ reduce using rule 15 (expresion -> expresion MAS expresion .) ]
+  ! MODULO          [ reduce using rule 15 (expresion -> expresion MAS expresion .) ]
+  ! MAS             [ shift and go to state 27 ]
+  ! MENOS           [ shift and go to state 28 ]
+
 
 state 39
 
-    (15) expresion -> PAR1 expresion PAR2 .
+    (16) expresion -> expresion MENOS expresion .
+    (15) expresion -> expresion . MAS expresion
+    (16) expresion -> expresion . MENOS expresion
+    (17) expresion -> expresion . MULT expresion
+    (18) expresion -> expresion . DIVISION expresion
+    (19) expresion -> expresion . POTENCIA expresion
+    (20) expresion -> expresion . MODULO expresion
 
-    PUNTOCOMA       reduce using rule 15 (expresion -> PAR1 expresion PAR2 .)
-    MAS             reduce using rule 15 (expresion -> PAR1 expresion PAR2 .)
-    MENOS           reduce using rule 15 (expresion -> PAR1 expresion PAR2 .)
-    MULT            reduce using rule 15 (expresion -> PAR1 expresion PAR2 .)
-    DIVISION        reduce using rule 15 (expresion -> PAR1 expresion PAR2 .)
-    POTENCIA        reduce using rule 15 (expresion -> PAR1 expresion PAR2 .)
-    MODULO          reduce using rule 15 (expresion -> PAR1 expresion PAR2 .)
-    PAR2            reduce using rule 15 (expresion -> PAR1 expresion PAR2 .)
+    PUNTOCOMA       reduce using rule 16 (expresion -> expresion MENOS expresion .)
+    MAS             reduce using rule 16 (expresion -> expresion MENOS expresion .)
+    MENOS           reduce using rule 16 (expresion -> expresion MENOS expresion .)
+    PAR2            reduce using rule 16 (expresion -> expresion MENOS expresion .)
+    MULT            shift and go to state 29
+    DIVISION        shift and go to state 30
+    POTENCIA        shift and go to state 31
+    MODULO          shift and go to state 32
+
+  ! MULT            [ reduce using rule 16 (expresion -> expresion MENOS expresion .) ]
+  ! DIVISION        [ reduce using rule 16 (expresion -> expresion MENOS expresion .) ]
+  ! POTENCIA        [ reduce using rule 16 (expresion -> expresion MENOS expresion .) ]
+  ! MODULO          [ reduce using rule 16 (expresion -> expresion MENOS expresion .) ]
+  ! MAS             [ shift and go to state 27 ]
+  ! MENOS           [ shift and go to state 28 ]
 
 
 state 40
 
-    (6) declaracion -> tipos ID IGUAL expresion .
-    (8) expresion -> expresion . MAS expresion
-    (9) expresion -> expresion . MENOS expresion
-    (10) expresion -> expresion . MULT expresion
-    (11) expresion -> expresion . DIVISION expresion
-    (12) expresion -> expresion . POTENCIA expresion
-    (13) expresion -> expresion . MODULO expresion
+    (17) expresion -> expresion MULT expresion .
+    (15) expresion -> expresion . MAS expresion
+    (16) expresion -> expresion . MENOS expresion
+    (17) expresion -> expresion . MULT expresion
+    (18) expresion -> expresion . DIVISION expresion
+    (19) expresion -> expresion . POTENCIA expresion
+    (20) expresion -> expresion . MODULO expresion
 
-    PUNTOCOMA       reduce using rule 6 (declaracion -> tipos ID IGUAL expresion .)
-    MAS             shift and go to state 22
-    MENOS           shift and go to state 23
-    MULT            shift and go to state 24
-    DIVISION        shift and go to state 25
-    POTENCIA        shift and go to state 26
-    MODULO          shift and go to state 27
+    PUNTOCOMA       reduce using rule 17 (expresion -> expresion MULT expresion .)
+    MAS             reduce using rule 17 (expresion -> expresion MULT expresion .)
+    MENOS           reduce using rule 17 (expresion -> expresion MULT expresion .)
+    MULT            reduce using rule 17 (expresion -> expresion MULT expresion .)
+    DIVISION        reduce using rule 17 (expresion -> expresion MULT expresion .)
+    MODULO          reduce using rule 17 (expresion -> expresion MULT expresion .)
+    PAR2            reduce using rule 17 (expresion -> expresion MULT expresion .)
+    POTENCIA        shift and go to state 31
+
+  ! POTENCIA        [ reduce using rule 17 (expresion -> expresion MULT expresion .) ]
+  ! MAS             [ shift and go to state 27 ]
+  ! MENOS           [ shift and go to state 28 ]
+  ! MULT            [ shift and go to state 29 ]
+  ! DIVISION        [ shift and go to state 30 ]
+  ! MODULO          [ shift and go to state 32 ]
+
+
+state 41
+
+    (18) expresion -> expresion DIVISION expresion .
+    (15) expresion -> expresion . MAS expresion
+    (16) expresion -> expresion . MENOS expresion
+    (17) expresion -> expresion . MULT expresion
+    (18) expresion -> expresion . DIVISION expresion
+    (19) expresion -> expresion . POTENCIA expresion
+    (20) expresion -> expresion . MODULO expresion
+
+    PUNTOCOMA       reduce using rule 18 (expresion -> expresion DIVISION expresion .)
+    MAS             reduce using rule 18 (expresion -> expresion DIVISION expresion .)
+    MENOS           reduce using rule 18 (expresion -> expresion DIVISION expresion .)
+    MULT            reduce using rule 18 (expresion -> expresion DIVISION expresion .)
+    DIVISION        reduce using rule 18 (expresion -> expresion DIVISION expresion .)
+    MODULO          reduce using rule 18 (expresion -> expresion DIVISION expresion .)
+    PAR2            reduce using rule 18 (expresion -> expresion DIVISION expresion .)
+    POTENCIA        shift and go to state 31
+
+  ! POTENCIA        [ reduce using rule 18 (expresion -> expresion DIVISION expresion .) ]
+  ! MAS             [ shift and go to state 27 ]
+  ! MENOS           [ shift and go to state 28 ]
+  ! MULT            [ shift and go to state 29 ]
+  ! DIVISION        [ shift and go to state 30 ]
+  ! MODULO          [ shift and go to state 32 ]
+
+
+state 42
+
+    (19) expresion -> expresion POTENCIA expresion .
+    (15) expresion -> expresion . MAS expresion
+    (16) expresion -> expresion . MENOS expresion
+    (17) expresion -> expresion . MULT expresion
+    (18) expresion -> expresion . DIVISION expresion
+    (19) expresion -> expresion . POTENCIA expresion
+    (20) expresion -> expresion . MODULO expresion
+
+    PUNTOCOMA       reduce using rule 19 (expresion -> expresion POTENCIA expresion .)
+    MAS             reduce using rule 19 (expresion -> expresion POTENCIA expresion .)
+    MENOS           reduce using rule 19 (expresion -> expresion POTENCIA expresion .)
+    MULT            reduce using rule 19 (expresion -> expresion POTENCIA expresion .)
+    DIVISION        reduce using rule 19 (expresion -> expresion POTENCIA expresion .)
+    MODULO          reduce using rule 19 (expresion -> expresion POTENCIA expresion .)
+    PAR2            reduce using rule 19 (expresion -> expresion POTENCIA expresion .)
+    POTENCIA        shift and go to state 31
+
+  ! POTENCIA        [ reduce using rule 19 (expresion -> expresion POTENCIA expresion .) ]
+  ! MAS             [ shift and go to state 27 ]
+  ! MENOS           [ shift and go to state 28 ]
+  ! MULT            [ shift and go to state 29 ]
+  ! DIVISION        [ shift and go to state 30 ]
+  ! MODULO          [ shift and go to state 32 ]
+
+
+state 43
+
+    (20) expresion -> expresion MODULO expresion .
+    (15) expresion -> expresion . MAS expresion
+    (16) expresion -> expresion . MENOS expresion
+    (17) expresion -> expresion . MULT expresion
+    (18) expresion -> expresion . DIVISION expresion
+    (19) expresion -> expresion . POTENCIA expresion
+    (20) expresion -> expresion . MODULO expresion
+
+    PUNTOCOMA       reduce using rule 20 (expresion -> expresion MODULO expresion .)
+    MAS             reduce using rule 20 (expresion -> expresion MODULO expresion .)
+    MENOS           reduce using rule 20 (expresion -> expresion MODULO expresion .)
+    MULT            reduce using rule 20 (expresion -> expresion MODULO expresion .)
+    DIVISION        reduce using rule 20 (expresion -> expresion MODULO expresion .)
+    MODULO          reduce using rule 20 (expresion -> expresion MODULO expresion .)
+    PAR2            reduce using rule 20 (expresion -> expresion MODULO expresion .)
+    POTENCIA        shift and go to state 31
+
+  ! POTENCIA        [ reduce using rule 20 (expresion -> expresion MODULO expresion .) ]
+  ! MAS             [ shift and go to state 27 ]
+  ! MENOS           [ shift and go to state 28 ]
+  ! MULT            [ shift and go to state 29 ]
+  ! DIVISION        [ shift and go to state 30 ]
+  ! MODULO          [ shift and go to state 32 ]
+
+
+state 44
+
+    (13) declaracion -> tipos ID IGUAL . expresion
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
+
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 35
+    CARACTER        shift and go to state 16
+
+    expresion                      shift and go to state 47
+
+state 45
+
+    (22) expresion -> PAR1 expresion PAR2 .
+
+    PUNTOCOMA       reduce using rule 22 (expresion -> PAR1 expresion PAR2 .)
+    MAS             reduce using rule 22 (expresion -> PAR1 expresion PAR2 .)
+    MENOS           reduce using rule 22 (expresion -> PAR1 expresion PAR2 .)
+    MULT            reduce using rule 22 (expresion -> PAR1 expresion PAR2 .)
+    DIVISION        reduce using rule 22 (expresion -> PAR1 expresion PAR2 .)
+    POTENCIA        reduce using rule 22 (expresion -> PAR1 expresion PAR2 .)
+    MODULO          reduce using rule 22 (expresion -> PAR1 expresion PAR2 .)
+    PAR2            reduce using rule 22 (expresion -> PAR1 expresion PAR2 .)
+
+
+state 46
+
+    (10) if_simple -> IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2
+    (11) if_else -> IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple
+    (15) expresion -> expresion . MAS expresion
+    (16) expresion -> expresion . MENOS expresion
+    (17) expresion -> expresion . MULT expresion
+    (18) expresion -> expresion . DIVISION expresion
+    (19) expresion -> expresion . POTENCIA expresion
+    (20) expresion -> expresion . MODULO expresion
+
+    PAR2            shift and go to state 48
+    MAS             shift and go to state 27
+    MENOS           shift and go to state 28
+    MULT            shift and go to state 29
+    DIVISION        shift and go to state 30
+    POTENCIA        shift and go to state 31
+    MODULO          shift and go to state 32
+
+
+state 47
+
+    (13) declaracion -> tipos ID IGUAL expresion .
+    (15) expresion -> expresion . MAS expresion
+    (16) expresion -> expresion . MENOS expresion
+    (17) expresion -> expresion . MULT expresion
+    (18) expresion -> expresion . DIVISION expresion
+    (19) expresion -> expresion . POTENCIA expresion
+    (20) expresion -> expresion . MODULO expresion
+
+    PUNTOCOMA       reduce using rule 13 (declaracion -> tipos ID IGUAL expresion .)
+    MAS             shift and go to state 27
+    MENOS           shift and go to state 28
+    MULT            shift and go to state 29
+    DIVISION        shift and go to state 30
+    POTENCIA        shift and go to state 31
+    MODULO          shift and go to state 32
+
+
+state 48
+
+    (10) if_simple -> IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2
+    (11) if_else -> IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2 ELSE if_simple
+
+    LLAVE1          shift and go to state 49
+
+
+state 49
+
+    (10) if_simple -> IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2
+    (11) if_else -> IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2 ELSE if_simple
+    (2) instrucciones -> . instrucciones instruccion
+    (3) instrucciones -> . instruccion
+    (4) instruccion -> . declaracion PUNTOCOMA
+    (5) instruccion -> . expresion PUNTOCOMA
+    (6) instruccion -> . sent_IF
+    (13) declaracion -> . tipos ID IGUAL expresion
+    (14) declaracion -> . tipos ID
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
+    (7) sent_IF -> . if_simple
+    (8) sent_IF -> . if_else
+    (9) sent_IF -> . if_elseif
+    (30) tipos -> . INT
+    (31) tipos -> . DOUBLE
+    (32) tipos -> . STRING
+    (33) tipos -> . CHAR
+    (10) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
+    (11) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple
+
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 15
+    CARACTER        shift and go to state 16
+    INT             shift and go to state 20
+    DOUBLE          shift and go to state 21
+    STRING          shift and go to state 22
+    IF              shift and go to state 23
+
+    expresion                      shift and go to state 5
+    instrucciones                  shift and go to state 50
+    if_simple                      shift and go to state 17
+    instruccion                    shift and go to state 3
+    declaracion                    shift and go to state 4
+    sent_IF                        shift and go to state 6
+    tipos                          shift and go to state 7
+    if_else                        shift and go to state 18
+    if_elseif                      shift and go to state 19
+
+state 50
+
+    (10) if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2
+    (11) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2 ELSE if_simple
+    (2) instrucciones -> instrucciones . instruccion
+    (4) instruccion -> . declaracion PUNTOCOMA
+    (5) instruccion -> . expresion PUNTOCOMA
+    (6) instruccion -> . sent_IF
+    (13) declaracion -> . tipos ID IGUAL expresion
+    (14) declaracion -> . tipos ID
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
+    (7) sent_IF -> . if_simple
+    (8) sent_IF -> . if_else
+    (9) sent_IF -> . if_elseif
+    (30) tipos -> . INT
+    (31) tipos -> . DOUBLE
+    (32) tipos -> . STRING
+    (33) tipos -> . CHAR
+    (10) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
+    (11) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple
+
+    LLAVE2          shift and go to state 51
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 15
+    CARACTER        shift and go to state 16
+    INT             shift and go to state 20
+    DOUBLE          shift and go to state 21
+    STRING          shift and go to state 22
+    IF              shift and go to state 23
+
+    expresion                      shift and go to state 5
+    if_simple                      shift and go to state 17
+    instruccion                    shift and go to state 24
+    declaracion                    shift and go to state 4
+    sent_IF                        shift and go to state 6
+    tipos                          shift and go to state 7
+    if_else                        shift and go to state 18
+    if_elseif                      shift and go to state 19
+
+state 51
+
+    (10) if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .
+    (11) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 . ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 . ELSE if_simple
+
+    MENOS           reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    PAR1            reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    ENTERO          reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    DECIMAL         reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    CADENA          reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    TRUE            reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    FALSE           reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    CHAR            reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    CARACTER        reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    INT             reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    DOUBLE          reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    STRING          reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    IF              reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    $end            reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    LLAVE2          reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    ELSE            shift and go to state 52
+
+
+state 52
+
+    (11) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE . LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE . if_simple
+    (10) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
+
+    LLAVE1          shift and go to state 54
+    IF              shift and go to state 53
+
+    if_simple                      shift and go to state 55
+
+state 53
+
+    (10) if_simple -> IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
+
+    PAR1            shift and go to state 56
+
+
+state 54
+
+    (11) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 . instrucciones LLAVE2
+    (2) instrucciones -> . instrucciones instruccion
+    (3) instrucciones -> . instruccion
+    (4) instruccion -> . declaracion PUNTOCOMA
+    (5) instruccion -> . expresion PUNTOCOMA
+    (6) instruccion -> . sent_IF
+    (13) declaracion -> . tipos ID IGUAL expresion
+    (14) declaracion -> . tipos ID
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
+    (7) sent_IF -> . if_simple
+    (8) sent_IF -> . if_else
+    (9) sent_IF -> . if_elseif
+    (30) tipos -> . INT
+    (31) tipos -> . DOUBLE
+    (32) tipos -> . STRING
+    (33) tipos -> . CHAR
+    (10) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
+    (11) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple
+
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 15
+    CARACTER        shift and go to state 16
+    INT             shift and go to state 20
+    DOUBLE          shift and go to state 21
+    STRING          shift and go to state 22
+    IF              shift and go to state 23
+
+    expresion                      shift and go to state 5
+    instrucciones                  shift and go to state 57
+    instruccion                    shift and go to state 3
+    declaracion                    shift and go to state 4
+    sent_IF                        shift and go to state 6
+    tipos                          shift and go to state 7
+    if_simple                      shift and go to state 17
+    if_else                        shift and go to state 18
+    if_elseif                      shift and go to state 19
+
+state 55
+
+    (12) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .
+
+    MENOS           reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    PAR1            reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    ENTERO          reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    DECIMAL         reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    CADENA          reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    TRUE            reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    FALSE           reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    CHAR            reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    CARACTER        reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    INT             reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    DOUBLE          reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    STRING          reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    IF              reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    $end            reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+    LLAVE2          reduce using rule 12 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple .)
+
+
+state 56
+
+    (10) if_simple -> IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
+
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 35
+    CARACTER        shift and go to state 16
+
+    expresion                      shift and go to state 58
+
+state 57
+
+    (11) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones . LLAVE2
+    (2) instrucciones -> instrucciones . instruccion
+    (4) instruccion -> . declaracion PUNTOCOMA
+    (5) instruccion -> . expresion PUNTOCOMA
+    (6) instruccion -> . sent_IF
+    (13) declaracion -> . tipos ID IGUAL expresion
+    (14) declaracion -> . tipos ID
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
+    (7) sent_IF -> . if_simple
+    (8) sent_IF -> . if_else
+    (9) sent_IF -> . if_elseif
+    (30) tipos -> . INT
+    (31) tipos -> . DOUBLE
+    (32) tipos -> . STRING
+    (33) tipos -> . CHAR
+    (10) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
+    (11) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple
+
+    LLAVE2          shift and go to state 59
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 15
+    CARACTER        shift and go to state 16
+    INT             shift and go to state 20
+    DOUBLE          shift and go to state 21
+    STRING          shift and go to state 22
+    IF              shift and go to state 23
+
+    expresion                      shift and go to state 5
+    instruccion                    shift and go to state 24
+    declaracion                    shift and go to state 4
+    sent_IF                        shift and go to state 6
+    tipos                          shift and go to state 7
+    if_simple                      shift and go to state 17
+    if_else                        shift and go to state 18
+    if_elseif                      shift and go to state 19
+
+state 58
+
+    (10) if_simple -> IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2
+    (15) expresion -> expresion . MAS expresion
+    (16) expresion -> expresion . MENOS expresion
+    (17) expresion -> expresion . MULT expresion
+    (18) expresion -> expresion . DIVISION expresion
+    (19) expresion -> expresion . POTENCIA expresion
+    (20) expresion -> expresion . MODULO expresion
+
+    PAR2            shift and go to state 60
+    MAS             shift and go to state 27
+    MENOS           shift and go to state 28
+    MULT            shift and go to state 29
+    DIVISION        shift and go to state 30
+    POTENCIA        shift and go to state 31
+    MODULO          shift and go to state 32
+
+
+state 59
+
+    (11) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .
+
+    MENOS           reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    PAR1            reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    ENTERO          reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    DECIMAL         reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    CADENA          reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    TRUE            reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    FALSE           reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    CHAR            reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    CARACTER        reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    INT             reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    DOUBLE          reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    STRING          reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    IF              reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    $end            reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    LLAVE2          reduce using rule 11 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+
+
+state 60
+
+    (10) if_simple -> IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2
+
+    LLAVE1          shift and go to state 61
+
+
+state 61
+
+    (10) if_simple -> IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2
+    (2) instrucciones -> . instrucciones instruccion
+    (3) instrucciones -> . instruccion
+    (4) instruccion -> . declaracion PUNTOCOMA
+    (5) instruccion -> . expresion PUNTOCOMA
+    (6) instruccion -> . sent_IF
+    (13) declaracion -> . tipos ID IGUAL expresion
+    (14) declaracion -> . tipos ID
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
+    (7) sent_IF -> . if_simple
+    (8) sent_IF -> . if_else
+    (9) sent_IF -> . if_elseif
+    (30) tipos -> . INT
+    (31) tipos -> . DOUBLE
+    (32) tipos -> . STRING
+    (33) tipos -> . CHAR
+    (10) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
+    (11) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple
+
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 15
+    CARACTER        shift and go to state 16
+    INT             shift and go to state 20
+    DOUBLE          shift and go to state 21
+    STRING          shift and go to state 22
+    IF              shift and go to state 23
+
+    expresion                      shift and go to state 5
+    instrucciones                  shift and go to state 62
+    instruccion                    shift and go to state 3
+    declaracion                    shift and go to state 4
+    sent_IF                        shift and go to state 6
+    tipos                          shift and go to state 7
+    if_simple                      shift and go to state 17
+    if_else                        shift and go to state 18
+    if_elseif                      shift and go to state 19
+
+state 62
+
+    (10) if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2
+    (2) instrucciones -> instrucciones . instruccion
+    (4) instruccion -> . declaracion PUNTOCOMA
+    (5) instruccion -> . expresion PUNTOCOMA
+    (6) instruccion -> . sent_IF
+    (13) declaracion -> . tipos ID IGUAL expresion
+    (14) declaracion -> . tipos ID
+    (15) expresion -> . expresion MAS expresion
+    (16) expresion -> . expresion MENOS expresion
+    (17) expresion -> . expresion MULT expresion
+    (18) expresion -> . expresion DIVISION expresion
+    (19) expresion -> . expresion POTENCIA expresion
+    (20) expresion -> . expresion MODULO expresion
+    (21) expresion -> . MENOS expresion
+    (22) expresion -> . PAR1 expresion PAR2
+    (23) expresion -> . ENTERO
+    (24) expresion -> . DECIMAL
+    (25) expresion -> . CADENA
+    (26) expresion -> . TRUE
+    (27) expresion -> . FALSE
+    (28) expresion -> . CHAR
+    (29) expresion -> . CARACTER
+    (7) sent_IF -> . if_simple
+    (8) sent_IF -> . if_else
+    (9) sent_IF -> . if_elseif
+    (30) tipos -> . INT
+    (31) tipos -> . DOUBLE
+    (32) tipos -> . STRING
+    (33) tipos -> . CHAR
+    (10) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
+    (11) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (12) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple
+
+    LLAVE2          shift and go to state 63
+    MENOS           shift and go to state 8
+    PAR1            shift and go to state 9
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    CADENA          shift and go to state 12
+    TRUE            shift and go to state 13
+    FALSE           shift and go to state 14
+    CHAR            shift and go to state 15
+    CARACTER        shift and go to state 16
+    INT             shift and go to state 20
+    DOUBLE          shift and go to state 21
+    STRING          shift and go to state 22
+    IF              shift and go to state 23
+
+    expresion                      shift and go to state 5
+    instruccion                    shift and go to state 24
+    declaracion                    shift and go to state 4
+    sent_IF                        shift and go to state 6
+    tipos                          shift and go to state 7
+    if_simple                      shift and go to state 17
+    if_else                        shift and go to state 18
+    if_elseif                      shift and go to state 19
+
+state 63
+
+    (10) if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .
+
+    MENOS           reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    PAR1            reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    ENTERO          reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    DECIMAL         reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    CADENA          reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    TRUE            reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    FALSE           reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    CHAR            reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    CARACTER        reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    INT             reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    DOUBLE          reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    STRING          reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    IF              reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    $end            reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
+    LLAVE2          reduce using rule 10 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
 

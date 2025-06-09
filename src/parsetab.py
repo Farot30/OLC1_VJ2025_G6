@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftMASMENOSleftMULTDIVISIONMODULOrightPOTENCIArightUMENOSBOOL CADENA CARACTER CHAR DECIMAL DIVISION DOUBLE ENTERO FALSE ID IGUAL INT MAS MENOR MENOS MODULO MULT PAR1 PAR2 POTENCIA PUNTOCOMA STRING TRUEinicio : instruccionesinstrucciones : instrucciones instruccion\n                     | instruccioninstruccion : declaracion PUNTOCOMA\n            | expresion PUNTOCOMAdeclaracion : tipos ID IGUAL expresiondeclaracion : tipos ID expresion : expresion MAS expresion\n                 | expresion MENOS expresion\n                 | expresion MULT expresion\n                 | expresion DIVISION expresion\n                 | expresion POTENCIA expresion\n                 | expresion MODULO expresionexpresion : MENOS expresion %prec UMENOSexpresion : PAR1 expresion PAR2expresion : ENTEROexpresion : DECIMALexpresion : CADENAexpresion : TRUE\n                 | FALSEexpresion : CHARexpresion : CARACTERtipos : INT\n             | DOUBLE\n             | STRING\n             | CHAR'
+_lr_signature = 'leftMASMENOSleftMULTDIVISIONMODULOrightPOTENCIArightUMENOSBOOL CADENA CARACTER CHAR DECIMAL DIVISION DOUBLE ELSE ENTERO FALSE ID IF IGUAL INT LLAVE1 LLAVE2 MAS MENOR MENOS MODULO MULT PAR1 PAR2 POTENCIA PUNTOCOMA STRING TRUEinicio : instruccionesinstrucciones : instrucciones instruccion\n                     | instruccioninstruccion : declaracion PUNTOCOMA\n            | expresion PUNTOCOMA\n            | sent_IFsent_IF : if_simple\n            | if_else\n            | if_elseifif_simple : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2if_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simpledeclaracion : tipos ID IGUAL expresiondeclaracion : tipos ID expresion : expresion MAS expresion\n                 | expresion MENOS expresion\n                 | expresion MULT expresion\n                 | expresion DIVISION expresion\n                 | expresion POTENCIA expresion\n                 | expresion MODULO expresionexpresion : MENOS expresion %prec UMENOSexpresion : PAR1 expresion PAR2expresion : ENTEROexpresion : DECIMALexpresion : CADENAexpresion : TRUE\n                 | FALSEexpresion : CHARexpresion : CARACTERtipos : INT\n             | DOUBLE\n             | STRING\n             | CHAR'
     
-_lr_action_items = {'MENOS':([0,2,3,5,7,8,9,10,11,12,13,14,15,19,20,21,22,23,24,25,26,27,29,30,31,32,33,34,35,36,37,38,39,40,],[7,7,-3,23,7,7,-16,-17,-18,-19,-20,-21,-22,-2,-4,-5,7,7,7,7,7,7,-14,-21,23,-8,-9,-10,-11,-12,-13,7,-15,23,]),'PAR1':([0,2,3,7,8,19,20,21,22,23,24,25,26,27,38,],[8,8,-3,8,8,-2,-4,-5,8,8,8,8,8,8,8,]),'ENTERO':([0,2,3,7,8,19,20,21,22,23,24,25,26,27,38,],[9,9,-3,9,9,-2,-4,-5,9,9,9,9,9,9,9,]),'DECIMAL':([0,2,3,7,8,19,20,21,22,23,24,25,26,27,38,],[10,10,-3,10,10,-2,-4,-5,10,10,10,10,10,10,10,]),'CADENA':([0,2,3,7,8,19,20,21,22,23,24,25,26,27,38,],[11,11,-3,11,11,-2,-4,-5,11,11,11,11,11,11,11,]),'TRUE':([0,2,3,7,8,19,20,21,22,23,24,25,26,27,38,],[12,12,-3,12,12,-2,-4,-5,12,12,12,12,12,12,12,]),'FALSE':([0,2,3,7,8,19,20,21,22,23,24,25,26,27,38,],[13,13,-3,13,13,-2,-4,-5,13,13,13,13,13,13,13,]),'CHAR':([0,2,3,7,8,19,20,21,22,23,24,25,26,27,38,],[14,14,-3,30,30,-2,-4,-5,30,30,30,30,30,30,30,]),'CARACTER':([0,2,3,7,8,19,20,21,22,23,24,25,26,27,38,],[15,15,-3,15,15,-2,-4,-5,15,15,15,15,15,15,15,]),'INT':([0,2,3,19,20,21,],[16,16,-3,-2,-4,-5,]),'DOUBLE':([0,2,3,19,20,21,],[17,17,-3,-2,-4,-5,]),'STRING':([0,2,3,19,20,21,],[18,18,-3,-2,-4,-5,]),'$end':([1,2,3,19,20,21,],[0,-1,-3,-2,-4,-5,]),'PUNTOCOMA':([4,5,9,10,11,12,13,14,15,28,29,30,32,33,34,35,36,37,39,40,],[20,21,-16,-17,-18,-19,-20,-21,-22,-7,-14,-21,-8,-9,-10,-11,-12,-13,-15,-6,]),'MAS':([5,9,10,11,12,13,14,15,29,30,31,32,33,34,35,36,37,39,40,],[22,-16,-17,-18,-19,-20,-21,-22,-14,-21,22,-8,-9,-10,-11,-12,-13,-15,22,]),'MULT':([5,9,10,11,12,13,14,15,29,30,31,32,33,34,35,36,37,39,40,],[24,-16,-17,-18,-19,-20,-21,-22,-14,-21,24,24,24,-10,-11,-12,-13,-15,24,]),'DIVISION':([5,9,10,11,12,13,14,15,29,30,31,32,33,34,35,36,37,39,40,],[25,-16,-17,-18,-19,-20,-21,-22,-14,-21,25,25,25,-10,-11,-12,-13,-15,25,]),'POTENCIA':([5,9,10,11,12,13,14,15,29,30,31,32,33,34,35,36,37,39,40,],[26,-16,-17,-18,-19,-20,-21,-22,-14,-21,26,26,26,26,26,26,26,-15,26,]),'MODULO':([5,9,10,11,12,13,14,15,29,30,31,32,33,34,35,36,37,39,40,],[27,-16,-17,-18,-19,-20,-21,-22,-14,-21,27,27,27,-10,-11,-12,-13,-15,27,]),'ID':([6,14,16,17,18,],[28,-26,-23,-24,-25,]),'PAR2':([9,10,11,12,13,15,29,30,31,32,33,34,35,36,37,39,],[-16,-17,-18,-19,-20,-22,-14,-21,39,-8,-9,-10,-11,-12,-13,-15,]),'IGUAL':([28,],[38,]),}
+_lr_action_items = {'MENOS':([0,2,3,5,6,8,9,10,11,12,13,14,15,16,17,18,19,24,25,26,27,28,29,30,31,32,34,35,36,37,38,39,40,41,42,43,44,45,46,47,49,50,51,54,55,56,57,58,59,61,62,63,],[8,8,-3,28,-6,8,8,-23,-24,-25,-26,-27,-28,-29,-7,-8,-9,-2,-4,-5,8,8,8,8,8,8,-21,-28,28,8,-15,-16,-17,-18,-19,-20,8,-22,28,28,8,8,-10,8,-12,8,8,28,-11,8,8,-10,]),'PAR1':([0,2,3,6,8,9,17,18,19,23,24,25,26,27,28,29,30,31,32,37,44,49,50,51,53,54,55,56,57,59,61,62,63,],[9,9,-3,-6,9,9,-7,-8,-9,37,-2,-4,-5,9,9,9,9,9,9,9,9,9,9,-10,56,9,-12,9,9,-11,9,9,-10,]),'ENTERO':([0,2,3,6,8,9,17,18,19,24,25,26,27,28,29,30,31,32,37,44,49,50,51,54,55,56,57,59,61,62,63,],[10,10,-3,-6,10,10,-7,-8,-9,-2,-4,-5,10,10,10,10,10,10,10,10,10,10,-10,10,-12,10,10,-11,10,10,-10,]),'DECIMAL':([0,2,3,6,8,9,17,18,19,24,25,26,27,28,29,30,31,32,37,44,49,50,51,54,55,56,57,59,61,62,63,],[11,11,-3,-6,11,11,-7,-8,-9,-2,-4,-5,11,11,11,11,11,11,11,11,11,11,-10,11,-12,11,11,-11,11,11,-10,]),'CADENA':([0,2,3,6,8,9,17,18,19,24,25,26,27,28,29,30,31,32,37,44,49,50,51,54,55,56,57,59,61,62,63,],[12,12,-3,-6,12,12,-7,-8,-9,-2,-4,-5,12,12,12,12,12,12,12,12,12,12,-10,12,-12,12,12,-11,12,12,-10,]),'TRUE':([0,2,3,6,8,9,17,18,19,24,25,26,27,28,29,30,31,32,37,44,49,50,51,54,55,56,57,59,61,62,63,],[13,13,-3,-6,13,13,-7,-8,-9,-2,-4,-5,13,13,13,13,13,13,13,13,13,13,-10,13,-12,13,13,-11,13,13,-10,]),'FALSE':([0,2,3,6,8,9,17,18,19,24,25,26,27,28,29,30,31,32,37,44,49,50,51,54,55,56,57,59,61,62,63,],[14,14,-3,-6,14,14,-7,-8,-9,-2,-4,-5,14,14,14,14,14,14,14,14,14,14,-10,14,-12,14,14,-11,14,14,-10,]),'CHAR':([0,2,3,6,8,9,17,18,19,24,25,26,27,28,29,30,31,32,37,44,49,50,51,54,55,56,57,59,61,62,63,],[15,15,-3,-6,35,35,-7,-8,-9,-2,-4,-5,35,35,35,35,35,35,35,35,15,15,-10,15,-12,35,15,-11,15,15,-10,]),'CARACTER':([0,2,3,6,8,9,17,18,19,24,25,26,27,28,29,30,31,32,37,44,49,50,51,54,55,56,57,59,61,62,63,],[16,16,-3,-6,16,16,-7,-8,-9,-2,-4,-5,16,16,16,16,16,16,16,16,16,16,-10,16,-12,16,16,-11,16,16,-10,]),'INT':([0,2,3,6,17,18,19,24,25,26,49,50,51,54,55,57,59,61,62,63,],[20,20,-3,-6,-7,-8,-9,-2,-4,-5,20,20,-10,20,-12,20,-11,20,20,-10,]),'DOUBLE':([0,2,3,6,17,18,19,24,25,26,49,50,51,54,55,57,59,61,62,63,],[21,21,-3,-6,-7,-8,-9,-2,-4,-5,21,21,-10,21,-12,21,-11,21,21,-10,]),'STRING':([0,2,3,6,17,18,19,24,25,26,49,50,51,54,55,57,59,61,62,63,],[22,22,-3,-6,-7,-8,-9,-2,-4,-5,22,22,-10,22,-12,22,-11,22,22,-10,]),'IF':([0,2,3,6,17,18,19,24,25,26,49,50,51,52,54,55,57,59,61,62,63,],[23,23,-3,-6,-7,-8,-9,-2,-4,-5,23,23,-10,53,23,-12,23,-11,23,23,-10,]),'$end':([1,2,3,6,17,18,19,24,25,26,51,55,59,63,],[0,-1,-3,-6,-7,-8,-9,-2,-4,-5,-10,-12,-11,-10,]),'LLAVE2':([3,6,17,18,19,24,25,26,50,51,55,57,59,62,63,],[-3,-6,-7,-8,-9,-2,-4,-5,51,-10,-12,59,-11,63,-10,]),'PUNTOCOMA':([4,5,10,11,12,13,14,15,16,33,34,35,38,39,40,41,42,43,45,47,],[25,26,-23,-24,-25,-26,-27,-28,-29,-14,-21,-28,-15,-16,-17,-18,-19,-20,-22,-13,]),'MAS':([5,10,11,12,13,14,15,16,34,35,36,38,39,40,41,42,43,45,46,47,58,],[27,-23,-24,-25,-26,-27,-28,-29,-21,-28,27,-15,-16,-17,-18,-19,-20,-22,27,27,27,]),'MULT':([5,10,11,12,13,14,15,16,34,35,36,38,39,40,41,42,43,45,46,47,58,],[29,-23,-24,-25,-26,-27,-28,-29,-21,-28,29,29,29,-17,-18,-19,-20,-22,29,29,29,]),'DIVISION':([5,10,11,12,13,14,15,16,34,35,36,38,39,40,41,42,43,45,46,47,58,],[30,-23,-24,-25,-26,-27,-28,-29,-21,-28,30,30,30,-17,-18,-19,-20,-22,30,30,30,]),'POTENCIA':([5,10,11,12,13,14,15,16,34,35,36,38,39,40,41,42,43,45,46,47,58,],[31,-23,-24,-25,-26,-27,-28,-29,-21,-28,31,31,31,31,31,31,31,-22,31,31,31,]),'MODULO':([5,10,11,12,13,14,15,16,34,35,36,38,39,40,41,42,43,45,46,47,58,],[32,-23,-24,-25,-26,-27,-28,-29,-21,-28,32,32,32,-17,-18,-19,-20,-22,32,32,32,]),'ID':([7,15,20,21,22,],[33,-33,-30,-31,-32,]),'PAR2':([10,11,12,13,14,16,34,35,36,38,39,40,41,42,43,45,46,58,],[-23,-24,-25,-26,-27,-29,-21,-28,45,-15,-16,-17,-18,-19,-20,-22,48,60,]),'IGUAL':([33,],[44,]),'LLAVE1':([48,52,60,],[49,54,61,]),'ELSE':([51,],[52,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'inicio':([0,],[1,]),'instrucciones':([0,],[2,]),'instruccion':([0,2,],[3,19,]),'declaracion':([0,2,],[4,4,]),'expresion':([0,2,7,8,22,23,24,25,26,27,38,],[5,5,29,31,32,33,34,35,36,37,40,]),'tipos':([0,2,],[6,6,]),}
+_lr_goto_items = {'inicio':([0,],[1,]),'instrucciones':([0,49,54,61,],[2,50,57,62,]),'instruccion':([0,2,49,50,54,57,61,62,],[3,24,3,24,3,24,3,24,]),'declaracion':([0,2,49,50,54,57,61,62,],[4,4,4,4,4,4,4,4,]),'expresion':([0,2,8,9,27,28,29,30,31,32,37,44,49,50,54,56,57,61,62,],[5,5,34,36,38,39,40,41,42,43,46,47,5,5,5,58,5,5,5,]),'sent_IF':([0,2,49,50,54,57,61,62,],[6,6,6,6,6,6,6,6,]),'tipos':([0,2,49,50,54,57,61,62,],[7,7,7,7,7,7,7,7,]),'if_simple':([0,2,49,50,52,54,57,61,62,],[17,17,17,17,55,17,17,17,17,]),'if_else':([0,2,49,50,54,57,61,62,],[18,18,18,18,18,18,18,18,]),'if_elseif':([0,2,49,50,54,57,61,62,],[19,19,19,19,19,19,19,19,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,30 +27,37 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> inicio","S'",1,None,None,None),
-  ('inicio -> instrucciones','inicio',1,'p_inicio','gramatica.py',125),
-  ('instrucciones -> instrucciones instruccion','instrucciones',2,'p_instrucciones','gramatica.py',129),
-  ('instrucciones -> instruccion','instrucciones',1,'p_instrucciones','gramatica.py',130),
-  ('instruccion -> declaracion PUNTOCOMA','instruccion',2,'p_instruccion','gramatica.py',138),
-  ('instruccion -> expresion PUNTOCOMA','instruccion',2,'p_instruccion','gramatica.py',139),
-  ('declaracion -> tipos ID IGUAL expresion','declaracion',4,'p_declaracion_cvalor','gramatica.py',143),
-  ('declaracion -> tipos ID','declaracion',2,'p_declaracion_sinval','gramatica.py',147),
-  ('expresion -> expresion MAS expresion','expresion',3,'p_expresion_binaria','gramatica.py',151),
-  ('expresion -> expresion MENOS expresion','expresion',3,'p_expresion_binaria','gramatica.py',152),
-  ('expresion -> expresion MULT expresion','expresion',3,'p_expresion_binaria','gramatica.py',153),
-  ('expresion -> expresion DIVISION expresion','expresion',3,'p_expresion_binaria','gramatica.py',154),
-  ('expresion -> expresion POTENCIA expresion','expresion',3,'p_expresion_binaria','gramatica.py',155),
-  ('expresion -> expresion MODULO expresion','expresion',3,'p_expresion_binaria','gramatica.py',156),
-  ('expresion -> MENOS expresion','expresion',2,'p_expresion_unaria','gramatica.py',176),
-  ('expresion -> PAR1 expresion PAR2','expresion',3,'p_expresion_par','gramatica.py',180),
-  ('expresion -> ENTERO','expresion',1,'p_expresion_entero','gramatica.py',184),
-  ('expresion -> DECIMAL','expresion',1,'p_expresion_decimal','gramatica.py',188),
-  ('expresion -> CADENA','expresion',1,'p_expresion_cadena','gramatica.py',192),
-  ('expresion -> TRUE','expresion',1,'p_expresion_bool','gramatica.py',196),
-  ('expresion -> FALSE','expresion',1,'p_expresion_bool','gramatica.py',197),
-  ('expresion -> CHAR','expresion',1,'p_expresion_char','gramatica.py',202),
-  ('expresion -> CARACTER','expresion',1,'p_expresion_caracter','gramatica.py',206),
-  ('tipos -> INT','tipos',1,'p_tipos','gramatica.py',210),
-  ('tipos -> DOUBLE','tipos',1,'p_tipos','gramatica.py',211),
-  ('tipos -> STRING','tipos',1,'p_tipos','gramatica.py',212),
-  ('tipos -> CHAR','tipos',1,'p_tipos','gramatica.py',213),
+  ('inicio -> instrucciones','inicio',1,'p_inicio','gramatica.py',131),
+  ('instrucciones -> instrucciones instruccion','instrucciones',2,'p_instrucciones','gramatica.py',135),
+  ('instrucciones -> instruccion','instrucciones',1,'p_instrucciones','gramatica.py',136),
+  ('instruccion -> declaracion PUNTOCOMA','instruccion',2,'p_instruccion','gramatica.py',144),
+  ('instruccion -> expresion PUNTOCOMA','instruccion',2,'p_instruccion','gramatica.py',145),
+  ('instruccion -> sent_IF','instruccion',1,'p_instruccion','gramatica.py',146),
+  ('sent_IF -> if_simple','sent_IF',1,'p_sent_IF','gramatica.py',150),
+  ('sent_IF -> if_else','sent_IF',1,'p_sent_IF','gramatica.py',151),
+  ('sent_IF -> if_elseif','sent_IF',1,'p_sent_IF','gramatica.py',152),
+  ('if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2','if_simple',7,'p_if_simple','gramatica.py',157),
+  ('if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2','if_else',11,'p_if_else','gramatica.py',162),
+  ('if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple','if_elseif',9,'p_if_elseif','gramatica.py',167),
+  ('declaracion -> tipos ID IGUAL expresion','declaracion',4,'p_declaracion_cvalor','gramatica.py',171),
+  ('declaracion -> tipos ID','declaracion',2,'p_declaracion_sinval','gramatica.py',175),
+  ('expresion -> expresion MAS expresion','expresion',3,'p_expresion_binaria','gramatica.py',179),
+  ('expresion -> expresion MENOS expresion','expresion',3,'p_expresion_binaria','gramatica.py',180),
+  ('expresion -> expresion MULT expresion','expresion',3,'p_expresion_binaria','gramatica.py',181),
+  ('expresion -> expresion DIVISION expresion','expresion',3,'p_expresion_binaria','gramatica.py',182),
+  ('expresion -> expresion POTENCIA expresion','expresion',3,'p_expresion_binaria','gramatica.py',183),
+  ('expresion -> expresion MODULO expresion','expresion',3,'p_expresion_binaria','gramatica.py',184),
+  ('expresion -> MENOS expresion','expresion',2,'p_expresion_unaria','gramatica.py',204),
+  ('expresion -> PAR1 expresion PAR2','expresion',3,'p_expresion_par','gramatica.py',208),
+  ('expresion -> ENTERO','expresion',1,'p_expresion_entero','gramatica.py',212),
+  ('expresion -> DECIMAL','expresion',1,'p_expresion_decimal','gramatica.py',216),
+  ('expresion -> CADENA','expresion',1,'p_expresion_cadena','gramatica.py',220),
+  ('expresion -> TRUE','expresion',1,'p_expresion_bool','gramatica.py',224),
+  ('expresion -> FALSE','expresion',1,'p_expresion_bool','gramatica.py',225),
+  ('expresion -> CHAR','expresion',1,'p_expresion_char','gramatica.py',230),
+  ('expresion -> CARACTER','expresion',1,'p_expresion_caracter','gramatica.py',234),
+  ('tipos -> INT','tipos',1,'p_tipos','gramatica.py',238),
+  ('tipos -> DOUBLE','tipos',1,'p_tipos','gramatica.py',239),
+  ('tipos -> STRING','tipos',1,'p_tipos','gramatica.py',240),
+  ('tipos -> CHAR','tipos',1,'p_tipos','gramatica.py',241),
 ]

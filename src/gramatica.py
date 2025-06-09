@@ -10,7 +10,9 @@ tokens = [
     'IGUAL',
     'DECIMAL', 'ENTERO',
     'CADENA', 'CARACTER',
-    'ID'
+    'ID', 'IF', 'ELSE',
+    'LLAVE1',
+    "LLAVE2",
 ]
 
 # Simbolos
@@ -24,6 +26,8 @@ t_MODULO    = r'%'
 t_PAR1      = r'\('
 t_PAR2      = r'\)'
 t_IGUAL     = r'='
+t_LLAVE1    = r'\{'
+t_LLAVE2    = r'\}'
 t_ignore    = ' \t\r\f'
 
 reservadas = {
@@ -33,7 +37,8 @@ reservadas = {
     'bool': 'BOOL',
     'char': 'CHAR',
     'true': 'TRUE',
-    'false': 'FALSE'
+    'false': 'FALSE',
+    'if' : 'IF'
 }
 
 def t_ID(t):
@@ -103,6 +108,7 @@ def t_error(t):
 # Construyendo el analizador léxico
 import ply.lex as lex
 
+from src.instrucciones.SentenciaIF import sentIF
 from src.expresiones.CAritmeticas import Aritmeticas, Operadores
 from src.expresiones.CNativo import Nativo
 from src.instrucciones.CDeclaracion import Declaracion
@@ -136,8 +142,30 @@ def p_instrucciones(t):
 
 def p_instruccion(t):
     '''instruccion : declaracion PUNTOCOMA
-            | expresion PUNTOCOMA'''
+            | expresion PUNTOCOMA
+            | sent_IF'''
     t[0] = t[1]
+
+def p_sent_IF(t): 
+    '''sent_IF : if_simple
+            | if_else
+            | if_elseif'''
+    t[0] = t[1]
+
+# if (expresion) { instrucciones }
+def p_if_simple(t):
+    '''if_simple : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2'''
+    t[0] = sentIF(t[3], t[6],0,0)
+
+# if (expresion) { instrucciones } else { instrucciones }
+def p_if_else(t):
+    '''if_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2'''
+    t[0] = sentIF(t[3], t[6], 0, 0, sentIF(None, t[10], 0,0))  # else sin condición
+
+# if (expresion) { instrucciones } else if (expresion) { instrucciones }
+def p_if_elseif(t):
+    '''if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple'''
+    t[0] = sentIF(t[3], t[6],0, 0, t[9])
 
 def p_declaracion_cvalor(t):
     'declaracion : tipos ID IGUAL expresion'
