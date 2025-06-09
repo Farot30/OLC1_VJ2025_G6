@@ -31,7 +31,6 @@ class For(Instruccion):
             x_val = (
                 tabla.getVariable("x").getValor() if tabla.getVariable("x") else None
             )
-            print(f"Condición del for: {cond}, x={x_val}")
             if isinstance(cond, Errores):
                 return cond
             if not cond:

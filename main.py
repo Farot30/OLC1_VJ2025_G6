@@ -1,21 +1,18 @@
-from src.gramatica import parse_input
+from src.gramatica import parse_input, errores_sintacticos_globales
 from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
-
-
-from src.gramatica import parse_input, errores_sintacticos_globales
-
-# ...existing code...
 
 
 def main():
     try:
         f = open("pruebas.txt", "r")
         entrada = f.read()
+
         ast = Arbol([])  # Crea el árbol antes de parsear
         instrucciones = parse_input(entrada, ast)  # Pasa el árbol aquí
         ast.set_instrucciones(instrucciones)
+
         tabla = tablaSimbolo()
         ast.setTablaGlobal(tabla)
         ast.setConsola("")
@@ -46,7 +43,6 @@ def main():
 
     except Exception as e:
         print(f"Error durante la ejecución: {e}")
-        return None
 
 
 def imprimir_tabla_simbolos(tabla: tablaSimbolo):

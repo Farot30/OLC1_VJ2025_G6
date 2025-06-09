@@ -39,10 +39,11 @@ class Declaracion(Instruccion):
                     self.tipoDato, self.identificador, res_valor, self.linea, self.col
                 )
             ):
-                arbol.setConsola(
-                    arbol.getConsola()
-                    + f"Declaración '{self.identificador}' = {res_valor}\n"
-                )
+                # arbol.setConsola(
+                #   arbol.getConsola()
+                #    + f"Declaración '{self.identificador}' = {res_valor}\n"
+                # )
+                pass
             else:
                 return Errores(
                     "SEMANTICO",
@@ -54,10 +55,11 @@ class Declaracion(Instruccion):
             if tabla.setVariable(
                 Simbolo(self.tipoDato, self.identificador, None, self.linea, self.col)
             ):
-                arbol.setConsola(
-                    arbol.getConsola()
-                    + f"Declaración '{self.identificador}'  sin valor\n"
-                )
+                # arbol.setConsola(
+                #    arbol.getConsola()
+                #    + f"Declaración '{self.identificador}'  sin valor\n"
+                # )
+                pass
             else:
                 return Errores(
                     "SEMANTICO",

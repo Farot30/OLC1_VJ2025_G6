@@ -121,8 +121,22 @@ println(3.5 != 3.5);
 
 println(5.5 < 5);
 println(5.5 < 'a');
-println(5.5 < true);
 println("paco" != "hola");
-println(true != "hola");
-println
 
+int x41;
+for(x41 = 0; x41 < 3; x41++) {
+    println("holas");
+    println("hola");
+}
+
+println(x41);
+
+if (0==0){
+    println("a"); 
+    println("hola");
+    if(2==3){
+        break;
+        println("aas"); 
+
+    }
+}

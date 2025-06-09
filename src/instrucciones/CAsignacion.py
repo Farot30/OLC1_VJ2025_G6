@@ -69,9 +69,9 @@ class Asignacion(Instruccion):
             val = int(val)
 
         simbolo.setValor(val)
-        tipo = simbolo.getTipo().tipo.name if simbolo.getTipo() else "desconocido"
-        arbol.setConsola(
-            arbol.getConsola()
-            + f"Asignación: variable '{self.id}' (tipo {tipo}) = {val}\n"
-        )
+        # tipo = simbolo.getTipo().tipo.name if simbolo.getTipo() else "desconocido"
+        # arbol.setConsola(
+        #    arbol.getConsola()
+        #    + f"Asignación: variable '{self.id}' (tipo {tipo}) = {val}\n"
+        # )
         return None

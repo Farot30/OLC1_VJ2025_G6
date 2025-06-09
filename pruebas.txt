@@ -1,6 +1,29 @@
-int x;
-for(x = 0; x < 3; x++) {
+int x41;
+for(x41 = 0; x41 < 3; x41++) {
     println("holas");
 }
 
-println(x);
+println(x41);
+
+if (0==0){
+    println("hola paco");
+    if(2==3){
+        break;
+        println("aas"); 
+
+    }
+}
+
+int i = 0;
+while(i < 3){
+    println("while: " + i);
+    i++;
+}
+println("fin while");
+
+int j = 0;
+do {
+    println("do while: " + j);
+    j++;
+} while(j < 3);
+println("fin do while");

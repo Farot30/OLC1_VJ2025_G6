@@ -24,11 +24,11 @@ class Incremento(Instruccion):
                 self.col,
             )
         simbolo.setValor(valor + 1)
-        tipo = simbolo.getTipo().tipo.name if simbolo.getTipo() else "desconocido"
-        arbol.setConsola(
-            arbol.getConsola()
-            + f"Incremento: variable '{self.id}' (tipo {tipo}) ahora vale {valor + 1}\n"
-        )
+        # tipo = simbolo.getTipo().tipo.name if simbolo.getTipo() else "desconocido"
+        # arbol.setConsola(
+        #    arbol.getConsola()
+        #    + f"Incremento: variable '{self.id}' (tipo {tipo}) ahora vale {valor + 1}\n"
+        # S)
         return None
 
 
@@ -52,9 +52,9 @@ class Decremento(Instruccion):
                 self.col,
             )
         simbolo.setValor(valor - 1)
-        tipo = simbolo.getTipo().tipo.name if simbolo.getTipo() else "desconocido"
-        arbol.setConsola(
-            arbol.getConsola()
-            + f"Decremento: variable '{self.id}' (tipo {tipo}) ahora vale {valor - 1}\n"
-        )
+        # tipo = simbolo.getTipo().tipo.name if simbolo.getTipo() else "desconocido"
+        # arbol.setConsola(
+        #    arbol.getConsola()
+        #    + f"Decremento: variable '{self.id}' (tipo {tipo}) ahora vale {valor - 1}\n"
+        # )
         return None

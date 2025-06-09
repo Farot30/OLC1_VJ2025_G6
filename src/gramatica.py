@@ -25,6 +25,8 @@ tokens = [
     "CADENA",
     "CARACTER",
     "ID",
+    "IF",
+    "ELSE",
     "INCREMENTO",
     "DECREMENTO",
     "BOOLEANO",
@@ -43,6 +45,9 @@ tokens = [
     "FOR",
     "LLAVE1",
     "LLAVE2",
+    "BREAK",
+    "DO",
+    "WHILE",
 ]
 
 # Simbolos
@@ -83,6 +88,10 @@ reservadas = {
     "print": "PRINT",
     "println": "PRINTLN",
     "for": "FOR",
+    "if": "IF",
+    "break": "BREAK",
+    "do": "DO",
+    "while": "WHILE",
 }
 
 
@@ -106,7 +115,6 @@ def t_BOOLEANO(t):
 def t_CADENA(t):
     r'"([^"\\\n]|(\\.))*"'
     t.value = bytes(t.value[1:-1], "utf-8").decode("unicode_escape")
-    print(f"Reconocido CADENA: {t.value}")  # <-- depuración
     return t
 
 
@@ -210,6 +218,10 @@ from src.expresiones.CXor import Xor
 from src.expresiones.CNot import Not
 from src.excepciones.CErrores import Errores
 from src.expresiones.CFor import For
+from src.instrucciones.SetenciaIF import sentIF
+from src.instrucciones.CBreak import Break
+from src.instrucciones.CWhile import While
+from src.instrucciones.CDoWhile import DoWhile
 
 
 lexer = lex.lex()
@@ -346,8 +358,60 @@ def p_expresion_booleano(t):
 
 def p_instruccion(t):
     """instruccion : declaracion PUNTOCOMA
-    | expresion PUNTOCOMA"""
+    | expresion PUNTOCOMA
+    | sent_IF
+    | SBreak"""
     t[0] = t[1]
+
+
+def p_SBreak(t):
+    """SBreak : BREAK PUNTOCOMA"""
+    t[0] = Break(0, 0)
+
+
+def p_sent_IF(t):
+    """sent_IF : if_simple
+    | if_else
+    | if_elseif"""
+    t[0] = t[1]
+
+
+# if (expresion) { instrucciones }
+def p_if_simple(t):
+    """if_simple : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""
+    t[0] = sentIF(t[3], t[6], 0, 0)
+
+
+# if (expresion) { instrucciones } else { instrucciones }
+def p_if_else(t):
+    """if_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""
+    t[0] = sentIF(t[3], t[6], 0, 0, sentIF(None, t[10], 0, 0))  # else sin condición
+
+
+# if (expresion) { instrucciones } else if (expresion) { instrucciones }
+def p_if_elseif(t):
+    """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple"""
+    t[0] = sentIF(t[3], t[6], 0, 0, t[9])
+
+
+def p_instruccion_while(t):
+    "instruccion : WHILE PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"
+    t[0] = While(
+        t[3],  # condición
+        t[6],  # lista de instrucciones
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
+
+
+def p_instruccion_dowhile(t):
+    "instruccion : DO LLAVE1 instrucciones LLAVE2 WHILE PAR1 expresion PAR2 PUNTOCOMA"
+    t[0] = DoWhile(
+        t[3],  # lista de instrucciones
+        t[7],  # condición
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
 
 
 def find_column(input, token):
@@ -580,6 +644,12 @@ def p_error(t):
         print(error)
     parser.restart()
     return []
+
+
+def p_instruccion_error(t):
+    "instruccion : error PUNTOCOMA"
+    # No ejecuta nada, pero evita que el parser se detenga
+    t[0] = None
 
 
 ## APLICACION ----------------------------------------------------------------------------
