@@ -28,11 +28,16 @@ class For(Instruccion):
 
         while True:
             cond = self.condicion.interpretar(arbol, tabla)
-            x_val = (
-                tabla.getVariable("x").getValor() if tabla.getVariable("x") else None
-            )
+            # --- Validación de tipo booleano ---
             if isinstance(cond, Errores):
                 return cond
+            if not isinstance(cond, bool):
+                return Errores(
+                    "SEMANTICO",
+                    "La condición del ciclo for debe ser booleana.",
+                    self.linea,
+                    self.col,
+                )
             if not cond:
                 break
 

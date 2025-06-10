@@ -1,3 +1,24 @@
+from src.expresiones.CAritmeticas import Aritmeticas, Operadores
+from src.expresiones.CNativo import Nativo
+from src.instrucciones.CDeclaracion import Declaracion
+from src.simbolo.CTipo import Tipo, tipoDato
+from src.instrucciones.CAsignacion import Asignacion
+from src.instrucciones.CIncremento import Incremento, Decremento
+from src.expresiones.CUnitario import Unario
+from src.expresiones.CRelacionales import Relacional, OperadoresRel
+from src.instrucciones.CPrintln import Println
+from src.expresiones.COr import Or
+from src.expresiones.CAnd import And
+from src.expresiones.CXor import Xor
+from src.expresiones.CNot import Not
+from src.excepciones.CErrores import Errores
+from src.expresiones.CFor import For
+from src.instrucciones.SetenciaIF import sentIF
+from src.instrucciones.CBreak import Break
+from src.instrucciones.CWhile import While
+from src.instrucciones.CDoWhile import DoWhile
+
+
 ####  DEFINICION DE ANALISIS LEXICO -----------------------------------------------------------------
 
 
@@ -36,7 +57,6 @@ tokens = [
     "MENOR_QUE",
     "IGUAL_IGUAL",
     "DIFERENTE",
-    "PRINT",
     "PRINTLN",
     "OR",
     "AND",
@@ -85,7 +105,6 @@ reservadas = {
     "char": "CHAR",
     "true": "TRUE",
     "false": "FALSE",
-    "print": "PRINT",
     "println": "PRINTLN",
     "for": "FOR",
     "if": "IF",
@@ -202,28 +221,6 @@ def t_error(t):
 # Construyendo el analizador léxico
 import ply.lex as lex
 
-from src.expresiones.CAritmeticas import Aritmeticas, Operadores
-from src.expresiones.CNativo import Nativo
-from src.instrucciones.CDeclaracion import Declaracion
-from src.simbolo.CTipo import Tipo, tipoDato
-from src.instrucciones.CAsignacion import Asignacion
-from src.instrucciones.CIncremento import Incremento, Decremento
-from src.expresiones.CUnitario import Unario
-from src.expresiones.CRelacionales import Relacional, OperadoresRel
-from src.instrucciones.CPrint import Print
-from src.instrucciones.CPrintln import Println
-from src.expresiones.COr import Or
-from src.expresiones.CAnd import And
-from src.expresiones.CXor import Xor
-from src.expresiones.CNot import Not
-from src.excepciones.CErrores import Errores
-from src.expresiones.CFor import For
-from src.instrucciones.SetenciaIF import sentIF
-from src.instrucciones.CBreak import Break
-from src.instrucciones.CWhile import While
-from src.instrucciones.CDoWhile import DoWhile
-
-
 lexer = lex.lex()
 
 # Asociación de operadores y precedencia
@@ -270,11 +267,14 @@ def p_for(t):
 def p_for_init(t):
     """for_init : ID IGUAL expresion
     | ID INCREMENTO
-    | ID DECREMENTO"""
+    | ID DECREMENTO
+    | declaracion"""
     if len(t) == 4:
         t[0] = Asignacion(
             t[1], t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
         )
+    elif len(t) == 2 and isinstance(t[1], Declaracion):
+        t[0] = t[1]
     elif t[2] == "++":
         t[0] = Incremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
     elif t[2] == "--":
@@ -470,12 +470,6 @@ def p_expresion_binaria(t):
 def p_expresion_unaria(t):
     "expresion : MENOS expresion %prec UMENOS"
     t[0] = Unario("-", t[2], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-
-
-def p_instruccion_print(t):
-    "instruccion : PRINT PAR1 expresion PAR2 PUNTOCOMA"
-
-    t[0] = Print(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
 def p_instruccion_println(t):

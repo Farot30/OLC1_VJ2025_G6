@@ -6,7 +6,7 @@ class tablaSimbolo:
     def __init__(self, padre=None):
         self.tabla_actual: Dict[str, Simbolo] = {}
         self.nombre_dato: str = ""
-        self.padre = padre  # <-- Nuevo
+        self.padre = padre
 
     def getTabla(self) -> Dict[str, Simbolo]:
         return self.tabla_actual

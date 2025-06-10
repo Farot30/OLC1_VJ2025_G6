@@ -25,5 +25,4 @@ class Nativo(Instruccion):
                     self.linea,
                     self.col,
                 )
-        # Si es una cadena literal, retorna el valor directamente
         return self.valor
