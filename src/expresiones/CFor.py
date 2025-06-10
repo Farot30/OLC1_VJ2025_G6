@@ -1,7 +1,6 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.CTipo import Tipo, tipoDato
 from src.excepciones.CErrores import Errores
-from src.simbolo.TablaSimbolo import tablaSimbolo
 
 
 class For(Instruccion):

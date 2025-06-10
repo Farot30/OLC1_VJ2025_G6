@@ -140,3 +140,22 @@ if (0==0){
 
     }
 }
+
+int x4 = 2;
+
+switch(x4) {
+    case 1:
+        println("Es uno");
+        break;
+    case 2:
+        println("Es dos");
+        break;
+    case 3:
+        println("Es tres");
+        break;
+    default:
+        println("No es uno, dos ni tres");
+        break;
+}
+
+println("Fin del switch");
