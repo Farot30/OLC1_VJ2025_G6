@@ -50,3 +50,5 @@ switch(x4) {
 }
 
 println("Fin del switch");
+
+break;

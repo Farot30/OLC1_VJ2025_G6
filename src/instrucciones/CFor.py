@@ -20,14 +20,12 @@ class For(Instruccion):
         self.instrucciones = instrucciones
 
     def interpretar(self, arbol, tabla):
-        # Ejecuta la inicialización
         res_init = self.inicializacion.interpretar(arbol, tabla)
         if isinstance(res_init, Errores):
             return res_init
 
         while True:
             cond = self.condicion.interpretar(arbol, tabla)
-            # --- Validación de tipo booleano ---
             if isinstance(cond, Errores):
                 return cond
             if not isinstance(cond, bool):
@@ -41,9 +39,17 @@ class For(Instruccion):
                 break
 
             for instr in self.instrucciones:
-                res = instr.interpretar(arbol, tabla)
+                # Solo pasa en_ciclo si la instrucción lo acepta
+                if "en_ciclo" in instr.interpretar.__code__.co_varnames:
+                    res = instr.interpretar(arbol, tabla, en_ciclo=True)
+                else:
+                    res = instr.interpretar(arbol, tabla)
                 if isinstance(res, Errores):
                     return res
+                if res == "continue":
+                    break  # Salta a la siguiente iteración del for
+                if res == "break":
+                    return None  # Sale del ciclo for
 
             res_upd = self.actualizacion.interpretar(arbol, tabla)
             if isinstance(res_upd, Errores):

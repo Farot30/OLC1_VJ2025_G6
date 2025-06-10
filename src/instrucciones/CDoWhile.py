@@ -10,13 +10,21 @@ class DoWhile(Instruccion):
         self.condicion = condicion
 
     def interpretar(self, arbol, tabla: tablaSimbolo):
-        # al menos una ejecución
         while True:
             nueva_tabla = tablaSimbolo(tabla)
+            salto = False
             for instr in self.instrucciones:
-                res = instr.interpretar(arbol, nueva_tabla)
+                if "en_ciclo" in instr.interpretar.__code__.co_varnames:
+                    res = instr.interpretar(arbol, nueva_tabla, en_ciclo=True)
+                else:
+                    res = instr.interpretar(arbol, nueva_tabla)
                 if isinstance(res, Errores):
                     arbol.errores.append(res)
+                if res == "continue":
+                    salto = True
+                    break
+                if res == "break":
+                    return  # Sale del ciclo do-while
             # evaluar condición
             valor_cond = self.condicion.interpretar(arbol, tabla)
             if isinstance(valor_cond, Errores):
@@ -34,3 +42,5 @@ class DoWhile(Instruccion):
                 break
             if not valor_cond:
                 break
+            if salto:
+                continue

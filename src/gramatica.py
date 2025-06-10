@@ -1,3 +1,4 @@
+# 1. IMPORTS
 from src.expresiones.CAritmeticas import Aritmeticas, Operadores
 from src.expresiones.CNativo import Nativo
 from src.instrucciones.CDeclaracion import Declaracion
@@ -12,18 +13,15 @@ from src.expresiones.CAnd import And
 from src.expresiones.CXor import Xor
 from src.expresiones.CNot import Not
 from src.excepciones.CErrores import Errores
-from src.expresiones.CFor import For
+from src.instrucciones.CFor import For
 from src.instrucciones.SetenciaIF import sentIF
 from src.instrucciones.CBreak import Break
 from src.instrucciones.CWhile import While
 from src.instrucciones.CDoWhile import DoWhile
 from src.instrucciones.CSwitch import Switch, Case
+from src.instrucciones.CContinue import Continue
 
-
-####  DEFINICION DE ANALISIS LEXICO -----------------------------------------------------------------
-
-
-# tokens
+# 2. TOKENS Y RESERVADAS
 tokens = [
     "INT",
     "DOUBLE",
@@ -73,35 +71,8 @@ tokens = [
     "CASE",
     "DEFAULT",
     "DOSPT",
+    "CONTINUE",
 ]
-
-# Simbolos
-t_PUNTOCOMA = r";"
-t_MAS = r"\+"
-t_MENOS = r"-"
-t_MULT = r"\*"
-t_DIVISION = r"/"
-t_POTENCIA = r"\*\*"
-t_MODULO = r"%"
-t_PAR1 = r"\("
-t_PAR2 = r"\)"
-t_IGUAL = r"="
-t_ignore = " \t\r\f"
-t_INCREMENTO = r"\+\+"
-t_DECREMENTO = r"--"
-t_MENOR_IGUAL = r"<="
-t_MAYOR_QUE = r">"
-t_MAYOR_IGUAL = r">="
-t_MENOR_QUE = r"<"
-t_IGUAL_IGUAL = r"=="
-t_DIFERENTE = r"!="
-t_OR = r"\|\|"
-t_AND = r"&&"
-t_XOR = r"\^"
-t_NOT = r"!"
-t_LLAVE1 = r"\{"
-t_LLAVE2 = r"\}"
-t_DOSPT = r":"
 
 reservadas = {
     "int": "INT",
@@ -121,9 +92,39 @@ reservadas = {
     "switch": "SWITCH",
     "case": "CASE",
     "default": "DEFAULT",
+    "continue": "CONTINUE",
 }
 
+# 3. EXPRESIONES REGULARES DE TOKENS
+t_PUNTOCOMA = r";"
+t_MAS = r"\+"
+t_MENOS = r"-"
+t_MULT = r"\*"
+t_DIVISION = r"/"
+t_POTENCIA = r"\*\*"
+t_MODULO = r"%"
+t_PAR1 = r"\("
+t_PAR2 = r"\)"
+t_IGUAL = r"="
+t_INCREMENTO = r"\+\+"
+t_DECREMENTO = r"--"
+t_MENOR_IGUAL = r"<="
+t_MAYOR_QUE = r">"
+t_MAYOR_IGUAL = r">="
+t_MENOR_QUE = r"<"
+t_IGUAL_IGUAL = r"=="
+t_DIFERENTE = r"!="
+t_OR = r"\|\|"
+t_AND = r"&&"
+t_XOR = r"\^"
+t_NOT = r"!"
+t_LLAVE1 = r"\{"
+t_LLAVE2 = r"\}"
+t_DOSPT = r":"
+t_ignore = " \t\r\f"
 
+
+# 4. FUNCIONES DE TOKENS ESPECIALES
 def t_COMMENT_SINGLELINE(t):
     r"//.*"
     pass
@@ -213,7 +214,6 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 
-# En t_error (léxico)
 def t_error(t):
     error = Errores(
         "Léxico",
@@ -228,15 +228,15 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-# Construyendo el analizador léxico
+# 5. CONSTRUCCIÓN DEL LEXER
 import ply.lex as lex
 
 lexer = lex.lex()
 
-# Asociación de operadores y precedencia
+# 6. PRECEDENCIA
 precedence = (
-    ("right", "UMENOS"),  # - unario
-    ("right", "POTENCIA"),  # **
+    ("right", "UMENOS"),
+    ("right", "POTENCIA"),
     ("left", "MULT", "DIVISION", "MODULO"),
     ("left", "MAS", "MENOS"),
     (
@@ -247,128 +247,20 @@ precedence = (
         "IGUAL_IGUAL",
         "DIFERENTE",
         "MENOR_QUE",
-    ),  # relacionales
-    ("right", "NOT"),  # !
-    ("left", "XOR"),  # ^
-    ("left", "AND"),  # &&
-    ("left", "OR"),  # ||
+    ),
+    ("right", "NOT"),
+    ("left", "XOR"),
+    ("left", "AND"),
+    ("left", "OR"),
 )
 
-#### DEFINICION DE GRAMATICA (ANALISIS SINTACTICO) ----------------------------------------------------------------------------
+# 7. REGLAS DE GRAMÁTICA (SINTAXIS)
 
 
+# --- Inicio y lista de instrucciones ---
 def p_inicio(t):
     "inicio : instrucciones"
     t[0] = t[1]
-
-
-def p_for(t):
-    """instruccion : FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 LLAVE1 instrucciones LLAVE2"""
-    t[0] = For(
-        t[3],  # inicialización (puede ser asignación o incremento)
-        t[5],  # condición (expresión booleana)
-        t[7],  # actualización (puede ser asignación o incremento)
-        t[10],  # instrucciones dentro del for
-        t.lineno(1),
-        find_column(t.lexer.lexdata, t.slice[1]),
-    )
-
-
-def p_for_init(t):
-    """for_init : ID IGUAL expresion
-    | ID INCREMENTO
-    | ID DECREMENTO
-    | declaracion"""
-    if len(t) == 4:
-        t[0] = Asignacion(
-            t[1], t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
-        )
-    elif len(t) == 2 and isinstance(t[1], Declaracion):
-        t[0] = t[1]
-    elif t[2] == "++":
-        t[0] = Incremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-    elif t[2] == "--":
-        t[0] = Decremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-
-
-def p_for_update(t):
-    """for_update : ID IGUAL expresion
-    | ID INCREMENTO
-    | ID DECREMENTO"""
-    if len(t) == 4:
-        t[0] = Asignacion(
-            t[1], t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
-        )
-    elif t[2] == "++":
-        t[0] = Incremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-    elif t[2] == "--":
-        t[0] = Decremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-
-
-def p_instruccion_switch(t):
-    "instruccion : SWITCH PAR1 expresion PAR2 LLAVE1 lista_casos LLAVE2"
-    casos = []
-    defecto = []
-    for c in t[6]:
-        if isinstance(c, Case):
-            casos.append(c)
-        elif isinstance(c, tuple) and c[0] == "default":
-            defecto = c[1]
-    t[0] = Switch(
-        t[3], casos, defecto, t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
-    )
-
-
-def p_lista_casos(t):
-    """lista_casos : lista_casos caso
-    | caso"""
-    t[0] = t[1] + [t[2]] if len(t) == 3 else [t[1]]
-
-
-def p_caso_case(t):
-    "caso : CASE expresion DOSPT instrucciones BREAK PUNTOCOMA"
-    t[0] = Case(
-        t[2], t[4] + [Break(t.lineno(5), find_column(t.lexer.lexdata, t.slice[5]))]
-    )
-
-
-def p_caso_default(t):
-    "caso : DEFAULT DOSPT instrucciones BREAK PUNTOCOMA"
-    from src.instrucciones.CBreak import Break
-
-    t[0] = (
-        "default",
-        t[3] + [Break(t.lineno(4), find_column(t.lexer.lexdata, t.slice[4]))],
-    )
-
-
-def p_expresion_or(t):
-    "expresion : expresion OR expresion"
-    t[0] = Or(t[1], t[3], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]))
-
-
-def p_expresion_and(t):
-    "expresion : expresion AND expresion"
-    t[0] = And(t[1], t[3], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]))
-
-
-def p_expresion_xor(t):
-    "expresion : expresion XOR expresion"
-    t[0] = Xor(t[1], t[3], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]))
-
-
-def p_expresion_not(t):
-    "expresion : NOT expresion"
-    t[0] = Not(t[2], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-
-
-def p_expresion_id(t):
-    "expresion : ID"
-    nodo = Nativo(
-        Tipo(None), t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
-    )
-    nodo.es_identificador = True
-    t[0] = nodo
 
 
 def p_instrucciones(t):
@@ -379,6 +271,21 @@ def p_instrucciones(t):
         t[0] = t[1]
     else:
         t[0] = [t[1]]
+
+
+# --- Declaraciones y asignaciones ---
+def p_declaracion_cvalor(t):
+    "declaracion : tipos ID IGUAL expresion"
+    t[0] = Declaracion(
+        t[1], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]), t[2], t[4]
+    )
+
+
+def p_declaracion_sinval(t):
+    "declaracion : tipos ID"
+    t[0] = Declaracion(
+        t[1], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]), t[2], None
+    )
 
 
 def p_instruccion_asignacion(t):
@@ -396,92 +303,7 @@ def p_instruccion_decremento(t):
     t[0] = Decremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
-def p_expresion_booleano(t):
-    "expresion : BOOLEANO"
-    t[0] = Nativo(
-        Tipo(tipoDato.BOOL), t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
-    )
-
-
-def p_instruccion(t):
-    """instruccion : declaracion PUNTOCOMA
-    | expresion PUNTOCOMA
-    | sent_IF
-    | SBreak"""
-    t[0] = t[1]
-
-
-def p_SBreak(t):
-    """SBreak : BREAK PUNTOCOMA"""
-    t[0] = Break(0, 0)
-
-
-def p_sent_IF(t):
-    """sent_IF : if_simple
-    | if_else
-    | if_elseif"""
-    t[0] = t[1]
-
-
-# if (expresion) { instrucciones }
-def p_if_simple(t):
-    """if_simple : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""
-    t[0] = sentIF(t[3], t[6], 0, 0)
-
-
-# if (expresion) { instrucciones } else { instrucciones }
-def p_if_else(t):
-    """if_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""
-    t[0] = sentIF(t[3], t[6], 0, 0, sentIF(None, t[10], 0, 0))  # else sin condición
-
-
-# if (expresion) { instrucciones } else if (expresion) { instrucciones }
-def p_if_elseif(t):
-    """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple"""
-    t[0] = sentIF(t[3], t[6], 0, 0, t[9])
-
-
-def p_instruccion_while(t):
-    "instruccion : WHILE PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"
-    t[0] = While(
-        t[3],  # condición
-        t[6],  # lista de instrucciones
-        t.lineno(1),
-        find_column(t.lexer.lexdata, t.slice[1]),
-    )
-
-
-def p_instruccion_dowhile(t):
-    "instruccion : DO LLAVE1 instrucciones LLAVE2 WHILE PAR1 expresion PAR2 PUNTOCOMA"
-    t[0] = DoWhile(
-        t[3],  # lista de instrucciones
-        t[7],  # condición
-        t.lineno(1),
-        find_column(t.lexer.lexdata, t.slice[1]),
-    )
-
-
-def find_column(input, token):
-    last_cr = input.rfind("\n", 0, token.lexpos)
-    if last_cr < 0:
-        last_cr = -1
-    return token.lexpos - last_cr
-
-
-def p_declaracion_cvalor(t):
-    "declaracion : tipos ID IGUAL expresion"
-    t[0] = Declaracion(
-        t[1], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]), t[2], t[4]
-    )
-
-
-def p_declaracion_sinval(t):
-    "declaracion : tipos ID"
-    t[0] = Declaracion(
-        t[1], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]), t[2], None
-    )
-
-
+# --- Expresiones ---
 def p_expresion_binaria(t):
     """expresion : expresion MAS expresion
     | expresion MENOS expresion
@@ -489,7 +311,6 @@ def p_expresion_binaria(t):
     | expresion DIVISION expresion
     | expresion POTENCIA expresion
     | expresion MODULO expresion"""
-
     if t[2] == "+":
         operador = Operadores.SUMA
     elif t[2] == "-":
@@ -504,24 +325,14 @@ def p_expresion_binaria(t):
         operador = Operadores.MODULO
     else:
         raise SyntaxError(f"Operador no esperado: {t[2]}")
-
     t[0] = Aritmeticas(
-        operador,
-        t.lineno(2),  # línea del operador
-        find_column(t.lexer.lexdata, t.slice[2]),  # columna del operador
-        t[1],
-        t[3],
+        operador, t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]), t[1], t[3]
     )
 
 
 def p_expresion_unaria(t):
     "expresion : MENOS expresion %prec UMENOS"
     t[0] = Unario("-", t[2], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-
-
-def p_instruccion_println(t):
-    "instruccion : PRINTLN PAR1 expresion PAR2 PUNTOCOMA"
-    t[0] = Println(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
 def p_expresion_par(t):
@@ -571,6 +382,13 @@ def p_expresion_bool(t):
     )
 
 
+def p_expresion_booleano(t):
+    "expresion : BOOLEANO"
+    t[0] = Nativo(
+        Tipo(tipoDato.BOOL), t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+    )
+
+
 def p_expresion_char(t):
     "expresion : CHAR"
     t[0] = Nativo(
@@ -585,6 +403,35 @@ def p_expresion_caracter(t):
     )
 
 
+def p_expresion_id(t):
+    "expresion : ID"
+    nodo = Nativo(
+        Tipo(None), t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+    )
+    nodo.es_identificador = True
+    t[0] = nodo
+
+
+def p_expresion_or(t):
+    "expresion : expresion OR expresion"
+    t[0] = Or(t[1], t[3], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]))
+
+
+def p_expresion_and(t):
+    "expresion : expresion AND expresion"
+    t[0] = And(t[1], t[3], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]))
+
+
+def p_expresion_xor(t):
+    "expresion : expresion XOR expresion"
+    t[0] = Xor(t[1], t[3], t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]))
+
+
+def p_expresion_not(t):
+    "expresion : NOT expresion"
+    t[0] = Not(t[2], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
 def p_expresion_relacional(t):
     """expresion : expresion MENOR_IGUAL expresion
     | expresion MAYOR_QUE expresion
@@ -592,7 +439,6 @@ def p_expresion_relacional(t):
     | expresion MENOR_QUE expresion
     | expresion IGUAL_IGUAL expresion
     | expresion DIFERENTE expresion"""
-
     if t[2] == "<=":
         operador = OperadoresRel.MENOR_IGUAL
     elif t[2] == ">":
@@ -608,14 +454,148 @@ def p_expresion_relacional(t):
     else:
         raise SyntaxError(f"Operador no esperado: {t[2]}")
     t[0] = Relacional(
-        operador,
-        t.lineno(2),
-        find_column(t.lexer.lexdata, t.slice[2]),
-        t[1],
-        t[3],
+        operador, t.lineno(2), find_column(t.lexer.lexdata, t.slice[2]), t[1], t[3]
     )
 
 
+# --- Instrucciones de control ---
+def p_instruccion(t):
+    """instruccion : declaracion PUNTOCOMA
+    | expresion PUNTOCOMA
+    | sent_IF
+    | SBreak"""
+    t[0] = t[1]
+
+
+def p_SBreak(t):
+    """SBreak : BREAK PUNTOCOMA"""
+    t[0] = Break(0, 0)
+
+
+def p_SContinue(t):
+    """instruccion : CONTINUE PUNTOCOMA"""
+    t[0] = Continue(t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+# --- IF ---
+def p_sent_IF(t):
+    """sent_IF : if_simple
+    | if_else
+    | if_elseif"""
+    t[0] = t[1]
+
+
+def p_if_simple(t):
+    """if_simple : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""
+    t[0] = sentIF(t[3], t[6], 0, 0)
+
+
+def p_if_else(t):
+    """if_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""
+    t[0] = sentIF(t[3], t[6], 0, 0, sentIF(None, t[10], 0, 0))
+
+
+def p_if_elseif(t):
+    """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple"""
+    t[0] = sentIF(t[3], t[6], 0, 0, t[9])
+
+
+# --- FOR ---
+def p_for(t):
+    """instruccion : FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 LLAVE1 instrucciones LLAVE2"""
+    t[0] = For(
+        t[3], t[5], t[7], t[10], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+    )
+
+
+def p_for_init(t):
+    """for_init : ID IGUAL expresion
+    | ID INCREMENTO
+    | ID DECREMENTO
+    | declaracion"""
+    if len(t) == 4:
+        t[0] = Asignacion(
+            t[1], t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+        )
+    elif len(t) == 2 and isinstance(t[1], Declaracion):
+        t[0] = t[1]
+    elif t[2] == "++":
+        t[0] = Incremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+    elif t[2] == "--":
+        t[0] = Decremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_for_update(t):
+    """for_update : ID IGUAL expresion
+    | ID INCREMENTO
+    | ID DECREMENTO"""
+    if len(t) == 4:
+        t[0] = Asignacion(
+            t[1], t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+        )
+    elif t[2] == "++":
+        t[0] = Incremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+    elif t[2] == "--":
+        t[0] = Decremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+# --- WHILE ---
+def p_instruccion_while(t):
+    "instruccion : WHILE PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"
+    t[0] = While(t[3], t[6], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+# --- DO WHILE ---
+def p_instruccion_dowhile(t):
+    "instruccion : DO LLAVE1 instrucciones LLAVE2 WHILE PAR1 expresion PAR2 PUNTOCOMA"
+    t[0] = DoWhile(t[3], t[7], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+# --- SWITCH ---
+def p_instruccion_switch(t):
+    "instruccion : SWITCH PAR1 expresion PAR2 LLAVE1 lista_casos LLAVE2"
+    casos = []
+    defecto = []
+    for c in t[6]:
+        if isinstance(c, Case):
+            casos.append(c)
+        elif isinstance(c, tuple) and c[0] == "default":
+            defecto = c[1]
+    t[0] = Switch(
+        t[3], casos, defecto, t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+    )
+
+
+def p_lista_casos(t):
+    """lista_casos : lista_casos caso
+    | caso"""
+    t[0] = t[1] + [t[2]] if len(t) == 3 else [t[1]]
+
+
+def p_caso_case(t):
+    "caso : CASE expresion DOSPT instrucciones BREAK PUNTOCOMA"
+    t[0] = Case(
+        t[2], t[4] + [Break(t.lineno(5), find_column(t.lexer.lexdata, t.slice[5]))]
+    )
+
+
+def p_caso_default(t):
+    "caso : DEFAULT DOSPT instrucciones BREAK PUNTOCOMA"
+    from src.instrucciones.CBreak import Break
+
+    t[0] = (
+        "default",
+        t[3] + [Break(t.lineno(4), find_column(t.lexer.lexdata, t.slice[4]))],
+    )
+
+
+# --- PRINTLN ---
+def p_instruccion_println(t):
+    "instruccion : PRINTLN PAR1 expresion PAR2 PUNTOCOMA"
+    t[0] = Println(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+# --- TIPOS ---
 def p_tipos(t):
     """tipos : INT
     | DOUBLE
@@ -634,6 +614,7 @@ def p_tipos(t):
         t[0] = Tipo(tipoDato.BOOL)
 
 
+# --- ERRORES ---
 errores_sintacticos_globales = []
 
 
@@ -679,7 +660,7 @@ def p_error(t):
         )
         if arbol is not None:
             arbol.errores.append(error)
-            print("Error agregado a arbol.errores")  # <-- Depuración
+            print("Error agregado a arbol.errores")
         else:
             errores_sintacticos_globales.append(error)
         print(error)
@@ -689,15 +670,21 @@ def p_error(t):
 
 def p_instruccion_error(t):
     "instruccion : error PUNTOCOMA"
-    # No ejecuta nada, pero evita que el parser se detenga
     t[0] = None
 
 
-## APLICACION ----------------------------------------------------------------------------
+# --- FUNCIONES AUXILIARES ---
+def find_column(input, token):
+    last_cr = input.rfind("\n", 0, token.lexpos)
+    if last_cr < 0:
+        last_cr = -1
+    return token.lexpos - last_cr
+
+
+# 8. PARSER Y FUNCIÓN DE ENTRADA
 import ply.yacc as yacc
 
 start = "inicio"
-
 parser = yacc.yacc()
 
 
