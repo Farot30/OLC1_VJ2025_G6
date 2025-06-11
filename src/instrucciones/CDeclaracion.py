@@ -20,12 +20,20 @@ class Declaracion(Instruccion):
         self.valor = valor
 
     def interpretar(self, arbol: Arbol, tabla: tablaSimbolo):
+        scope_actual = tabla.current_scope  # obtiene el scope actual (entorno)
+        # caso: <TIPO> <ID> = <EXPRESIÓN>;
         if self.valor:
             res_valor = self.valor.interpretar(arbol, tabla)
             if isinstance(res_valor, Errores):
                 return res_valor
 
-            if self.valor.tipoDato.getTipo() != self.tipoDato.getTipo():
+            # Validar tipo solo si self.valor tiene tipoDato y getTipo
+            tipo_valor = None
+            if hasattr(self.valor, "tipoDato") and hasattr(
+                self.valor.tipoDato, "getTipo"
+            ):
+                tipo_valor = self.valor.tipoDato.getTipo()
+            if tipo_valor != self.tipoDato.getTipo():
                 return Errores(
                     "SEMANTICO",
                     "El tipo y el valor de la variable no coinciden",
@@ -33,38 +41,48 @@ class Declaracion(Instruccion):
                     self.col,
                 )
 
-            # Solo agrega si no existe
-            if tabla.setVariable(
-                Simbolo(
-                    self.tipoDato, self.identificador, res_valor, self.linea, self.col
-                )
-            ):
-                # arbol.setConsola(
-                #   arbol.getConsola()
-                #    + f"Declaración '{self.identificador}' = {res_valor}\n"
-                # )
-                pass
-            else:
+            # entidad="variable"
+            sim = Simbolo(
+                tipo=self.tipoDato,
+                id=self.identificador,
+                entidad="variable",
+                valor=res_valor,
+                scope=scope_actual,
+                linea=self.linea,
+                columna=self.col,
+            )
+            if not tabla.setVariable(sim):
                 return Errores(
                     "SEMANTICO",
                     f"La variable '{self.identificador}' ya existe",
                     self.linea,
                     self.col,
                 )
+            # arbol.setConsola(
+            #    arbol.getConsola()
+            #    + f"Declaración '{self.identificador}' = {res_valor}\n"
+            # )
+
+        # caso <TIPO> <ID>;
         else:
-            if tabla.setVariable(
-                Simbolo(self.tipoDato, self.identificador, None, self.linea, self.col)
-            ):
-                # arbol.setConsola(
-                #    arbol.getConsola()
-                #    + f"Declaración '{self.identificador}'  sin valor\n"
-                # )
-                pass
-            else:
+            sim = Simbolo(
+                tipo=self.tipoDato,
+                id=self.identificador,
+                entidad="variable",
+                valor=None,
+                scope=scope_actual,
+                linea=self.linea,
+                columna=self.col,
+            )
+            if not tabla.setVariable(sim):
                 return Errores(
                     "SEMANTICO",
                     f"La variable '{self.identificador}' ya existe",
                     self.linea,
                     self.col,
                 )
+            # arbol.setConsola(
+            #    arbol.getConsola() + f"Declaración '{self.identificador}'  sin valor\n"
+            # )
+
         return None

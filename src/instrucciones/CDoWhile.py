@@ -11,20 +11,28 @@ class DoWhile(Instruccion):
 
     def interpretar(self, arbol, tabla: tablaSimbolo):
         while True:
-            nueva_tabla = tablaSimbolo(tabla)
+            tabla.nuevoScope("DoWhile")
             salto = False
             for instr in self.instrucciones:
-                if "en_ciclo" in instr.interpretar.__code__.co_varnames:
-                    res = instr.interpretar(arbol, nueva_tabla, en_ciclo=True)
+                if "entorno" in instr.interpretar.__code__.co_varnames:
+                    res = instr.interpretar(
+                        arbol, tabla, en_ciclo=True, entorno="DoWhile"
+                    )
                 else:
-                    res = instr.interpretar(arbol, nueva_tabla)
+                    res = (
+                        instr.interpretar(arbol, tabla, en_ciclo=True)
+                        if "en_ciclo" in instr.interpretar.__code__.co_varnames
+                        else instr.interpretar(arbol, tabla)
+                    )
                 if isinstance(res, Errores):
                     arbol.errores.append(res)
                 if res == "continue":
                     salto = True
                     break
                 if res == "break":
+                    tabla.borrarScope()
                     return  # Sale del ciclo do-while
+            tabla.borrarScope()
             # evaluar condición
             valor_cond = self.condicion.interpretar(arbol, tabla)
             if isinstance(valor_cond, Errores):

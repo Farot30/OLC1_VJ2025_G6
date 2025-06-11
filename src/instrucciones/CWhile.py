@@ -25,20 +25,31 @@ class While(Instruccion):
             )
             return
         while valor_cond:
-            nueva_tabla = tablaSimbolo(tabla)
+            tabla.nuevoScope("While")
             salto = False
             for instr in self.instrucciones:
-                if "en_ciclo" in instr.interpretar.__code__.co_varnames:
-                    res = instr.interpretar(arbol, nueva_tabla, en_ciclo=True)
+                # Pasa el entorno "While" si la instrucción lo acepta
+                if "entorno" in instr.interpretar.__code__.co_varnames:
+                    if "en_ciclo" in instr.interpretar.__code__.co_varnames:
+                        res = instr.interpretar(
+                            arbol, tabla, en_ciclo=True, entorno="While"
+                        )
+                    else:
+                        res = instr.interpretar(arbol, tabla, entorno="While")
                 else:
-                    res = instr.interpretar(arbol, nueva_tabla)
+                    if "en_ciclo" in instr.interpretar.__code__.co_varnames:
+                        res = instr.interpretar(arbol, tabla, en_ciclo=True)
+                    else:
+                        res = instr.interpretar(arbol, tabla)
                 if isinstance(res, Errores):
                     arbol.errores.append(res)
                 if res == "continue":
                     salto = True
                     break
                 if res == "break":
+                    tabla.borrarScope()
                     return  # Sale del ciclo while
+            tabla.borrarScope()
             if salto:
                 valor_cond = self.condicion.interpretar(arbol, tabla)
                 continue

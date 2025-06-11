@@ -37,21 +37,8 @@ def index():
                     errores += f"{idx}\t{error.get_tipo_error()}\t{error.get_desc()}\t{error.get_linea()}\t{error.get_col()}\n"
             else:
                 errores = "Sin errores."
-            # Generar tabla de símbolos
-            tabla_simbolos = "#\tID\tTIPO\tTIPO2\tENTORNO\tVALOR\tLINEA\tCOLUMNA\n"
-            for idx, simbolo in enumerate(tabla.getTabla().values(), 1):
-                id_ = simbolo.getId()
-                tipo1 = "Variable"
-                tipo2 = (
-                    simbolo.getTipo().tipo.name if simbolo.getTipo() else "desconocido"
-                )
-                entorno = tabla.getNombre() if tabla.getNombre() else "Global"
-                valor = simbolo.getValor()
-                linea = simbolo.getLinea() if hasattr(simbolo, "getLinea") else "-"
-                columna = (
-                    simbolo.getColumna() if hasattr(simbolo, "getColumna") else "-"
-                )
-                tabla_simbolos += f"{idx}\t{id_}\t{tipo1}\t{tipo2}\t{entorno}\t{valor}\t{linea}\t{columna}\n"
+            # Generar tabla de símbolos usando el método de la clase
+            tabla_simbolos = tabla.tablaComoString()
             ast = str(arbol)
         elif "archivo" in request.files:
             archivo = request.files["archivo"]
@@ -68,6 +55,29 @@ def index():
         tabla_simbolos=tabla_simbolos,
         ast=ast,
     )
+
+
+@app.route("/errores")
+def pagina_errores():
+    # Puedes guardar los errores en una variable global o en sesión si lo prefieres
+    errores = request.args.get("data", "")
+    # Si los errores vienen como string, sepáralos por líneas
+    errores_lista = []
+    if errores:
+        for linea in errores.split("\n"):
+            if linea.strip() and not linea.startswith("#"):
+                partes = linea.split("\t")
+                if len(partes) >= 5:
+                    errores_lista.append(
+                        {
+                            "num": partes[0],
+                            "tipo": partes[1],
+                            "desc": partes[2],
+                            "linea": partes[3],
+                            "col": partes[4],
+                        }
+                    )
+    return render_template("errores.html", errores=errores_lista)
 
 
 @app.route("/descargar/<tipo>")
@@ -93,4 +103,4 @@ def descargar(tipo):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True)

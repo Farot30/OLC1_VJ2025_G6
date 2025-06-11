@@ -20,15 +20,19 @@ class For(Instruccion):
         self.instrucciones = instrucciones
 
     def interpretar(self, arbol, tabla):
+        # PRIMERO la inicialización, para que use el scope correcto
         res_init = self.inicializacion.interpretar(arbol, tabla)
         if isinstance(res_init, Errores):
             return res_init
 
+        tabla.nuevoScope("For")  # Scope solo para el cuerpo del for
         while True:
             cond = self.condicion.interpretar(arbol, tabla)
             if isinstance(cond, Errores):
+                tabla.borrarScope()
                 return cond
             if not isinstance(cond, bool):
+                tabla.borrarScope()
                 return Errores(
                     "SEMANTICO",
                     "La condición del ciclo for debe ser booleana.",
@@ -39,18 +43,30 @@ class For(Instruccion):
                 break
 
             for instr in self.instrucciones:
-                # Solo pasa en_ciclo si la instrucción lo acepta
-                if "en_ciclo" in instr.interpretar.__code__.co_varnames:
-                    res = instr.interpretar(arbol, tabla, en_ciclo=True)
+                if "entorno" in instr.interpretar.__code__.co_varnames:
+                    if "en_ciclo" in instr.interpretar.__code__.co_varnames:
+                        res = instr.interpretar(
+                            arbol, tabla, en_ciclo=True, entorno="For"
+                        )
+                    else:
+                        res = instr.interpretar(arbol, tabla, entorno="For")
                 else:
-                    res = instr.interpretar(arbol, tabla)
+                    if "en_ciclo" in instr.interpretar.__code__.co_varnames:
+                        res = instr.interpretar(arbol, tabla, en_ciclo=True)
+                    else:
+                        res = instr.interpretar(arbol, tabla)
                 if isinstance(res, Errores):
+                    tabla.borrarScope()
                     return res
                 if res == "continue":
-                    break  # Salta a la siguiente iteración del for
+                    break
                 if res == "break":
-                    return None  # Sale del ciclo for
+                    tabla.borrarScope()
+                    return None
 
             res_upd = self.actualizacion.interpretar(arbol, tabla)
             if isinstance(res_upd, Errores):
+                tabla.borrarScope()
                 return res_upd
+        tabla.borrarScope()
+        return None

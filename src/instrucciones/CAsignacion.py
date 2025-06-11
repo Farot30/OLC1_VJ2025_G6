@@ -12,7 +12,11 @@ class Asignacion(Instruccion):
         self.valor = valor
 
     def interpretar(self, arbol: Arbol, tabla: tablaSimbolo):
-        simbolo = tabla.getVariable(self.id)
+        simbolo = None
+        for sym in reversed(tabla.getTabla()):
+            if sym.entidad == "variable" and sym.id == self.id.lower():
+                simbolo = sym
+                break
         if simbolo is None:
             return Errores(
                 "SEMANTICO", f"Variable '{self.id}' no declarada", self.linea, self.col
@@ -22,24 +26,21 @@ class Asignacion(Instruccion):
             return val
 
         tipo_var = simbolo.getTipo().tipo
-        tipo_val = (
-            self.valor.tipoDato.getTipo() if hasattr(self.valor, "tipoDato") else None
-        )
+        tipo_val = None
+        if hasattr(self.valor, "tipoDato") and hasattr(self.valor.tipoDato, "getTipo"):
+            tipo_val = self.valor.tipoDato.getTipo()
 
         # para enteros
-        # Si la variable es ENTERO y el valor es DECIMAL, actualiza el tipo de la variable a DECIMAL
         if tipo_var == tipoDato.ENTERO and tipo_val == tipoDato.DECIMAL:
             val = float(val)
             tipo_val = tipoDato.DECIMAL
             simbolo.getTipo().setTipo(tipoDato.DECIMAL)
-            tipo_var = tipoDato.DECIMAL  # Se actualiza la variable
+            tipo_var = tipoDato.DECIMAL
 
-        # sumas de decimales
         if tipo_var == tipoDato.DECIMAL and tipo_val == tipoDato.ENTERO:
             val = float(val)
             tipo_val = tipoDato.DECIMAL
 
-        # Suma de caracteres
         if tipo_var == tipoDato.CHAR and tipo_val != tipoDato.CHAR:
             val = str(val)
             tipo_val = tipoDato.CHAR
@@ -53,12 +54,11 @@ class Asignacion(Instruccion):
             val = chr(int(val))
             tipo_val = tipoDato.CHAR
 
-        # Suma de cadenas
         if tipo_var == tipoDato.STRING and tipo_val != tipoDato.STRING:
             val = str(val)
             tipo_val = tipoDato.STRING
 
-        if tipo_var != tipo_val:
+        if tipo_val is not None and tipo_var != tipo_val:
             return Errores(
                 "SEMANTICO",
                 f"No se puede asignar un valor de tipo {tipo_val.name if tipo_val else 'desconocido'} a la variable '{self.id}' de tipo {tipo_var.name}",
@@ -68,10 +68,8 @@ class Asignacion(Instruccion):
         if tipo_var == tipoDato.ENTERO:
             val = int(val)
 
+        # Siempre actualiza el scope al actual cuando se asigna un nuevo valor
+        simbolo.scope = tabla.current_scope
+
         simbolo.setValor(val)
-        # tipo = simbolo.getTipo().tipo.name if simbolo.getTipo() else "desconocido"
-        # arbol.setConsola(
-        #    arbol.getConsola()
-        #    + f"Asignación: variable '{self.id}' (tipo {tipo}) = {val}\n"
-        # )
         return None

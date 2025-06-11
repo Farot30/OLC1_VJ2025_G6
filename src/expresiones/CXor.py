@@ -18,7 +18,7 @@ class Xor(Instruccion):
             return val2
 
         try:
-            return bool(val1) and bool(val2)
+            return bool(val1) ^ bool(val2)  # XOR lógico
         except Exception:
             return Errores(
                 "SEMANTICO",

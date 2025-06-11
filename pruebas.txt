@@ -1,4 +1,6 @@
+
 int x41;
+
 for(x41 = 0; x41 < 3; x41++) {
     println("holas");
 }
@@ -28,7 +30,7 @@ do {
 } while(j < 3);
 println("fin do while");
 
-for(int h = 0; h + 3; h++) {
+for(int h = 0; h < 3; h++) {
     println("for: " + h);
 }
 
@@ -51,4 +53,10 @@ switch(x4) {
 
 println("Fin del switch");
 
-break;
+
+int ix = 0;
+
+if (ix == 0) {
+    println("Es cero");
+    ix++;
+}

@@ -24,7 +24,7 @@
         <label>Salida:</label>
         <div class="salida">{{ salida }}</div>
         <div class="botones">
-            <form method="get" action="/descargar/errores" style="display:inline;">
+            <form method="get" action="/errores" style="display:inline;">
                 <input type="hidden" name="data" value="{{ errores|e }}">
                 <button type="submit">Reporte de Errores</button>
             </form>

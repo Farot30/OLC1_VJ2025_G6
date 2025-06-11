@@ -2,10 +2,16 @@ from src.simbolo.CTipo import Tipo
 
 
 class Simbolo:
-    def __init__(self, tipo: Tipo, id: str, valor=None, linea=0, columna=0):
+    _id_cc = 0  # atreibuto de clase
+
+    def __init__(self, tipo: Tipo, id: str, entidad, valor, scope, linea, columna):
+        Simbolo._id_cc += 1
+        self.nID = Simbolo._id_cc
         self.tipo = tipo
         self.id = id.lower()
+        self.entidad = entidad
         self.valor = valor
+        self.scope = scope
         self.linea = linea
         self.columna = columna
 
@@ -32,3 +38,15 @@ class Simbolo:
 
     def getColumna(self):
         return self.columna
+
+    def to_dict(self):
+        return {
+            "id": self.nID,
+            "nombre": self.id,
+            "entidad": self.entidad,
+            "tipo": self.tipo,
+            "valor": self.valor,
+            "scope": self.scope,
+            "linea": self.linea,
+            "columna": self.columna,
+        }

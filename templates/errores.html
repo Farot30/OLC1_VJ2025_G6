@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Errores</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+<body>
+    <h1>Reporte de Errores</h1>
+    {% if errores %}
+    <table border="1">
+        <tr>
+            <th>#</th>
+            <th>Tipo</th>
+            <th>Descripción</th>
+            <th>Línea</th>
+            <th>Columna</th>
+        </tr>
+        {% for error in errores %}
+        <tr>
+            <td>{{ error.num }}</td>
+            <td>{{ error.tipo }}</td>
+            <td>{{ error.desc }}</td>
+            <td>{{ error.linea }}</td>
+            <td>{{ error.col }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No hay errores.</p>
+    {% endif %}
+    <a href="{{ url_for('index') }}">Volver</a>
+</body>
+</html>
