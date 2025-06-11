@@ -2,6 +2,7 @@ from src.gramatica import parse_input
 from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
+from src.simbolo.CInstancia import tabla_S as aTab
 
 from src.gramatica import parse_input, errores_sintacticos_globales
 
@@ -15,7 +16,7 @@ def main():
         instrucciones = parse_input(entrada, ast)  # Pasa el árbol aquí
         ast.set_instrucciones(instrucciones)
         
-        tabla = tablaSimbolo()
+        tabla = aTab
         ast.setTablaGlobal(tabla)
         ast.setConsola("")
 
@@ -68,7 +69,7 @@ def main():
 
 def imprimir_tabla_simbolos(tabla: tablaSimbolo):
     print("#\tID\tTIPO\t\tTIPO2\tENTORNO\tVALOR\tLINEA\tCOLUMNA")
-    for idx, simbolo in enumerate(tabla.getTabla().values(), 1):
+    for idx, simbolo in enumerate(tabla.getTabla(), 1):
         id_ = simbolo.getId()
         tipo1 = "Variable"  # Si solo manejas variables, si tienes funciones/campos, cámbialo
         tipo2 = simbolo.getTipo().tipo.name if simbolo.getTipo() else "desconocido"

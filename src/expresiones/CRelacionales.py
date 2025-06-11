@@ -2,6 +2,7 @@ from abc import ABC
 from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.CTipo import Tipo, tipoDato
 from src.excepciones.CErrores import Errores
+from src.simbolo.CInstancia import tabla_S as aTab
 
 
 class OperadoresRel:

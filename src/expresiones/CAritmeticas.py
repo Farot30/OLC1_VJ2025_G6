@@ -5,6 +5,7 @@ from src.excepciones.CErrores import Errores
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.simbolo.CTipo import Tipo, tipoDato
 from src.simbolo.CArbol import Arbol
+from src.simbolo.CInstancia import tabla_S as aTab
 
 class Operadores:
     SUMA = 0
@@ -23,7 +24,7 @@ class Aritmeticas(Instruccion, ABC):
         self.operando1 = op1
         self.operando2 = op2
 
-    def interpretar(self, arbol: Arbol, tabla: tablaSimbolo):
+    def interpretar(self, arbol: Arbol, tabla):
         op_izq = self.operando1.interpretar(arbol, tabla)
         if isinstance(op_izq, Errores):
             return op_izq

@@ -134,6 +134,8 @@ def t_error(t):
 # Construyendo el analizador léxico
 import ply.lex as lex
 
+from src.simbolo.CInstancia import tabla_S as aTab
+
 from src.instrucciones.CPrint import Print
 from src.instrucciones.CPrintln import Println
 from src.expresiones.CRelacionales import OperadoresRel, Relacional
@@ -144,7 +146,6 @@ from src.instrucciones.CDeclaracion import Declaracion
 from src.simbolo.CTipo import Tipo, tipoDato
 from src.excepciones.CErrores import Errores
 from src.instrucciones.CBreak import Break
-
 lexer = lex.lex()
 
 # Asociación de operadores y precedencia
@@ -176,6 +177,7 @@ def p_instrucciones(t):
     if len(t) == 3:
         t[1].append(t[2])
         t[0] = t[1]
+       # aTab.ImprimirTabla()
     else:
         t[0] = [t[1]]
 
@@ -214,10 +216,12 @@ def p_if_elseif(t):
 def p_declaracion_cvalor(t):
     'declaracion : tipos ID IGUAL expresion'
     t[0] = Declaracion(t[1], 0, 0, t[2], t[4])
+    #aTab.agregarVariable(id=t[2], tipo=t[1], valor=t[4],linea=0,columna=0)
 
 def p_declaracion_sinval(t):
     'declaracion : tipos ID '
     t[0] = Declaracion(t[1], 0, 0, t[2], None)
+   # aTab.agregarVariable(id=t[2], tipo=t[1], valor=None,linea=0,columna=0)
 
 def p_expresion_binaria(t):
     '''expresion : expresion MAS expresion

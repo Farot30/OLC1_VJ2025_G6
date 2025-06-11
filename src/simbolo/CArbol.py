@@ -2,13 +2,14 @@ from __future__ import annotations
 from src.abstracto.CInstruccion import Instruccion
 from src.excepciones.CErrores import Errores
 from src.simbolo.TablaSimbolo import tablaSimbolo
+from src.simbolo.CInstancia import tabla_S as aTab
 
 
 class Arbol:
     def __init__(self, instrucciones: list[Instruccion]): 
         self.instrucciones = instrucciones
         self.consola = ""
-        self.tabla_global = tablaSimbolo()
+        self.tabla_global = aTab
         self.errores = []
 
     def getConsola(self) -> str:
@@ -23,10 +24,10 @@ class Arbol:
     def set_instrucciones(self, instrucciones: list[Instruccion]): 
         self.instrucciones = instrucciones
 
-    def get_tabla_global(self) -> tablaSimbolo:
+    def get_tabla_global(self) -> aTab:
         return self.tabla_global
 
-    def setTablaGlobal(self, tabla: tablaSimbolo):
+    def setTablaGlobal(self, tabla: aTab):
         self.tabla_global = tabla
 
     def get_errores(self) -> list[Errores]:

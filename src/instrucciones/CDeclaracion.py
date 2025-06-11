@@ -4,6 +4,7 @@ from src.excepciones.CErrores import Errores
 from src.simbolo.CTipo import Tipo
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.simbolo.CArbol import Arbol
+from src.simbolo.CInstancia import tabla_S as aTab
 
 
 class Declaracion(Instruccion):
@@ -12,10 +13,11 @@ class Declaracion(Instruccion):
         self.identificador = identificador
         self.valor = valor
 
-    def interpretar(self, arbol: Arbol, tabla: tablaSimbolo):
+    def interpretar(self, arbol: Arbol, tabla):
         # caso: <TIPO> <ID> = <EXPRESIÓN>;
         if self.valor:
             res_valor = self.valor.interpretar(arbol, tabla)
+           # aTab.agregarVariable(self.identificador, self.tipoDato, res_valor, 0,0)
             if isinstance(res_valor, Errores):
                 return res_valor
 
@@ -23,14 +25,14 @@ class Declaracion(Instruccion):
             if self.valor.tipoDato.getTipo() != self.tipoDato.getTipo():
                 return Errores("SEMANTICO", "El tipo y el valor de la variable no coinciden", self.linea, self.col)
 
-            if not tabla.setVariable(Simbolo(self.tipoDato, self.identificador, res_valor)):
+            if not aTab.agregarVariable(self.identificador, self.tipoDato, res_valor, self.linea, self.col):
                 return Errores("SEMANTICO", "No se puede declarar la variable", self.linea, self.col)
             
             arbol.setConsola(arbol.getConsola() + f"Declaración '{self.identificador}' = {res_valor}\n")
 
         #caso <TIPO> <ID>; 
         else:
-            if not tabla.setVariable(Simbolo(self.tipoDato, self.identificador, None)):
+            if not aTab.agregarVariable(self.identificador, self.tipoDato, None, self.linea, self.col):
                 return Errores("SEMANTICO", f"No se puede declarar la variable '{self.identificador}'", self.linea, self.col)
 
             arbol.setConsola(arbol.getConsola() + f"Declaración '{self.identificador}'  sin valor\n")

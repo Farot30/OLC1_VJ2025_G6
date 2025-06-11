@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 #from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.simbolo.CTipo import Tipo
+from src.simbolo.CInstancia import tabla_S as aTab
 
 class Instruccion(ABC):
     def __init__(self, tipo: Tipo, linea: int, col: int):
@@ -10,5 +11,5 @@ class Instruccion(ABC):
         self.col = col
 
     @abstractmethod
-    def interpretar(self, arbol, tabla: tablaSimbolo):
+    def interpretar(self, arbol, tabla):
         pass
