@@ -28,12 +28,10 @@
                 <input type="hidden" name="data" value="{{ errores|e }}">
                 <button type="submit">Reporte de Errores</button>
             </form>
-            <form method="get" action="/descargar/tabla" style="display:inline;">
-                <input type="hidden" name="data" value="{{ tabla_simbolos|e }}">
+            <form method="get" action="/tabla_simbolos" style="display:inline;">
                 <button type="submit">Tabla de Símbolos</button>
             </form>
-            <form method="get" action="/descargar/ast" style="display:inline;">
-                <input type="hidden" name="data" value="{{ ast|e }}">
+            <form method="get"style="display:inline;">
                 <button type="submit">AST</button>
             </form>
         </div>

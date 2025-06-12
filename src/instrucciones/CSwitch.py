@@ -39,6 +39,9 @@ class Switch(Instruccion):
                     if resultado == "break":
                         tabla.borrarScope()
                         return None
+                    elif resultado == "continue":
+                        tabla.borrarScope()
+                        return "continue"
 
         if not ejecutando and self.defecto:
             for instr in self.defecto:
@@ -49,6 +52,9 @@ class Switch(Instruccion):
                 if resultado == "break":
                     tabla.borrarScope()
                     return None
+                elif resultado == "continue":
+                    tabla.borrarScope()
+                    return "continue"
 
         tabla.borrarScope()
         return None

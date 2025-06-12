@@ -181,3 +181,9 @@ class tablaSimbolo(metaclass=SingletonMeta):
             if var.id == id.lower() and var.scope == scope:
                 return True
         return False
+
+    def limpiar(self):
+        self.tabla_actual = []
+        from src.simbolo.CSimbolo import Simbolo
+
+        Simbolo._id_cc = 0  # Reinicia el contador de IDs

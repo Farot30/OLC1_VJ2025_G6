@@ -130,6 +130,11 @@ def t_COMMENT_SINGLELINE(t):
     pass
 
 
+def t_NEWLINE(t):
+    r"\n+"
+    t.lexer.lineno += len(t.value)
+
+
 def t_COMMENT_MULTILINE(t):
     r"/\*(.|\n)*?\*/"
     t.lexer.lineno += t.value.count("\n")
@@ -664,12 +669,51 @@ def p_error(t):
         else:
             errores_sintacticos_globales.append(error)
         print(error)
+    parser.errok()
     parser.restart()
-    return []
+    # return []
 
 
 def p_instruccion_error(t):
+    "instruccion : error"
+    t[0] = None
+
+
+def p_instruccion_error_punto_coma(t):
     "instruccion : error PUNTOCOMA"
+    t[0] = None
+
+
+def p_instruccion_vacia(t):
+    "instruccion : PUNTOCOMA"
+    t[0] = None
+
+
+def p_instruccion_declaracion_sin_puntocoma(t):
+    "instruccion : declaracion"
+    error = Errores(
+        "Sintáctico",
+        "Falta punto y coma al final de la declaración.",
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
+    arbol = getattr(t.lexer, "arbol", None)
+    if arbol:
+        arbol.errores.append(error)
+    t[0] = None
+
+
+def p_instruccion_catch_all(t):
+    "instruccion : ID"
+    error = Errores(
+        "Sintáctico",
+        f"Instrucción inválida: '{t[1]}'",
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
+    arbol = getattr(t.lexer, "arbol", None)
+    if arbol:
+        arbol.errores.append(error)
     t[0] = None
 
 
@@ -690,6 +734,7 @@ parser = yacc.yacc()
 
 def parse_input(input_text, arbol):
     setattr(lexer, "arbol", arbol)
+    lexer.lineno = 1  # <-- Reinicia el número de línea aquí
     result = parser.parse(input_text, lexer=lexer)
     if result is None:
         return []

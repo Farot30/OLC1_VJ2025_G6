@@ -20,8 +20,8 @@ class sentIF(Instruccion):
             for instruccion in self.instrucciones:
                 res = instruccion.interpretar(arbol, tabla)
                 if isinstance(res, Errores):
-                    arbol.addErrores(res)
-                elif isinstance(res, Break):
+                    arbol.errores.append(res)
+                elif res == "break" or res == "continue":
                     tabla.borrarScope()
                     return res
             tabla.borrarScope()
@@ -39,8 +39,8 @@ class sentIF(Instruccion):
             for instruccion in self.instrucciones:
                 resultado = instruccion.interpretar(arbol, tabla)
                 if isinstance(resultado, Errores):
-                    arbol.addErrores(resultado)
-                elif isinstance(resultado, Break):
+                    arbol.errores.append(resultado)
+                elif resultado == "break" or resultado == "continue":
                     tabla.borrarScope()
                     return resultado
             tabla.borrarScope()

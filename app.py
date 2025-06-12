@@ -5,6 +5,7 @@ from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
 
+
 app = Flask(__name__)
 
 
@@ -18,14 +19,19 @@ def index():
     if request.method == "POST":
         if "interpretar" in request.form:
             entrada = request.form.get("entrada", "")
-            arbol = Arbol([])  # 1. Crea el árbol antes de parsear
-            instrucciones = parse_input(entrada, arbol)  # 2. Pasa el árbol aquí
+            arbol = Arbol([])  # Crea un nuevo árbol
+            instrucciones = parse_input(entrada, arbol)
             arbol.set_instrucciones(instrucciones)
+            # Reinicia la tabla de símbolos (nueva instancia)
             tabla = tablaSimbolo()
+            tabla.limpiar()  # <-- Agrega este método en tu clase tablaSimbolo si no existe
             arbol.setTablaGlobal(tabla)
             arbol.setConsola("")
+            arbol.errores = []  # Limpia errores previos
             # Ejecutar instrucciones
             for instr in arbol.getInstrucciones():
+                if instr is None:
+                    continue
                 resultado = instr.interpretar(arbol, tabla)
                 if isinstance(resultado, Errores):
                     arbol.errores.append(resultado)
@@ -35,6 +41,11 @@ def index():
                 errores = "#\tTipo\tDescripcion\tLINEA\tCOLUMNA\n"
                 for idx, error in enumerate(arbol.errores, 1):
                     errores += f"{idx}\t{error.get_tipo_error()}\t{error.get_desc()}\t{error.get_linea()}\t{error.get_col()}\n"
+                # Agrega el conteo de errores al inicio de la salida
+                salida = (
+                    f"Se encontraron {len(arbol.errores)} errores durante la compilación.\n"
+                    + salida
+                )
             else:
                 errores = "Sin errores."
             # Generar tabla de símbolos usando el método de la clase
@@ -80,26 +91,11 @@ def pagina_errores():
     return render_template("errores.html", errores=errores_lista)
 
 
-@app.route("/descargar/<tipo>")
-def descargar(tipo):
-    if tipo == "errores":
-        contenido = request.args.get("data", "No hay errores.")
-        filename = "errores.txt"
-    elif tipo == "tabla":
-        contenido = request.args.get("data", "No hay tabla de símbolos.")
-        filename = "tabla_simbolos.txt"
-    elif tipo == "ast":
-        contenido = request.args.get("data", "No hay AST.")
-        filename = "ast.txt"
-    else:
-        contenido = "Tipo no válido."
-        filename = "reporte.txt"
-    buffer = io.BytesIO()
-    buffer.write(contenido.encode("utf-8"))
-    buffer.seek(0)
-    return send_file(
-        buffer, as_attachment=True, download_name=filename, mimetype="text/plain"
-    )
+@app.route("/tabla_simbolos")
+def mostrar_tabla_simbolos():
+    # Recupera la tabla de símbolos global (ajusta según tu lógica)
+    tabla = tablaSimbolo()
+    return render_template("tabla_simbolos.html", tabla=tabla.getTabla())
 
 
 if __name__ == "__main__":

@@ -1,4 +1,3 @@
-
 int x41;
 
 for(x41 = 0; x41 < 3; x41++) {
@@ -9,10 +8,11 @@ println(x41);
 
 if (0==0){
     println("hola paco");
-    if(2==3){
+    if(2==2){
         break;
         println("aas"); 
-
+        int isis=1;
+        println("isis: "+isis);
     }
 }
 
