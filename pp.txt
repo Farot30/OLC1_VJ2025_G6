@@ -4,7 +4,6 @@ if (0==0){
     int a = 1+2;
     if(2==3){
         break;
-        println("aas"); 
 
     }
 }

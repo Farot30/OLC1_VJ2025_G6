@@ -1,5 +1,6 @@
 from abc import ABC
 
+from src.abstracto.CAST import clasAST
 from src.abstracto.CInstruccion import Instruccion
 from src.excepciones.CErrores import Errores
 from src.simbolo.TablaSimbolo import tablaSimbolo
@@ -306,3 +307,34 @@ class Aritmeticas(Instruccion, ABC):
 
         return Errores("SEMANTICO", "Modulo entre tipos no valida", self.linea, self.col)
     
+
+    def graficar(self, grafo: clasAST):
+        #Nodo principal 
+        tipOperacion = self.getNOpe()
+        nodoPrincipal = grafo.agregar_nodo(f"Aritmética: {tipOperacion}", fillcolor="white")
+
+        #operando 1
+        nodoOp1 = self.operando1.graficar(grafo)
+        grafo.agregar_arista(nodoPrincipal, nodoOp1)
+
+         #operando 2
+        nodoOp2 = self.operando2.graficar(grafo)
+        grafo.agregar_arista(nodoPrincipal, nodoOp2)
+
+        return nodoPrincipal
+    
+    def getNOpe(self):
+        if self.operacion == Operadores.SUMA:
+            return '+'
+        elif self.operacion == Operadores.RESTA:
+            return '-'
+        elif self.operacion == Operadores.MULTIPLICACION:
+            return '*'
+        elif self.operacion == Operadores.DIVISION:
+            return '/'
+        elif self.operacion == Operadores.POTENCIA:
+            return '**'
+        elif self.operacion == Operadores.MODULO:
+            return '%'
+        else:
+            return ' '

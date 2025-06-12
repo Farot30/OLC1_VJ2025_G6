@@ -3,6 +3,7 @@ from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
 from src.simbolo.CInstancia import tabla_S as aTab
+from src.abstracto.CAST import generarGrafica
 
 from src.gramatica import parse_input, errores_sintacticos_globales
 
@@ -40,6 +41,8 @@ def main():
                 ast.errores.append(resultado)
             elif resultado is not None:
                 print("Prueba:", resultado)
+
+        generarGrafica(ast, "reporteAST")
 
         print(ast.getConsola())
         return ast

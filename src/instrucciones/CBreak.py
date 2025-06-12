@@ -1,3 +1,4 @@
+from src.abstracto.CAST import clasAST
 from src.simbolo.CTipo import Tipo, tipoDato
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.simbolo.CArbol import Arbol
@@ -11,3 +12,6 @@ class Break(Instruccion):
 
     def interpretar(self, arbol: Arbol, tabla):
         return self
+    
+    def graficar(self, grafo: clasAST):
+        return grafo.agregar_nodo("Break")
