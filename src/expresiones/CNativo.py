@@ -1,6 +1,7 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.CTipo import Tipo
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class Nativo(Instruccion):
@@ -12,15 +13,18 @@ class Nativo(Instruccion):
     def interpretar(self, arbol, tabla):
         # Si es un identificador, busca el valor en la tabla de símbolos SIEMPRE
         if getattr(self, "es_identificador", False):
-            simbolo = tabla.getVariable(self.valor)
-            if simbolo is not None:
+            try:
+                simbolo = tabla.getVariable(self.valor)
                 self.tipoDato = simbolo.getTipo()
                 return simbolo.getValor()
-            else:
+            except KeyError as e:
                 return Errores(
                     "SEMANTICO",
-                    f"Variable '{self.valor}' no definida",
+                    str(e),
                     self.linea,
                     self.col,
                 )
         return self.valor
+
+    def graficar(self, grafo: clasAST):
+        return grafo.agregar_nodo(str(self.valor))

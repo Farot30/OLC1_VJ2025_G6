@@ -1,5 +1,6 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class Println(Instruccion):
@@ -15,3 +16,9 @@ class Println(Instruccion):
             return None
         arbol.setConsola(arbol.getConsola() + str(valor) + "\n")
         return None
+
+    def graficar(self, grafo: clasAST):
+        nodoPrintln = grafo.agregar_nodo("Println")
+        nodoExp = self.expresion.graficar(grafo)
+        grafo.agregar_arista(nodoPrintln, nodoExp)
+        return nodoPrintln

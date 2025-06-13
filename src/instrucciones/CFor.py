@@ -1,6 +1,7 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.CTipo import Tipo, tipoDato
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class For(Instruccion):
@@ -70,3 +71,21 @@ class For(Instruccion):
                 return res_upd
         tabla.borrarScope()
         return None
+
+    def graficar(self, grafo: clasAST):
+        nodoFor = grafo.agregar_nodo("For")
+        nodoInicializacion = self.inicializacion.graficar(grafo)
+        nodoCondicion = self.condicion.graficar(grafo)
+        nodoActualizacion = self.actualizacion.graficar(grafo)
+        nodoCuerpo = grafo.agregar_nodo("Cuerpo")
+
+        grafo.agregar_arista(nodoFor, nodoInicializacion)
+        grafo.agregar_arista(nodoFor, nodoCondicion)
+        grafo.agregar_arista(nodoFor, nodoActualizacion)
+        grafo.agregar_arista(nodoFor, nodoCuerpo)
+
+        for instr in self.instrucciones:
+            hijo = instr.graficar(grafo)
+            grafo.agregar_arista(nodoCuerpo, hijo)
+
+        return nodoFor

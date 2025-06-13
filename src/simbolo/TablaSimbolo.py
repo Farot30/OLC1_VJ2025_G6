@@ -49,19 +49,40 @@ class tablaSimbolo(metaclass=SingletonMeta):
 
     def setVariable(self, simbolo: Simbolo) -> bool:
         key = simbolo.getId().lower()
-        # print(f"Agregando variable '{key}' al scope '{self.current_scope}'")
-        for var in self.tabla_actual:
-            if var.id == key and var.scope == self.current_scope:
-                return False  # Ya existe
+        # Si estamos en global, solo debe fallar si ya existe en global
+        if self.current_scope == "global":
+            for var in self.tabla_actual:
+                if var.id == key and var.scope == "global":
+                    return False  # Ya existe en global
+        else:
+            # Si estamos en un entorno local, no debe existir en global ni en este entorno
+            for var in self.tabla_actual:
+                if var.id == key and (
+                    var.scope == "global" or var.scope == self.current_scope
+                ):
+                    return False  # Ya existe en global o en este entorno
         self.tabla_actual.append(simbolo)
         return True
 
     def getVariable(self, id_, scope=None):
         key = id_.lower()
+        scope = scope or self.current_scope
+        # Busca primero en el scope actual
         for var in reversed(self.tabla_actual):
-            if var.entidad == "variable" and var.id == key:
+            if var.entidad == "variable" and var.id == key and var.scope == scope:
                 return var
-        raise KeyError(f"La variable '{id_}' no ha sido declarada")
+        # Si no está, busca en global
+        if scope != "global":
+            for var in reversed(self.tabla_actual):
+                if (
+                    var.entidad == "variable"
+                    and var.id == key
+                    and var.scope == "global"
+                ):
+                    return var
+        raise KeyError(
+            f"La variable '{id_}' no ha sido declarada en el entorno '{scope}' ni en global"
+        )
         """if key in self.tabla_actual:
             return self.tabla_actual[key]
         elif self.padre is not None:
@@ -115,7 +136,7 @@ class tablaSimbolo(metaclass=SingletonMeta):
             "linea",
             "columna",
         ]
-        print(" |\t ".join(headers))
+        print(" | ".join(headers))
         print("-" * (len(headers) * 15))
         for sym in self.tabla_actual:
             # Tipo como texto

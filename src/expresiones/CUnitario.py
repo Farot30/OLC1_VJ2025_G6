@@ -3,6 +3,7 @@ from src.simbolo.CTipo import Tipo, tipoDato
 from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class Unario(Instruccion):
@@ -33,3 +34,13 @@ class Unario(Instruccion):
             self.linea,
             self.col,
         )
+
+    def graficar(self, grafo: clasAST):
+        unario = grafo.agregar_nodo("Unario")
+        nodoExp = self.expresion.graficar(grafo)  # <-- Grafica la expresión
+        nodoOperador = grafo.agregar_nodo(self.operador)  # Nodo para el operador
+
+        grafo.agregar_arista(unario, nodoOperador)
+        grafo.agregar_arista(unario, nodoExp)
+
+        return unario

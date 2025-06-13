@@ -1,6 +1,7 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.CTipo import Tipo, tipoDato
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class Not(Instruccion):
@@ -10,6 +11,8 @@ class Not(Instruccion):
 
     def interpretar(self, arbol, tabla):
         valor = self.expresion.interpretar(arbol, tabla)
+        if isinstance(valor, Errores):
+            return valor
         if isinstance(valor, bool):
             return not valor
         else:
@@ -19,3 +22,10 @@ class Not(Instruccion):
                 self.linea,
                 self.col,
             )
+
+    def graficar(self, grafo: clasAST):
+        nodoNot = grafo.agregar_nodo("NOT")
+        nodoExp = self.expresion.graficar(grafo)  # <-- Grafica la expresión
+
+        grafo.agregar_arista(nodoNot, nodoExp)
+        return nodoNot

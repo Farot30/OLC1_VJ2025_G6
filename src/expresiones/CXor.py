@@ -1,6 +1,7 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.CTipo import Tipo, tipoDato
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class Xor(Instruccion):
@@ -26,3 +27,13 @@ class Xor(Instruccion):
                 self.linea,
                 self.col,
             )
+
+    def graficar(self, grafo: clasAST):
+        nodoXor = grafo.agregar_nodo("XOR")
+        nodoIzq = self.izq.graficar(grafo)
+        nodoDer = self.der.graficar(grafo)
+
+        grafo.agregar_arista(nodoXor, nodoIzq)
+        grafo.agregar_arista(nodoXor, nodoDer)
+
+        return nodoXor

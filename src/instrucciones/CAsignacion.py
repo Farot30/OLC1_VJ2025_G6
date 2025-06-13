@@ -3,6 +3,7 @@ from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.simbolo.CArbol import Arbol
 from src.excepciones.CErrores import Errores
 from src.simbolo.CTipo import tipoDato
+from src.abstracto.CAST import clasAST
 
 
 class Asignacion(Instruccion):
@@ -12,14 +13,16 @@ class Asignacion(Instruccion):
         self.valor = valor
 
     def interpretar(self, arbol: Arbol, tabla: tablaSimbolo):
-        simbolo = None
-        for sym in reversed(tabla.getTabla()):
-            if sym.entidad == "variable" and sym.id == self.id.lower():
-                simbolo = sym
-                break
-        if simbolo is None:
+        # Busca la variable usando el método getVariable, captura el error si no existe
+        try:
+            simbolo = tabla.getVariable(self.id)
+        except KeyError as e:
+            # Retorna un objeto Errores para que el error se agregue a la tabla de errores
             return Errores(
-                "SEMANTICO", f"Variable '{self.id}' no declarada", self.linea, self.col
+                "SEMANTICO",
+                str(e),
+                self.linea,
+                self.col,
             )
         val = self.valor.interpretar(arbol, tabla)
         if isinstance(val, Errores):
@@ -69,7 +72,22 @@ class Asignacion(Instruccion):
             val = int(val)
 
         # Siempre actualiza el scope al actual cuando se asigna un nuevo valor
-        simbolo.scope = tabla.current_scope
+        # simbolo.scope = tabla.current_scope
 
         simbolo.setValor(val)
         return None
+
+    def graficar(self, grafo: clasAST):
+        asignacion = grafo.agregar_nodo("Asignación")
+        tipo = (
+            self.valor.tipoDato.getTipo()
+            if hasattr(self.valor, "tipoDato")
+            else "desconocido"
+        )
+        nodoID = grafo.agregar_nodo(f"ID: {self.id} ({tipo})")
+        nodoval = self.valor.graficar(grafo)
+
+        grafo.agregar_arista(asignacion, nodoID)
+        grafo.agregar_arista(asignacion, nodoval)
+
+        return asignacion

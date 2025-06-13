@@ -1,7 +1,15 @@
-d
+int s = 0;
 
-int s;
+if (s == 0) {
+    println("Hola");
+    s = 1;
+}
 
-int l;
+println(s);
 
-l = 2 + 1;
+if (s ==1){
+    int l = 1;
+    println("Hola " + l);
+}
+//int l = 8;
+println(l);

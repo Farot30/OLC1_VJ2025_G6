@@ -1,6 +1,7 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.CTipo import Tipo, tipoDato
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class Or(Instruccion):
@@ -27,3 +28,13 @@ class Or(Instruccion):
                 self.linea,
                 self.col,
             )
+
+    def graficar(self, grafo: clasAST):
+        nodoOR = grafo.agregar_nodo("OR")
+        nodoIzq = self.izq.graficar(grafo)
+        nodoDer = self.der.graficar(grafo)
+
+        grafo.agregar_arista(nodoOR, nodoIzq)
+        grafo.agregar_arista(nodoOR, nodoDer)
+
+        return nodoOR

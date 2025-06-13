@@ -3,6 +3,7 @@ from src.abstracto.CInstruccion import Instruccion
 from src.excepciones.CErrores import Errores
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.simbolo.CInstancia import tabla_S as aTab
+from src.abstracto.CAST import clasAST
 
 
 class Arbol:
@@ -32,3 +33,10 @@ class Arbol:
 
     def get_errores(self) -> list[Errores]:
         return self.errores
+
+    def graficar(self, grafo: clasAST):
+        nodoRaiz = grafo.agregar_nodo("REPORTE")
+        for instru in self.instrucciones:
+            nodoHijo = instru.graficar(grafo)
+            grafo.agregar_arista(nodoRaiz, nodoHijo)
+        return nodoRaiz

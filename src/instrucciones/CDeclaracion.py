@@ -4,6 +4,7 @@ from src.excepciones.CErrores import Errores
 from src.simbolo.CTipo import Tipo
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.simbolo.CArbol import Arbol
+from src.abstracto.CAST import clasAST
 
 
 class Declaracion(Instruccion):
@@ -86,3 +87,23 @@ class Declaracion(Instruccion):
             # )
 
         return None
+
+    def graficar(self, grafo: clasAST):
+        nodoDeclaracion = grafo.agregar_nodo("Declaración")
+
+        # identificador
+        nodoID = grafo.agregar_nodo(f"ID: {self.identificador}")
+        grafo.agregar_arista(nodoDeclaracion, nodoID)
+
+        # tipo
+        nodoTipo = grafo.agregar_nodo(f"Tipo: {self.tipoDato.getTipo().name}")
+        grafo.agregar_arista(nodoDeclaracion, nodoTipo)
+
+        # valor si fuera declaracion de variable con valor
+        if self.valor is not None:
+            nodoValor = grafo.agregar_nodo("Valor")
+            grafo.agregar_arista(nodoDeclaracion, nodoValor)
+            hijValor = self.valor.graficar(grafo)
+            grafo.agregar_arista(nodoValor, hijValor)
+
+        return nodoDeclaracion

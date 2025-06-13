@@ -2,6 +2,7 @@ from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.simbolo.CArbol import Arbol
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class Incremento(Instruccion):
@@ -28,7 +29,7 @@ class Incremento(Instruccion):
                 self.col,
             )
         # Siempre actualiza el scope al actual cuando se incrementa
-        simbolo.scope = tabla.current_scope
+        # simbolo.scope = tabla.current_scope
 
         simbolo.setValor(valor + 1)
         return None
@@ -58,7 +59,13 @@ class Decremento(Instruccion):
                 self.col,
             )
         # Siempre actualiza el scope al actual cuando se decrementa
-        simbolo.scope = tabla.current_scope
+        # simbolo.scope = tabla.current_scope
 
         simbolo.setValor(valor - 1)
         return None
+
+    def graficar(self, grafo: clasAST):
+        nodoID = grafo.agregar_nodo(f"ID: {self.id}")
+        grafo.agregar_arista(nodoID, grafo.agregar_nodo("ID"))
+
+        return nodoID

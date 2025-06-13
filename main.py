@@ -6,7 +6,7 @@ from src.excepciones.CErrores import Errores
 
 def main():
     try:
-        f = open("pruebas.txt", "r")
+        f = open("proban.txt", "r")
         entrada = f.read()
 
         ast = Arbol([])  # Crea el árbol antes de parsear
@@ -32,13 +32,12 @@ def main():
 
         for instr in ast.getInstrucciones():
             if instr is None:
-                continue  # Salta instrucciones vacías (errores sintácticos)
+                continue
             resultado = instr.interpretar(ast, tabla)
-            if isinstance(resultado, Errores):
-                print(resultado)
+            # Solo agrega el error si no está ya en ast.errores
+            if isinstance(resultado, Errores) and resultado not in ast.errores:
                 ast.errores.append(resultado)
-            elif resultado is not None:
-                print("Prueba:", resultado)
+            # No imprimas aquí, solo imprime al final
 
         print(ast.getConsola())
         return ast

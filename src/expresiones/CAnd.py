@@ -1,6 +1,7 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.CTipo import Tipo, tipoDato
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class And(Instruccion):
@@ -26,3 +27,13 @@ class And(Instruccion):
                 self.linea,
                 self.col,
             )
+
+    def graficar(self, grafo: clasAST):
+        nodoAND = grafo.agregar_nodo("AND")
+        nodoIzq = self.izq.graficar(grafo)  # <-- Grafica la izquierda
+        nodoDer = self.der.graficar(grafo)  # <-- Grafica la derecha
+
+        grafo.agregar_arista(nodoAND, nodoIzq)
+        grafo.agregar_arista(nodoAND, nodoDer)
+
+        return nodoAND

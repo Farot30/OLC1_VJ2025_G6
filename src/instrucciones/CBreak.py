@@ -13,7 +13,7 @@ class Break(Instruccion):
         if not en_ciclo:
             return Errores(
                 "SEMANTICO",
-                "La sentencia 'break' solo puede usarse dentro de un ciclo.",
+                "La sentencia 'break' solo puede usarse dentro de un ciclo o switch.",
                 self.linea,
                 self.col,
             )

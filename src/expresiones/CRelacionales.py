@@ -2,6 +2,7 @@ from abc import ABC
 from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.CTipo import Tipo, tipoDato
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class OperadoresRel:
@@ -22,7 +23,11 @@ class Relacional(Instruccion, ABC):
 
     def interpretar(self, arbol, tabla):
         val1 = self.op1.interpretar(arbol, tabla)
+        if isinstance(val1, Errores):
+            return val1
         val2 = self.op2.interpretar(arbol, tabla)
+        if isinstance(val2, Errores):
+            return val2
 
         tipos_validos = (int, float, str, bool)
         if not isinstance(val1, tipos_validos) or not isinstance(val2, tipos_validos):
@@ -84,3 +89,36 @@ class Relacional(Instruccion, ABC):
                 self.linea,
                 self.col,
             )
+
+    def graficar(self, grafo: clasAST):
+        # Nodo principal
+        tipOperacion = self.getNOpe()
+        nodoPrincipal = grafo.agregar_nodo(
+            f"Relacional: {tipOperacion}", fillcolor="white"
+        )
+
+        # operando 1
+        nodoOp1 = self.op1.graficar(grafo)
+        grafo.agregar_arista(nodoPrincipal, nodoOp1)
+
+        # operando 2
+        nodoOp2 = self.op2.graficar(grafo)
+        grafo.agregar_arista(nodoPrincipal, nodoOp2)
+
+        return nodoPrincipal
+
+    def getNOpe(self):
+        if self.operador == OperadoresRel.IGUAL_IGUAL:
+            return "=="
+        elif self.operador == OperadoresRel.DIFERENTE:
+            return "!="
+        elif self.operador == OperadoresRel.MENOR_QUE:
+            return "<"
+        elif self.operador == OperadoresRel.MAYOR_QUE:
+            return ">"
+        elif self.operador == OperadoresRel.MENOR_IGUAL:
+            return "<="
+        elif self.operador == OperadoresRel.MAYOR_IGUAL:
+            return ">="
+        else:
+            return " "
