@@ -2,6 +2,7 @@ int s = 0;
 
 if (s == 0) {
     println("Hola");
+    break;
     s = 1;
 }
 
@@ -18,4 +19,14 @@ str h = "paco";
 if (s == 1){
     println("hojana" + l) ;
     println(h);
+}
+
+if (0==0){
+    println("hola paco");
+    if(2==2){
+        break;
+        println("aas"); 
+        int isis=1;
+        println("isis: " + isis);
+    }
 }

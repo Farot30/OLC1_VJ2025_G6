@@ -38,5 +38,6 @@ class Arbol:
         nodoRaiz = grafo.agregar_nodo("REPORTE")
         for instru in self.instrucciones:
             nodoHijo = instru.graficar(grafo)
-            grafo.agregar_arista(nodoRaiz, nodoHijo)
+            if nodoHijo is not None:
+                grafo.agregar_arista(nodoRaiz, nodoHijo)
         return nodoRaiz

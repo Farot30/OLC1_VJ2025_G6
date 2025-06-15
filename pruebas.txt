@@ -11,8 +11,8 @@ if (0==0){
     if(2==2){
         break;
         println("aas"); 
-        int isis=1;
-        println("isis: "+isis);
+        int isis = 1;
+        println("isis: " + isis);
     }
 }
 

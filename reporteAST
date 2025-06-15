@@ -1,283 +1,794 @@
 digraph ReporteAST {
 	node1 [label=REPORTE color=purple fillcolor=white style=filled]
 	node2 [label="Declaración" color=purple fillcolor=white style=filled]
-	node3 [label="ID: x41" color=purple fillcolor=white style=filled]
+	node3 [label="ID: a" color=purple fillcolor=white style=filled]
 	node2 -> node3
-	node4 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node4 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
 	node2 -> node4
 	node1 -> node2
-	node5 [label=For color=purple fillcolor=white style=filled]
-	node6 [label="Asignación" color=purple fillcolor=white style=filled]
-	node7 [label=x41 color=purple fillcolor=white style=filled]
-	node8 [label=0 color=purple fillcolor=white style=filled]
-	node6 -> node7
-	node6 -> node8
-	node9 [label="<" color=purple fillcolor=white style=filled]
-	node10 [label=x41 color=purple fillcolor=white style=filled]
-	node9 -> node10
-	node11 [label=3 color=purple fillcolor=white style=filled]
-	node9 -> node11
-	node12 [label=Incremento color=purple fillcolor=white style=filled]
-	node13 [label="ID: x41" color=purple fillcolor=white style=filled]
-	node12 -> node13
-	node14 [label=Cuerpo color=purple fillcolor=white style=filled]
+	node5 [label="Declaración" color=purple fillcolor=white style=filled]
+	node6 [label="ID: b" color=purple fillcolor=white style=filled]
 	node5 -> node6
-	node5 -> node9
-	node5 -> node12
-	node5 -> node14
-	node15 [label=Println color=purple fillcolor=white style=filled]
-	node16 [label=holas color=purple fillcolor=white style=filled]
-	node15 -> node16
-	node14 -> node15
+	node7 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
+	node5 -> node7
+	node8 [label=Valor color=purple fillcolor=white style=filled]
+	node5 -> node8
+	node9 [label=10 color=purple fillcolor=white style=filled]
+	node8 -> node9
 	node1 -> node5
-	node17 [label=Println color=purple fillcolor=white style=filled]
-	node18 [label=x41 color=purple fillcolor=white style=filled]
-	node17 -> node18
-	node1 -> node17
-	node19 [label=If color=purple fillcolor=white style=filled]
-	node20 [label="==" color=purple fillcolor=white style=filled]
-	node21 [label=0 color=purple fillcolor=white style=filled]
+	node10 [label="Declaración" color=purple fillcolor=white style=filled]
+	node11 [label="ID: c" color=purple fillcolor=white style=filled]
+	node10 -> node11
+	node12 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
+	node10 -> node12
+	node13 [label=Valor color=purple fillcolor=white style=filled]
+	node10 -> node13
+	node14 [label=3.5 color=purple fillcolor=white style=filled]
+	node13 -> node14
+	node1 -> node10
+	node15 [label="Declaración" color=purple fillcolor=white style=filled]
+	node16 [label="ID: d" color=purple fillcolor=white style=filled]
+	node15 -> node16
+	node17 [label="Tipo: BOOL" color=purple fillcolor=white style=filled]
+	node15 -> node17
+	node18 [label=Valor color=purple fillcolor=white style=filled]
+	node15 -> node18
+	node19 [label=True color=purple fillcolor=white style=filled]
+	node18 -> node19
+	node1 -> node15
+	node20 [label="Declaración" color=purple fillcolor=white style=filled]
+	node21 [label="ID: e" color=purple fillcolor=white style=filled]
 	node20 -> node21
-	node22 [label=0 color=purple fillcolor=white style=filled]
+	node22 [label="Tipo: CHAR" color=purple fillcolor=white style=filled]
 	node20 -> node22
-	node19 -> node20
-	node23 [label=Instrucciones color=purple fillcolor=white style=filled]
-	node19 -> node23
-	node24 [label=Println color=purple fillcolor=white style=filled]
-	node25 [label="hola paco" color=purple fillcolor=white style=filled]
-	node24 -> node25
+	node23 [label=Valor color=purple fillcolor=white style=filled]
+	node20 -> node23
+	node24 [label=x color=purple fillcolor=white style=filled]
 	node23 -> node24
-	node26 [label=If color=purple fillcolor=white style=filled]
-	node27 [label="==" color=purple fillcolor=white style=filled]
-	node28 [label=2 color=purple fillcolor=white style=filled]
-	node27 -> node28
-	node29 [label=2 color=purple fillcolor=white style=filled]
-	node27 -> node29
-	node26 -> node27
-	node30 [label=Instrucciones color=purple fillcolor=white style=filled]
-	node26 -> node30
-	node31 [label=Break color=purple fillcolor=white style=filled]
+	node1 -> node20
+	node25 [label="Declaración" color=purple fillcolor=white style=filled]
+	node26 [label="ID: f" color=purple fillcolor=white style=filled]
+	node25 -> node26
+	node27 [label="Tipo: STRING" color=purple fillcolor=white style=filled]
+	node25 -> node27
+	node28 [label=Valor color=purple fillcolor=white style=filled]
+	node25 -> node28
+	node29 [label="Hola mundo" color=purple fillcolor=white style=filled]
+	node28 -> node29
+	node1 -> node25
+	node30 [label="Asignación" color=purple fillcolor=white style=filled]
+	node31 [label=a color=purple fillcolor=white style=filled]
+	node32 [label=5 color=purple fillcolor=white style=filled]
 	node30 -> node31
-	node32 [label=Println color=purple fillcolor=white style=filled]
-	node33 [label=aas color=purple fillcolor=white style=filled]
-	node32 -> node33
 	node30 -> node32
-	node34 [label="Declaración" color=purple fillcolor=white style=filled]
-	node35 [label="ID: isis" color=purple fillcolor=white style=filled]
-	node34 -> node35
-	node36 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
-	node34 -> node36
-	node37 [label=Valor color=purple fillcolor=white style=filled]
-	node34 -> node37
-	node38 [label=1 color=purple fillcolor=white style=filled]
-	node37 -> node38
-	node30 -> node34
-	node39 [label=Println color=purple fillcolor=white style=filled]
-	node40 [label="+" color=purple fillcolor=white style=filled]
-	node41 [label="isis: " color=purple fillcolor=white style=filled]
-	node40 -> node41
-	node42 [label=isis color=purple fillcolor=white style=filled]
-	node40 -> node42
+	node1 -> node30
+	node33 [label="Asignación" color=purple fillcolor=white style=filled]
+	node34 [label=d color=purple fillcolor=white style=filled]
+	node35 [label=False color=purple fillcolor=white style=filled]
+	node33 -> node34
+	node33 -> node35
+	node1 -> node33
+	node36 [label="Asignación" color=purple fillcolor=white style=filled]
+	node37 [label=f color=purple fillcolor=white style=filled]
+	node38 [label="Nuevo texto" color=purple fillcolor=white style=filled]
+	node36 -> node37
+	node36 -> node38
+	node1 -> node36
+	node39 [label=Incremento color=purple fillcolor=white style=filled]
+	node40 [label="ID: a" color=purple fillcolor=white style=filled]
 	node39 -> node40
-	node30 -> node39
-	node23 -> node26
-	node1 -> node19
-	node43 [label="Declaración" color=purple fillcolor=white style=filled]
-	node44 [label="ID: i" color=purple fillcolor=white style=filled]
+	node1 -> node39
+	node41 [label=Decremento color=purple fillcolor=white style=filled]
+	node42 [label="ID: b" color=purple fillcolor=white style=filled]
+	node41 -> node42
+	node1 -> node41
+	node43 [label=Incremento color=purple fillcolor=white style=filled]
+	node44 [label="ID: c" color=purple fillcolor=white style=filled]
 	node43 -> node44
-	node45 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
-	node43 -> node45
-	node46 [label=Valor color=purple fillcolor=white style=filled]
-	node43 -> node46
-	node47 [label=0 color=purple fillcolor=white style=filled]
-	node46 -> node47
 	node1 -> node43
-	node48 [label=While color=purple fillcolor=white style=filled]
-	node49 [label="<" color=purple fillcolor=white style=filled]
-	node50 [label=i color=purple fillcolor=white style=filled]
-	node49 -> node50
-	node51 [label=3 color=purple fillcolor=white style=filled]
-	node49 -> node51
-	node52 [label=Cuerpo color=purple fillcolor=white style=filled]
-	node48 -> node49
-	node48 -> node52
-	node53 [label=Println color=purple fillcolor=white style=filled]
-	node54 [label="+" color=purple fillcolor=white style=filled]
-	node55 [label="while: " color=purple fillcolor=white style=filled]
-	node54 -> node55
-	node56 [label=i color=purple fillcolor=white style=filled]
-	node54 -> node56
-	node53 -> node54
+	node45 [label=Decremento color=purple fillcolor=white style=filled]
+	node46 [label="ID: c" color=purple fillcolor=white style=filled]
+	node45 -> node46
+	node1 -> node45
+	node47 [label="Declaración" color=purple fillcolor=white style=filled]
+	node48 [label="ID: B1" color=purple fillcolor=white style=filled]
+	node47 -> node48
+	node49 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
+	node47 -> node49
+	node1 -> node47
+	node50 [label="Asignación" color=purple fillcolor=white style=filled]
+	node51 [label=a color=purple fillcolor=white style=filled]
+	node52 [label="+" color=purple fillcolor=white style=filled]
+	node53 [label=a color=purple fillcolor=white style=filled]
 	node52 -> node53
-	node57 [label=Incremento color=purple fillcolor=white style=filled]
-	node58 [label="ID: i" color=purple fillcolor=white style=filled]
+	node54 [label=1 color=purple fillcolor=white style=filled]
+	node52 -> node54
+	node50 -> node51
+	node50 -> node52
+	node1 -> node50
+	node55 [label="Asignación" color=purple fillcolor=white style=filled]
+	node56 [label=b color=purple fillcolor=white style=filled]
+	node57 [label="-" color=purple fillcolor=white style=filled]
+	node58 [label=2 color=purple fillcolor=white style=filled]
 	node57 -> node58
-	node52 -> node57
-	node1 -> node48
-	node59 [label=Println color=purple fillcolor=white style=filled]
-	node60 [label="fin while" color=purple fillcolor=white style=filled]
-	node59 -> node60
-	node1 -> node59
-	node61 [label="Declaración" color=purple fillcolor=white style=filled]
-	node62 [label="ID: j" color=purple fillcolor=white style=filled]
-	node61 -> node62
-	node63 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
-	node61 -> node63
-	node64 [label=Valor color=purple fillcolor=white style=filled]
-	node61 -> node64
-	node65 [label=0 color=purple fillcolor=white style=filled]
-	node64 -> node65
-	node1 -> node61
-	node66 [label=DoWhile color=purple fillcolor=white style=filled]
-	node67 [label="<" color=purple fillcolor=white style=filled]
-	node68 [label=j color=purple fillcolor=white style=filled]
+	node59 [label=3.5 color=purple fillcolor=white style=filled]
+	node57 -> node59
+	node55 -> node56
+	node55 -> node57
+	node1 -> node55
+	node60 [label="Asignación" color=purple fillcolor=white style=filled]
+	node61 [label=B1 color=purple fillcolor=white style=filled]
+	node62 [label="-" color=purple fillcolor=white style=filled]
+	node63 [label=2 color=purple fillcolor=white style=filled]
+	node62 -> node63
+	node64 [label=3.5 color=purple fillcolor=white style=filled]
+	node62 -> node64
+	node60 -> node61
+	node60 -> node62
+	node1 -> node60
+	node65 [label="Asignación" color=purple fillcolor=white style=filled]
+	node66 [label=c color=purple fillcolor=white style=filled]
+	node67 [label="*" color=purple fillcolor=white style=filled]
+	node68 [label=c color=purple fillcolor=white style=filled]
 	node67 -> node68
-	node69 [label=3 color=purple fillcolor=white style=filled]
+	node69 [label=2 color=purple fillcolor=white style=filled]
 	node67 -> node69
-	node70 [label=Cuerpo color=purple fillcolor=white style=filled]
-	node66 -> node67
-	node66 -> node70
-	node71 [label=Println color=purple fillcolor=white style=filled]
-	node72 [label="+" color=purple fillcolor=white style=filled]
-	node73 [label="do while: " color=purple fillcolor=white style=filled]
+	node65 -> node66
+	node65 -> node67
+	node1 -> node65
+	node70 [label="Asignación" color=purple fillcolor=white style=filled]
+	node71 [label=c color=purple fillcolor=white style=filled]
+	node72 [label="/" color=purple fillcolor=white style=filled]
+	node73 [label=c color=purple fillcolor=white style=filled]
 	node72 -> node73
-	node74 [label=j color=purple fillcolor=white style=filled]
+	node74 [label=2 color=purple fillcolor=white style=filled]
 	node72 -> node74
-	node71 -> node72
 	node70 -> node71
-	node75 [label=Incremento color=purple fillcolor=white style=filled]
-	node76 [label="ID: j" color=purple fillcolor=white style=filled]
+	node70 -> node72
+	node1 -> node70
+	node75 [label="Asignación" color=purple fillcolor=white style=filled]
+	node76 [label=d color=purple fillcolor=white style=filled]
+	node77 [label=True color=purple fillcolor=white style=filled]
 	node75 -> node76
-	node70 -> node75
-	node1 -> node66
-	node77 [label=Println color=purple fillcolor=white style=filled]
-	node78 [label="fin do while" color=purple fillcolor=white style=filled]
-	node77 -> node78
-	node1 -> node77
-	node79 [label=For color=purple fillcolor=white style=filled]
-	node80 [label="Declaración" color=purple fillcolor=white style=filled]
-	node81 [label="ID: h" color=purple fillcolor=white style=filled]
-	node80 -> node81
-	node82 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
-	node80 -> node82
-	node83 [label=Valor color=purple fillcolor=white style=filled]
-	node80 -> node83
-	node84 [label=0 color=purple fillcolor=white style=filled]
-	node83 -> node84
-	node85 [label="<" color=purple fillcolor=white style=filled]
-	node86 [label=h color=purple fillcolor=white style=filled]
-	node85 -> node86
-	node87 [label=3 color=purple fillcolor=white style=filled]
-	node85 -> node87
-	node88 [label=Incremento color=purple fillcolor=white style=filled]
-	node89 [label="ID: h" color=purple fillcolor=white style=filled]
-	node88 -> node89
-	node90 [label=Cuerpo color=purple fillcolor=white style=filled]
-	node79 -> node80
-	node79 -> node85
-	node79 -> node88
-	node79 -> node90
-	node91 [label=Println color=purple fillcolor=white style=filled]
-	node92 [label="+" color=purple fillcolor=white style=filled]
-	node93 [label="for: " color=purple fillcolor=white style=filled]
-	node92 -> node93
-	node94 [label=h color=purple fillcolor=white style=filled]
-	node92 -> node94
-	node91 -> node92
+	node75 -> node77
+	node1 -> node75
+	node78 [label="Asignación" color=purple fillcolor=white style=filled]
+	node79 [label=d color=purple fillcolor=white style=filled]
+	node80 [label=False color=purple fillcolor=white style=filled]
+	node78 -> node79
+	node78 -> node80
+	node1 -> node78
+	node81 [label="Asignación" color=purple fillcolor=white style=filled]
+	node82 [label=e color=purple fillcolor=white style=filled]
+	node83 [label=z color=purple fillcolor=white style=filled]
+	node81 -> node82
+	node81 -> node83
+	node1 -> node81
+	node84 [label="Asignación" color=purple fillcolor=white style=filled]
+	node85 [label=f color=purple fillcolor=white style=filled]
+	node86 [label=Texto color=purple fillcolor=white style=filled]
+	node84 -> node85
+	node84 -> node86
+	node1 -> node84
+	node87 [label="Declaración" color=purple fillcolor=white style=filled]
+	node88 [label="ID: j" color=purple fillcolor=white style=filled]
+	node87 -> node88
+	node89 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node87 -> node89
+	node90 [label=Valor color=purple fillcolor=white style=filled]
+	node87 -> node90
+	node91 [label=5 color=purple fillcolor=white style=filled]
 	node90 -> node91
-	node1 -> node79
-	node95 [label="Declaración" color=purple fillcolor=white style=filled]
-	node96 [label="ID: x4" color=purple fillcolor=white style=filled]
+	node1 -> node87
+	node92 [label="Declaración" color=purple fillcolor=white style=filled]
+	node93 [label="ID: h" color=purple fillcolor=white style=filled]
+	node92 -> node93
+	node94 [label="Tipo: BOOL" color=purple fillcolor=white style=filled]
+	node92 -> node94
+	node95 [label=Valor color=purple fillcolor=white style=filled]
+	node92 -> node95
+	node96 [label=False color=purple fillcolor=white style=filled]
 	node95 -> node96
-	node97 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
-	node95 -> node97
-	node98 [label=Valor color=purple fillcolor=white style=filled]
-	node95 -> node98
-	node99 [label=2 color=purple fillcolor=white style=filled]
-	node98 -> node99
-	node1 -> node95
-	node100 [label=Switch color=purple fillcolor=white style=filled]
-	node101 [label=x4 color=purple fillcolor=white style=filled]
+	node1 -> node92
+	node97 [label="Declaración" color=purple fillcolor=white style=filled]
+	node98 [label="ID: p" color=purple fillcolor=white style=filled]
+	node97 -> node98
+	node99 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node97 -> node99
+	node1 -> node97
+	node100 [label="Asignación" color=purple fillcolor=white style=filled]
+	node101 [label=j color=purple fillcolor=white style=filled]
+	node102 [label=False color=purple fillcolor=white style=filled]
 	node100 -> node101
-	node102 [label=Casos color=purple fillcolor=white style=filled]
 	node100 -> node102
-	node103 [label=Case color=purple fillcolor=white style=filled]
-	node102 -> node103
-	node104 [label=1 color=purple fillcolor=white style=filled]
-	node103 -> node104
-	node105 [label=Instrucciones color=purple fillcolor=white style=filled]
-	node103 -> node105
-	node106 [label=Println color=purple fillcolor=white style=filled]
-	node107 [label="Es uno" color=purple fillcolor=white style=filled]
-	node106 -> node107
-	node105 -> node106
-	node108 [label=Break color=purple fillcolor=white style=filled]
-	node105 -> node108
-	node109 [label=Case color=purple fillcolor=white style=filled]
-	node102 -> node109
-	node110 [label=2 color=purple fillcolor=white style=filled]
-	node109 -> node110
-	node111 [label=Instrucciones color=purple fillcolor=white style=filled]
-	node109 -> node111
-	node112 [label=Println color=purple fillcolor=white style=filled]
-	node113 [label="Es dos" color=purple fillcolor=white style=filled]
-	node112 -> node113
-	node111 -> node112
-	node114 [label=Break color=purple fillcolor=white style=filled]
-	node111 -> node114
-	node115 [label=Case color=purple fillcolor=white style=filled]
-	node102 -> node115
-	node116 [label=3 color=purple fillcolor=white style=filled]
-	node115 -> node116
-	node117 [label=Instrucciones color=purple fillcolor=white style=filled]
-	node115 -> node117
-	node118 [label=Println color=purple fillcolor=white style=filled]
-	node119 [label="Es tres" color=purple fillcolor=white style=filled]
-	node118 -> node119
-	node117 -> node118
-	node120 [label=Break color=purple fillcolor=white style=filled]
-	node117 -> node120
-	node121 [label=Default color=purple fillcolor=white style=filled]
-	node100 -> node121
-	node122 [label=Instrucciones color=purple fillcolor=white style=filled]
-	node121 -> node122
-	node123 [label=Println color=purple fillcolor=white style=filled]
-	node124 [label="No es uno, dos ni tres" color=purple fillcolor=white style=filled]
-	node123 -> node124
-	node122 -> node123
-	node125 [label=Break color=purple fillcolor=white style=filled]
-	node122 -> node125
 	node1 -> node100
-	node126 [label=Println color=purple fillcolor=white style=filled]
-	node127 [label="Fin del switch" color=purple fillcolor=white style=filled]
-	node126 -> node127
-	node1 -> node126
-	node128 [label="Declaración" color=purple fillcolor=white style=filled]
-	node129 [label="ID: ix" color=purple fillcolor=white style=filled]
-	node128 -> node129
-	node130 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
-	node128 -> node130
-	node131 [label=Valor color=purple fillcolor=white style=filled]
-	node128 -> node131
-	node132 [label=0 color=purple fillcolor=white style=filled]
-	node131 -> node132
-	node1 -> node128
-	node133 [label=If color=purple fillcolor=white style=filled]
-	node134 [label="==" color=purple fillcolor=white style=filled]
-	node135 [label=ix color=purple fillcolor=white style=filled]
-	node134 -> node135
-	node136 [label=0 color=purple fillcolor=white style=filled]
-	node134 -> node136
+	node103 [label="Declaración" color=purple fillcolor=white style=filled]
+	node104 [label="ID: o" color=purple fillcolor=white style=filled]
+	node103 -> node104
+	node105 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node103 -> node105
+	node1 -> node103
+	node106 [label="Asignación" color=purple fillcolor=white style=filled]
+	node107 [label=o color=purple fillcolor=white style=filled]
+	node108 [label="+" color=purple fillcolor=white style=filled]
+	node109 [label=5 color=purple fillcolor=white style=filled]
+	node108 -> node109
+	node110 [label=7 color=purple fillcolor=white style=filled]
+	node108 -> node110
+	node106 -> node107
+	node106 -> node108
+	node1 -> node106
+	node111 [label="Declaración" color=purple fillcolor=white style=filled]
+	node112 [label="ID: k" color=purple fillcolor=white style=filled]
+	node111 -> node112
+	node113 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node111 -> node113
+	node1 -> node111
+	node114 [label="Asignación" color=purple fillcolor=white style=filled]
+	node115 [label=k color=purple fillcolor=white style=filled]
+	node116 [label="-" color=purple fillcolor=white style=filled]
+	node117 [label=o color=purple fillcolor=white style=filled]
+	node116 -> node117
+	node118 [label=1 color=purple fillcolor=white style=filled]
+	node116 -> node118
+	node114 -> node115
+	node114 -> node116
+	node1 -> node114
+	node119 [label="Asignación" color=purple fillcolor=white style=filled]
+	node120 [label=p color=purple fillcolor=white style=filled]
+	node121 [label="*" color=purple fillcolor=white style=filled]
+	node122 [label=k color=purple fillcolor=white style=filled]
+	node121 -> node122
+	node123 [label=2 color=purple fillcolor=white style=filled]
+	node121 -> node123
+	node119 -> node120
+	node119 -> node121
+	node1 -> node119
+	node124 [label="Declaración" color=purple fillcolor=white style=filled]
+	node125 [label="ID: x" color=purple fillcolor=white style=filled]
+	node124 -> node125
+	node126 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
+	node124 -> node126
+	node1 -> node124
+	node127 [label="Declaración" color=purple fillcolor=white style=filled]
+	node128 [label="ID: z" color=purple fillcolor=white style=filled]
+	node127 -> node128
+	node129 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
+	node127 -> node129
+	node1 -> node127
+	node130 [label="Declaración" color=purple fillcolor=white style=filled]
+	node131 [label="ID: w" color=purple fillcolor=white style=filled]
+	node130 -> node131
+	node132 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
+	node130 -> node132
+	node1 -> node130
+	node133 [label="Asignación" color=purple fillcolor=white style=filled]
+	node134 [label=x color=purple fillcolor=white style=filled]
+	node135 [label="/" color=purple fillcolor=white style=filled]
+	node136 [label=p color=purple fillcolor=white style=filled]
+	node135 -> node136
+	node137 [label=2 color=purple fillcolor=white style=filled]
+	node135 -> node137
 	node133 -> node134
-	node137 [label=Instrucciones color=purple fillcolor=white style=filled]
-	node133 -> node137
-	node138 [label=Println color=purple fillcolor=white style=filled]
-	node139 [label="Es cero" color=purple fillcolor=white style=filled]
-	node138 -> node139
-	node137 -> node138
-	node140 [label=Incremento color=purple fillcolor=white style=filled]
-	node141 [label="ID: ix" color=purple fillcolor=white style=filled]
-	node140 -> node141
-	node137 -> node140
+	node133 -> node135
 	node1 -> node133
+	node138 [label="Asignación" color=purple fillcolor=white style=filled]
+	node139 [label=z color=purple fillcolor=white style=filled]
+	node140 [label="%" color=purple fillcolor=white style=filled]
+	node141 [label=x color=purple fillcolor=white style=filled]
+	node140 -> node141
+	node142 [label=2 color=purple fillcolor=white style=filled]
+	node140 -> node142
+	node138 -> node139
+	node138 -> node140
+	node1 -> node138
+	node143 [label="Asignación" color=purple fillcolor=white style=filled]
+	node144 [label=w color=purple fillcolor=white style=filled]
+	node145 [label="+" color=purple fillcolor=white style=filled]
+	node146 [label=p color=purple fillcolor=white style=filled]
+	node145 -> node146
+	node147 [label=2 color=purple fillcolor=white style=filled]
+	node145 -> node147
+	node143 -> node144
+	node143 -> node145
+	node1 -> node143
+	node148 [label="Declaración" color=purple fillcolor=white style=filled]
+	node149 [label="ID: q" color=purple fillcolor=white style=filled]
+	node148 -> node149
+	node150 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
+	node148 -> node150
+	node1 -> node148
+	node151 [label="Asignación" color=purple fillcolor=white style=filled]
+	node152 [label=q color=purple fillcolor=white style=filled]
+	node153 [label="+" color=purple fillcolor=white style=filled]
+	node154 [label=b color=purple fillcolor=white style=filled]
+	node153 -> node154
+	node155 [label=2 color=purple fillcolor=white style=filled]
+	node153 -> node155
+	node151 -> node152
+	node151 -> node153
+	node1 -> node151
+	node156 [label="Declaración" color=purple fillcolor=white style=filled]
+	node157 [label="ID: s1" color=purple fillcolor=white style=filled]
+	node156 -> node157
+	node158 [label="Tipo: STRING" color=purple fillcolor=white style=filled]
+	node156 -> node158
+	node1 -> node156
+	node159 [label="Asignación" color=purple fillcolor=white style=filled]
+	node160 [label=s1 color=purple fillcolor=white style=filled]
+	node161 [label="+" color=purple fillcolor=white style=filled]
+	node162 [label=A color=purple fillcolor=white style=filled]
+	node161 -> node162
+	node163 [label=BC color=purple fillcolor=white style=filled]
+	node161 -> node163
+	node159 -> node160
+	node159 -> node161
+	node1 -> node159
+	node164 [label="Declaración" color=purple fillcolor=white style=filled]
+	node165 [label="ID: s2" color=purple fillcolor=white style=filled]
+	node164 -> node165
+	node166 [label="Tipo: STRING" color=purple fillcolor=white style=filled]
+	node164 -> node166
+	node1 -> node164
+	node167 [label="Asignación" color=purple fillcolor=white style=filled]
+	node168 [label=s2 color=purple fillcolor=white style=filled]
+	node169 [label="+" color=purple fillcolor=white style=filled]
+	node170 [label="Hola " color=purple fillcolor=white style=filled]
+	node169 -> node170
+	node171 [label=M color=purple fillcolor=white style=filled]
+	node169 -> node171
+	node167 -> node168
+	node167 -> node169
+	node1 -> node167
+	node172 [label="Declaración" color=purple fillcolor=white style=filled]
+	node173 [label="ID: f1" color=purple fillcolor=white style=filled]
+	node172 -> node173
+	node174 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
+	node172 -> node174
+	node1 -> node172
+	node175 [label="Asignación" color=purple fillcolor=white style=filled]
+	node176 [label=f1 color=purple fillcolor=white style=filled]
+	node177 [label="+" color=purple fillcolor=white style=filled]
+	node178 [label=A color=purple fillcolor=white style=filled]
+	node177 -> node178
+	node179 [label=0.5 color=purple fillcolor=white style=filled]
+	node177 -> node179
+	node175 -> node176
+	node175 -> node177
+	node1 -> node175
+	node180 [label="Declaración" color=purple fillcolor=white style=filled]
+	node181 [label="ID: f2" color=purple fillcolor=white style=filled]
+	node180 -> node181
+	node182 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
+	node180 -> node182
+	node1 -> node180
+	node183 [label="Asignación" color=purple fillcolor=white style=filled]
+	node184 [label=f2 color=purple fillcolor=white style=filled]
+	node185 [label="+" color=purple fillcolor=white style=filled]
+	node186 [label=1.5 color=purple fillcolor=white style=filled]
+	node185 -> node186
+	node187 [label=a color=purple fillcolor=white style=filled]
+	node185 -> node187
+	node183 -> node184
+	node183 -> node185
+	node1 -> node183
+	node188 [label="Declaración" color=purple fillcolor=white style=filled]
+	node189 [label="ID: s3" color=purple fillcolor=white style=filled]
+	node188 -> node189
+	node190 [label="Tipo: STRING" color=purple fillcolor=white style=filled]
+	node188 -> node190
+	node1 -> node188
+	node191 [label="Asignación" color=purple fillcolor=white style=filled]
+	node192 [label=s3 color=purple fillcolor=white style=filled]
+	node193 [label="+" color=purple fillcolor=white style=filled]
+	node194 [label=3 color=purple fillcolor=white style=filled]
+	node193 -> node194
+	node195 [label=" pana" color=purple fillcolor=white style=filled]
+	node193 -> node195
+	node191 -> node192
+	node191 -> node193
+	node1 -> node191
+	node196 [label="Declaración" color=purple fillcolor=white style=filled]
+	node197 [label="ID: s4" color=purple fillcolor=white style=filled]
+	node196 -> node197
+	node198 [label="Tipo: CHAR" color=purple fillcolor=white style=filled]
+	node196 -> node198
+	node1 -> node196
+	node199 [label="Asignación" color=purple fillcolor=white style=filled]
+	node200 [label=s4 color=purple fillcolor=white style=filled]
+	node201 [label="+" color=purple fillcolor=white style=filled]
+	node202 [label=A color=purple fillcolor=white style=filled]
+	node201 -> node202
+	node203 [label=B color=purple fillcolor=white style=filled]
+	node201 -> node203
+	node199 -> node200
+	node199 -> node201
+	node1 -> node199
+	node204 [label="Asignación" color=purple fillcolor=white style=filled]
+	node205 [label=b color=purple fillcolor=white style=filled]
+	node206 [label=Unario color=purple fillcolor=white style=filled]
+	node207 [label="-" color=purple fillcolor=white style=filled]
+	node208 [label=2 color=purple fillcolor=white style=filled]
+	node207 -> node208
+	node209 [label=a color=purple fillcolor=white style=filled]
+	node207 -> node209
+	node210 [label="-" color=purple fillcolor=white style=filled]
+	node206 -> node210
+	node206 -> node207
+	node204 -> node205
+	node204 -> node206
+	node1 -> node204
+	node211 [label="Asignación" color=purple fillcolor=white style=filled]
+	node212 [label=a color=purple fillcolor=white style=filled]
+	node213 [label="-" color=purple fillcolor=white style=filled]
+	node214 [label=2.5 color=purple fillcolor=white style=filled]
+	node213 -> node214
+	node215 [label=3 color=purple fillcolor=white style=filled]
+	node213 -> node215
+	node211 -> node212
+	node211 -> node213
+	node1 -> node211
+	node216 [label="Asignación" color=purple fillcolor=white style=filled]
+	node217 [label=a color=purple fillcolor=white style=filled]
+	node218 [label="-" color=purple fillcolor=white style=filled]
+	node219 [label=4.5 color=purple fillcolor=white style=filled]
+	node218 -> node219
+	node220 [label=w color=purple fillcolor=white style=filled]
+	node218 -> node220
+	node216 -> node217
+	node216 -> node218
+	node1 -> node216
+	node221 [label="Asignación" color=purple fillcolor=white style=filled]
+	node222 [label=b color=purple fillcolor=white style=filled]
+	node223 [label=Unario color=purple fillcolor=white style=filled]
+	node224 [label=5 color=purple fillcolor=white style=filled]
+	node225 [label="-" color=purple fillcolor=white style=filled]
+	node223 -> node225
+	node223 -> node224
+	node221 -> node222
+	node221 -> node223
+	node1 -> node221
+	node226 [label="Declaración" color=purple fillcolor=white style=filled]
+	node227 [label="ID: resultado" color=purple fillcolor=white style=filled]
+	node226 -> node227
+	node228 [label="Tipo: BOOL" color=purple fillcolor=white style=filled]
+	node226 -> node228
+	node1 -> node226
+	node229 [label="Asignación" color=purple fillcolor=white style=filled]
+	node230 [label=resultado color=purple fillcolor=white style=filled]
+	node231 [label=">=" color=purple fillcolor=white style=filled]
+	node232 [label=a color=purple fillcolor=white style=filled]
+	node231 -> node232
+	node233 [label=b color=purple fillcolor=white style=filled]
+	node231 -> node233
+	node229 -> node230
+	node229 -> node231
+	node1 -> node229
+	node234 [label=Println color=purple fillcolor=white style=filled]
+	node235 [label="+" color=purple fillcolor=white style=filled]
+	node236 [label=a color=purple fillcolor=white style=filled]
+	node235 -> node236
+	node237 [label=b color=purple fillcolor=white style=filled]
+	node235 -> node237
+	node234 -> node235
+	node1 -> node234
+	node238 [label=Println color=purple fillcolor=white style=filled]
+	node239 [label="Hola mundo" color=purple fillcolor=white style=filled]
+	node238 -> node239
+	node1 -> node238
+	node240 [label=Println color=purple fillcolor=white style=filled]
+	node241 [label=OR color=purple fillcolor=white style=filled]
+	node242 [label=True color=purple fillcolor=white style=filled]
+	node243 [label=5 color=purple fillcolor=white style=filled]
+	node241 -> node242
+	node241 -> node243
+	node240 -> node241
+	node1 -> node240
+	node244 [label=Println color=purple fillcolor=white style=filled]
+	node245 [label=AND color=purple fillcolor=white style=filled]
+	node246 [label=27 color=purple fillcolor=white style=filled]
+	node247 [label=c color=purple fillcolor=white style=filled]
+	node245 -> node246
+	node245 -> node247
+	node244 -> node245
+	node1 -> node244
+	node248 [label=Println color=purple fillcolor=white style=filled]
+	node249 [label=XOR color=purple fillcolor=white style=filled]
+	node250 [label=True color=purple fillcolor=white style=filled]
+	node251 [label=False color=purple fillcolor=white style=filled]
+	node249 -> node250
+	node249 -> node251
+	node248 -> node249
+	node1 -> node248
+	node252 [label=Println color=purple fillcolor=white style=filled]
+	node253 [label=NOT color=purple fillcolor=white style=filled]
+	node254 [label=True color=purple fillcolor=white style=filled]
+	node253 -> node254
+	node252 -> node253
+	node1 -> node252
+	node255 [label=Println color=purple fillcolor=white style=filled]
+	node256 [label="C:\miCarpeta" color=purple fillcolor=white style=filled]
+	node255 -> node256
+	node1 -> node255
+	node257 [label=Println color=purple fillcolor=white style=filled]
+	node258 [label="\"esto es una cadena\"" color=purple fillcolor=white style=filled]
+	node257 -> node258
+	node1 -> node257
+	node259 [label=Println color=purple fillcolor=white style=filled]
+	node260 [label="	Esto es una tabulacion" color=purple fillcolor=white style=filled]
+	node259 -> node260
+	node1 -> node259
+	node261 [label=Println color=purple fillcolor=white style=filled]
+	node262 [label="'Estas son comillas simples'" color=purple fillcolor=white style=filled]
+	node261 -> node262
+	node1 -> node261
+	node263 [label=Println color=purple fillcolor=white style=filled]
+	node264 [label="Hola
+Mundo" color=purple fillcolor=white style=filled]
+	node263 -> node264
+	node1 -> node263
+	node265 [label=Println color=purple fillcolor=white style=filled]
+	node266 [label="*" color=purple fillcolor=white style=filled]
+	node267 [label="+" color=purple fillcolor=white style=filled]
+	node268 [label=2 color=purple fillcolor=white style=filled]
+	node267 -> node268
+	node269 [label=3 color=purple fillcolor=white style=filled]
+	node267 -> node269
+	node266 -> node267
+	node270 [label=4 color=purple fillcolor=white style=filled]
+	node266 -> node270
+	node265 -> node266
+	node1 -> node265
+	node271 [label=Println color=purple fillcolor=white style=filled]
+	node272 [label=AND color=purple fillcolor=white style=filled]
+	node273 [label=OR color=purple fillcolor=white style=filled]
+	node274 [label=True color=purple fillcolor=white style=filled]
+	node275 [label=False color=purple fillcolor=white style=filled]
+	node273 -> node274
+	node273 -> node275
+	node276 [label=">" color=purple fillcolor=white style=filled]
+	node277 [label=5 color=purple fillcolor=white style=filled]
+	node276 -> node277
+	node278 [label=2 color=purple fillcolor=white style=filled]
+	node276 -> node278
+	node272 -> node273
+	node272 -> node276
+	node271 -> node272
+	node1 -> node271
+	node279 [label=Println color=purple fillcolor=white style=filled]
+	node280 [label="/" color=purple fillcolor=white style=filled]
+	node281 [label="+" color=purple fillcolor=white style=filled]
+	node282 [label=a color=purple fillcolor=white style=filled]
+	node281 -> node282
+	node283 [label=b color=purple fillcolor=white style=filled]
+	node281 -> node283
+	node280 -> node281
+	node284 [label="-" color=purple fillcolor=white style=filled]
+	node285 [label=c color=purple fillcolor=white style=filled]
+	node284 -> node285
+	node286 [label=w color=purple fillcolor=white style=filled]
+	node284 -> node286
+	node280 -> node284
+	node279 -> node280
+	node1 -> node279
+	node287 [label="Declaración" color=purple fillcolor=white style=filled]
+	node288 [label="ID: A" color=purple fillcolor=white style=filled]
+	node287 -> node288
+	node289 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node287 -> node289
+	node290 [label=Valor color=purple fillcolor=white style=filled]
+	node287 -> node290
+	node291 [label="*" color=purple fillcolor=white style=filled]
+	node292 [label="+" color=purple fillcolor=white style=filled]
+	node293 [label=5 color=purple fillcolor=white style=filled]
+	node292 -> node293
+	node294 [label=5 color=purple fillcolor=white style=filled]
+	node292 -> node294
+	node291 -> node292
+	node295 [label=4 color=purple fillcolor=white style=filled]
+	node291 -> node295
+	node290 -> node291
+	node1 -> node287
+	node296 [label=Println color=purple fillcolor=white style=filled]
+	node297 [label="<" color=purple fillcolor=white style=filled]
+	node298 [label=5 color=purple fillcolor=white style=filled]
+	node297 -> node298
+	node299 [label=hola color=purple fillcolor=white style=filled]
+	node297 -> node299
+	node296 -> node297
+	node1 -> node296
+	node300 [label=Println color=purple fillcolor=white style=filled]
+	node301 [label=">" color=purple fillcolor=white style=filled]
+	node302 [label=abc color=purple fillcolor=white style=filled]
+	node301 -> node302
+	node303 [label=10 color=purple fillcolor=white style=filled]
+	node301 -> node303
+	node300 -> node301
+	node1 -> node300
+	node304 [label=Println color=purple fillcolor=white style=filled]
+	node305 [label="<" color=purple fillcolor=white style=filled]
+	node306 [label=True color=purple fillcolor=white style=filled]
+	node305 -> node306
+	node307 [label=5 color=purple fillcolor=white style=filled]
+	node305 -> node307
+	node304 -> node305
+	node1 -> node304
+	node308 [label=Println color=purple fillcolor=white style=filled]
+	node309 [label="==" color=purple fillcolor=white style=filled]
+	node310 [label=a color=purple fillcolor=white style=filled]
+	node309 -> node310
+	node311 [label=a color=purple fillcolor=white style=filled]
+	node309 -> node311
+	node308 -> node309
+	node1 -> node308
+	node312 [label=Println color=purple fillcolor=white style=filled]
+	node313 [label="!=" color=purple fillcolor=white style=filled]
+	node314 [label=3.5 color=purple fillcolor=white style=filled]
+	node313 -> node314
+	node315 [label=3.5 color=purple fillcolor=white style=filled]
+	node313 -> node315
+	node312 -> node313
+	node1 -> node312
+	node316 [label=Println color=purple fillcolor=white style=filled]
+	node317 [label="<" color=purple fillcolor=white style=filled]
+	node318 [label=5.5 color=purple fillcolor=white style=filled]
+	node317 -> node318
+	node319 [label=5 color=purple fillcolor=white style=filled]
+	node317 -> node319
+	node316 -> node317
+	node1 -> node316
+	node320 [label=Println color=purple fillcolor=white style=filled]
+	node321 [label="<" color=purple fillcolor=white style=filled]
+	node322 [label=5.5 color=purple fillcolor=white style=filled]
+	node321 -> node322
+	node323 [label=a color=purple fillcolor=white style=filled]
+	node321 -> node323
+	node320 -> node321
+	node1 -> node320
+	node324 [label=Println color=purple fillcolor=white style=filled]
+	node325 [label="!=" color=purple fillcolor=white style=filled]
+	node326 [label=paco color=purple fillcolor=white style=filled]
+	node325 -> node326
+	node327 [label=hola color=purple fillcolor=white style=filled]
+	node325 -> node327
+	node324 -> node325
+	node1 -> node324
+	node328 [label="Declaración" color=purple fillcolor=white style=filled]
+	node329 [label="ID: x41" color=purple fillcolor=white style=filled]
+	node328 -> node329
+	node330 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node328 -> node330
+	node1 -> node328
+	node331 [label=For color=purple fillcolor=white style=filled]
+	node332 [label="Asignación" color=purple fillcolor=white style=filled]
+	node333 [label=x41 color=purple fillcolor=white style=filled]
+	node334 [label=0 color=purple fillcolor=white style=filled]
+	node332 -> node333
+	node332 -> node334
+	node335 [label="<" color=purple fillcolor=white style=filled]
+	node336 [label=x41 color=purple fillcolor=white style=filled]
+	node335 -> node336
+	node337 [label=3 color=purple fillcolor=white style=filled]
+	node335 -> node337
+	node338 [label=Incremento color=purple fillcolor=white style=filled]
+	node339 [label="ID: x41" color=purple fillcolor=white style=filled]
+	node338 -> node339
+	node340 [label=Cuerpo color=purple fillcolor=white style=filled]
+	node331 -> node332
+	node331 -> node335
+	node331 -> node338
+	node331 -> node340
+	node341 [label=Println color=purple fillcolor=white style=filled]
+	node342 [label=holas color=purple fillcolor=white style=filled]
+	node341 -> node342
+	node340 -> node341
+	node343 [label=Println color=purple fillcolor=white style=filled]
+	node344 [label=hola color=purple fillcolor=white style=filled]
+	node343 -> node344
+	node340 -> node343
+	node1 -> node331
+	node345 [label=Println color=purple fillcolor=white style=filled]
+	node346 [label=x41 color=purple fillcolor=white style=filled]
+	node345 -> node346
+	node1 -> node345
+	node347 [label=If color=purple fillcolor=white style=filled]
+	node348 [label="==" color=purple fillcolor=white style=filled]
+	node349 [label=0 color=purple fillcolor=white style=filled]
+	node348 -> node349
+	node350 [label=0 color=purple fillcolor=white style=filled]
+	node348 -> node350
+	node347 -> node348
+	node351 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node347 -> node351
+	node352 [label=Println color=purple fillcolor=white style=filled]
+	node353 [label=a color=purple fillcolor=white style=filled]
+	node352 -> node353
+	node351 -> node352
+	node354 [label=Println color=purple fillcolor=white style=filled]
+	node355 [label=hola color=purple fillcolor=white style=filled]
+	node354 -> node355
+	node351 -> node354
+	node356 [label=If color=purple fillcolor=white style=filled]
+	node357 [label="==" color=purple fillcolor=white style=filled]
+	node358 [label=2 color=purple fillcolor=white style=filled]
+	node357 -> node358
+	node359 [label=3 color=purple fillcolor=white style=filled]
+	node357 -> node359
+	node356 -> node357
+	node360 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node356 -> node360
+	node361 [label=Break color=purple fillcolor=white style=filled]
+	node360 -> node361
+	node362 [label=Println color=purple fillcolor=white style=filled]
+	node363 [label=aas color=purple fillcolor=white style=filled]
+	node362 -> node363
+	node360 -> node362
+	node351 -> node356
+	node1 -> node347
+	node364 [label="Declaración" color=purple fillcolor=white style=filled]
+	node365 [label="ID: x4" color=purple fillcolor=white style=filled]
+	node364 -> node365
+	node366 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node364 -> node366
+	node367 [label=Valor color=purple fillcolor=white style=filled]
+	node364 -> node367
+	node368 [label=2 color=purple fillcolor=white style=filled]
+	node367 -> node368
+	node1 -> node364
+	node369 [label=Switch color=purple fillcolor=white style=filled]
+	node370 [label=x4 color=purple fillcolor=white style=filled]
+	node369 -> node370
+	node371 [label=Casos color=purple fillcolor=white style=filled]
+	node369 -> node371
+	node372 [label=Case color=purple fillcolor=white style=filled]
+	node371 -> node372
+	node373 [label=1 color=purple fillcolor=white style=filled]
+	node372 -> node373
+	node374 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node372 -> node374
+	node375 [label=Println color=purple fillcolor=white style=filled]
+	node376 [label="Es uno" color=purple fillcolor=white style=filled]
+	node375 -> node376
+	node374 -> node375
+	node377 [label=Break color=purple fillcolor=white style=filled]
+	node374 -> node377
+	node378 [label=Case color=purple fillcolor=white style=filled]
+	node371 -> node378
+	node379 [label=2 color=purple fillcolor=white style=filled]
+	node378 -> node379
+	node380 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node378 -> node380
+	node381 [label=Println color=purple fillcolor=white style=filled]
+	node382 [label="Es dos" color=purple fillcolor=white style=filled]
+	node381 -> node382
+	node380 -> node381
+	node383 [label=Break color=purple fillcolor=white style=filled]
+	node380 -> node383
+	node384 [label=Case color=purple fillcolor=white style=filled]
+	node371 -> node384
+	node385 [label=3 color=purple fillcolor=white style=filled]
+	node384 -> node385
+	node386 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node384 -> node386
+	node387 [label=Println color=purple fillcolor=white style=filled]
+	node388 [label="Es tres" color=purple fillcolor=white style=filled]
+	node387 -> node388
+	node386 -> node387
+	node389 [label=Break color=purple fillcolor=white style=filled]
+	node386 -> node389
+	node390 [label=Default color=purple fillcolor=white style=filled]
+	node369 -> node390
+	node391 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node390 -> node391
+	node392 [label=Println color=purple fillcolor=white style=filled]
+	node393 [label="No es uno, dos ni tres" color=purple fillcolor=white style=filled]
+	node392 -> node393
+	node391 -> node392
+	node394 [label=Break color=purple fillcolor=white style=filled]
+	node391 -> node394
+	node1 -> node369
+	node395 [label=Println color=purple fillcolor=white style=filled]
+	node396 [label="Fin del switch" color=purple fillcolor=white style=filled]
+	node395 -> node396
+	node1 -> node395
 }
