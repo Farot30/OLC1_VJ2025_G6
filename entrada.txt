@@ -8,8 +8,6 @@ str f = "Hola mundo";
 
 // Asignaciones
 a = 5;
-//b = b + 2;
-//c = c * 2.0;
 d = false;
 f = "Nuevo texto";
 
@@ -20,20 +18,17 @@ c++;
 c--;
 
 // Operaciones aritméticas
-/*
+int B1;
 a = a + 1;
-b = b - 3;
+b = 2 - 3.5;
+B1 = 2 - 3.5;
 c = c * 2;
 c = c / 2;
-*/
+
 
 // Booleanos y reasignación
 d = true;
 d = false;
-
-// Prueba de booleanos en mayúsculas y minúsculas
-d = TRUE;
-d = FALSE;
 
 // Prueba de caracteres y cadenas
 e = 'z';
@@ -49,6 +44,118 @@ int j = 5;
 //b = b + 2;
 //c = c * 2.0;
 bool h = false;
-str p = "Nuevo";
+int p;
 
- j = false;
+j = false;
+
+int o;
+o = 5 + 7;
+int k;
+k = o - 1;
+
+p = k * 2;
+float x;
+float z;
+float w;
+
+x = p / 2;
+z = x % 2;
+w = p + 2;
+
+float q;
+q =  'b' +2;
+
+str s1;
+s1 = 'A' + "BC";  // Resultado esperado: "ABC"
+
+str s2;
+s2 = "Hola " + 'M';  // Resultado esperado: "Hola M"
+
+float f1;
+f1 = 'A' + 0.5;   // 65 + 0.5 = 65.5
+
+float f2;
+f2 = 1.5 + 'a';   // 1.5 + 97 = 98.5
+
+str s3;
+s3 = 3 + " pana";   // Debe dar error semántico
+
+char s4;
+s4 = 'A' + 'B';    // 65 + 66 = 131
+
+b = -(2 - 'a');
+
+a = 2.5 - 3;
+a = 4.5 - 'w';
+
+b = -5;
+
+bool resultado;
+resultado = a >= b;
+
+println(a + b);
+println("Hola mundo");
+
+println(true || 5);
+println(27 && c);
+println(true ^ false);
+println(!true);
+
+println("C:\\miCarpeta");
+println("\"esto es una cadena\"");
+println("\tEsto es una tabulacion");
+println("\'Estas son comillas simples\'");
+println("Hola\nMundo");
+
+println((2 + 3) * 4);
+println((true || false) && (5 > 2));
+println((a + b) / (c - w));
+
+int A = ( 5 + 5 ) * 4 ;
+
+println(5 < "hola");         // Error: int y string
+println("abc" > 10);         // Error: string y int
+println(true < 5);           // Error: bool y int
+println('a' == "a");         // Error: char y string
+println(3.5 != 3.5);
+
+println(5.5 < 5);
+println(5.5 < 'a');
+println("paco" != "hola");
+
+int x41;
+for(x41 = 0; x41 < 3; x41++) {
+    println("holas");
+    println("hola");
+}
+
+println(x41);
+
+if (0==0){
+    println("a"); 
+    println("hola");
+    if(2==3){
+        break;
+        println("aas"); 
+
+    }
+}
+
+int x4 = 2;
+
+switch(x4) {
+    case 1:
+        println("Es uno");
+        break;
+    case 2:
+        println("Es dos");
+        break;
+    case 3:
+        println("Es tres");
+        break;
+    default:
+        println("No es uno, dos ni tres");
+        break;
+}
+
+println("Fin del switch");

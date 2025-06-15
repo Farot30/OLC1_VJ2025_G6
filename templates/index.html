@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <head>
-    <meta charset="UTF-8">
-    <title>Intérprete OLC1</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
-</head>
+  <meta charset="UTF-8">
+  <title>Intérprete OLC1</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
 </head>
 <body>
+  <!-- Franja superior -->
+  <div class="header-bar">
     <h1>Intérprete OLC1</h1>
-    <div class="panel">
-        <form method="POST" enctype="multipart/form-data">
-            <label>Entrada:</label><br>
-            <textarea name="entrada">{{ entrada }}</textarea><br>
-            <div class="botones">
-                <input type="file" name="archivo" accept=".objc">
-                <button type="submit" name="cargar">Cargar archivo</button>
-                <button type="submit" name="interpretar">Interpretar</button>
-            </div>
-        </form>
+    <div class="top-buttons">
+      <form method="get" action="/errores">
+        <input type="hidden" name="data" value="{{ errores|e }}">
+        <button type="submit">Reporte de Errores</button>
+      </form>
+      <form method="get" action="/tabla_simbolos">
+        <button type="submit">Tabla de Símbolos</button>
+      </form>
+      <form method="get" action="/ast">
+        <button type="submit">AST</button>
+      </form>
     </div>
-    <div class="panel">
-        <label>Salida:</label>
-        <div class="salida">{{ salida }}</div>
-        <div class="botones">
-            <form method="get" action="/descargar/errores" style="display:inline;">
-                <input type="hidden" name="data" value="{{ errores|e }}">
-                <button type="submit">Reporte de Errores</button>
-            </form>
-            <form method="get" action="/descargar/tabla" style="display:inline;">
-                <input type="hidden" name="data" value="{{ tabla_simbolos|e }}">
-                <button type="submit">Tabla de Símbolos</button>
-            </form>
-            <form method="get" action="/descargar/ast" style="display:inline;">
-                <input type="hidden" name="data" value="{{ ast|e }}">
-                <button type="submit">AST</button>
-            </form>
-        </div>
-    </div>
+  </div>
+  <!-- Panel de Entrada -->
+  <div class="panel entrada">
+    <form method="POST" enctype="multipart/form-data">
+      <label>Entrada:</label>
+      <div class="botones">
+        <input type="file" name="archivo" accept=".objc">
+        <button type="submit" name="cargar">Cargar archivo</button>
+        <button type="submit" name="interpretar">Interpretar</button>
+      </div>
+      <textarea name="entrada">{{ entrada }}</textarea>
+    </form>
+  </div>
+  <!-- Panel de Salida -->
+  <div class="panel salida">
+    <label>Salida:</label>
+    <pre class="salida-content">{{ salida }}</pre>
+  </div>
 </body>
 </html>

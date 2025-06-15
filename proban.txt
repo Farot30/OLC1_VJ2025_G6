@@ -1,0 +1,21 @@
+int s = 0;
+
+if (s == 0) {
+    println("Hola");
+    s = 1;
+}
+
+println(s);
+
+if (s ==1){
+    int l = 1;
+    println("Hola " + l);
+}
+int l = 2;
+println(l);
+str h = "paco";
+
+if (s == 1){
+    println("hojana" + l) ;
+    println(h);
+}

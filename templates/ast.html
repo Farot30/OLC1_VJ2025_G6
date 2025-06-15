@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte AST</title>
+</head>
+<body>
+    <h2>Árbol de Sintaxis Abstracta (AST)</h2>
+    {% if ast_svg %}
+        <object type="image/svg+xml" data="{{ url_for('static', filename=ast_svg) }}" width="100%" height="600px"></object>
+    {% else %}
+        <p>No se ha generado el AST.</p>
+    {% endif %}
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
+</body>
+</html>

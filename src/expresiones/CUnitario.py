@@ -3,6 +3,7 @@ from src.simbolo.CTipo import Tipo, tipoDato
 from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class Unario(Instruccion):
@@ -15,6 +16,9 @@ class Unario(Instruccion):
         valor = self.expresion.interpretar(arbol, tabla)
         if isinstance(valor, Errores):
             return valor
+
+        # Copia el tipo de la expresión interna
+        self.tipoDato = self.expresion.tipoDato
         if self.operador == "-":
             if isinstance(valor, (int, float)):
                 return -valor
@@ -30,3 +34,13 @@ class Unario(Instruccion):
             self.linea,
             self.col,
         )
+
+    def graficar(self, grafo: clasAST):
+        unario = grafo.agregar_nodo("Unario")
+        nodoExp = self.expresion.graficar(grafo)  # <-- Grafica la expresión
+        nodoOperador = grafo.agregar_nodo(self.operador)  # Nodo para el operador
+
+        grafo.agregar_arista(unario, nodoOperador)
+        grafo.agregar_arista(unario, nodoExp)
+
+        return unario
