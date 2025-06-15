@@ -1,5 +1,6 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class Switch(Instruccion):
@@ -58,6 +59,41 @@ class Switch(Instruccion):
 
         tabla.borrarScope()
         return None
+
+    def graficar(self, grafo: clasAST):
+        nodoSwitch = grafo.agregar_nodo("Switch")
+
+        nodoExp = self.expresion.graficar(grafo)
+        grafo.agregar_arista(nodoSwitch, nodoExp)
+
+        nodoCasos = grafo.agregar_nodo("Casos")
+        grafo.agregar_arista(nodoSwitch, nodoCasos)
+
+        for caso in self.casos:
+            nodoCase = grafo.agregar_nodo("Case")
+            grafo.agregar_arista(nodoCasos, nodoCase)
+
+            nodoValor = caso.valor.graficar(grafo)
+            grafo.agregar_arista(nodoCase, nodoValor)
+
+            nodoInstr = grafo.agregar_nodo("Instrucciones")
+            grafo.agregar_arista(nodoCase, nodoInstr)
+            for instr in caso.instrucciones:
+                hijo = instr.graficar(grafo)
+                grafo.agregar_arista(nodoInstr, hijo)
+
+        # Nodo default (si existe)
+        if self.defecto:
+            nodoDefault = grafo.agregar_nodo("Default")
+            grafo.agregar_arista(nodoSwitch, nodoDefault)
+
+            nodoInstrDef = grafo.agregar_nodo("Instrucciones")
+            grafo.agregar_arista(nodoDefault, nodoInstrDef)
+            for instr in self.defecto:
+                hijo = instr.graficar(grafo)
+                grafo.agregar_arista(nodoInstrDef, hijo)
+
+        return nodoSwitch
 
 
 class Case:

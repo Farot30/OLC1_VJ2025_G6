@@ -1,6 +1,7 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.CTipo import Tipo, tipoDato
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class Continue(Instruccion):
@@ -16,3 +17,7 @@ class Continue(Instruccion):
                 self.col,
             )
         return "continue"
+
+    def graficar(self, grafo: clasAST):
+        nodo_id = grafo.agregar_nodo("Continue")
+        return nodo_id

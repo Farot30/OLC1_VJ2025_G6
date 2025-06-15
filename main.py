@@ -2,11 +2,12 @@ from src.gramatica import parse_input, errores_sintacticos_globales
 from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import generarGrafica
 
 
 def main():
     try:
-        f = open("proban.txt", "r")
+        f = open("pruebas.txt", "r")
         entrada = f.read()
 
         ast = Arbol([])  # Crea el árbol antes de parsear
@@ -40,6 +41,15 @@ def main():
             # No imprimas aquí, solo imprime al final
 
         print(ast.getConsola())
+
+        # Generar el AST y el archivo .dot/.svg
+        try:
+            if ast is not None and ast.getInstrucciones():
+                generarGrafica(ast, "reporteAST")
+                print("AST generado correctamente en reporteAST.dot y reporteAST.svg")
+        except Exception as e:
+            print(f"Error al generar el AST: {e}")
+
         return ast
 
     except Exception as e:

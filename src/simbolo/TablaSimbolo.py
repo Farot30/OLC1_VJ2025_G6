@@ -15,20 +15,22 @@ class SingletonMeta(type):
 class tablaSimbolo(metaclass=SingletonMeta):
     def __init__(self):
         if not hasattr(self, "scopes"):
-            self.scopes = ["global"]  # finje el funcionamiento de una pila
-            # scopes las instancias
+            self.scopes = ["global"]
             self.tabla_actual = []
             self.nombre_dato: str = ""
-        #  self.padre = padre  # <-- Nuevo
+            self.entorno_contadores = {}  # <-- Agrega esto
 
     @property
     def current_scope(self):
         return self.scopes[-1]
 
-    def nuevoScope(self, id=None):
-        id = id or f"scope_{len(self.scopes)}"
-        self.scopes.append(id)
-        return id
+    def nuevoScope(self, tipo_entorno="scope"):
+        # Usa un contador para cada tipo de entorno
+        contador = self.entorno_contadores.get(tipo_entorno, 0) + 1
+        self.entorno_contadores[tipo_entorno] = contador
+        nombre_scope = f"{tipo_entorno}_{contador}"
+        self.scopes.append(nombre_scope)
+        return nombre_scope
 
     def borrarScope(self):
         if len(self.scopes) > 1:

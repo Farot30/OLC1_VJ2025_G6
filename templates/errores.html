@@ -1,34 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Reporte de Errores</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+  <meta charset="UTF-8">
+  <title>Reporte de Errores</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
 </head>
 <body>
+  <!-- Franja superior-->
+  <div class="header-bar">
     <h1>Reporte de Errores</h1>
-    {% if errores %}
-    <table border="1">
+    <div class="top-buttons">
+      <form method="get" action="/errores">
+        <input type="hidden" name="data" value="{{ errores|e }}">
+        <button type="submit">Reporte de Errores</button>
+      </form>
+      <form method="get" action="/tabla_simbolos">
+        <button type="submit">Tabla de Símbolos</button>
+      </form>
+      <form method="get" action="/ast">
+        <button type="submit">AST</button>
+      </form>
+      <form method="get" action="{{ url_for('index') }}">
+        <button type="submit">Volver</button>
+      </form>
+    </div>
+  </div>
+
+  {% if errores %}
+    <table>
+      <thead>
         <tr>
-            <th>#</th>
-            <th>Tipo</th>
-            <th>Descripción</th>
-            <th>Línea</th>
-            <th>Columna</th>
+          <th>#</th><th>Tipo</th><th>Descripción</th><th>Línea</th><th>Columna</th>
         </tr>
-        {% for error in errores %}
+      </thead>
+      <tbody>
+      {% for error in errores %}
         <tr>
-            <td>{{ error.num }}</td>
-            <td>{{ error.tipo }}</td>
-            <td>{{ error.desc }}</td>
-            <td>{{ error.linea }}</td>
-            <td>{{ error.col }}</td>
+          <td>{{ error.num }}</td>
+          <td>{{ error.tipo }}</td>
+          <td>{{ error.desc }}</td>
+          <td>{{ error.linea }}</td>
+          <td>{{ error.col }}</td>
         </tr>
-        {% endfor %}
+      {% endfor %}
+      </tbody>
     </table>
-    {% else %}
-    <p>No hay errores.</p>
-    {% endif %}
-    <a href="{{ url_for('index') }}">Volver</a>
+  {% else %}
+    <div class="panel salida">
+      <p>No hay errores.</p>
+    </div>
+  {% endif %}
+
 </body>
 </html>

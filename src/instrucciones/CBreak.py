@@ -3,6 +3,7 @@ from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.simbolo.CArbol import Arbol
 from src.abstracto.CInstruccion import Instruccion
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class Break(Instruccion):
@@ -18,3 +19,7 @@ class Break(Instruccion):
                 self.col,
             )
         return "break"
+
+    def graficar(self, grafo: clasAST):
+        nodo_id = grafo.agregar_nodo("Break")
+        return nodo_id

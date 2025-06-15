@@ -1,6 +1,7 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class DoWhile(Instruccion):
@@ -52,3 +53,17 @@ class DoWhile(Instruccion):
                 break
             if salto:
                 continue
+
+    def graficar(self, grafo: clasAST):
+        nodoDoWhile = grafo.agregar_nodo("DoWhile")
+        nodoCondicion = self.condicion.graficar(grafo)
+        nodoCuerpo = grafo.agregar_nodo("Cuerpo")
+
+        grafo.agregar_arista(nodoDoWhile, nodoCondicion)
+        grafo.agregar_arista(nodoDoWhile, nodoCuerpo)
+
+        for instr in self.instrucciones:
+            nodoInstr = instr.graficar(grafo)
+            grafo.agregar_arista(nodoCuerpo, nodoInstr)
+
+        return nodoDoWhile

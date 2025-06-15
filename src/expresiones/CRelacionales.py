@@ -93,9 +93,7 @@ class Relacional(Instruccion, ABC):
     def graficar(self, grafo: clasAST):
         # Nodo principal
         tipOperacion = self.getNOpe()
-        nodoPrincipal = grafo.agregar_nodo(
-            f"Relacional: {tipOperacion}", fillcolor="white"
-        )
+        nodoPrincipal = grafo.agregar_nodo(f"{tipOperacion}", fillcolor="white")
 
         # operando 1
         nodoOp1 = self.op1.graficar(grafo)

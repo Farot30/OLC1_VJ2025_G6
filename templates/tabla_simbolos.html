@@ -1,40 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Tabla de Símbolos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+  <meta charset="UTF-8">
+  <title>Tabla de Símbolos</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
 </head>
 <body>
+  <!-- Franja superior-->
+  <div class="header-bar">
     <h1>Tabla de Símbolos</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>ID</th>
-                <th>Entidad</th>
-                <th>Tipo</th>
-                <th>Valor</th>
-                <th>Entorno</th>
-                <th>Línea</th>
-                <th>Columna</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for sym in tabla %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ sym.id }}</td>
-                <td>{{ sym.entidad }}</td>
-                <td>{{ sym.tipo.tipo.name if sym.tipo and sym.tipo.tipo else sym.tipo }}</td>
-                <td>{{ sym.valor }}</td>
-                <td>{{ sym.scope }}</td>
-                <td>{{ sym.linea }}</td>
-                <td>{{ sym.columna }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <a href="{{ url_for('index') }}">Volver</a>
+    <div class="top-buttons">
+      <form method="get" action="/errores">
+        <input type="hidden" name="data" value="{{ errores|e }}">
+        <button type="submit">Reporte de Errores</button>
+      </form>
+      <form method="get" action="/tabla_simbolos">
+        <button type="submit">Tabla de Símbolos</button>
+      </form>
+      <form method="get" action="/ast">
+        <button type="submit">AST</button>
+      </form>
+      <form method="get" action="{{ url_for('index') }}">
+        <button type="submit">Volver</button>
+      </form>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th><th>ID</th><th>Entidad</th><th>Tipo</th><th>Valor</th>
+        <th>Entorno</th><th>Línea</th><th>Columna</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for sym in tabla %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ sym.id }}</td>
+        <td>{{ sym.entidad }}</td>
+        <td>{{ sym.tipo.tipo.name if sym.tipo and sym.tipo.tipo else sym.tipo }}</td>
+        <td>{{ sym.valor }}</td>
+        <td>{{ sym.scope }}</td>
+        <td>{{ sym.linea }}</td>
+        <td>{{ sym.columna }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 </body>
 </html>

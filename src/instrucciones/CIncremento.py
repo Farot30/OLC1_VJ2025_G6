@@ -34,6 +34,12 @@ class Incremento(Instruccion):
         simbolo.setValor(valor + 1)
         return None
 
+    def graficar(self, grafo: clasAST):
+        nodoInc = grafo.agregar_nodo("Incremento")
+        nodoID = grafo.agregar_nodo(f"ID: {self.id}")
+        grafo.agregar_arista(nodoInc, nodoID)
+        return nodoInc
+
 
 class Decremento(Instruccion):
     def __init__(self, id, linea, col):
@@ -65,7 +71,7 @@ class Decremento(Instruccion):
         return None
 
     def graficar(self, grafo: clasAST):
+        nodoDec = grafo.agregar_nodo("Decremento")
         nodoID = grafo.agregar_nodo(f"ID: {self.id}")
-        grafo.agregar_arista(nodoID, grafo.agregar_nodo("ID"))
-
-        return nodoID
+        grafo.agregar_arista(nodoDec, nodoID)
+        return nodoDec

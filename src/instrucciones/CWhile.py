@@ -1,6 +1,7 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
 
 
 class While(Instruccion):
@@ -57,3 +58,17 @@ class While(Instruccion):
             if isinstance(valor_cond, Errores):
                 arbol.errores.append(valor_cond)
                 break
+
+    def graficar(self, grafo: clasAST):
+        nodoWhile = grafo.agregar_nodo("While")
+        nodoCondicion = self.condicion.graficar(grafo)
+        nodoCuerpo = grafo.agregar_nodo("Cuerpo")
+
+        grafo.agregar_arista(nodoWhile, nodoCondicion)
+        grafo.agregar_arista(nodoWhile, nodoCuerpo)
+
+        for instr in self.instrucciones:
+            nodoInstr = instr.graficar(grafo)
+            grafo.agregar_arista(nodoCuerpo, nodoInstr)
+
+        return nodoWhile

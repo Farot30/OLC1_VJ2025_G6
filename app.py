@@ -1,10 +1,10 @@
-import io
-from flask import Flask, render_template, request, send_file
+import os
+from flask import Flask, render_template, request
 from src.gramatica import parse_input
 from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
-
+from src.abstracto.CAST import generarGrafica
 
 app = Flask(__name__)
 
@@ -15,7 +15,7 @@ def index():
     salida = ""
     errores = ""
     tabla_simbolos = ""
-    ast = ""
+    ast_svg = ""
     if request.method == "POST":
         if "interpretar" in request.form:
             entrada = request.form.get("entrada", "")
@@ -36,12 +36,11 @@ def index():
                 if isinstance(resultado, Errores):
                     arbol.errores.append(resultado)
             salida = arbol.getConsola()
-            # 3. Mostrar todos los errores del árbol
+            # Mostrar todos los errores del árbol
             if arbol.errores:
                 errores = "#\tTipo\tDescripcion\tLINEA\tCOLUMNA\n"
                 for idx, error in enumerate(arbol.errores, 1):
                     errores += f"{idx}\t{error.get_tipo_error()}\t{error.get_desc()}\t{error.get_linea()}\t{error.get_col()}\n"
-                # Agrega el conteo de errores al inicio de la salida
                 salida = (
                     f"Se encontraron {len(arbol.errores)} errores durante la compilación.\n"
                     + salida
@@ -50,7 +49,13 @@ def index():
                 errores = "Sin errores."
             # Generar tabla de símbolos usando el método de la clase
             tabla_simbolos = tabla.tablaComoString()
-            ast = str(arbol)
+            # Generar el AST y el archivo .svg en static/
+            if arbol.getInstrucciones():
+                try:
+                    generarGrafica(arbol, "report/ast_reporte")
+                    ast_svg = "ast_reporte.svg"
+                except Exception as e:
+                    ast_svg = ""
         elif "archivo" in request.files:
             archivo = request.files["archivo"]
             if archivo and archivo.filename:
@@ -64,7 +69,7 @@ def index():
         salida=salida,
         errores=errores,
         tabla_simbolos=tabla_simbolos,
-        ast=ast,
+        ast_svg=ast_svg,
     )
 
 
@@ -96,6 +101,17 @@ def mostrar_tabla_simbolos():
     # Recupera la tabla de símbolos global (ajusta según tu lógica)
     tabla = tablaSimbolo()
     return render_template("tabla_simbolos.html", tabla=tabla.getTabla())
+
+
+@app.route("/ast")
+def mostrar_ast():
+    # El archivo SVG se genera en static/ast_reporte.svg
+    ast_path = os.path.join("static", "ast_reporte.svg")
+    if os.path.exists(ast_path):
+        # Puedes mostrar el SVG embebido en HTML
+        return render_template("ast.html", ast_svg="ast_reporte.svg")
+    else:
+        return "AST no generado aún."
 
 
 if __name__ == "__main__":
