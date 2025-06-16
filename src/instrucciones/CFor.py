@@ -72,11 +72,11 @@ class For(Instruccion):
         tabla.borrarScope()
         return None
 
-    def graficar(self, grafo: clasAST):
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         nodoFor = grafo.agregar_nodo("For")
-        nodoInicializacion = self.inicializacion.graficar(grafo)
-        nodoCondicion = self.condicion.graficar(grafo)
-        nodoActualizacion = self.actualizacion.graficar(grafo)
+        nodoInicializacion = self.inicializacion.graficar(grafo, arbol, tabla)
+        nodoCondicion = self.condicion.graficar(grafo, arbol, tabla)
+        nodoActualizacion = self.actualizacion.graficar(grafo, arbol, tabla)
         nodoCuerpo = grafo.agregar_nodo("Cuerpo")
 
         grafo.agregar_arista(nodoFor, nodoInicializacion)
@@ -85,7 +85,7 @@ class For(Instruccion):
         grafo.agregar_arista(nodoFor, nodoCuerpo)
 
         for instr in self.instrucciones:
-            hijo = instr.graficar(grafo)
+            hijo = instr.graficar(grafo, arbol, tabla)
             grafo.agregar_arista(nodoCuerpo, hijo)
 
         return nodoFor

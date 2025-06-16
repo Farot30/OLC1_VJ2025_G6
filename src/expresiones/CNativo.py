@@ -10,6 +10,9 @@ class Nativo(Instruccion):
         self.valor = valor
         self.es_identificador = False  # Por defecto, no es identificador
 
+    def __str__(self):
+        return str(self.valor)
+
     def interpretar(self, arbol, tabla):
         # Si es un identificador, busca el valor en la tabla de símbolos SIEMPRE
         if getattr(self, "es_identificador", False):
@@ -26,5 +29,13 @@ class Nativo(Instruccion):
                 )
         return self.valor
 
-    def graficar(self, grafo: clasAST):
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
+        # Si tienes contexto y es identificador, muestra el valor actual
+        if (
+            arbol is not None
+            and tabla is not None
+            and getattr(self, "es_identificador", False)
+        ):
+            valor = self.interpretar(arbol, tabla)
+            return grafo.agregar_nodo(str(valor))
         return grafo.agregar_nodo(str(self.valor))

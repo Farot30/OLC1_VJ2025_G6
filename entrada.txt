@@ -152,9 +152,12 @@ switch(x4) {
         break;
     case 3:
         println("Es tres");
+        println("sola");
         break;
     default:
         println("No es uno, dos ni tres");
+        println(1+2);
+        println(x4 +b);
         break;
 }
 

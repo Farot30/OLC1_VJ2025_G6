@@ -37,7 +37,8 @@ class Arbol:
     def graficar(self, grafo: clasAST):
         nodoRaiz = grafo.agregar_nodo("REPORTE")
         for instru in self.instrucciones:
-            nodoHijo = instru.graficar(grafo)
+            # Pasa self (el arbol) y la tabla global como contexto
+            nodoHijo = instru.graficar(grafo, self, self.tabla_global)
             if nodoHijo is not None:
                 grafo.agregar_arista(nodoRaiz, nodoHijo)
         return nodoRaiz

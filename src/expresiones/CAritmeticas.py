@@ -27,6 +27,9 @@ class Aritmeticas(Instruccion, ABC):
         self.operando1 = op1
         self.operando2 = op2
 
+    def __str__(self):
+        return f"({self.operando1} {self.getNOpe()} {self.operando2})"
+
     def interpretar(self, arbol: Arbol, tabla: tablaSimbolo):
         op_izq = self.operando1.interpretar(arbol, tabla)
         if isinstance(op_izq, Errores):
@@ -380,19 +383,18 @@ class Aritmeticas(Instruccion, ABC):
             "SEMANTICO", "Modulo entre tipos no valida", self.linea, self.col
         )
 
-    def graficar(self, grafo: clasAST):
-        # Nodo principal
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
+        # Si se pasa contexto de ejecución, grafica el valor evaluado
+        if arbol is not None and tabla is not None:
+            valor = self.interpretar(arbol, tabla)
+            return grafo.agregar_nodo(str(valor))
+        # Si no, grafica la estructura de la expresión
         tipOperacion = self.getNOpe()
         nodoPrincipal = grafo.agregar_nodo(f"{tipOperacion}", fillcolor="white")
-
-        # operando 1
         nodoOp1 = self.operando1.graficar(grafo)
         grafo.agregar_arista(nodoPrincipal, nodoOp1)
-
-        # operando 2
         nodoOp2 = self.operando2.graficar(grafo)
         grafo.agregar_arista(nodoPrincipal, nodoOp2)
-
         return nodoPrincipal
 
     def getNOpe(self):

@@ -88,7 +88,7 @@ class Declaracion(Instruccion):
 
         return None
 
-    def graficar(self, grafo: clasAST):
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         nodoDeclaracion = grafo.agregar_nodo("Declaración")
 
         # identificador
@@ -103,7 +103,7 @@ class Declaracion(Instruccion):
         if self.valor is not None:
             nodoValor = grafo.agregar_nodo("Valor")
             grafo.agregar_arista(nodoDeclaracion, nodoValor)
-            hijValor = self.valor.graficar(grafo)
+            hijValor = self.valor.graficar(grafo, arbol, tabla)
             grafo.agregar_arista(nodoValor, hijValor)
 
         return nodoDeclaracion

@@ -10,6 +10,9 @@ class Or(Instruccion):
         self.izq = izq
         self.der = der
 
+    def __str__(self):
+        return f"OR({self.izq}, {self.der})"
+
     def interpretar(self, arbol, tabla):
         val1 = self.izq.interpretar(arbol, tabla)
         if isinstance(val1, Errores):
@@ -29,12 +32,10 @@ class Or(Instruccion):
                 self.col,
             )
 
-    def graficar(self, grafo: clasAST):
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         nodoOR = grafo.agregar_nodo("OR")
-        nodoIzq = self.izq.graficar(grafo)
-        nodoDer = self.der.graficar(grafo)
-
+        nodoIzq = self.izq.graficar(grafo, arbol, tabla)
+        nodoDer = self.der.graficar(grafo, arbol, tabla)
         grafo.agregar_arista(nodoOR, nodoIzq)
         grafo.agregar_arista(nodoOR, nodoDer)
-
         return nodoOR

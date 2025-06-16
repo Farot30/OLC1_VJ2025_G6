@@ -20,6 +20,7 @@ class Break(Instruccion):
             )
         return "break"
 
-    def graficar(self, grafo: clasAST):
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         nodo_id = grafo.agregar_nodo("Break")
+
         return nodo_id

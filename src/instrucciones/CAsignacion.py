@@ -77,15 +77,10 @@ class Asignacion(Instruccion):
         simbolo.setValor(val)
         return None
 
-    def graficar(self, grafo: clasAST):
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         asignacion = grafo.agregar_nodo("Asignación")
-        # tipo = (
-        #    self.valor.tipoDato.getTipo()
-        #    if hasattr(self.valor, "tipoDato")
-        ##    else "desconocido"
-        # )
         nodoID = grafo.agregar_nodo(f"{self.id}")
-        nodoval = self.valor.graficar(grafo)
+        nodoval = self.valor.graficar(grafo, arbol, tabla)
 
         grafo.agregar_arista(asignacion, nodoID)
         grafo.agregar_arista(asignacion, nodoval)

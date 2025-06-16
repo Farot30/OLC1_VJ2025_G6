@@ -21,6 +21,9 @@ class Relacional(Instruccion, ABC):
         self.op1 = op1
         self.op2 = op2
 
+    def __str__(self):
+        return f"({self.op1} {self.getNOpe()} {self.op2})"
+
     def interpretar(self, arbol, tabla):
         val1 = self.op1.interpretar(arbol, tabla)
         if isinstance(val1, Errores):
@@ -90,17 +93,17 @@ class Relacional(Instruccion, ABC):
                 self.col,
             )
 
-    def graficar(self, grafo: clasAST):
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         # Nodo principal
         tipOperacion = self.getNOpe()
         nodoPrincipal = grafo.agregar_nodo(f"{tipOperacion}", fillcolor="white")
 
         # operando 1
-        nodoOp1 = self.op1.graficar(grafo)
+        nodoOp1 = self.op1.graficar(grafo, arbol, tabla)
         grafo.agregar_arista(nodoPrincipal, nodoOp1)
 
         # operando 2
-        nodoOp2 = self.op2.graficar(grafo)
+        nodoOp2 = self.op2.graficar(grafo, arbol, tabla)
         grafo.agregar_arista(nodoPrincipal, nodoOp2)
 
         return nodoPrincipal

@@ -207,6 +207,8 @@ class tablaSimbolo(metaclass=SingletonMeta):
 
     def limpiar(self):
         self.tabla_actual = []
+        self.scopes = ["global"]  # <-- Reinicia los scopes también
+        self.entorno_contadores = {}  # <-- Reinicia los contadores de scopes
         from src.simbolo.CSimbolo import Simbolo
 
         Simbolo._id_cc = 0  # Reinicia el contador de IDs
