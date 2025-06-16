@@ -2,7 +2,7 @@ int s = 0;
 
 if (s == 0) {
     println("Hola");
-    break;
+    continue;
     s = 1;
 }
 

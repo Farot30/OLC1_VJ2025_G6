@@ -54,16 +54,16 @@ class DoWhile(Instruccion):
             if salto:
                 continue
 
-    def graficar(self, grafo: clasAST):
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         nodoDoWhile = grafo.agregar_nodo("DoWhile")
-        nodoCondicion = self.condicion.graficar(grafo)
+        nodoCondicion = self.condicion.graficar(grafo, arbol, tabla)
         nodoCuerpo = grafo.agregar_nodo("Cuerpo")
 
         grafo.agregar_arista(nodoDoWhile, nodoCondicion)
         grafo.agregar_arista(nodoDoWhile, nodoCuerpo)
 
         for instr in self.instrucciones:
-            nodoInstr = instr.graficar(grafo)
+            nodoInstr = instr.graficar(grafo, arbol, tabla)
             grafo.agregar_arista(nodoCuerpo, nodoInstr)
 
         return nodoDoWhile

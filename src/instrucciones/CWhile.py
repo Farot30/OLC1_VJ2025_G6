@@ -59,16 +59,16 @@ class While(Instruccion):
                 arbol.errores.append(valor_cond)
                 break
 
-    def graficar(self, grafo: clasAST):
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         nodoWhile = grafo.agregar_nodo("While")
-        nodoCondicion = self.condicion.graficar(grafo)
+        nodoCondicion = self.condicion.graficar(grafo, arbol, tabla)
         nodoCuerpo = grafo.agregar_nodo("Cuerpo")
 
         grafo.agregar_arista(nodoWhile, nodoCondicion)
         grafo.agregar_arista(nodoWhile, nodoCuerpo)
 
         for instr in self.instrucciones:
-            nodoInstr = instr.graficar(grafo)
+            nodoInstr = instr.graficar(grafo, arbol, tabla)
             grafo.agregar_arista(nodoCuerpo, nodoInstr)
 
         return nodoWhile

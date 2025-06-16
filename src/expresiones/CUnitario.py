@@ -12,6 +12,9 @@ class Unario(Instruccion):
         self.operador = operador
         self.expresion = expresion
 
+    def __str__(self):
+        return f"{self.operador}{self.expresion}"
+
     def interpretar(self, arbol: Arbol, tabla: tablaSimbolo):
         valor = self.expresion.interpretar(arbol, tabla)
         if isinstance(valor, Errores):
@@ -35,12 +38,10 @@ class Unario(Instruccion):
             self.col,
         )
 
-    def graficar(self, grafo: clasAST):
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         unario = grafo.agregar_nodo("Unario")
-        nodoExp = self.expresion.graficar(grafo)  # <-- Grafica la expresión
-        nodoOperador = grafo.agregar_nodo(self.operador)  # Nodo para el operador
-
+        nodoOperador = grafo.agregar_nodo(self.operador)
+        nodoExp = self.expresion.graficar(grafo, arbol, tabla)
         grafo.agregar_arista(unario, nodoOperador)
         grafo.agregar_arista(unario, nodoExp)
-
         return unario

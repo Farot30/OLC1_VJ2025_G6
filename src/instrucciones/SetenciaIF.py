@@ -53,18 +53,16 @@ class sentIF(Instruccion):
             return self.sig.interpretar(arbol, tabla)
         return
 
-    def graficar(self, grafo: clasAST):
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         nodoIF = grafo.agregar_nodo("If")
-
         if self.condicion is not None:
-            nodoCondicion = self.condicion.graficar(grafo)
+            nodoCondicion = self.condicion.graficar(grafo, arbol, tabla)
             grafo.agregar_arista(nodoIF, nodoCondicion)
-
         nodoInstruccion = grafo.agregar_nodo("Instrucciones")
         grafo.agregar_arista(nodoIF, nodoInstruccion)
 
         for inst in self.instrucciones:
-            hijo = inst.graficar(grafo)
+            hijo = inst.graficar(grafo, arbol, tabla)
             grafo.agregar_arista(nodoInstruccion, hijo)
 
         # else o elseif

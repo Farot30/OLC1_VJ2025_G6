@@ -9,6 +9,9 @@ class Not(Instruccion):
         super().__init__(Tipo(tipoDato.BOOL), linea, col)
         self.expresion = expresion
 
+    def __str__(self):
+        return f"NOT({self.expresion})"
+
     def interpretar(self, arbol, tabla):
         valor = self.expresion.interpretar(arbol, tabla)
         if isinstance(valor, Errores):
@@ -23,9 +26,8 @@ class Not(Instruccion):
                 self.col,
             )
 
-    def graficar(self, grafo: clasAST):
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         nodoNot = grafo.agregar_nodo("NOT")
-        nodoExp = self.expresion.graficar(grafo)  # <-- Grafica la expresión
-
+        nodoExp = self.expresion.graficar(grafo, arbol, tabla)
         grafo.agregar_arista(nodoNot, nodoExp)
         return nodoNot

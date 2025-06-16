@@ -18,6 +18,6 @@ class Continue(Instruccion):
             )
         return "continue"
 
-    def graficar(self, grafo: clasAST):
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         nodo_id = grafo.agregar_nodo("Continue")
         return nodo_id
