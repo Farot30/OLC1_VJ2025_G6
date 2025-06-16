@@ -1,12 +1,17 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from src.gramatica import parse_input
 from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
 from src.abstracto.CAST import generarGrafica
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static")
+
+
+@app.route("/report/<path:filename>")
+def report(filename):
+    return send_from_directory("report", filename)
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -106,7 +111,7 @@ def mostrar_tabla_simbolos():
 @app.route("/ast")
 def mostrar_ast():
     # El archivo SVG se genera en static/ast_reporte.svg
-    ast_path = os.path.join("static", "ast_reporte.svg")
+    ast_path = os.path.join("report", "ast_reporte.svg")
     if os.path.exists(ast_path):
         # Puedes mostrar el SVG embebido en HTML
         return render_template("ast.html", ast_svg="ast_reporte.svg")

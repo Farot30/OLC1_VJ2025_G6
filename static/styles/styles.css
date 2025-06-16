@@ -21,7 +21,7 @@ body {
     align-items: center;
     background-color: var(--color-principal);
     color: var(--color-contrast);
-    width: 99vw;
+    width: 100%;
     height: var(--header-height);
     box-sizing: border-box;
     padding: 0 2rem;
@@ -166,4 +166,41 @@ a:hover {
 label {
     font-weight: bold;
     color: var(--color-principal);
+}
+
+/* Botones de zoom flotantes en la esquina inferior derecha */
+.zoom-buttons {
+    position: fixed;
+    right: 2.5rem;
+    bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 1000;
+}
+
+.zoom-buttons button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-principal);
+    color: var(--color-contrast);
+    border: none;
+    font-size: 2rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.zoom-buttons button:hover {
+    background: #009688;
+    transform: scale(1.1);
+}
+
+.zoom-buttons button span {
+    pointer-events: none;
 }
