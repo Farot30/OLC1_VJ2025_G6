@@ -63,8 +63,8 @@ class sentIF(Instruccion):
 
         for inst in self.instrucciones:
             hijo = inst.graficar(grafo, arbol, tabla)
-            grafo.agregar_arista(nodoInstruccion, hijo)
-
+            if hijo is not None:
+                grafo.agregar_arista(nodoInstruccion, hijo)
         # else o elseif
         if self.sig is not None:
             if isinstance(self.sig, sentIF) and self.sig.condicion is not None:
@@ -81,10 +81,12 @@ class sentIF(Instruccion):
                 # Puede ser un bloque de instrucciones o un solo nodo
                 if hasattr(self.sig, "graficar"):
                     hijoElse = self.sig.graficar(grafo)
-                    grafo.agregar_arista(nodoElse, hijoElse)
+                    if hijoElse is not None:
+                        grafo.agregar_arista(nodoElse, hijoElse)
                 elif hasattr(self.sig, "__iter__"):
                     for instr in self.sig:
                         hijo = instr.graficar(grafo)
-                        grafo.agregar_arista(nodoElse, hijo)
+                        if hijo is not None:
+                            grafo.agregar_arista(nodoElse, hijo)
 
         return nodoIF

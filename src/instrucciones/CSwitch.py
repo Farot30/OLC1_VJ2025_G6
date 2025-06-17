@@ -79,7 +79,8 @@ class Switch(Instruccion):
             grafo.agregar_arista(nodoCase, nodoInstr)
             for instr in caso.instrucciones:
                 hijo = instr.graficar(grafo, arbol, tabla)
-                grafo.agregar_arista(nodoInstr, hijo)
+                if hijo is not None:  # <-- Solo agrega si el hijo existe
+                    grafo.agregar_arista(nodoInstr, hijo)
 
         if self.defecto:
             nodoDefault = grafo.agregar_nodo("Default")
@@ -89,7 +90,8 @@ class Switch(Instruccion):
             grafo.agregar_arista(nodoDefault, nodoInstrDef)
             for instr in self.defecto:
                 hijo = instr.graficar(grafo, arbol, tabla)
-                grafo.agregar_arista(nodoInstrDef, hijo)
+                if hijo is not None:  # <-- Solo agrega si el hijo existe
+                    grafo.agregar_arista(nodoInstrDef, hijo)
 
         return nodoSwitch
 

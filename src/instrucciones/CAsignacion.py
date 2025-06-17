@@ -83,6 +83,7 @@ class Asignacion(Instruccion):
         nodoval = self.valor.graficar(grafo, arbol, tabla)
 
         grafo.agregar_arista(asignacion, nodoID)
-        grafo.agregar_arista(asignacion, nodoval)
+        if nodoval is not None:  # <-- Solo agrega si el nodo existe
+            grafo.agregar_arista(asignacion, nodoval)
 
         return asignacion

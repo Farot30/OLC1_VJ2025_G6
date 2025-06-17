@@ -64,6 +64,7 @@ class DoWhile(Instruccion):
 
         for instr in self.instrucciones:
             nodoInstr = instr.graficar(grafo, arbol, tabla)
-            grafo.agregar_arista(nodoCuerpo, nodoInstr)
+            if nodoInstr is not None:  # <-- Solo agrega si el hijo existe
+                grafo.agregar_arista(nodoCuerpo, nodoInstr)
 
         return nodoDoWhile

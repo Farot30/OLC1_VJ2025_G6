@@ -86,6 +86,7 @@ class For(Instruccion):
 
         for instr in self.instrucciones:
             hijo = instr.graficar(grafo, arbol, tabla)
-            grafo.agregar_arista(nodoCuerpo, hijo)
+            if hijo is not None:  # <-- Solo agrega si el hijo existe
+                grafo.agregar_arista(nodoCuerpo, hijo)
 
         return nodoFor

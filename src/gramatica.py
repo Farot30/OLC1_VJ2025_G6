@@ -1,4 +1,5 @@
 # 1. IMPORTS
+import re
 from src.expresiones.CAritmeticas import Aritmeticas, Operadores
 from src.expresiones.CNativo import Nativo
 from src.instrucciones.CDeclaracion import Declaracion
@@ -82,7 +83,6 @@ reservadas = {
     "char": "CHAR",
     "true": "TRUE",
     "false": "FALSE",
-    "println": "PRINTLN",
     "for": "FOR",
     "if": "IF",
     "break": "BREAK",
@@ -93,6 +93,7 @@ reservadas = {
     "case": "CASE",
     "default": "DEFAULT",
     "continue": "CONTINUE",
+    "println": "PRINTLN",
 }
 
 # 3. EXPRESIONES REGULARES DE TOKENS
@@ -155,7 +156,9 @@ def t_CADENA(t):
 
 def t_ID(t):
     r"[a-zA-Z][a-zA-Z0-9_]*"
-    t.type = reservadas.get(t.value, "ID")
+    t_lower = t.value.lower()
+    t.type = reservadas.get(t_lower, "ID")
+    t.value = t_lower if t.type != "ID" else t.value
     return t
 
 
@@ -240,10 +243,10 @@ lexer = lex.lex()
 
 # 6. PRECEDENCIA
 precedence = (
-    ("right", "UMENOS"),
-    ("right", "POTENCIA"),
-    ("left", "MULT", "DIVISION", "MODULO"),
-    ("left", "MAS", "MENOS"),
+    ("left", "OR"),
+    ("left", "AND"),
+    ("left", "XOR"),
+    ("right", "NOT"),
     (
         "left",
         "MENOR_IGUAL",
@@ -253,10 +256,10 @@ precedence = (
         "DIFERENTE",
         "MENOR_QUE",
     ),
-    ("right", "NOT"),
-    ("left", "XOR"),
-    ("left", "AND"),
-    ("left", "OR"),
+    ("left", "MAS", "MENOS"),
+    ("left", "MULT", "DIVISION", "MODULO"),
+    ("right", "POTENCIA"),
+    ("right", "UMENOS"),
 )
 
 # 7. REGLAS DE GRAMÁTICA (SINTAXIS)
@@ -272,10 +275,13 @@ def p_instrucciones(t):
     """instrucciones : instrucciones instruccion
     | instruccion"""
     if len(t) == 3:
-        t[1].append(t[2])
+        # Solo agrega si la instrucción es válida
+        if t[2] is not None:
+            t[1].append(t[2])
         t[0] = t[1]
     else:
-        t[0] = [t[1]]
+        # Si la única instrucción es inválida, devuelve lista vacía
+        t[0] = [t[1]] if t[1] is not None else []
 
 
 # --- Declaraciones y asignaciones ---
@@ -338,6 +344,20 @@ def p_expresion_binaria(t):
 def p_expresion_unaria(t):
     "expresion : MENOS expresion %prec UMENOS"
     t[0] = Unario("-", t[2], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_expresion_par_error(t):
+    "expresion : PAR1 error PAR2"
+    error = Errores(
+        "Sintáctico",
+        "Error en la expresión entre paréntesis.",
+        t.lineno(1),
+        t.lexpos(1) if hasattr(t, "lexpos") else 0,
+    )
+    arbol = getattr(t.lexer, "arbol", None)
+    if arbol:
+        arbol.errores.append(error)
+    t[0] = None
 
 
 def p_expresion_par(t):
@@ -466,15 +486,18 @@ def p_expresion_relacional(t):
 # --- Instrucciones de control ---
 def p_instruccion(t):
     """instruccion : declaracion PUNTOCOMA
-    | expresion PUNTOCOMA
     | sent_IF
-    | SBreak"""
-    t[0] = t[1]
+    | SBreak
+    | PRINTLN PAR1 expresion PAR2 PUNTOCOMA"""
+    if len(t) == 6:
+        t[0] = Println(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+    else:
+        t[0] = t[1]
 
 
 def p_SBreak(t):
     """SBreak : BREAK PUNTOCOMA"""
-    t[0] = Break(0, 0)
+    t[0] = Break(t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
 def p_SContinue(t):
@@ -492,17 +515,25 @@ def p_sent_IF(t):
 
 def p_if_simple(t):
     """if_simple : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""
-    t[0] = sentIF(t[3], t[6], 0, 0)
+    t[0] = sentIF(t[3], t[6], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
 def p_if_else(t):
     """if_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""
-    t[0] = sentIF(t[3], t[6], 0, 0, sentIF(None, t[10], 0, 0))
+    t[0] = sentIF(
+        t[3],
+        t[6],
+        0,
+        0,
+        sentIF(None, t[10], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])),
+    )
 
 
 def p_if_elseif(t):
     """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple"""
-    t[0] = sentIF(t[3], t[6], 0, 0, t[9])
+    t[0] = sentIF(
+        t[3], t[6], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]), t[9]
+    )
 
 
 # --- FOR ---
@@ -586,7 +617,6 @@ def p_caso_case(t):
 
 def p_caso_default(t):
     "caso : DEFAULT DOSPT instrucciones BREAK PUNTOCOMA"
-    from src.instrucciones.CBreak import Break
 
     t[0] = (
         "default",
@@ -595,9 +625,34 @@ def p_caso_default(t):
 
 
 # --- PRINTLN ---
-def p_instruccion_println(t):
-    "instruccion : PRINTLN PAR1 expresion PAR2 PUNTOCOMA"
-    t[0] = Println(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_instruccion_println_error(t):
+    "instruccion : PRINTLN PAR1 error PAR2 PUNTOCOMA"
+    error = Errores(
+        "Sintáctico",
+        "Error en la expresión de PRINTLN.",
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
+    arbol = getattr(t.lexer, "arbol", None)
+    if arbol:
+        arbol.errores.append(error)
+    t[0] = None
+
+
+def p_instruccion_llamada_id(t):
+    "instruccion : ID PAR1 expresion PAR2 PUNTOCOMA"
+    error = Errores(
+        "Sintáctico",
+        f"Instrucción inválida: '{t[1]}' no es una función reconocida.",
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
+    arbol = getattr(t.lexer, "arbol", None)
+    if arbol:
+        arbol.errores.append(error)
+    t[0] = None
 
 
 # --- TIPOS ---
@@ -641,7 +696,13 @@ def p_error(t):
         else:
             errores_sintacticos_globales.append(error)
         print(error)
+        parser.errok()
+        tok = t
+        while tok and tok.type != "PUNTOCOMA":
+            tok = t.lexer.token()
+        # No consumas el punto y coma
     else:
+        # EOF: solo reporta el error una vez y termina
         try:
             lexer = parser.lexer  # type: ignore
             arbol = getattr(lexer, "arbol", None)
@@ -669,13 +730,35 @@ def p_error(t):
         else:
             errores_sintacticos_globales.append(error)
         print(error)
-    parser.errok()
-    parser.restart()
-    # return []
+        # NO LLAMES parser.errok() NI intentes consumir más tokens aquí
+        return
 
 
-def p_instruccion_error(t):
-    "instruccion : error"
+def p_instruccion_llamada_id_error(t):
+    "instruccion : ID PAR1 error PAR2 PUNTOCOMA"
+    error = Errores(
+        "Sintáctico",
+        f"Instrucción inválida: '{t[1]}' no es una función reconocida (expresión inválida).",
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
+    arbol = getattr(t.lexer, "arbol", None)
+    if arbol:
+        arbol.errores.append(error)
+    t[0] = None
+
+
+def p_instruccion_llamada_id_error_puntocoma(t):
+    "instruccion : ID PAR1 error PUNTOCOMA"
+    error = Errores(
+        "Sintáctico",
+        f"Instrucción inválida: '{t[1]}' no es una función reconocida (error grave en argumentos).",
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
+    arbol = getattr(t.lexer, "arbol", None)
+    if arbol:
+        arbol.errores.append(error)
     t[0] = None
 
 
@@ -686,34 +769,6 @@ def p_instruccion_error_punto_coma(t):
 
 def p_instruccion_vacia(t):
     "instruccion : PUNTOCOMA"
-    t[0] = None
-
-
-def p_instruccion_declaracion_sin_puntocoma(t):
-    "instruccion : declaracion"
-    error = Errores(
-        "Sintáctico",
-        "Falta punto y coma al final de la declaración.",
-        t.lineno(1),
-        find_column(t.lexer.lexdata, t.slice[1]),
-    )
-    arbol = getattr(t.lexer, "arbol", None)
-    if arbol:
-        arbol.errores.append(error)
-    t[0] = None
-
-
-def p_instruccion_catch_all(t):
-    "instruccion : ID"
-    error = Errores(
-        "Sintáctico",
-        f"Instrucción inválida: '{t[1]}'",
-        t.lineno(1),
-        find_column(t.lexer.lexdata, t.slice[1]),
-    )
-    arbol = getattr(t.lexer, "arbol", None)
-    if arbol:
-        arbol.errores.append(error)
     t[0] = None
 
 
@@ -734,8 +789,9 @@ parser = yacc.yacc()
 
 def parse_input(input_text, arbol):
     setattr(lexer, "arbol", arbol)
-    lexer.lineno = 1  # <-- Reinicia el número de línea aquí
+    lexer.lineno = 1
     result = parser.parse(input_text, lexer=lexer)
     if result is None:
         return []
-    return result
+    # Filtra instrucciones válidas
+    return [instr for instr in result if instr is not None]

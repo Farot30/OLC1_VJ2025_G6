@@ -35,6 +35,8 @@ class Incremento(Instruccion):
         return None
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
+        if getattr(self, "error", False):
+            return None  # <-- No grafica si hubo error
         nodoInc = grafo.agregar_nodo("Incremento")
         nodoID = grafo.agregar_nodo(f"ID: {self.id}")
         grafo.agregar_arista(nodoInc, nodoID)
@@ -71,6 +73,8 @@ class Decremento(Instruccion):
         return None
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
+        if getattr(self, "error", False):
+            return None  # <-- No grafica si hubo error
         nodoDec = grafo.agregar_nodo("Decremento")
         nodoID = grafo.agregar_nodo(f"ID: {self.id}")
         grafo.agregar_arista(nodoDec, nodoID)

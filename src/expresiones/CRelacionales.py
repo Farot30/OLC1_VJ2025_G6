@@ -80,7 +80,8 @@ class Relacional(Instruccion, ABC):
         elif self.operador == OperadoresRel.MAYOR_IGUAL:
             return val1 >= val2
         elif self.operador == OperadoresRel.IGUAL_IGUAL:
-            return val1 == val2
+            resultado = val1 == val2
+            return resultado
         elif self.operador == OperadoresRel.DIFERENTE:
             return val1 != val2
         elif self.operador == OperadoresRel.MENOR_QUE:
@@ -94,18 +95,14 @@ class Relacional(Instruccion, ABC):
             )
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
-        # Nodo principal
         tipOperacion = self.getNOpe()
         nodoPrincipal = grafo.agregar_nodo(f"{tipOperacion}", fillcolor="white")
-
-        # operando 1
         nodoOp1 = self.op1.graficar(grafo, arbol, tabla)
-        grafo.agregar_arista(nodoPrincipal, nodoOp1)
-
-        # operando 2
+        if nodoOp1 is not None:
+            grafo.agregar_arista(nodoPrincipal, nodoOp1)
         nodoOp2 = self.op2.graficar(grafo, arbol, tabla)
-        grafo.agregar_arista(nodoPrincipal, nodoOp2)
-
+        if nodoOp2 is not None:
+            grafo.agregar_arista(nodoPrincipal, nodoOp2)
         return nodoPrincipal
 
     def getNOpe(self):
