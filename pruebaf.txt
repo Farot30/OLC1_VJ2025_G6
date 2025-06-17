@@ -1,15 +1,16 @@
-println("---------------------------------------------------------------------------");
-println("--------------------------- FOR ANIDADO -----------------------------------");
-println("---------------------------------------------------------------------------");
+INT opcion = 2;
 
-FOR (INT x = 0; x < 3; X++) {		//DEPENDIENDO DE LA GRAMATICA DESARROLLADA ES PERMITIDO CAMBIAR A X++;
-    FOR (INT y = 0; y < 3; Y++) {
-        IF (x == 0 && y == 2) {
-            println("x = " + x + ", y = " + y);
-        }
-        IF (x == 2 && y == 1) {
-            println("x = " + x + ", y = " + y);
-        }
-        println("x = " + x + ", y = " + y);
-    }
+SWITCH (opcion) {
+    CASE 1:
+        PRINTLN("OPCIÓN 1");
+        BREAK;
+    CASE 2:
+        PRINTLN("OPCIÓN 2");
+        // ERROR SEMÁNTICO: falta el break
+    CASE 3:
+        PRINTLN("OPCIÓN 3");
+        BREAK;
+    DEFAULT:
+        PRINTLN("OPCIÓN NO VÁLIDA");
+        BREAK;
 }

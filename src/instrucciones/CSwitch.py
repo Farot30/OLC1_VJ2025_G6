@@ -1,6 +1,7 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.excepciones.CErrores import Errores
 from src.abstracto.CAST import clasAST
+from src.instrucciones.CBreak import Break
 
 
 class Switch(Instruccion):
@@ -11,6 +12,30 @@ class Switch(Instruccion):
         self.defecto = defecto
 
     def interpretar(self, arbol, tabla):
+        # Verificar que cada caso tenga un break (validación semántica)
+        for caso in self.casos:
+            if not caso.tiene_break():
+                return Errores(
+                    "SEMANTICO",
+                    f"Falta un 'break' al final del case en la línea {caso.valor.linea}",
+                    caso.valor.linea,
+                    caso.valor.col,
+                )
+
+        # Verificar que el default tenga break si existe
+        if self.defecto and len(self.defecto) > 0:
+            tiene_break_default = False
+            if len(self.defecto) > 0:
+                tiene_break_default = isinstance(self.defecto[-1], Break)
+            if not tiene_break_default:
+                return Errores(
+                    "SEMANTICO",
+                    f"Falta un 'break' al final del default",
+                    self.linea,
+                    self.col,
+                )
+
+        # Continuar con la interpretación normal
         valor = self.expresion.interpretar(arbol, tabla)
         if isinstance(valor, Errores):
             return valor
@@ -27,6 +52,7 @@ class Switch(Instruccion):
         ejecutando = False
         romper = False
 
+        # Resto del código original...
         for caso in self.casos:
             val_caso = caso.valor.interpretar(arbol, tabla)
             if isinstance(val_caso, Errores):
@@ -120,3 +146,10 @@ class Case:
     def __init__(self, valor, instrucciones):
         self.valor = valor
         self.instrucciones = instrucciones
+
+    def tiene_break(self):
+        """Verifica si el caso termina con un break"""
+        if not self.instrucciones:
+            return False
+        # Verificar si la última instrucción es un Break
+        return isinstance(self.instrucciones[-1], Break)
