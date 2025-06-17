@@ -4,7 +4,7 @@ PrInTlN("Println basico: 1");
 
 //---------------------------------- Prueba recuperacion errores ----------------------------------
 
-//Print(Esto es un error);
+//Println(Esto es un error);
 
 /*
 	Esto deberia ignorarse

@@ -1,7 +1,1283 @@
 digraph ReporteAST {
 	node1 [label=REPORTE color=purple fillcolor=white style=filled]
 	node2 [label=Println color=purple fillcolor=white style=filled]
-	node3 [label="INT + INT:" color=purple fillcolor=white style=filled]
+	node3 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
 	node2 -> node3
 	node1 -> node2
+	node4 [label=Println color=purple fillcolor=white style=filled]
+	node5 [label="---------------------------------- SUMAS ----------------------------------" color=purple fillcolor=white style=filled]
+	node4 -> node5
+	node1 -> node4
+	node6 [label=Println color=purple fillcolor=white style=filled]
+	node7 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node6 -> node7
+	node1 -> node6
+	node8 [label=Println color=purple fillcolor=white style=filled]
+	node9 [label="INT + INT:" color=purple fillcolor=white style=filled]
+	node8 -> node9
+	node1 -> node8
+	node10 [label=Println color=purple fillcolor=white style=filled]
+	node11 [label=2 color=purple fillcolor=white style=filled]
+	node10 -> node11
+	node1 -> node10
+	node12 [label=Println color=purple fillcolor=white style=filled]
+	node13 [label="INT + FLOAT:" color=purple fillcolor=white style=filled]
+	node12 -> node13
+	node1 -> node12
+	node14 [label=Println color=purple fillcolor=white style=filled]
+	node15 [label=2.1 color=purple fillcolor=white style=filled]
+	node14 -> node15
+	node1 -> node14
+	node16 [label=Println color=purple fillcolor=white style=filled]
+	node17 [label="INT + BOOL:" color=purple fillcolor=white style=filled]
+	node16 -> node17
+	node1 -> node16
+	node18 [label=Println color=purple fillcolor=white style=filled]
+	node19 [label="(1 + True)" color=purple fillcolor=white style=filled]
+	node18 -> node19
+	node1 -> node18
+	node20 [label=Println color=purple fillcolor=white style=filled]
+	node21 [label="INT + DECIMAL:" color=purple fillcolor=white style=filled]
+	node20 -> node21
+	node1 -> node20
+	node22 [label=Println color=purple fillcolor=white style=filled]
+	node23 [label=2.1 color=purple fillcolor=white style=filled]
+	node22 -> node23
+	node1 -> node22
+	node24 [label=Println color=purple fillcolor=white style=filled]
+	node25 [label="INT + CHAR:" color=purple fillcolor=white style=filled]
+	node24 -> node25
+	node1 -> node24
+	node26 [label=Println color=purple fillcolor=white style=filled]
+	node27 [label=37.0 color=purple fillcolor=white style=filled]
+	node26 -> node27
+	node1 -> node26
+	node28 [label=Println color=purple fillcolor=white style=filled]
+	node29 [label="INT + STR:" color=purple fillcolor=white style=filled]
+	node28 -> node29
+	node1 -> node28
+	node30 [label=Println color=purple fillcolor=white style=filled]
+	node31 [label="HOLA 2+1>" color=purple fillcolor=white style=filled]
+	node30 -> node31
+	node1 -> node30
+	node32 [label=Println color=purple fillcolor=white style=filled]
+	node33 [label="FLOAT + INT:" color=purple fillcolor=white style=filled]
+	node32 -> node33
+	node1 -> node32
+	node34 [label=Println color=purple fillcolor=white style=filled]
+	node35 [label=28.1 color=purple fillcolor=white style=filled]
+	node34 -> node35
+	node1 -> node34
+	node36 [label=Println color=purple fillcolor=white style=filled]
+	node37 [label="FLOAT + FLOAT:" color=purple fillcolor=white style=filled]
+	node36 -> node37
+	node1 -> node36
+	node38 [label=Println color=purple fillcolor=white style=filled]
+	node39 [label=11.100000000000001 color=purple fillcolor=white style=filled]
+	node38 -> node39
+	node1 -> node38
+	node40 [label=Println color=purple fillcolor=white style=filled]
+	node41 [label="FLOAT + BOOL:" color=purple fillcolor=white style=filled]
+	node40 -> node41
+	node1 -> node40
+	node42 [label=Println color=purple fillcolor=white style=filled]
+	node43 [label="(True + 2.1)" color=purple fillcolor=white style=filled]
+	node42 -> node43
+	node1 -> node42
+	node44 [label=Println color=purple fillcolor=white style=filled]
+	node45 [label="FLOAT + CHAR:" color=purple fillcolor=white style=filled]
+	node44 -> node45
+	node1 -> node44
+	node46 [label=Println color=purple fillcolor=white style=filled]
+	node47 [label=56.1 color=purple fillcolor=white style=filled]
+	node46 -> node47
+	node1 -> node46
+	node48 [label=Println color=purple fillcolor=white style=filled]
+	node49 [label="FLOAT + STR:" color=purple fillcolor=white style=filled]
+	node48 -> node49
+	node1 -> node48
+	node50 [label=Println color=purple fillcolor=white style=filled]
+	node51 [label="0.5 SERO PUNTO CINCO" color=purple fillcolor=white style=filled]
+	node50 -> node51
+	node1 -> node50
+	node52 [label=Println color=purple fillcolor=white style=filled]
+	node53 [label="BOOL + INT:" color=purple fillcolor=white style=filled]
+	node52 -> node53
+	node1 -> node52
+	node54 [label=Println color=purple fillcolor=white style=filled]
+	node55 [label="(True + 12)" color=purple fillcolor=white style=filled]
+	node54 -> node55
+	node1 -> node54
+	node56 [label=Println color=purple fillcolor=white style=filled]
+	node57 [label="BOOL + DECIMAL:" color=purple fillcolor=white style=filled]
+	node56 -> node57
+	node1 -> node56
+	node58 [label=Println color=purple fillcolor=white style=filled]
+	node59 [label="(True + 12.5)" color=purple fillcolor=white style=filled]
+	node58 -> node59
+	node1 -> node58
+	node60 [label=Println color=purple fillcolor=white style=filled]
+	node61 [label="BOOL + BOOL:" color=purple fillcolor=white style=filled]
+	node60 -> node61
+	node1 -> node60
+	node62 [label=Println color=purple fillcolor=white style=filled]
+	node63 [label="(True + False)" color=purple fillcolor=white style=filled]
+	node62 -> node63
+	node1 -> node62
+	node64 [label=Println color=purple fillcolor=white style=filled]
+	node65 [label="BOOL + CHAR:" color=purple fillcolor=white style=filled]
+	node64 -> node65
+	node1 -> node64
+	node66 [label=Println color=purple fillcolor=white style=filled]
+	node67 [label="(True + =)" color=purple fillcolor=white style=filled]
+	node66 -> node67
+	node1 -> node66
+	node68 [label=Println color=purple fillcolor=white style=filled]
+	node69 [label="BOOL + STR:" color=purple fillcolor=white style=filled]
+	node68 -> node69
+	node1 -> node68
+	node70 [label=Println color=purple fillcolor=white style=filled]
+	node71 [label=LATrue color=purple fillcolor=white style=filled]
+	node70 -> node71
+	node1 -> node70
+	node72 [label=Println color=purple fillcolor=white style=filled]
+	node73 [label="CHAR + INT:" color=purple fillcolor=white style=filled]
+	node72 -> node73
+	node1 -> node72
+	node74 [label=Println color=purple fillcolor=white style=filled]
+	node75 [label=66 color=purple fillcolor=white style=filled]
+	node74 -> node75
+	node1 -> node74
+	node76 [label=Println color=purple fillcolor=white style=filled]
+	node77 [label="CHAR + FLOAT:" color=purple fillcolor=white style=filled]
+	node76 -> node77
+	node1 -> node76
+	node78 [label=Println color=purple fillcolor=white style=filled]
+	node79 [label=66.5 color=purple fillcolor=white style=filled]
+	node78 -> node79
+	node1 -> node78
+	node80 [label=Println color=purple fillcolor=white style=filled]
+	node81 [label="CHAR + BOOL:" color=purple fillcolor=white style=filled]
+	node80 -> node81
+	node1 -> node80
+	node82 [label=Println color=purple fillcolor=white style=filled]
+	node83 [label="(A + True)" color=purple fillcolor=white style=filled]
+	node82 -> node83
+	node1 -> node82
+	node84 [label=Println color=purple fillcolor=white style=filled]
+	node85 [label="CHAR + CHAR:" color=purple fillcolor=white style=filled]
+	node84 -> node85
+	node1 -> node84
+	node86 [label=Println color=purple fillcolor=white style=filled]
+	node87 [label="A#" color=purple fillcolor=white style=filled]
+	node86 -> node87
+	node1 -> node86
+	node88 [label=Println color=purple fillcolor=white style=filled]
+	node89 [label="CHAR + STR:" color=purple fillcolor=white style=filled]
+	node88 -> node89
+	node1 -> node88
+	node90 [label=Println color=purple fillcolor=white style=filled]
+	node91 [label=Xtreme color=purple fillcolor=white style=filled]
+	node90 -> node91
+	node1 -> node90
+	node92 [label=Println color=purple fillcolor=white style=filled]
+	node93 [label="STR + INT:" color=purple fillcolor=white style=filled]
+	node92 -> node93
+	node1 -> node92
+	node94 [label=Println color=purple fillcolor=white style=filled]
+	node95 [label="Edad: 30" color=purple fillcolor=white style=filled]
+	node94 -> node95
+	node1 -> node94
+	node96 [label=Println color=purple fillcolor=white style=filled]
+	node97 [label="STR + FLOAT:" color=purple fillcolor=white style=filled]
+	node96 -> node97
+	node1 -> node96
+	node98 [label=Println color=purple fillcolor=white style=filled]
+	node99 [label="Pi es 3.14" color=purple fillcolor=white style=filled]
+	node98 -> node99
+	node1 -> node98
+	node100 [label=Println color=purple fillcolor=white style=filled]
+	node101 [label="STR + BOOL:" color=purple fillcolor=white style=filled]
+	node100 -> node101
+	node1 -> node100
+	node102 [label=Println color=purple fillcolor=white style=filled]
+	node103 [label="Â¿Es vÃ¡lido? False" color=purple fillcolor=white style=filled]
+	node102 -> node103
+	node1 -> node102
+	node104 [label=Println color=purple fillcolor=white style=filled]
+	node105 [label="STR + CHAR:" color=purple fillcolor=white style=filled]
+	node104 -> node105
+	node1 -> node104
+	node106 [label=Println color=purple fillcolor=white style=filled]
+	node107 [label="Letra: Z" color=purple fillcolor=white style=filled]
+	node106 -> node107
+	node1 -> node106
+	node108 [label=Println color=purple fillcolor=white style=filled]
+	node109 [label="STR + STR:" color=purple fillcolor=white style=filled]
+	node108 -> node109
+	node1 -> node108
+	node110 [label=Println color=purple fillcolor=white style=filled]
+	node111 [label="Hola mundo" color=purple fillcolor=white style=filled]
+	node110 -> node111
+	node1 -> node110
+	node112 [label=Println color=purple fillcolor=white style=filled]
+	node113 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node112 -> node113
+	node1 -> node112
+	node114 [label=Println color=purple fillcolor=white style=filled]
+	node115 [label="---------------------------------- RESTAS ----------------------------------" color=purple fillcolor=white style=filled]
+	node114 -> node115
+	node1 -> node114
+	node116 [label=Println color=purple fillcolor=white style=filled]
+	node117 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node116 -> node117
+	node1 -> node116
+	node118 [label=Println color=purple fillcolor=white style=filled]
+	node119 [label="INT - INT:" color=purple fillcolor=white style=filled]
+	node118 -> node119
+	node1 -> node118
+	node120 [label=Println color=purple fillcolor=white style=filled]
+	node121 [label=6 color=purple fillcolor=white style=filled]
+	node120 -> node121
+	node1 -> node120
+	node122 [label=Println color=purple fillcolor=white style=filled]
+	node123 [label="INT - DECIMAL:" color=purple fillcolor=white style=filled]
+	node122 -> node123
+	node1 -> node122
+	node124 [label=Println color=purple fillcolor=white style=filled]
+	node125 [label=7.5 color=purple fillcolor=white style=filled]
+	node124 -> node125
+	node1 -> node124
+	node126 [label=Println color=purple fillcolor=white style=filled]
+	node127 [label="INT - BOOL:" color=purple fillcolor=white style=filled]
+	node126 -> node127
+	node1 -> node126
+	node128 [label=Println color=purple fillcolor=white style=filled]
+	node129 [label="(10 - True)" color=purple fillcolor=white style=filled]
+	node128 -> node129
+	node1 -> node128
+	node130 [label=Println color=purple fillcolor=white style=filled]
+	node131 [label="INT - CHAR:" color=purple fillcolor=white style=filled]
+	node130 -> node131
+	node1 -> node130
+	node132 [label=Println color=purple fillcolor=white style=filled]
+	node133 [label=5.0 color=purple fillcolor=white style=filled]
+	node132 -> node133
+	node1 -> node132
+	node134 [label=Println color=purple fillcolor=white style=filled]
+	node135 [label="INT - STRING:" color=purple fillcolor=white style=filled]
+	node134 -> node135
+	node1 -> node134
+	node136 [label=Println color=purple fillcolor=white style=filled]
+	node137 [label="(5 - texto)" color=purple fillcolor=white style=filled]
+	node136 -> node137
+	node1 -> node136
+	node138 [label=Println color=purple fillcolor=white style=filled]
+	node139 [label="DECIMAL - INT:" color=purple fillcolor=white style=filled]
+	node138 -> node139
+	node1 -> node138
+	node140 [label=Println color=purple fillcolor=white style=filled]
+	node141 [label=5.5 color=purple fillcolor=white style=filled]
+	node140 -> node141
+	node1 -> node140
+	node142 [label=Println color=purple fillcolor=white style=filled]
+	node143 [label="DECIMAL - DECIMAL:" color=purple fillcolor=white style=filled]
+	node142 -> node143
+	node1 -> node142
+	node144 [label=Println color=purple fillcolor=white style=filled]
+	node145 [label=8.0 color=purple fillcolor=white style=filled]
+	node144 -> node145
+	node1 -> node144
+	node146 [label=Println color=purple fillcolor=white style=filled]
+	node147 [label="DECIMAL - BOOL:" color=purple fillcolor=white style=filled]
+	node146 -> node147
+	node1 -> node146
+	node148 [label=Println color=purple fillcolor=white style=filled]
+	node149 [label="(3.2 - False)" color=purple fillcolor=white style=filled]
+	node148 -> node149
+	node1 -> node148
+	node150 [label=Println color=purple fillcolor=white style=filled]
+	node151 [label="DECIMAL - CHAR:" color=purple fillcolor=white style=filled]
+	node150 -> node151
+	node1 -> node150
+	node152 [label=Println color=purple fillcolor=white style=filled]
+	node153 [label=4.5 color=purple fillcolor=white style=filled]
+	node152 -> node153
+	node1 -> node152
+	node154 [label=Println color=purple fillcolor=white style=filled]
+	node155 [label="DECIMAL - STRING:" color=purple fillcolor=white style=filled]
+	node154 -> node155
+	node1 -> node154
+	node156 [label=Println color=purple fillcolor=white style=filled]
+	node157 [label="(1.1 - dato)" color=purple fillcolor=white style=filled]
+	node156 -> node157
+	node1 -> node156
+	node158 [label=Println color=purple fillcolor=white style=filled]
+	node159 [label="BOOL - INT:" color=purple fillcolor=white style=filled]
+	node158 -> node159
+	node1 -> node158
+	node160 [label=Println color=purple fillcolor=white style=filled]
+	node161 [label="(True - 1)" color=purple fillcolor=white style=filled]
+	node160 -> node161
+	node1 -> node160
+	node162 [label=Println color=purple fillcolor=white style=filled]
+	node163 [label="BOOL - DECIMAL:" color=purple fillcolor=white style=filled]
+	node162 -> node163
+	node1 -> node162
+	node164 [label=Println color=purple fillcolor=white style=filled]
+	node165 [label="(False - 2.2)" color=purple fillcolor=white style=filled]
+	node164 -> node165
+	node1 -> node164
+	node166 [label=Println color=purple fillcolor=white style=filled]
+	node167 [label="BOOL - BOOL:" color=purple fillcolor=white style=filled]
+	node166 -> node167
+	node1 -> node166
+	node168 [label=Println color=purple fillcolor=white style=filled]
+	node169 [label="(True - False)" color=purple fillcolor=white style=filled]
+	node168 -> node169
+	node1 -> node168
+	node170 [label=Println color=purple fillcolor=white style=filled]
+	node171 [label="BOOL - CHAR:" color=purple fillcolor=white style=filled]
+	node170 -> node171
+	node1 -> node170
+	node172 [label=Println color=purple fillcolor=white style=filled]
+	node173 [label="(True - A)" color=purple fillcolor=white style=filled]
+	node172 -> node173
+	node1 -> node172
+	node174 [label=Println color=purple fillcolor=white style=filled]
+	node175 [label="BOOL - STRING:" color=purple fillcolor=white style=filled]
+	node174 -> node175
+	node1 -> node174
+	node176 [label=Println color=purple fillcolor=white style=filled]
+	node177 [label="(True - algo)" color=purple fillcolor=white style=filled]
+	node176 -> node177
+	node1 -> node176
+	node178 [label=Println color=purple fillcolor=white style=filled]
+	node179 [label="CHAR - INT:" color=purple fillcolor=white style=filled]
+	node178 -> node179
+	node1 -> node178
+	node180 [label=Println color=purple fillcolor=white style=filled]
+	node181 [label=66 color=purple fillcolor=white style=filled]
+	node180 -> node181
+	node1 -> node180
+	node182 [label=Println color=purple fillcolor=white style=filled]
+	node183 [label="CHAR - DECIMAL:" color=purple fillcolor=white style=filled]
+	node182 -> node183
+	node1 -> node182
+	node184 [label=Println color=purple fillcolor=white style=filled]
+	node185 [label=68.5 color=purple fillcolor=white style=filled]
+	node184 -> node185
+	node1 -> node184
+	node186 [label=Println color=purple fillcolor=white style=filled]
+	node187 [label="CHAR - BOOL:" color=purple fillcolor=white style=filled]
+	node186 -> node187
+	node1 -> node186
+	node188 [label=Println color=purple fillcolor=white style=filled]
+	node189 [label="(A - True)" color=purple fillcolor=white style=filled]
+	node188 -> node189
+	node1 -> node188
+	node190 [label=Println color=purple fillcolor=white style=filled]
+	node191 [label="CHAR - CHAR:" color=purple fillcolor=white style=filled]
+	node190 -> node191
+	node1 -> node190
+	node192 [label=Println color=purple fillcolor=white style=filled]
+	node193 [label="(B - A)" color=purple fillcolor=white style=filled]
+	node192 -> node193
+	node1 -> node192
+	node194 [label=Println color=purple fillcolor=white style=filled]
+	node195 [label="CHAR - STRING:" color=purple fillcolor=white style=filled]
+	node194 -> node195
+	node1 -> node194
+	node196 [label=Println color=purple fillcolor=white style=filled]
+	node197 [label="(Z - texto)" color=purple fillcolor=white style=filled]
+	node196 -> node197
+	node1 -> node196
+	node198 [label=Println color=purple fillcolor=white style=filled]
+	node199 [label="STRING - INT:" color=purple fillcolor=white style=filled]
+	node198 -> node199
+	node1 -> node198
+	node200 [label=Println color=purple fillcolor=white style=filled]
+	node201 [label="(Texto - 5)" color=purple fillcolor=white style=filled]
+	node200 -> node201
+	node1 -> node200
+	node202 [label=Println color=purple fillcolor=white style=filled]
+	node203 [label="STRING - DECIMAL:" color=purple fillcolor=white style=filled]
+	node202 -> node203
+	node1 -> node202
+	node204 [label=Println color=purple fillcolor=white style=filled]
+	node205 [label="(Texto - 3.14)" color=purple fillcolor=white style=filled]
+	node204 -> node205
+	node1 -> node204
+	node206 [label=Println color=purple fillcolor=white style=filled]
+	node207 [label="STRING - BOOL:" color=purple fillcolor=white style=filled]
+	node206 -> node207
+	node1 -> node206
+	node208 [label=Println color=purple fillcolor=white style=filled]
+	node209 [label="(Texto - False)" color=purple fillcolor=white style=filled]
+	node208 -> node209
+	node1 -> node208
+	node210 [label=Println color=purple fillcolor=white style=filled]
+	node211 [label="STRING - CHAR:" color=purple fillcolor=white style=filled]
+	node210 -> node211
+	node1 -> node210
+	node212 [label=Println color=purple fillcolor=white style=filled]
+	node213 [label="(Texto - o)" color=purple fillcolor=white style=filled]
+	node212 -> node213
+	node1 -> node212
+	node214 [label=Println color=purple fillcolor=white style=filled]
+	node215 [label="STRING - STRING:" color=purple fillcolor=white style=filled]
+	node214 -> node215
+	node1 -> node214
+	node216 [label=Println color=purple fillcolor=white style=filled]
+	node217 [label="(Texto - To)" color=purple fillcolor=white style=filled]
+	node216 -> node217
+	node1 -> node216
+	node218 [label=Println color=purple fillcolor=white style=filled]
+	node219 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node218 -> node219
+	node1 -> node218
+	node220 [label=Println color=purple fillcolor=white style=filled]
+	node221 [label="------------------------------ MULTIPLICACIONES ----------------------------" color=purple fillcolor=white style=filled]
+	node220 -> node221
+	node1 -> node220
+	node222 [label=Println color=purple fillcolor=white style=filled]
+	node223 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node222 -> node223
+	node1 -> node222
+	node224 [label=Println color=purple fillcolor=white style=filled]
+	node225 [label="INT * INT:" color=purple fillcolor=white style=filled]
+	node224 -> node225
+	node1 -> node224
+	node226 [label=Println color=purple fillcolor=white style=filled]
+	node227 [label=42 color=purple fillcolor=white style=filled]
+	node226 -> node227
+	node1 -> node226
+	node228 [label=Println color=purple fillcolor=white style=filled]
+	node229 [label="INT * DECIMAL:" color=purple fillcolor=white style=filled]
+	node228 -> node229
+	node1 -> node228
+	node230 [label=Println color=purple fillcolor=white style=filled]
+	node231 [label=10.0 color=purple fillcolor=white style=filled]
+	node230 -> node231
+	node1 -> node230
+	node232 [label=Println color=purple fillcolor=white style=filled]
+	node233 [label="INT * BOOL:" color=purple fillcolor=white style=filled]
+	node232 -> node233
+	node1 -> node232
+	node234 [label=Println color=purple fillcolor=white style=filled]
+	node235 [label="(3 * True)" color=purple fillcolor=white style=filled]
+	node234 -> node235
+	node1 -> node234
+	node236 [label=Println color=purple fillcolor=white style=filled]
+	node237 [label="INT * CHAR:" color=purple fillcolor=white style=filled]
+	node236 -> node237
+	node1 -> node236
+	node238 [label=Println color=purple fillcolor=white style=filled]
+	node239 [label=195.0 color=purple fillcolor=white style=filled]
+	node238 -> node239
+	node1 -> node238
+	node240 [label=Println color=purple fillcolor=white style=filled]
+	node241 [label="INT * STRING:" color=purple fillcolor=white style=filled]
+	node240 -> node241
+	node1 -> node240
+	node242 [label=Println color=purple fillcolor=white style=filled]
+	node243 [label="(2 * hola)" color=purple fillcolor=white style=filled]
+	node242 -> node243
+	node1 -> node242
+	node244 [label=Println color=purple fillcolor=white style=filled]
+	node245 [label="DECIMAL * INT:" color=purple fillcolor=white style=filled]
+	node244 -> node245
+	node1 -> node244
+	node246 [label=Println color=purple fillcolor=white style=filled]
+	node247 [label=10.0 color=purple fillcolor=white style=filled]
+	node246 -> node247
+	node1 -> node246
+	node248 [label=Println color=purple fillcolor=white style=filled]
+	node249 [label="DECIMAL * DECIMAL:" color=purple fillcolor=white style=filled]
+	node248 -> node249
+	node1 -> node248
+	node250 [label=Println color=purple fillcolor=white style=filled]
+	node251 [label=3.0 color=purple fillcolor=white style=filled]
+	node250 -> node251
+	node1 -> node250
+	node252 [label=Println color=purple fillcolor=white style=filled]
+	node253 [label="DECIMAL * BOOL:" color=purple fillcolor=white style=filled]
+	node252 -> node253
+	node1 -> node252
+	node254 [label=Println color=purple fillcolor=white style=filled]
+	node255 [label="(2.0 * False)" color=purple fillcolor=white style=filled]
+	node254 -> node255
+	node1 -> node254
+	node256 [label=Println color=purple fillcolor=white style=filled]
+	node257 [label="DECIMAL * CHAR:" color=purple fillcolor=white style=filled]
+	node256 -> node257
+	node1 -> node256
+	node258 [label=Println color=purple fillcolor=white style=filled]
+	node259 [label=165.0 color=purple fillcolor=white style=filled]
+	node258 -> node259
+	node1 -> node258
+	node260 [label=Println color=purple fillcolor=white style=filled]
+	node261 [label="DECIMAL * STRING:" color=purple fillcolor=white style=filled]
+	node260 -> node261
+	node1 -> node260
+	node262 [label=Println color=purple fillcolor=white style=filled]
+	node263 [label="(1.1 * dato)" color=purple fillcolor=white style=filled]
+	node262 -> node263
+	node1 -> node262
+	node264 [label=Println color=purple fillcolor=white style=filled]
+	node265 [label="BOOL * INT:" color=purple fillcolor=white style=filled]
+	node264 -> node265
+	node1 -> node264
+	node266 [label=Println color=purple fillcolor=white style=filled]
+	node267 [label="(True * 5)" color=purple fillcolor=white style=filled]
+	node266 -> node267
+	node1 -> node266
+	node268 [label=Println color=purple fillcolor=white style=filled]
+	node269 [label="BOOL * DECIMAL:" color=purple fillcolor=white style=filled]
+	node268 -> node269
+	node1 -> node268
+	node270 [label=Println color=purple fillcolor=white style=filled]
+	node271 [label="(False * 3.14)" color=purple fillcolor=white style=filled]
+	node270 -> node271
+	node1 -> node270
+	node272 [label=Println color=purple fillcolor=white style=filled]
+	node273 [label="BOOL * BOOL:" color=purple fillcolor=white style=filled]
+	node272 -> node273
+	node1 -> node272
+	node274 [label=Println color=purple fillcolor=white style=filled]
+	node275 [label="(True * False)" color=purple fillcolor=white style=filled]
+	node274 -> node275
+	node1 -> node274
+	node276 [label=Println color=purple fillcolor=white style=filled]
+	node277 [label="BOOL * CHAR:" color=purple fillcolor=white style=filled]
+	node276 -> node277
+	node1 -> node276
+	node278 [label=Println color=purple fillcolor=white style=filled]
+	node279 [label="(True * X)" color=purple fillcolor=white style=filled]
+	node278 -> node279
+	node1 -> node278
+	node280 [label=Println color=purple fillcolor=white style=filled]
+	node281 [label="BOOL * STRING:" color=purple fillcolor=white style=filled]
+	node280 -> node281
+	node1 -> node280
+	node282 [label=Println color=purple fillcolor=white style=filled]
+	node283 [label="(True * nada)" color=purple fillcolor=white style=filled]
+	node282 -> node283
+	node1 -> node282
+	node284 [label=Println color=purple fillcolor=white style=filled]
+	node285 [label="CHAR * INT:" color=purple fillcolor=white style=filled]
+	node284 -> node285
+	node1 -> node284
+	node286 [label=Println color=purple fillcolor=white style=filled]
+	node287 [label=134 color=purple fillcolor=white style=filled]
+	node286 -> node287
+	node1 -> node286
+	node288 [label=Println color=purple fillcolor=white style=filled]
+	node289 [label="CHAR * DECIMAL:" color=purple fillcolor=white style=filled]
+	node288 -> node289
+	node1 -> node288
+	node290 [label=Println color=purple fillcolor=white style=filled]
+	node291 [label=134.0 color=purple fillcolor=white style=filled]
+	node290 -> node291
+	node1 -> node290
+	node292 [label=Println color=purple fillcolor=white style=filled]
+	node293 [label="CHAR * BOOL:" color=purple fillcolor=white style=filled]
+	node292 -> node293
+	node1 -> node292
+	node294 [label=Println color=purple fillcolor=white style=filled]
+	node295 [label="(C * True)" color=purple fillcolor=white style=filled]
+	node294 -> node295
+	node1 -> node294
+	node296 [label=Println color=purple fillcolor=white style=filled]
+	node297 [label="CHAR * CHAR:" color=purple fillcolor=white style=filled]
+	node296 -> node297
+	node1 -> node296
+	node298 [label=Println color=purple fillcolor=white style=filled]
+	node299 [label="(A * B)" color=purple fillcolor=white style=filled]
+	node298 -> node299
+	node1 -> node298
+	node300 [label=Println color=purple fillcolor=white style=filled]
+	node301 [label="CHAR * STRING:" color=purple fillcolor=white style=filled]
+	node300 -> node301
+	node1 -> node300
+	node302 [label=Println color=purple fillcolor=white style=filled]
+	node303 [label="(Z * algo)" color=purple fillcolor=white style=filled]
+	node302 -> node303
+	node1 -> node302
+	node304 [label=Println color=purple fillcolor=white style=filled]
+	node305 [label="STRING * INT:" color=purple fillcolor=white style=filled]
+	node304 -> node305
+	node1 -> node304
+	node306 [label=Println color=purple fillcolor=white style=filled]
+	node307 [label="(hola * 3)" color=purple fillcolor=white style=filled]
+	node306 -> node307
+	node1 -> node306
+	node308 [label=Println color=purple fillcolor=white style=filled]
+	node309 [label="STRING * DECIMAL:" color=purple fillcolor=white style=filled]
+	node308 -> node309
+	node1 -> node308
+	node310 [label=Println color=purple fillcolor=white style=filled]
+	node311 [label="(hola * 2.5)" color=purple fillcolor=white style=filled]
+	node310 -> node311
+	node1 -> node310
+	node312 [label=Println color=purple fillcolor=white style=filled]
+	node313 [label="STRING * BOOL:" color=purple fillcolor=white style=filled]
+	node312 -> node313
+	node1 -> node312
+	node314 [label=Println color=purple fillcolor=white style=filled]
+	node315 [label="(hola * False)" color=purple fillcolor=white style=filled]
+	node314 -> node315
+	node1 -> node314
+	node316 [label=Println color=purple fillcolor=white style=filled]
+	node317 [label="STRING * CHAR:" color=purple fillcolor=white style=filled]
+	node316 -> node317
+	node1 -> node316
+	node318 [label=Println color=purple fillcolor=white style=filled]
+	node319 [label="(hola * X)" color=purple fillcolor=white style=filled]
+	node318 -> node319
+	node1 -> node318
+	node320 [label=Println color=purple fillcolor=white style=filled]
+	node321 [label="STRING * STRING:" color=purple fillcolor=white style=filled]
+	node320 -> node321
+	node1 -> node320
+	node322 [label=Println color=purple fillcolor=white style=filled]
+	node323 [label="(hola * mundo)" color=purple fillcolor=white style=filled]
+	node322 -> node323
+	node1 -> node322
+	node324 [label=Println color=purple fillcolor=white style=filled]
+	node325 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node324 -> node325
+	node1 -> node324
+	node326 [label=Println color=purple fillcolor=white style=filled]
+	node327 [label="------------------------------- DIVISIONES -------------------------------" color=purple fillcolor=white style=filled]
+	node326 -> node327
+	node1 -> node326
+	node328 [label=Println color=purple fillcolor=white style=filled]
+	node329 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node328 -> node329
+	node1 -> node328
+	node330 [label=Println color=purple fillcolor=white style=filled]
+	node331 [label="INT / INT:" color=purple fillcolor=white style=filled]
+	node330 -> node331
+	node1 -> node330
+	node332 [label=Println color=purple fillcolor=white style=filled]
+	node333 [label=5.0 color=purple fillcolor=white style=filled]
+	node332 -> node333
+	node1 -> node332
+	node334 [label=Println color=purple fillcolor=white style=filled]
+	node335 [label="INT / DECIMAL:" color=purple fillcolor=white style=filled]
+	node334 -> node335
+	node1 -> node334
+	node336 [label=Println color=purple fillcolor=white style=filled]
+	node337 [label=2.5 color=purple fillcolor=white style=filled]
+	node336 -> node337
+	node1 -> node336
+	node338 [label=Println color=purple fillcolor=white style=filled]
+	node339 [label="INT / BOOL:" color=purple fillcolor=white style=filled]
+	node338 -> node339
+	node1 -> node338
+	node340 [label=Println color=purple fillcolor=white style=filled]
+	node341 [label="(10 / True)" color=purple fillcolor=white style=filled]
+	node340 -> node341
+	node1 -> node340
+	node342 [label=Println color=purple fillcolor=white style=filled]
+	node343 [label="INT / CHAR:" color=purple fillcolor=white style=filled]
+	node342 -> node343
+	node1 -> node342
+	node344 [label=Println color=purple fillcolor=white style=filled]
+	node345 [label=1.0606060606060606 color=purple fillcolor=white style=filled]
+	node344 -> node345
+	node1 -> node344
+	node346 [label=Println color=purple fillcolor=white style=filled]
+	node347 [label="INT / STRING:" color=purple fillcolor=white style=filled]
+	node346 -> node347
+	node1 -> node346
+	node348 [label=Println color=purple fillcolor=white style=filled]
+	node349 [label="(10 / algo)" color=purple fillcolor=white style=filled]
+	node348 -> node349
+	node1 -> node348
+	node350 [label=Println color=purple fillcolor=white style=filled]
+	node351 [label="DECIMAL / INT:" color=purple fillcolor=white style=filled]
+	node350 -> node351
+	node1 -> node350
+	node352 [label=Println color=purple fillcolor=white style=filled]
+	node353 [label=3.0 color=purple fillcolor=white style=filled]
+	node352 -> node353
+	node1 -> node352
+	node354 [label=Println color=purple fillcolor=white style=filled]
+	node355 [label="DECIMAL / DECIMAL:" color=purple fillcolor=white style=filled]
+	node354 -> node355
+	node1 -> node354
+	node356 [label=Println color=purple fillcolor=white style=filled]
+	node357 [label=2.75 color=purple fillcolor=white style=filled]
+	node356 -> node357
+	node1 -> node356
+	node358 [label=Println color=purple fillcolor=white style=filled]
+	node359 [label="DECIMAL / BOOL:" color=purple fillcolor=white style=filled]
+	node358 -> node359
+	node1 -> node358
+	node360 [label=Println color=purple fillcolor=white style=filled]
+	node361 [label="(4.2 / False)" color=purple fillcolor=white style=filled]
+	node360 -> node361
+	node1 -> node360
+	node362 [label=Println color=purple fillcolor=white style=filled]
+	node363 [label="DECIMAL / CHAR:" color=purple fillcolor=white style=filled]
+	node362 -> node363
+	node1 -> node362
+	node364 [label=Println color=purple fillcolor=white style=filled]
+	node365 [label=2.0 color=purple fillcolor=white style=filled]
+	node364 -> node365
+	node1 -> node364
+	node366 [label=Println color=purple fillcolor=white style=filled]
+	node367 [label="DECIMAL / STRING:" color=purple fillcolor=white style=filled]
+	node366 -> node367
+	node1 -> node366
+	node368 [label=Println color=purple fillcolor=white style=filled]
+	node369 [label="(1.1 / texto)" color=purple fillcolor=white style=filled]
+	node368 -> node369
+	node1 -> node368
+	node370 [label=Println color=purple fillcolor=white style=filled]
+	node371 [label="BOOL / INT:" color=purple fillcolor=white style=filled]
+	node370 -> node371
+	node1 -> node370
+	node372 [label=Println color=purple fillcolor=white style=filled]
+	node373 [label="(True / 1)" color=purple fillcolor=white style=filled]
+	node372 -> node373
+	node1 -> node372
+	node374 [label=Println color=purple fillcolor=white style=filled]
+	node375 [label="BOOL / DECIMAL:" color=purple fillcolor=white style=filled]
+	node374 -> node375
+	node1 -> node374
+	node376 [label=Println color=purple fillcolor=white style=filled]
+	node377 [label="(False / 3.14)" color=purple fillcolor=white style=filled]
+	node376 -> node377
+	node1 -> node376
+	node378 [label=Println color=purple fillcolor=white style=filled]
+	node379 [label="BOOL / BOOL:" color=purple fillcolor=white style=filled]
+	node378 -> node379
+	node1 -> node378
+	node380 [label=Println color=purple fillcolor=white style=filled]
+	node381 [label="(True / False)" color=purple fillcolor=white style=filled]
+	node380 -> node381
+	node1 -> node380
+	node382 [label=Println color=purple fillcolor=white style=filled]
+	node383 [label="BOOL / CHAR:" color=purple fillcolor=white style=filled]
+	node382 -> node383
+	node1 -> node382
+	node384 [label=Println color=purple fillcolor=white style=filled]
+	node385 [label="(True / X)" color=purple fillcolor=white style=filled]
+	node384 -> node385
+	node1 -> node384
+	node386 [label=Println color=purple fillcolor=white style=filled]
+	node387 [label="BOOL / STRING:" color=purple fillcolor=white style=filled]
+	node386 -> node387
+	node1 -> node386
+	node388 [label=Println color=purple fillcolor=white style=filled]
+	node389 [label="(True / nada)" color=purple fillcolor=white style=filled]
+	node388 -> node389
+	node1 -> node388
+	node390 [label=Println color=purple fillcolor=white style=filled]
+	node391 [label="CHAR / INT:" color=purple fillcolor=white style=filled]
+	node390 -> node391
+	node1 -> node390
+	node392 [label=Println color=purple fillcolor=white style=filled]
+	node393 [label=34.0 color=purple fillcolor=white style=filled]
+	node392 -> node393
+	node1 -> node392
+	node394 [label=Println color=purple fillcolor=white style=filled]
+	node395 [label="CHAR / DECIMAL:" color=purple fillcolor=white style=filled]
+	node394 -> node395
+	node1 -> node394
+	node396 [label=Println color=purple fillcolor=white style=filled]
+	node397 [label=34.5 color=purple fillcolor=white style=filled]
+	node396 -> node397
+	node1 -> node396
+	node398 [label=Println color=purple fillcolor=white style=filled]
+	node399 [label="CHAR / BOOL:" color=purple fillcolor=white style=filled]
+	node398 -> node399
+	node1 -> node398
+	node400 [label=Println color=purple fillcolor=white style=filled]
+	node401 [label="(A / True)" color=purple fillcolor=white style=filled]
+	node400 -> node401
+	node1 -> node400
+	node402 [label=Println color=purple fillcolor=white style=filled]
+	node403 [label="CHAR / CHAR:" color=purple fillcolor=white style=filled]
+	node402 -> node403
+	node1 -> node402
+	node404 [label=Println color=purple fillcolor=white style=filled]
+	node405 [label="(B / A)" color=purple fillcolor=white style=filled]
+	node404 -> node405
+	node1 -> node404
+	node406 [label=Println color=purple fillcolor=white style=filled]
+	node407 [label="CHAR / STRING:" color=purple fillcolor=white style=filled]
+	node406 -> node407
+	node1 -> node406
+	node408 [label=Println color=purple fillcolor=white style=filled]
+	node409 [label="(Z / texto)" color=purple fillcolor=white style=filled]
+	node408 -> node409
+	node1 -> node408
+	node410 [label=Println color=purple fillcolor=white style=filled]
+	node411 [label="STRING / INT:" color=purple fillcolor=white style=filled]
+	node410 -> node411
+	node1 -> node410
+	node412 [label=Println color=purple fillcolor=white style=filled]
+	node413 [label="(texto / 2)" color=purple fillcolor=white style=filled]
+	node412 -> node413
+	node1 -> node412
+	node414 [label=Println color=purple fillcolor=white style=filled]
+	node415 [label="STRING / DECIMAL:" color=purple fillcolor=white style=filled]
+	node414 -> node415
+	node1 -> node414
+	node416 [label=Println color=purple fillcolor=white style=filled]
+	node417 [label="(texto / 1.1)" color=purple fillcolor=white style=filled]
+	node416 -> node417
+	node1 -> node416
+	node418 [label=Println color=purple fillcolor=white style=filled]
+	node419 [label="STRING / BOOL:" color=purple fillcolor=white style=filled]
+	node418 -> node419
+	node1 -> node418
+	node420 [label=Println color=purple fillcolor=white style=filled]
+	node421 [label="(texto / False)" color=purple fillcolor=white style=filled]
+	node420 -> node421
+	node1 -> node420
+	node422 [label=Println color=purple fillcolor=white style=filled]
+	node423 [label="STRING / CHAR:" color=purple fillcolor=white style=filled]
+	node422 -> node423
+	node1 -> node422
+	node424 [label=Println color=purple fillcolor=white style=filled]
+	node425 [label="(texto / X)" color=purple fillcolor=white style=filled]
+	node424 -> node425
+	node1 -> node424
+	node426 [label=Println color=purple fillcolor=white style=filled]
+	node427 [label="STRING / STRING:" color=purple fillcolor=white style=filled]
+	node426 -> node427
+	node1 -> node426
+	node428 [label=Println color=purple fillcolor=white style=filled]
+	node429 [label="(texto / otro)" color=purple fillcolor=white style=filled]
+	node428 -> node429
+	node1 -> node428
+	node430 [label=Println color=purple fillcolor=white style=filled]
+	node431 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node430 -> node431
+	node1 -> node430
+	node432 [label=Println color=purple fillcolor=white style=filled]
+	node433 [label="------------------------------- POTENCIA ---------------------------------" color=purple fillcolor=white style=filled]
+	node432 -> node433
+	node1 -> node432
+	node434 [label=Println color=purple fillcolor=white style=filled]
+	node435 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node434 -> node435
+	node1 -> node434
+	node436 [label=Println color=purple fillcolor=white style=filled]
+	node437 [label="INT ** INT:" color=purple fillcolor=white style=filled]
+	node436 -> node437
+	node1 -> node436
+	node438 [label=Println color=purple fillcolor=white style=filled]
+	node439 [label=8 color=purple fillcolor=white style=filled]
+	node438 -> node439
+	node1 -> node438
+	node440 [label=Println color=purple fillcolor=white style=filled]
+	node441 [label="INT ** DECIMAL:" color=purple fillcolor=white style=filled]
+	node440 -> node441
+	node1 -> node440
+	node442 [label=Println color=purple fillcolor=white style=filled]
+	node443 [label=2.0 color=purple fillcolor=white style=filled]
+	node442 -> node443
+	node1 -> node442
+	node444 [label=Println color=purple fillcolor=white style=filled]
+	node445 [label="INT ** BOOL:" color=purple fillcolor=white style=filled]
+	node444 -> node445
+	node1 -> node444
+	node446 [label=Println color=purple fillcolor=white style=filled]
+	node447 [label="(3 ** True)" color=purple fillcolor=white style=filled]
+	node446 -> node447
+	node1 -> node446
+	node448 [label=Println color=purple fillcolor=white style=filled]
+	node449 [label="INT ** CHAR:" color=purple fillcolor=white style=filled]
+	node448 -> node449
+	node1 -> node448
+	node450 [label=Println color=purple fillcolor=white style=filled]
+	node451 [label="(2 ** A)" color=purple fillcolor=white style=filled]
+	node450 -> node451
+	node1 -> node450
+	node452 [label=Println color=purple fillcolor=white style=filled]
+	node453 [label="INT ** STRING:" color=purple fillcolor=white style=filled]
+	node452 -> node453
+	node1 -> node452
+	node454 [label=Println color=purple fillcolor=white style=filled]
+	node455 [label="(2 ** texto)" color=purple fillcolor=white style=filled]
+	node454 -> node455
+	node1 -> node454
+	node456 [label=Println color=purple fillcolor=white style=filled]
+	node457 [label="DECIMAL ** INT:" color=purple fillcolor=white style=filled]
+	node456 -> node457
+	node1 -> node456
+	node458 [label=Println color=purple fillcolor=white style=filled]
+	node459 [label=6.25 color=purple fillcolor=white style=filled]
+	node458 -> node459
+	node1 -> node458
+	node460 [label=Println color=purple fillcolor=white style=filled]
+	node461 [label="DECIMAL ** DECIMAL:" color=purple fillcolor=white style=filled]
+	node460 -> node461
+	node1 -> node460
+	node462 [label=Println color=purple fillcolor=white style=filled]
+	node463 [label=3.0 color=purple fillcolor=white style=filled]
+	node462 -> node463
+	node1 -> node462
+	node464 [label=Println color=purple fillcolor=white style=filled]
+	node465 [label="DECIMAL ** BOOL:" color=purple fillcolor=white style=filled]
+	node464 -> node465
+	node1 -> node464
+	node466 [label=Println color=purple fillcolor=white style=filled]
+	node467 [label="(2.1 ** False)" color=purple fillcolor=white style=filled]
+	node466 -> node467
+	node1 -> node466
+	node468 [label=Println color=purple fillcolor=white style=filled]
+	node469 [label="DECIMAL ** CHAR:" color=purple fillcolor=white style=filled]
+	node468 -> node469
+	node1 -> node468
+	node470 [label=Println color=purple fillcolor=white style=filled]
+	node471 [label="(2.0 ** C)" color=purple fillcolor=white style=filled]
+	node470 -> node471
+	node1 -> node470
+	node472 [label=Println color=purple fillcolor=white style=filled]
+	node473 [label="DECIMAL ** STRING:" color=purple fillcolor=white style=filled]
+	node472 -> node473
+	node1 -> node472
+	node474 [label=Println color=purple fillcolor=white style=filled]
+	node475 [label="(2.0 ** abc)" color=purple fillcolor=white style=filled]
+	node474 -> node475
+	node1 -> node474
+	node476 [label=Println color=purple fillcolor=white style=filled]
+	node477 [label="BOOL ** INT:" color=purple fillcolor=white style=filled]
+	node476 -> node477
+	node1 -> node476
+	node478 [label=Println color=purple fillcolor=white style=filled]
+	node479 [label="(True ** 3)" color=purple fillcolor=white style=filled]
+	node478 -> node479
+	node1 -> node478
+	node480 [label=Println color=purple fillcolor=white style=filled]
+	node481 [label="BOOL ** DECIMAL:" color=purple fillcolor=white style=filled]
+	node480 -> node481
+	node1 -> node480
+	node482 [label=Println color=purple fillcolor=white style=filled]
+	node483 [label="(False ** 2.5)" color=purple fillcolor=white style=filled]
+	node482 -> node483
+	node1 -> node482
+	node484 [label=Println color=purple fillcolor=white style=filled]
+	node485 [label="BOOL ** BOOL:" color=purple fillcolor=white style=filled]
+	node484 -> node485
+	node1 -> node484
+	node486 [label=Println color=purple fillcolor=white style=filled]
+	node487 [label="(True ** False)" color=purple fillcolor=white style=filled]
+	node486 -> node487
+	node1 -> node486
+	node488 [label=Println color=purple fillcolor=white style=filled]
+	node489 [label="BOOL ** CHAR:" color=purple fillcolor=white style=filled]
+	node488 -> node489
+	node1 -> node488
+	node490 [label=Println color=purple fillcolor=white style=filled]
+	node491 [label="(False ** Z)" color=purple fillcolor=white style=filled]
+	node490 -> node491
+	node1 -> node490
+	node492 [label=Println color=purple fillcolor=white style=filled]
+	node493 [label="BOOL ** STRING:" color=purple fillcolor=white style=filled]
+	node492 -> node493
+	node1 -> node492
+	node494 [label=Println color=purple fillcolor=white style=filled]
+	node495 [label="(True ** nada)" color=purple fillcolor=white style=filled]
+	node494 -> node495
+	node1 -> node494
+	node496 [label=Println color=purple fillcolor=white style=filled]
+	node497 [label="CHAR ** INT:" color=purple fillcolor=white style=filled]
+	node496 -> node497
+	node1 -> node496
+	node498 [label=Println color=purple fillcolor=white style=filled]
+	node499 [label="(C ** 2)" color=purple fillcolor=white style=filled]
+	node498 -> node499
+	node1 -> node498
+	node500 [label=Println color=purple fillcolor=white style=filled]
+	node501 [label="CHAR ** DECIMAL:" color=purple fillcolor=white style=filled]
+	node500 -> node501
+	node1 -> node500
+	node502 [label=Println color=purple fillcolor=white style=filled]
+	node503 [label="(D ** 1.5)" color=purple fillcolor=white style=filled]
+	node502 -> node503
+	node1 -> node502
+	node504 [label=Println color=purple fillcolor=white style=filled]
+	node505 [label="CHAR ** BOOL:" color=purple fillcolor=white style=filled]
+	node504 -> node505
+	node1 -> node504
+	node506 [label=Println color=purple fillcolor=white style=filled]
+	node507 [label="(E ** True)" color=purple fillcolor=white style=filled]
+	node506 -> node507
+	node1 -> node506
+	node508 [label=Println color=purple fillcolor=white style=filled]
+	node509 [label="CHAR ** CHAR:" color=purple fillcolor=white style=filled]
+	node508 -> node509
+	node1 -> node508
+	node510 [label=Println color=purple fillcolor=white style=filled]
+	node511 [label="(F ** G)" color=purple fillcolor=white style=filled]
+	node510 -> node511
+	node1 -> node510
+	node512 [label=Println color=purple fillcolor=white style=filled]
+	node513 [label="CHAR ** STRING:" color=purple fillcolor=white style=filled]
+	node512 -> node513
+	node1 -> node512
+	node514 [label=Println color=purple fillcolor=white style=filled]
+	node515 [label="(H ** texto)" color=purple fillcolor=white style=filled]
+	node514 -> node515
+	node1 -> node514
+	node516 [label=Println color=purple fillcolor=white style=filled]
+	node517 [label="STRING ** INT:" color=purple fillcolor=white style=filled]
+	node516 -> node517
+	node1 -> node516
+	node518 [label=Println color=purple fillcolor=white style=filled]
+	node519 [label="(abc ** 3)" color=purple fillcolor=white style=filled]
+	node518 -> node519
+	node1 -> node518
+	node520 [label=Println color=purple fillcolor=white style=filled]
+	node521 [label="STRING ** DECIMAL:" color=purple fillcolor=white style=filled]
+	node520 -> node521
+	node1 -> node520
+	node522 [label=Println color=purple fillcolor=white style=filled]
+	node523 [label="(abc ** 2.5)" color=purple fillcolor=white style=filled]
+	node522 -> node523
+	node1 -> node522
+	node524 [label=Println color=purple fillcolor=white style=filled]
+	node525 [label="STRING ** BOOL:" color=purple fillcolor=white style=filled]
+	node524 -> node525
+	node1 -> node524
+	node526 [label=Println color=purple fillcolor=white style=filled]
+	node527 [label="(abc ** False)" color=purple fillcolor=white style=filled]
+	node526 -> node527
+	node1 -> node526
+	node528 [label=Println color=purple fillcolor=white style=filled]
+	node529 [label="STRING ** CHAR:" color=purple fillcolor=white style=filled]
+	node528 -> node529
+	node1 -> node528
+	node530 [label=Println color=purple fillcolor=white style=filled]
+	node531 [label="(abc ** X)" color=purple fillcolor=white style=filled]
+	node530 -> node531
+	node1 -> node530
+	node532 [label=Println color=purple fillcolor=white style=filled]
+	node533 [label="STRING ** STRING:" color=purple fillcolor=white style=filled]
+	node532 -> node533
+	node1 -> node532
+	node534 [label=Println color=purple fillcolor=white style=filled]
+	node535 [label="(abc ** def)" color=purple fillcolor=white style=filled]
+	node534 -> node535
+	node1 -> node534
+	node536 [label=Println color=purple fillcolor=white style=filled]
+	node537 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node536 -> node537
+	node1 -> node536
+	node538 [label=Println color=purple fillcolor=white style=filled]
+	node539 [label="------------------------------- MODULO ------------------------------------" color=purple fillcolor=white style=filled]
+	node538 -> node539
+	node1 -> node538
+	node540 [label=Println color=purple fillcolor=white style=filled]
+	node541 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node540 -> node541
+	node1 -> node540
+	node542 [label=Println color=purple fillcolor=white style=filled]
+	node543 [label="INT % INT:" color=purple fillcolor=white style=filled]
+	node542 -> node543
+	node1 -> node542
+	node544 [label=Println color=purple fillcolor=white style=filled]
+	node545 [label=1.0 color=purple fillcolor=white style=filled]
+	node544 -> node545
+	node1 -> node544
+	node546 [label=Println color=purple fillcolor=white style=filled]
+	node547 [label="INT % DECIMAL:" color=purple fillcolor=white style=filled]
+	node546 -> node547
+	node1 -> node546
+	node548 [label=Println color=purple fillcolor=white style=filled]
+	node549 [label=1.0 color=purple fillcolor=white style=filled]
+	node548 -> node549
+	node1 -> node548
+	node550 [label=Println color=purple fillcolor=white style=filled]
+	node551 [label="INT % BOOL:" color=purple fillcolor=white style=filled]
+	node550 -> node551
+	node1 -> node550
+	node552 [label=Println color=purple fillcolor=white style=filled]
+	node553 [label="(10 % True)" color=purple fillcolor=white style=filled]
+	node552 -> node553
+	node1 -> node552
+	node554 [label=Println color=purple fillcolor=white style=filled]
+	node555 [label="INT % CHAR:" color=purple fillcolor=white style=filled]
+	node554 -> node555
+	node1 -> node554
+	node556 [label=Println color=purple fillcolor=white style=filled]
+	node557 [label="(10 % A)" color=purple fillcolor=white style=filled]
+	node556 -> node557
+	node1 -> node556
+	node558 [label=Println color=purple fillcolor=white style=filled]
+	node559 [label="INT % STRING:" color=purple fillcolor=white style=filled]
+	node558 -> node559
+	node1 -> node558
+	node560 [label=Println color=purple fillcolor=white style=filled]
+	node561 [label="(10 % texto)" color=purple fillcolor=white style=filled]
+	node560 -> node561
+	node1 -> node560
+	node562 [label=Println color=purple fillcolor=white style=filled]
+	node563 [label="DECIMAL % INT:" color=purple fillcolor=white style=filled]
+	node562 -> node563
+	node1 -> node562
+	node564 [label=Println color=purple fillcolor=white style=filled]
+	node565 [label=1.5 color=purple fillcolor=white style=filled]
+	node564 -> node565
+	node1 -> node564
+	node566 [label=Println color=purple fillcolor=white style=filled]
+	node567 [label="DECIMAL % DECIMAL:" color=purple fillcolor=white style=filled]
+	node566 -> node567
+	node1 -> node566
+	node568 [label=Println color=purple fillcolor=white style=filled]
+	node569 [label=2.200000000000001 color=purple fillcolor=white style=filled]
+	node568 -> node569
+	node1 -> node568
+	node570 [label=Println color=purple fillcolor=white style=filled]
+	node571 [label="DECIMAL % BOOL:" color=purple fillcolor=white style=filled]
+	node570 -> node571
+	node1 -> node570
+	node572 [label=Println color=purple fillcolor=white style=filled]
+	node573 [label="(5.5 % False)" color=purple fillcolor=white style=filled]
+	node572 -> node573
+	node1 -> node572
+	node574 [label=Println color=purple fillcolor=white style=filled]
+	node575 [label="DECIMAL % CHAR:" color=purple fillcolor=white style=filled]
+	node574 -> node575
+	node1 -> node574
+	node576 [label=Println color=purple fillcolor=white style=filled]
+	node577 [label="(4.5 % C)" color=purple fillcolor=white style=filled]
+	node576 -> node577
+	node1 -> node576
+	node578 [label=Println color=purple fillcolor=white style=filled]
+	node579 [label="DECIMAL % STRING:" color=purple fillcolor=white style=filled]
+	node578 -> node579
+	node1 -> node578
+	node580 [label=Println color=purple fillcolor=white style=filled]
+	node581 [label="(6.6 % cadena)" color=purple fillcolor=white style=filled]
+	node580 -> node581
+	node1 -> node580
+	node582 [label=Println color=purple fillcolor=white style=filled]
+	node583 [label="BOOL % INT:" color=purple fillcolor=white style=filled]
+	node582 -> node583
+	node1 -> node582
+	node584 [label=Println color=purple fillcolor=white style=filled]
+	node585 [label="(True % 1)" color=purple fillcolor=white style=filled]
+	node584 -> node585
+	node1 -> node584
+	node586 [label=Println color=purple fillcolor=white style=filled]
+	node587 [label="BOOL % DECIMAL:" color=purple fillcolor=white style=filled]
+	node586 -> node587
+	node1 -> node586
+	node588 [label=Println color=purple fillcolor=white style=filled]
+	node589 [label="(False % 2.0)" color=purple fillcolor=white style=filled]
+	node588 -> node589
+	node1 -> node588
+	node590 [label=Println color=purple fillcolor=white style=filled]
+	node591 [label="BOOL % BOOL:" color=purple fillcolor=white style=filled]
+	node590 -> node591
+	node1 -> node590
+	node592 [label=Println color=purple fillcolor=white style=filled]
+	node593 [label="(True % False)" color=purple fillcolor=white style=filled]
+	node592 -> node593
+	node1 -> node592
+	node594 [label=Println color=purple fillcolor=white style=filled]
+	node595 [label="BOOL % CHAR:" color=purple fillcolor=white style=filled]
+	node594 -> node595
+	node1 -> node594
+	node596 [label=Println color=purple fillcolor=white style=filled]
+	node597 [label="(True % X)" color=purple fillcolor=white style=filled]
+	node596 -> node597
+	node1 -> node596
+	node598 [label=Println color=purple fillcolor=white style=filled]
+	node599 [label="BOOL % STRING:" color=purple fillcolor=white style=filled]
+	node598 -> node599
+	node1 -> node598
+	node600 [label=Println color=purple fillcolor=white style=filled]
+	node601 [label="(False % hola)" color=purple fillcolor=white style=filled]
+	node600 -> node601
+	node1 -> node600
+	node602 [label=Println color=purple fillcolor=white style=filled]
+	node603 [label="CHAR % INT:" color=purple fillcolor=white style=filled]
+	node602 -> node603
+	node1 -> node602
+	node604 [label=Println color=purple fillcolor=white style=filled]
+	node605 [label="(C % 2)" color=purple fillcolor=white style=filled]
+	node604 -> node605
+	node1 -> node604
+	node606 [label=Println color=purple fillcolor=white style=filled]
+	node607 [label="CHAR % DECIMAL:" color=purple fillcolor=white style=filled]
+	node606 -> node607
+	node1 -> node606
+	node608 [label=Println color=purple fillcolor=white style=filled]
+	node609 [label="(D % 1.5)" color=purple fillcolor=white style=filled]
+	node608 -> node609
+	node1 -> node608
+	node610 [label=Println color=purple fillcolor=white style=filled]
+	node611 [label="CHAR % BOOL:" color=purple fillcolor=white style=filled]
+	node610 -> node611
+	node1 -> node610
+	node612 [label=Println color=purple fillcolor=white style=filled]
+	node613 [label="(E % True)" color=purple fillcolor=white style=filled]
+	node612 -> node613
+	node1 -> node612
+	node614 [label=Println color=purple fillcolor=white style=filled]
+	node615 [label="CHAR % CHAR:" color=purple fillcolor=white style=filled]
+	node614 -> node615
+	node1 -> node614
+	node616 [label=Println color=purple fillcolor=white style=filled]
+	node617 [label="(F % G)" color=purple fillcolor=white style=filled]
+	node616 -> node617
+	node1 -> node616
+	node618 [label=Println color=purple fillcolor=white style=filled]
+	node619 [label="CHAR % STRING:" color=purple fillcolor=white style=filled]
+	node618 -> node619
+	node1 -> node618
+	node620 [label=Println color=purple fillcolor=white style=filled]
+	node621 [label="(H % texto)" color=purple fillcolor=white style=filled]
+	node620 -> node621
+	node1 -> node620
+	node622 [label=Println color=purple fillcolor=white style=filled]
+	node623 [label="STRING % INT:" color=purple fillcolor=white style=filled]
+	node622 -> node623
+	node1 -> node622
+	node624 [label=Println color=purple fillcolor=white style=filled]
+	node625 [label="(abc % 3)" color=purple fillcolor=white style=filled]
+	node624 -> node625
+	node1 -> node624
+	node626 [label=Println color=purple fillcolor=white style=filled]
+	node627 [label="STRING % DECIMAL:" color=purple fillcolor=white style=filled]
+	node626 -> node627
+	node1 -> node626
+	node628 [label=Println color=purple fillcolor=white style=filled]
+	node629 [label="(abc % 2.5)" color=purple fillcolor=white style=filled]
+	node628 -> node629
+	node1 -> node628
+	node630 [label=Println color=purple fillcolor=white style=filled]
+	node631 [label="STRING % BOOL:" color=purple fillcolor=white style=filled]
+	node630 -> node631
+	node1 -> node630
+	node632 [label=Println color=purple fillcolor=white style=filled]
+	node633 [label="(abc % False)" color=purple fillcolor=white style=filled]
+	node632 -> node633
+	node1 -> node632
+	node634 [label=Println color=purple fillcolor=white style=filled]
+	node635 [label="STRING % CHAR:" color=purple fillcolor=white style=filled]
+	node634 -> node635
+	node1 -> node634
+	node636 [label=Println color=purple fillcolor=white style=filled]
+	node637 [label="(abc % X)" color=purple fillcolor=white style=filled]
+	node636 -> node637
+	node1 -> node636
+	node638 [label=Println color=purple fillcolor=white style=filled]
+	node639 [label="STRING % STRING:" color=purple fillcolor=white style=filled]
+	node638 -> node639
+	node1 -> node638
+	node640 [label=Println color=purple fillcolor=white style=filled]
+	node641 [label="(abc % def)" color=purple fillcolor=white style=filled]
+	node640 -> node641
+	node1 -> node640
 }
