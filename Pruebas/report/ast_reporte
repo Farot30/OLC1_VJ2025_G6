@@ -1,0 +1,11 @@
+digraph ReporteAST {
+	node1 [label=REPORTE color=purple fillcolor=white style=filled]
+	node2 [label=Println color=purple fillcolor=white style=filled]
+	node3 [label="Println basico: 1" color=purple fillcolor=white style=filled]
+	node2 -> node3
+	node1 -> node2
+	node4 [label=Println color=purple fillcolor=white style=filled]
+	node5 [label="Esto es un error" color=purple fillcolor=white style=filled]
+	node4 -> node5
+	node1 -> node4
+}

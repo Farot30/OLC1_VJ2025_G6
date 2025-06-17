@@ -1,0 +1,176 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> inicial
+Rule 1     inicial -> asignaciones
+Rule 2     asignaciones -> asignaciones asignacion
+Rule 3     asignaciones -> asignacion
+Rule 4     asignacion -> ID IGUAL valor PUNTOYCOMA
+Rule 5     asignacion -> ID INCREMENTO PUNTOYCOMA
+Rule 6     asignacion -> ID DECREMENTO PUNTOYCOMA
+Rule 7     valor -> ENTERO
+Rule 8     valor -> DECIMAL
+Rule 9     valor -> BOOLEANO
+
+Terminals, with rules where they appear
+
+BOOLEANO             : 9
+DECIMAL              : 8
+DECREMENTO           : 6
+ENTERO               : 7
+ID                   : 4 5 6
+IGUAL                : 4
+INCREMENTO           : 5
+PUNTOYCOMA           : 4 5 6
+error                : 
+
+Nonterminals, with rules where they appear
+
+asignacion           : 2 3
+asignaciones         : 1 2
+inicial              : 0
+valor                : 4
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . inicial
+    (1) inicial -> . asignaciones
+    (2) asignaciones -> . asignaciones asignacion
+    (3) asignaciones -> . asignacion
+    (4) asignacion -> . ID IGUAL valor PUNTOYCOMA
+    (5) asignacion -> . ID INCREMENTO PUNTOYCOMA
+    (6) asignacion -> . ID DECREMENTO PUNTOYCOMA
+
+    ID              shift and go to state 4
+
+    inicial                        shift and go to state 1
+    asignaciones                   shift and go to state 2
+    asignacion                     shift and go to state 3
+
+state 1
+
+    (0) S' -> inicial .
+
+
+
+state 2
+
+    (1) inicial -> asignaciones .
+    (2) asignaciones -> asignaciones . asignacion
+    (4) asignacion -> . ID IGUAL valor PUNTOYCOMA
+    (5) asignacion -> . ID INCREMENTO PUNTOYCOMA
+    (6) asignacion -> . ID DECREMENTO PUNTOYCOMA
+
+    $end            reduce using rule 1 (inicial -> asignaciones .)
+    ID              shift and go to state 4
+
+    asignacion                     shift and go to state 5
+
+state 3
+
+    (3) asignaciones -> asignacion .
+
+    ID              reduce using rule 3 (asignaciones -> asignacion .)
+    $end            reduce using rule 3 (asignaciones -> asignacion .)
+
+
+state 4
+
+    (4) asignacion -> ID . IGUAL valor PUNTOYCOMA
+    (5) asignacion -> ID . INCREMENTO PUNTOYCOMA
+    (6) asignacion -> ID . DECREMENTO PUNTOYCOMA
+
+    IGUAL           shift and go to state 6
+    INCREMENTO      shift and go to state 7
+    DECREMENTO      shift and go to state 8
+
+
+state 5
+
+    (2) asignaciones -> asignaciones asignacion .
+
+    ID              reduce using rule 2 (asignaciones -> asignaciones asignacion .)
+    $end            reduce using rule 2 (asignaciones -> asignaciones asignacion .)
+
+
+state 6
+
+    (4) asignacion -> ID IGUAL . valor PUNTOYCOMA
+    (7) valor -> . ENTERO
+    (8) valor -> . DECIMAL
+    (9) valor -> . BOOLEANO
+
+    ENTERO          shift and go to state 10
+    DECIMAL         shift and go to state 11
+    BOOLEANO        shift and go to state 12
+
+    valor                          shift and go to state 9
+
+state 7
+
+    (5) asignacion -> ID INCREMENTO . PUNTOYCOMA
+
+    PUNTOYCOMA      shift and go to state 13
+
+
+state 8
+
+    (6) asignacion -> ID DECREMENTO . PUNTOYCOMA
+
+    PUNTOYCOMA      shift and go to state 14
+
+
+state 9
+
+    (4) asignacion -> ID IGUAL valor . PUNTOYCOMA
+
+    PUNTOYCOMA      shift and go to state 15
+
+
+state 10
+
+    (7) valor -> ENTERO .
+
+    PUNTOYCOMA      reduce using rule 7 (valor -> ENTERO .)
+
+
+state 11
+
+    (8) valor -> DECIMAL .
+
+    PUNTOYCOMA      reduce using rule 8 (valor -> DECIMAL .)
+
+
+state 12
+
+    (9) valor -> BOOLEANO .
+
+    PUNTOYCOMA      reduce using rule 9 (valor -> BOOLEANO .)
+
+
+state 13
+
+    (5) asignacion -> ID INCREMENTO PUNTOYCOMA .
+
+    ID              reduce using rule 5 (asignacion -> ID INCREMENTO PUNTOYCOMA .)
+    $end            reduce using rule 5 (asignacion -> ID INCREMENTO PUNTOYCOMA .)
+
+
+state 14
+
+    (6) asignacion -> ID DECREMENTO PUNTOYCOMA .
+
+    ID              reduce using rule 6 (asignacion -> ID DECREMENTO PUNTOYCOMA .)
+    $end            reduce using rule 6 (asignacion -> ID DECREMENTO PUNTOYCOMA .)
+
+
+state 15
+
+    (4) asignacion -> ID IGUAL valor PUNTOYCOMA .
+
+    ID              reduce using rule 4 (asignacion -> ID IGUAL valor PUNTOYCOMA .)
+    $end            reduce using rule 4 (asignacion -> ID IGUAL valor PUNTOYCOMA .)
+
