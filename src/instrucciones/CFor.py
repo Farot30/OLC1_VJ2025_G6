@@ -26,50 +26,62 @@ class For(Instruccion):
         if isinstance(res_init, Errores):
             return res_init
 
-        tabla.nuevoScope("For")  # Scope solo para el cuerpo del for
-        while True:
-            cond = self.condicion.interpretar(arbol, tabla)
-            if isinstance(cond, Errores):
-                tabla.borrarScope()
-                return cond
-            if not isinstance(cond, bool):
-                tabla.borrarScope()
-                return Errores(
-                    "SEMANTICO",
-                    "La condición del ciclo for debe ser booleana.",
-                    self.linea,
-                    self.col,
-                )
-            if not cond:
-                break
+        # Crear un scope único para este FOR
+        scope_name = tabla.nuevoScope("For")
 
-            for instr in self.instrucciones:
-                if "entorno" in instr.interpretar.__code__.co_varnames:
-                    if "en_ciclo" in instr.interpretar.__code__.co_varnames:
-                        res = instr.interpretar(
-                            arbol, tabla, en_ciclo=True, entorno="For"
-                        )
-                    else:
-                        res = instr.interpretar(arbol, tabla, entorno="For")
-                else:
-                    if "en_ciclo" in instr.interpretar.__code__.co_varnames:
-                        res = instr.interpretar(arbol, tabla, en_ciclo=True)
-                    else:
-                        res = instr.interpretar(arbol, tabla)
-                if isinstance(res, Errores):
-                    tabla.borrarScope()
-                    return res
-                if res == "continue":
+        try:
+            while True:
+                cond = self.condicion.interpretar(arbol, tabla)
+                if isinstance(cond, Errores):
+                    return cond
+                if not isinstance(cond, bool):
+                    return Errores(
+                        "SEMANTICO",
+                        "La condición del ciclo for debe ser booleana.",
+                        self.linea,
+                        self.col,
+                    )
+                if not cond:
                     break
-                if res == "break":
-                    tabla.borrarScope()
-                    return None
 
-            res_upd = self.actualizacion.interpretar(arbol, tabla)
-            if isinstance(res_upd, Errores):
-                tabla.borrarScope()
-                return res_upd
-        tabla.borrarScope()
+                # Crear un nuevo scope INTERNO para cada iteración
+                # Esto es clave para los FOR anidados
+                tabla.nuevoScope(f"{scope_name}_iter")
+
+                try:
+                    for instr in self.instrucciones:
+                        if "entorno" in instr.interpretar.__code__.co_varnames:
+                            if "en_ciclo" in instr.interpretar.__code__.co_varnames:
+                                res = instr.interpretar(
+                                    arbol, tabla, en_ciclo=True, entorno=scope_name
+                                )
+                            else:
+                                res = instr.interpretar(
+                                    arbol, tabla, entorno=scope_name
+                                )
+                        else:
+                            if "en_ciclo" in instr.interpretar.__code__.co_varnames:
+                                res = instr.interpretar(arbol, tabla, en_ciclo=True)
+                            else:
+                                res = instr.interpretar(arbol, tabla)
+                        if isinstance(res, Errores):
+                            return res
+                        if res == "continue":
+                            break
+                        if res == "break":
+                            return None
+
+                    res_upd = self.actualizacion.interpretar(arbol, tabla)
+                    if isinstance(res_upd, Errores):
+                        return res_upd
+                finally:
+                    # Eliminar el scope de iteración
+                    tabla.borrarScope()
+
+        finally:
+            # Eliminar el scope principal del FOR
+            tabla.borrarScope()
+
         return None
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):

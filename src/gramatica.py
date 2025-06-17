@@ -225,7 +225,7 @@ def t_newline(t):
 def t_error(t):
     error = Errores(
         "Léxico",
-        f"El carácter “{t.value[0]}” no pertenece al lenguaje",
+        f"El carácter '{t.value[0]}' no pertenece al lenguaje",
         t.lineno,
         t.lexpos,
     )
@@ -274,17 +274,47 @@ def p_inicio(t):
 def p_instrucciones(t):
     """instrucciones : instrucciones instruccion
     | instruccion"""
-    if len(t) == 3:
-        # Solo agrega si la instrucción es válida
-        if t[2] is not None:
-            t[1].append(t[2])
-        t[0] = t[1]
-    else:
-        # Si la única instrucción es inválida, devuelve lista vacía
+    if len(t) == 2:
         t[0] = [t[1]] if t[1] is not None else []
+    else:
+        t[0] = t[1] + ([t[2]] if t[2] is not None else [])
 
 
-# --- Declaraciones y asignaciones ---
+def p_instrucciones_vacia(t):
+    "instrucciones : empty"
+    t[0] = []
+
+
+def p_instruccion_vacia(t):
+    "instruccion : PUNTOCOMA"
+    t[0] = None
+
+
+# --- Instrucción principal ---
+def p_instruccion(t):
+    """instruccion : declaracion PUNTOCOMA
+    | asignacion PUNTOCOMA
+    | incremento PUNTOCOMA
+    | decremento PUNTOCOMA
+    | sent_if
+    | sent_while
+    | sent_do_while
+    | sent_for
+    | sent_switch
+    | sent_break PUNTOCOMA
+    | sent_continue PUNTOCOMA
+    | sent_println PUNTOCOMA
+    | bloque"""
+    if len(t) == 2:
+        if t[1] == ";":
+            t[0] = None  # Instrucción vacía
+        else:
+            t[0] = t[1]
+    else:
+        t[0] = t[1]
+
+
+# --- Declaraciones ---
 def p_declaracion_cvalor(t):
     "declaracion : tipos ID IGUAL expresion"
     t[0] = Declaracion(
@@ -299,19 +329,199 @@ def p_declaracion_sinval(t):
     )
 
 
-def p_instruccion_asignacion(t):
-    "instruccion : ID IGUAL expresion PUNTOCOMA"
+# --- Asignación ---
+def p_asignacion(t):
+    "asignacion : ID IGUAL expresion"
     t[0] = Asignacion(t[1], t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
-def p_instruccion_incremento(t):
-    "instruccion : ID INCREMENTO PUNTOCOMA"
+# --- Incremento y decremento ---
+def p_incremento(t):
+    "incremento : ID INCREMENTO"
     t[0] = Incremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
-def p_instruccion_decremento(t):
-    "instruccion : ID DECREMENTO PUNTOCOMA"
+def p_decremento(t):
+    "decremento : ID DECREMENTO"
     t[0] = Decremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+# --- Bloque ---
+def p_bloque(t):
+    "bloque : LLAVE1 instrucciones LLAVE2"
+    t[0] = t[2]
+
+
+# --- IF ---
+
+
+# 2. Mantén la función p_sent_if, pero ajusta las reglas para manejar IF en mayúsculas
+def p_sent_if(t):
+    """sent_if : if_simple
+    | if_else
+    | if_elseif"""
+    t[0] = t[1]
+
+
+# 3. Modifica la regla if_simple para usar IF en mayúsculas
+def p_if_simple(t):
+    """if_simple : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""
+    t[0] = sentIF(t[3], t[6], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+# 4. Modifica la regla if_else para usar IF y ELSE en mayúsculas
+def p_if_else(t):
+    """if_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""
+    t[0] = sentIF(
+        t[3],
+        t[6],
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+        sentIF(None, t[10], t.lineno(8), find_column(t.lexer.lexdata, t.slice[8])),
+    )
+
+
+# 5. Añadir una nueva regla específica para ELSE IF (como se usa en tu código)
+def p_if_elseif(t):
+    """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""
+    # Esta implementación maneja explícitamente la secuencia "ELSE IF"
+    t[0] = sentIF(
+        t[3],  # Condición del IF
+        t[6],  # Cuerpo del IF
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+        sentIF(
+            t[11],  # Condición del ELSE IF
+            t[14],  # Cuerpo del ELSE IF
+            t.lineno(9),
+            find_column(t.lexer.lexdata, t.slice[9]),
+        ),
+    )
+
+
+# 6. Añadir una regla para IF-ELSE IF-ELSE completo
+def p_if_elseif_else(t):
+    """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""
+    # Maneja: IF (...) {...} ELSE IF (...) {...} ELSE {...}
+    elseif_node = sentIF(
+        t[11],  # Condición del ELSE IF
+        t[14],  # Cuerpo del ELSE IF
+        t.lineno(9),
+        find_column(t.lexer.lexdata, t.slice[9]),
+    )
+
+    else_node = sentIF(
+        None,  # No hay condición en ELSE
+        t[18],  # Cuerpo del ELSE
+        t.lineno(16),
+        find_column(t.lexer.lexdata, t.slice[16]),
+    )
+
+    # Conectar el ELSE al ELSE IF
+    elseif_node.else_st = else_node
+
+    # Crear el nodo principal IF con su rama ELSE IF+ELSE
+    t[0] = sentIF(
+        t[3],  # Condición del IF
+        t[6],  # Cuerpo del IF
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+        elseif_node,
+    )
+
+
+# --- WHILE ---
+def p_sent_while(t):
+    "sent_while : WHILE PAR1 expresion PAR2 bloque"
+    t[0] = While(t[3], t[5], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+# --- DO-WHILE ---
+def p_sent_do_while(t):
+    "sent_do_while : DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA"
+    t[0] = DoWhile(t[2], t[5], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+# --- FOR ---
+def p_sent_for(t):
+    "sent_for : FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque"
+    t[0] = For(
+        t[3],
+        t[5],
+        t[7],
+        t[9],
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
+
+
+def p_for_init(t):
+    """for_init : declaracion
+    | asignacion
+    | incremento
+    | decremento
+    | empty"""
+    t[0] = t[1]
+
+
+def p_for_update(t):
+    """for_update : asignacion
+    | incremento
+    | decremento
+    | empty"""
+    t[0] = t[1]
+
+
+# --- SWITCH ---
+def p_sent_switch(t):
+    "sent_switch : SWITCH PAR1 expresion PAR2 LLAVE1 lista_casos LLAVE2"
+    casos = []
+    defecto = []
+    for c in t[6]:
+        if isinstance(c, Case):
+            casos.append(c)
+        elif isinstance(c, tuple) and c[0] == "default":
+            defecto = c[1]
+    t[0] = Switch(
+        t[3], casos, defecto, t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+    )
+
+
+def p_lista_casos(t):
+    """lista_casos : lista_casos caso
+    | caso"""
+    if len(t) == 2:
+        t[0] = [t[1]]
+    else:
+        t[0] = t[1] + [t[2]]
+
+
+def p_caso_case(t):
+    "caso : CASE expresion DOSPT instrucciones"
+    t[0] = Case(t[2], t[4])
+
+
+def p_caso_default(t):
+    "caso : DEFAULT DOSPT instrucciones"
+    t[0] = ("default", t[3])
+
+
+# --- BREAK ---
+def p_sent_break(t):
+    "sent_break : BREAK"
+    t[0] = Break(t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+# --- CONTINUE ---
+def p_sent_continue(t):
+    "sent_continue : CONTINUE"
+    t[0] = Continue(t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+# --- PRINTLN ---
+def p_sent_println(t):
+    "sent_println : PRINTLN PAR1 expresion PAR2"
+    t[0] = Println(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
 # --- Expresiones ---
@@ -344,20 +554,6 @@ def p_expresion_binaria(t):
 def p_expresion_unaria(t):
     "expresion : MENOS expresion %prec UMENOS"
     t[0] = Unario("-", t[2], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-
-
-def p_expresion_par_error(t):
-    "expresion : PAR1 error PAR2"
-    error = Errores(
-        "Sintáctico",
-        "Error en la expresión entre paréntesis.",
-        t.lineno(1),
-        t.lexpos(1) if hasattr(t, "lexpos") else 0,
-    )
-    arbol = getattr(t.lexer, "arbol", None)
-    if arbol:
-        arbol.errores.append(error)
-    t[0] = None
 
 
 def p_expresion_par(t):
@@ -483,178 +679,6 @@ def p_expresion_relacional(t):
     )
 
 
-# --- Instrucciones de control ---
-def p_instruccion(t):
-    """instruccion : declaracion PUNTOCOMA
-    | sent_IF
-    | SBreak
-    | PRINTLN PAR1 expresion PAR2 PUNTOCOMA"""
-    if len(t) == 6:
-        t[0] = Println(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-    else:
-        t[0] = t[1]
-
-
-def p_SBreak(t):
-    """SBreak : BREAK PUNTOCOMA"""
-    t[0] = Break(t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-
-
-def p_SContinue(t):
-    """instruccion : CONTINUE PUNTOCOMA"""
-    t[0] = Continue(t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-
-
-# --- IF ---
-def p_sent_IF(t):
-    """sent_IF : if_simple
-    | if_else
-    | if_elseif"""
-    t[0] = t[1]
-
-
-def p_if_simple(t):
-    """if_simple : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""
-    t[0] = sentIF(t[3], t[6], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-
-
-def p_if_else(t):
-    """if_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""
-    t[0] = sentIF(
-        t[3],
-        t[6],
-        0,
-        0,
-        sentIF(None, t[10], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])),
-    )
-
-
-def p_if_elseif(t):
-    """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple"""
-    t[0] = sentIF(
-        t[3], t[6], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]), t[9]
-    )
-
-
-# --- FOR ---
-def p_for(t):
-    """instruccion : FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 LLAVE1 instrucciones LLAVE2"""
-    t[0] = For(
-        t[3], t[5], t[7], t[10], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
-    )
-
-
-def p_for_init(t):
-    """for_init : ID IGUAL expresion
-    | ID INCREMENTO
-    | ID DECREMENTO
-    | declaracion"""
-    if len(t) == 4:
-        t[0] = Asignacion(
-            t[1], t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
-        )
-    elif len(t) == 2 and isinstance(t[1], Declaracion):
-        t[0] = t[1]
-    elif t[2] == "++":
-        t[0] = Incremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-    elif t[2] == "--":
-        t[0] = Decremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-
-
-def p_for_update(t):
-    """for_update : ID IGUAL expresion
-    | ID INCREMENTO
-    | ID DECREMENTO"""
-    if len(t) == 4:
-        t[0] = Asignacion(
-            t[1], t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
-        )
-    elif t[2] == "++":
-        t[0] = Incremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-    elif t[2] == "--":
-        t[0] = Decremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-
-
-# --- WHILE ---
-def p_instruccion_while(t):
-    "instruccion : WHILE PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"
-    t[0] = While(t[3], t[6], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-
-
-# --- DO WHILE ---
-def p_instruccion_dowhile(t):
-    "instruccion : DO LLAVE1 instrucciones LLAVE2 WHILE PAR1 expresion PAR2 PUNTOCOMA"
-    t[0] = DoWhile(t[3], t[7], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
-
-
-# --- SWITCH ---
-def p_instruccion_switch(t):
-    "instruccion : SWITCH PAR1 expresion PAR2 LLAVE1 lista_casos LLAVE2"
-    casos = []
-    defecto = []
-    for c in t[6]:
-        if isinstance(c, Case):
-            casos.append(c)
-        elif isinstance(c, tuple) and c[0] == "default":
-            defecto = c[1]
-    t[0] = Switch(
-        t[3], casos, defecto, t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
-    )
-
-
-def p_lista_casos(t):
-    """lista_casos : lista_casos caso
-    | caso"""
-    t[0] = t[1] + [t[2]] if len(t) == 3 else [t[1]]
-
-
-def p_caso_case(t):
-    "caso : CASE expresion DOSPT instrucciones BREAK PUNTOCOMA"
-    t[0] = Case(
-        t[2], t[4] + [Break(t.lineno(5), find_column(t.lexer.lexdata, t.slice[5]))]
-    )
-
-
-def p_caso_default(t):
-    "caso : DEFAULT DOSPT instrucciones BREAK PUNTOCOMA"
-
-    t[0] = (
-        "default",
-        t[3] + [Break(t.lineno(4), find_column(t.lexer.lexdata, t.slice[4]))],
-    )
-
-
-# --- PRINTLN ---
-
-
-def p_instruccion_println_error(t):
-    "instruccion : PRINTLN PAR1 error PAR2 PUNTOCOMA"
-    error = Errores(
-        "Sintáctico",
-        "Error en la expresión de PRINTLN.",
-        t.lineno(1),
-        find_column(t.lexer.lexdata, t.slice[1]),
-    )
-    arbol = getattr(t.lexer, "arbol", None)
-    if arbol:
-        arbol.errores.append(error)
-    t[0] = None
-
-
-def p_instruccion_llamada_id(t):
-    "instruccion : ID PAR1 expresion PAR2 PUNTOCOMA"
-    error = Errores(
-        "Sintáctico",
-        f"Instrucción inválida: '{t[1]}' no es una función reconocida.",
-        t.lineno(1),
-        find_column(t.lexer.lexdata, t.slice[1]),
-    )
-    arbol = getattr(t.lexer, "arbol", None)
-    if arbol:
-        arbol.errores.append(error)
-    t[0] = None
-
-
 # --- TIPOS ---
 def p_tipos(t):
     """tipos : INT
@@ -674,6 +698,12 @@ def p_tipos(t):
         t[0] = Tipo(tipoDato.BOOL)
 
 
+# --- VACÍO ---
+def p_empty(t):
+    "empty :"
+    t[0] = None
+
+
 # --- ERRORES ---
 errores_sintacticos_globales = []
 
@@ -685,29 +715,43 @@ def p_error(t):
             arbol = getattr(t.lexer, "arbol", None)
         except Exception:
             arbol = None
+
+        # Mensaje de error para el token encontrado
         error = Errores(
             "Sintáctico",
             f"Se encontró {t.type} ('{t.value}') y se esperaba una expresión o instrucción válida.",
             t.lineno,
-            t.lexpos,
+            find_column(t.lexer.lexdata, t) if hasattr(t.lexer, "lexdata") else 1,
         )
+
         if arbol is not None:
             arbol.errores.append(error)
         else:
             errores_sintacticos_globales.append(error)
+
         print(error)
+
+        # Recuperación de errores más inteligente
+        # Intentamos sincronizar con el siguiente punto y coma, llave o final de bloque
+        next_token = t
+        while True:
+            next_token = parser.token()  # Obtener siguiente token
+            if not next_token or next_token.type in ["PUNTOCOMA", "LLAVE1", "LLAVE2"]:
+                break
+
+        # Indícale al parser que ya manejaste el error
         parser.errok()
-        tok = t
-        while tok and tok.type != "PUNTOCOMA":
-            tok = t.lexer.token()
-        # No consumas el punto y coma
+
+        # Si encontramos un punto y coma, regresamos ese token para continuar
+        if next_token and next_token.type == "PUNTOCOMA":
+            return next_token
     else:
-        # EOF: solo reporta el error una vez y termina
+        # EOF
         try:
-            lexer = parser.lexer  # type: ignore
-            arbol = getattr(lexer, "arbol", None)
-            lexdata = getattr(lexer, "lexdata", "")
-            lexpos = getattr(lexer, "lexpos", len(lexdata))
+            lexer_obj = parser.lexer
+            arbol = getattr(lexer_obj, "arbol", None)
+            lexdata = getattr(lexer_obj, "lexdata", "")
+            lexpos = getattr(lexer_obj, "lexpos", len(lexdata))
             lineno = lexdata.count("\n", 0, lexpos) + 1
             last_cr = lexdata.rfind("\n", 0, lexpos)
             if last_cr < 0:
@@ -726,49 +770,34 @@ def p_error(t):
         )
         if arbol is not None:
             arbol.errores.append(error)
-            print("Error agregado a arbol.errores")
         else:
             errores_sintacticos_globales.append(error)
         print(error)
-        # NO LLAMES parser.errok() NI intentes consumir más tokens aquí
-        return
 
 
-def p_instruccion_llamada_id_error(t):
-    "instruccion : ID PAR1 error PAR2 PUNTOCOMA"
+# Añade esta nueva regla para capturar identificadores sueltos como instrucciones inválidas
+def p_instruccion_invalida(t):
+    "instruccion : ID"
+    # Un ID suelto como instrucción es un error
     error = Errores(
         "Sintáctico",
-        f"Instrucción inválida: '{t[1]}' no es una función reconocida (expresión inválida).",
+        f"La palabra '{t[1]}' no es una instrucción válida",
         t.lineno(1),
         find_column(t.lexer.lexdata, t.slice[1]),
     )
+
+    # Registra el error
     arbol = getattr(t.lexer, "arbol", None)
     if arbol:
         arbol.errores.append(error)
-    t[0] = None
+    else:
+        errores_sintacticos_globales.append(error)
 
-
-def p_instruccion_llamada_id_error_puntocoma(t):
-    "instruccion : ID PAR1 error PUNTOCOMA"
-    error = Errores(
-        "Sintáctico",
-        f"Instrucción inválida: '{t[1]}' no es una función reconocida (error grave en argumentos).",
-        t.lineno(1),
-        find_column(t.lexer.lexdata, t.slice[1]),
+    print(
+        f"----- Error Sintáctico: La palabra '{t[1]}' no es una instrucción válida. en la linea {t.lineno(1)} y columna {find_column(t.lexer.lexdata, t.slice[1])} ----"
     )
-    arbol = getattr(t.lexer, "arbol", None)
-    if arbol:
-        arbol.errores.append(error)
-    t[0] = None
 
-
-def p_instruccion_error_punto_coma(t):
-    "instruccion : error PUNTOCOMA"
-    t[0] = None
-
-
-def p_instruccion_vacia(t):
-    "instruccion : PUNTOCOMA"
+    # Devolvemos None para que no se agregue al AST
     t[0] = None
 
 
@@ -784,7 +813,7 @@ def find_column(input, token):
 import ply.yacc as yacc
 
 start = "inicio"
-parser = yacc.yacc()
+parser = yacc.yacc(debug=True)
 
 
 def parse_input(input_text, arbol):

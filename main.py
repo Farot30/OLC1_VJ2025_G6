@@ -31,12 +31,12 @@ def main():
             errores_sintacticos_globales.clear()
 
         # Imprime errores ANTES de ejecutar instrucciones
-        if ast.errores:
-            print("Errores encontrados durante el análisis sintáctico:")
-            for idx, error in enumerate(ast.errores, 1):
-                print(
-                    f"{idx}\t{error.get_tipo_error()}\t{error.get_desc()}\t{error.get_linea()}\t{error.get_col()}"
-                )
+        # if ast.errores:
+        #    print("Errores encontrados durante el análisis sintáctico:")
+        #    for idx, error in enumerate(ast.errores, 1):
+        #        print(
+        #           f"{idx}\t{error.get_tipo_error()}\t{error.get_desc()}\t{error.get_linea()}\t{error.get_col()}"
+        #        )
 
         for instr in ast.getInstrucciones():
             if instr is None:

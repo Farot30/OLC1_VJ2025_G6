@@ -25,34 +25,54 @@ class Switch(Instruccion):
 
         tabla.nuevoScope("Switch")
         ejecutando = False
+        romper = False
+
         for caso in self.casos:
             val_caso = caso.valor.interpretar(arbol, tabla)
             if isinstance(val_caso, Errores):
                 tabla.borrarScope()
                 return val_caso
+
             if ejecutando or val_caso == valor:
                 ejecutando = True
                 for instr in caso.instrucciones:
-                    if "entorno" in instr.interpretar.__code__.co_varnames:
+                    parametros = instr.interpretar.__code__.co_varnames
+                    if "entorno" in parametros and "en_ciclo" in parametros:
+                        resultado = instr.interpretar(
+                            arbol, tabla, entorno="Switch", en_ciclo=True
+                        )
+                    elif "entorno" in parametros:
                         resultado = instr.interpretar(arbol, tabla, entorno="Switch")
+                    elif "en_ciclo" in parametros:
+                        resultado = instr.interpretar(arbol, tabla, en_ciclo=True)
                     else:
                         resultado = instr.interpretar(arbol, tabla)
+
                     if resultado == "break":
-                        tabla.borrarScope()
-                        return None
+                        romper = True
+                        break
                     elif resultado == "continue":
                         tabla.borrarScope()
                         return "continue"
+            if romper:
+                break
 
         if not ejecutando and self.defecto:
             for instr in self.defecto:
-                if "entorno" in instr.interpretar.__code__.co_varnames:
+                parametros = instr.interpretar.__code__.co_varnames
+                if "entorno" in parametros and "en_ciclo" in parametros:
+                    resultado = instr.interpretar(
+                        arbol, tabla, entorno="Switch", en_ciclo=True
+                    )
+                elif "entorno" in parametros:
                     resultado = instr.interpretar(arbol, tabla, entorno="Switch")
+                elif "en_ciclo" in parametros:
+                    resultado = instr.interpretar(arbol, tabla, en_ciclo=True)
                 else:
                     resultado = instr.interpretar(arbol, tabla)
+
                 if resultado == "break":
-                    tabla.borrarScope()
-                    return None
+                    break
                 elif resultado == "continue":
                     tabla.borrarScope()
                     return "continue"

@@ -1,1 +1,15 @@
-Println(Esto es un error);
+println("---------------------------------------------------------------------------");
+println("--------------------------- FOR ANIDADO -----------------------------------");
+println("---------------------------------------------------------------------------");
+
+FOR (INT x = 0; x < 3; X++) {		//DEPENDIENDO DE LA GRAMATICA DESARROLLADA ES PERMITIDO CAMBIAR A X++;
+    FOR (INT y = 0; y < 3; Y++) {
+        IF (x == 0 && y == 2) {
+            println("x = " + x + ", y = " + y);
+        }
+        IF (x == 2 && y == 1) {
+            println("x = " + x + ", y = " + y);
+        }
+        println("x = " + x + ", y = " + y);
+    }
+}
