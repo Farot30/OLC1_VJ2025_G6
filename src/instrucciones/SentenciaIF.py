@@ -15,32 +15,46 @@ class sentIF(Instruccion):
         self.sig = sig #otro IF
 
     def interpretar(self, arbol, tabla):
+        #bandera si encuentra errores en la condicion
+        self.enError = False
         #else
         if self.condicion is None:
-            nueTabla = aTab.nuevoScope()
+            tabla.nuevoScope("IF")
             for instruccion in  self.instrucciones:
-                res = instruccion.interpretar(arbol, nueTabla)
+                res = instruccion.interpretar(arbol, tabla)
                 if isinstance(res, Errores):
-                    arbol.addErrores(res)
-                elif  isinstance(res, Break):
+                    arbol.errores.append(res)
+                elif res == "continue":
+                    tabla.borrarScope()
                     return res
+                tabla.borrarScope()
+                #elif  isinstance(res, Break):
+                 #   return res
             return
         cond = self.condicion.interpretar(arbol, tabla)
 
         if isinstance(cond, Errores):
+            self.enError = True
             return cond
 
         if self.condicion.tipoDato.getTipo() != tipoDato.BOOL:
+            self.enError = True
             return Errores('Semantico', 'La condición es errónea', self.linea, self.col)
 
-        nueva_tabla = aTab.nuevoScope()
+        tabla.nuevoScope("If")
         if cond:
             # Si la condición es verdadera, se ejecuta
             for instruccion in self.instrucciones:
-                resultado = instruccion.interpretar(arbol, nueva_tabla)
+                resultado = instruccion.interpretar(arbol, tabla)
                 if isinstance(resultado, Errores):
-                    arbol.addErrores(resultado)
+                    arbol.errores.append(resultado)
+                elif resultado == "continue":
+                    tabla.borrarScope()
+                    return resultado
+            tabla.borrarScope()
             return    
+
+        tabla.borrarScope()
 
          # else IF
         if self.sig is not None:
@@ -48,6 +62,10 @@ class sentIF(Instruccion):
         return                
 
     def graficar(self, grafo: clasAST):
+        if getattr(self, 'enError', False): #accede a el valor de enError en forma dinamica
+            print("no se grafico")
+            return None
+        
         nodoIF = grafo.agregar_nodo("If")
 
         if self.condicion is not None:

@@ -25,10 +25,10 @@ class Arbol:
     def set_instrucciones(self, instrucciones: list[Instruccion]): 
         self.instrucciones = instrucciones
 
-    def get_tabla_global(self) -> aTab:
+    def get_tabla_global(self) -> aTab: # type: ignore
         return self.tabla_global
 
-    def setTablaGlobal(self, tabla: aTab):
+    def setTablaGlobal(self, tabla: aTab): # type: ignore
         self.tabla_global = tabla
 
     def get_errores(self) -> list[Errores]:

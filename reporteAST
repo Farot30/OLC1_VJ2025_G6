@@ -1,49 +1,23 @@
 digraph ReporteAST {
 	node1 [label=REPORTE color=purple fillcolor=white style=filled]
-	node2 [label="Declaración" color=purple fillcolor=white style=filled]
-	node3 [label="ID: i" color=purple fillcolor=white style=filled]
+	node2 [label=If color=purple fillcolor=white style=filled]
+	node3 [label="Relacional: ==" color=purple fillcolor=white style=filled]
+	node4 [label=0 color=purple fillcolor=white style=filled]
+	node3 -> node4
+	node5 [label=0 color=purple fillcolor=white style=filled]
+	node3 -> node5
 	node2 -> node3
-	node4 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
-	node2 -> node4
-	node5 [label=Valor color=purple fillcolor=white style=filled]
-	node2 -> node5
-	node6 [label=0 color=purple fillcolor=white style=filled]
-	node5 -> node6
-	node1 -> node2
-	node7 [label=If color=purple fillcolor=white style=filled]
-	node8 [label="Relacional: ==" color=purple fillcolor=white style=filled]
-	node9 [label=0 color=purple fillcolor=white style=filled]
-	node8 -> node9
-	node10 [label=0 color=purple fillcolor=white style=filled]
-	node8 -> node10
+	node6 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node2 -> node6
+	node7 [label="Declaración" color=purple fillcolor=white style=filled]
+	node8 [label="ID: a" color=purple fillcolor=white style=filled]
 	node7 -> node8
-	node11 [label=Instrucciones color=purple fillcolor=white style=filled]
-	node7 -> node11
-	node12 [label="Declaración" color=purple fillcolor=white style=filled]
-	node13 [label="ID: a" color=purple fillcolor=white style=filled]
-	node12 -> node13
-	node14 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
-	node12 -> node14
-	node15 [label=Valor color=purple fillcolor=white style=filled]
-	node12 -> node15
-	node16 [label="Aritmética: +" color=purple fillcolor=white style=filled]
-	node17 [label=1 color=purple fillcolor=white style=filled]
-	node16 -> node17
-	node18 [label=2 color=purple fillcolor=white style=filled]
-	node16 -> node18
-	node15 -> node16
-	node11 -> node12
-	node19 [label=If color=purple fillcolor=white style=filled]
-	node20 [label="Relacional: ==" color=purple fillcolor=white style=filled]
-	node21 [label=2 color=purple fillcolor=white style=filled]
-	node20 -> node21
-	node22 [label=3 color=purple fillcolor=white style=filled]
-	node20 -> node22
-	node19 -> node20
-	node23 [label=Instrucciones color=purple fillcolor=white style=filled]
-	node19 -> node23
-	node24 [label=Break color=purple fillcolor=white style=filled]
-	node23 -> node24
-	node11 -> node19
-	node1 -> node7
+	node9 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node7 -> node9
+	node10 [label=Valor color=purple fillcolor=white style=filled]
+	node7 -> node10
+	node11 [label=0 color=purple fillcolor=white style=filled]
+	node10 -> node11
+	node6 -> node7
+	node1 -> node2
 }

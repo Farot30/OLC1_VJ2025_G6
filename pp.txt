@@ -1,9 +1,6 @@
-int i = 0;
 
 if (0==0){
-    int a = 1+2;
-    if(2==3){
-        break;
-
-    }
+   int a = 0;
+} else if ("hola") {
+    int q;
 }
