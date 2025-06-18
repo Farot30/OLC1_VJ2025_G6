@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte AST</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+<body>
+    <div class="header-bar">
+        <h1>Árbol de Sintaxis Abstracta (AST)</h1>
+        <div class="top-buttons">
+            <form method="get" action="{{ url_for('index') }}">
+                <button type="submit">Volver al Inicio</button>
+            </form>
+        </div>
+    </div>
+    {% if ast_svg %}
+        <div id="ast-container" style="width:100%;height:600px;overflow:auto;position:relative;">
+            <object id="astObject" type="image/svg+xml" data="{{ url_for('report', filename=ast_svg) }}" width="100%" height="600px"></object>
+        </div>
+    {% else %}
+        <p>No se ha generado el AST.</p>
+    {% endif %}
+    <div class="zoom-buttons">
+        <button onclick="zoomAST(1.2)" title="Acercar" type="button"><span>+</span></button>
+        <button onclick="zoomAST(0.8)" title="Alejar" type="button"><span>-</span></button>
+    </div>
+
+    <script>
+        // ZOOM con límites
+        let currentZoom = 1;
+        const minZoom = 1; 
+        const maxZoom = 50; 
+
+        function zoomAST(factor) {
+            let newZoom = currentZoom * factor;
+            if (newZoom < minZoom) newZoom = minZoom;
+            if (newZoom > maxZoom) newZoom = maxZoom;
+            currentZoom = newZoom;
+            const obj = document.getElementById('astObject');
+            obj.style.width = (100 * currentZoom) + "%";
+            obj.style.height = (600 * currentZoom) + "px";
+        }
+
+        // DRAG para mover el SVG
+        let isDragging = false;
+        let startX, startY, scrollLeft, scrollTop;
+
+        window.onload = function() {
+            const container = document.getElementById('ast-container');
+            if (!container) return;
+
+            container.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                startX = e.pageX - container.offsetLeft;
+                startY = e.pageY - container.offsetTop;
+                scrollLeft = container.scrollLeft;
+                scrollTop = container.scrollTop;
+                container.style.cursor = 'grab';
+            });
+
+            container.addEventListener('mouseleave', function() {
+                isDragging = false;
+                container.style.cursor = 'default';
+            });
+
+            container.addEventListener('mouseup', function() {
+                isDragging = false;
+                container.style.cursor = 'default';
+            });
+
+            container.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                const x = e.pageX - container.offsetLeft;
+                const y = e.pageY - container.offsetTop;
+                const walkX = (x - startX);
+                const walkY = (y - startY);
+                container.scrollLeft = scrollLeft - walkX;
+                container.scrollTop = scrollTop - walkY;
+            });
+        }
+    </script>
+</body>
+</html>

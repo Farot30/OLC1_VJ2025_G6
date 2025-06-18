@@ -1,0 +1,1002 @@
+//---------------------------------- Prueba println case insensitive ----------------------------------
+
+PrInTlN("Println basico: 1");
+
+//---------------------------------- Prueba recuperacion errores ----------------------------------
+
+Print(Esto es un error);
+
+/*
+	Esto deberia ignorarse
+*/
+
+// ---------------------------------- Expresiones ----------------------------------
+
+println("---------------------------------------------------------------------------");
+println("---------------------------------- SUMAS ----------------------------------");
+println("---------------------------------------------------------------------------");
+
+// ENTEROS
+
+PRINTLN("INT + INT:");
+PRINTLN(1+1); // RES: 2
+
+PRINTLN("INT + FLOAT:");
+PRINTLN(1+1.1); // RES: 2.1
+
+PRINTLN("INT + BOOL:"); // BOOL SE PUEDE ASIGNAR A INT, PERO NO SE PUEDE SUMAR
+PRINTLN(1+TRUE); // RES: ERROR SEMANTICO
+
+PRINTLN("INT + DECIMAL:");
+PRINTLN(1+1.1); // RES: 2.1
+
+PRINTLN("INT + CHAR:"); // SE USA EL ASCII
+PRINTLN(1+'$'); // RES: 37 
+
+PRINTLN("INT + STR:"); // SE USA UNA CONCATENACION
+PRINTLN("HOLA 2+"+1+">"); // RES: HOLA 2+1>
+
+// FLOTANTES
+
+PRINTLN("FLOAT + INT:");
+PRINTLN(1+1.1+12+14*1); // RES: 28.1
+
+PRINTLN("FLOAT + FLOAT:");
+PRINTLN(4.20 + 6.9); // RES: 11.1
+
+PRINTLN("FLOAT + BOOL:");
+PRINTLN(TRUE + 2.1); // ANOTHER ERROR
+
+PRINTLN("FLOAT + CHAR:");
+PRINTLN(4.1 +'4'); // RES: 56.1
+
+PRINTLN("FLOAT + STR:");
+PRINTLN(0.5 + " SERO PUNTO CINCO"); // RES: 28.1
+
+// BOOL
+
+PRINTLN("BOOL + INT:");
+PRINTLN(TRUE + 12); // ERROR
+
+PRINTLN("BOOL + DECIMAL:");
+PRINTLN(TRUE + 12.5); // ERROR
+
+PRINTLN("BOOL + BOOL:");
+PRINTLN(TRUE + FALSE); // ERROR
+
+PRINTLN("BOOL + CHAR:");
+PRINTLN(TRUE + '='); // ERROR
+
+PRINTLN("BOOL + STR:");
+PRINTLN("LA" + TRUE); // RES: LA TRUE
+
+// CARÁCTER
+
+PRINTLN("CHAR + INT:");
+PRINTLN('A' + 1); // RES: 66 (ASCII de 'A' es 65)
+
+PRINTLN("CHAR + FLOAT:");
+PRINTLN('A' + 1.5); // RES: 66.5
+
+PRINTLN("CHAR + BOOL:");
+PRINTLN('A' + TRUE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR + CHAR:");
+PRINTLN('A' + '#'); // RES: A# (Concatenación)
+
+PRINTLN("CHAR + STR:");
+PRINTLN('X' + "treme"); // RES: Xtreme
+
+// CADENA
+
+PRINTLN("STR + INT:");
+PRINTLN("Edad: " + 30); // RES: Edad: 30
+
+PRINTLN("STR + FLOAT:");
+PRINTLN("Pi es " + 3.14); // RES: Pi es 3.14
+
+PRINTLN("STR + BOOL:");
+PRINTLN("¿Es válido? " + FALSE); // RES: ¿Es válido? FALSE
+
+PRINTLN("STR + CHAR:");
+PRINTLN("Letra: " + 'Z'); // RES: Letra: Z
+
+PRINTLN("STR + STR:");
+PRINTLN("Hola " + "mundo"); // RES: Hola mundo
+
+println("---------------------------------------------------------------------------");
+println("---------------------------------- RESTAS ----------------------------------");
+println("---------------------------------------------------------------------------");
+
+// ENTERO
+
+PRINTLN("INT - INT:");
+PRINTLN(10 - 4); // RES: 6
+
+PRINTLN("INT - DECIMAL:");
+PRINTLN(10 - 2.5); // RES: 7.5
+
+PRINTLN("INT - BOOL:");
+PRINTLN(10 - TRUE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("INT - CHAR:");
+PRINTLN(70 - 'A'); // RES: 5 (ASCII de 'A' es 65)
+
+PRINTLN("INT - STRING:");
+PRINTLN(5 - "texto"); // RES: ERROR SEMÁNTICO
+
+// DECIMAL
+
+PRINTLN("DECIMAL - INT:");
+PRINTLN(8.5 - 3); // RES: 5.5
+
+PRINTLN("DECIMAL - DECIMAL:");
+PRINTLN(10.5 - 2.5); // RES: 8.0
+
+PRINTLN("DECIMAL - BOOL:");
+PRINTLN(3.2 - FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("DECIMAL - CHAR:");
+PRINTLN(70.5 - 'B'); // RES: 4.5 (ASCII de 'B' es 66)
+
+PRINTLN("DECIMAL - STRING:");
+PRINTLN(1.1 - "dato"); // RES: ERROR SEMÁNTICO
+
+// BOOLEANO
+
+PRINTLN("BOOL - INT:");
+PRINTLN(TRUE - 1); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL - DECIMAL:");
+PRINTLN(FALSE - 2.2); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL - BOOL:");
+PRINTLN(TRUE - FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL - CHAR:");
+PRINTLN(TRUE - 'A'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL - STRING:");
+PRINTLN(TRUE - "algo"); // RES: ERROR SEMÁNTICO
+
+// CARÁCTER
+
+PRINTLN("CHAR - INT:");
+PRINTLN('D' - 2); // RES: 66 (ASCII de 'D' es 68)
+
+PRINTLN("CHAR - DECIMAL:");
+PRINTLN('E' - 0.5); // RES: 68.5 (ASCII de 'E' es 69)
+
+PRINTLN("CHAR - BOOL:");
+PRINTLN('A' - TRUE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR - CHAR:");
+PRINTLN('B' - 'A'); // RES: ERROR SEMÁNTICO 
+
+PRINTLN("CHAR - STRING:");
+PRINTLN('Z' - "texto"); // RES: ERROR SEMÁNTICO
+
+// CADENA
+
+PRINTLN("STRING - INT:");
+PRINTLN("Texto" - 5); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING - DECIMAL:");
+PRINTLN("Texto" - 3.14); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING - BOOL:");
+PRINTLN("Texto" - FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING - CHAR:");
+PRINTLN("Texto" - 'o'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING - STRING:");
+PRINTLN("Texto" - "To"); // RES: ERROR SEMÁNTICO
+
+println("---------------------------------------------------------------------------");
+println("------------------------------ MULTIPLICACIONES ----------------------------");
+println("---------------------------------------------------------------------------");
+
+// ENTERO
+
+PRINTLN("INT * INT:");
+PRINTLN(6 * 7); // RES: 42
+
+PRINTLN("INT * DECIMAL:");
+PRINTLN(4 * 2.5); // RES: 10.0
+
+PRINTLN("INT * BOOL:");
+PRINTLN(3 * TRUE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("INT * CHAR:");
+PRINTLN(3 * 'A'); // RES: 195 (3 * ASCII de 'A' = 3 * 65)
+
+PRINTLN("INT * STRING:");
+PRINTLN(2 * "hola"); // RES: ERROR SEMÁNTICO
+
+// DECIMAL
+
+PRINTLN("DECIMAL * INT:");
+PRINTLN(2.5 * 4); // RES: 10.0
+
+PRINTLN("DECIMAL * DECIMAL:");
+PRINTLN(1.5 * 2.0); // RES: 3.0
+
+PRINTLN("DECIMAL * BOOL:");
+PRINTLN(2.0 * FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("DECIMAL * CHAR:");
+PRINTLN(2.5 * 'B'); // RES: 165.0 (2.5 * 66)
+
+PRINTLN("DECIMAL * STRING:");
+PRINTLN(1.1 * "dato"); // RES: ERROR SEMÁNTICO
+
+// BOOLEANO
+
+PRINTLN("BOOL * INT:");
+PRINTLN(TRUE * 5); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL * DECIMAL:");
+PRINTLN(FALSE * 3.14); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL * BOOL:");
+PRINTLN(TRUE * FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL * CHAR:");
+PRINTLN(TRUE * 'X'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL * STRING:");
+PRINTLN(TRUE * "nada"); // RES: ERROR SEMÁNTICO
+
+// CARÁCTER
+
+PRINTLN("CHAR * INT:");
+PRINTLN('C' * 2); // RES: 134 (ASCII de 'C' = 67 * 2)
+
+PRINTLN("CHAR * DECIMAL:");
+PRINTLN('C' * 2.0); // RES: 134.0
+
+PRINTLN("CHAR * BOOL:");
+PRINTLN('C' * TRUE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR * CHAR:");
+PRINTLN('A' * 'B'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR * STRING:");
+PRINTLN('Z' * "algo"); // RES: ERROR SEMÁNTICO
+
+// CADENA
+
+PRINTLN("STRING * INT:");
+PRINTLN("hola" * 3); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING * DECIMAL:");
+PRINTLN("hola" * 2.5); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING * BOOL:");
+PRINTLN("hola" * FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING * CHAR:");
+PRINTLN("hola" * 'X'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING * STRING:");
+PRINTLN("hola" * "mundo"); // RES: ERROR SEMÁNTICO
+
+
+println("---------------------------------------------------------------------------");
+println("------------------------------- DIVISIONES -------------------------------");
+println("---------------------------------------------------------------------------");
+
+// ENTERO
+
+PRINTLN("INT / INT:");
+PRINTLN(10 / 2); // RES: 5.0 (resultado decimal)
+
+PRINTLN("INT / DECIMAL:");
+PRINTLN(10 / 4.0); // RES: 2.5
+
+PRINTLN("INT / BOOL:");
+PRINTLN(10 / TRUE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("INT / CHAR:");
+PRINTLN(70 / 'B'); // RES: 1.06 (70 / 66)
+
+PRINTLN("INT / STRING:");
+PRINTLN(10 / "algo"); // RES: ERROR SEMÁNTICO
+
+// DECIMAL
+
+PRINTLN("DECIMAL / INT:");
+PRINTLN(9.0 / 3); // RES: 3.0
+
+PRINTLN("DECIMAL / DECIMAL:")
+PRINTLN(5.5 / 2.0); // RES: 2.75
+
+PRINTLN("DECIMAL / BOOL:");
+PRINTLN(4.2 / FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("DECIMAL / CHAR:");
+PRINTLN(130.0 / 'A'); // RES: 2.0 (130 / 65)
+
+PRINTLN("DECIMAL / STRING:");
+PRINTLN(1.1 / "texto"); // RES: ERROR SEMÁNTICO
+
+// BOOLEANO
+
+PRINTLN("BOOL / INT:");
+PRINTLN(TRUE / 1); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL / DECIMAL:");
+PRINTLN(FALSE / 3.14); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL / BOOL:");
+PRINTLN(TRUE / FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL / CHAR:");
+PRINTLN(TRUE / 'X'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL / STRING:");
+PRINTLN(TRUE / "nada"); // RES: ERROR SEMÁNTICO
+
+// CARÁCTER
+
+PRINTLN("CHAR / INT:");
+PRINTLN('D' / 2); // RES: 32.5 (ASCII 68 / 2)
+
+PRINTLN("CHAR / DECIMAL:");
+PRINTLN('E' / 2.0); // RES: 34.5 (ASCII 69 / 2.0)
+
+PRINTLN("CHAR / BOOL:");
+PRINTLN('A' / TRUE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR / CHAR:");
+PRINTLN('B' / 'A'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR / STRING:");
+PRINTLN('Z' / "texto"); // RES: ERROR SEMÁNTICO
+
+// CADENA
+
+PRINTLN("STRING / INT:");
+PRINTLN("texto" / 2); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING / DECIMAL:");
+PRINTLN("texto" / 1.1); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING / BOOL:");
+PRINTLN("texto" / FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING / CHAR:");
+PRINTLN("texto" / 'X'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING / STRING:");
+PRINTLN("texto" / "otro"); // RES: ERROR SEMÁNTICO
+
+println("---------------------------------------------------------------------------");
+println("------------------------------- POTENCIA ---------------------------------");
+println("---------------------------------------------------------------------------");
+
+// ENTERO
+
+PRINTLN("INT ** INT:");
+PRINTLN(2 ** 3); // RES: 8
+
+PRINTLN("INT ** DECIMAL:");
+PRINTLN(4 ** 0.5); // RES: 2.0 (raíz cuadrada)
+
+PRINTLN("INT ** BOOL:");
+PRINTLN(3 ** TRUE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("INT ** CHAR:");
+PRINTLN(2 ** 'A'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("INT ** STRING:");
+PRINTLN(2 ** "texto"); // RES: ERROR SEMÁNTICO
+
+// DECIMAL
+
+PRINTLN("DECIMAL ** INT:");
+PRINTLN(2.5 ** 2); // RES: 6.25
+
+PRINTLN("DECIMAL ** DECIMAL:");
+PRINTLN(9.0 ** 0.5); // RES: 3.0
+
+PRINTLN("DECIMAL ** BOOL:");
+PRINTLN(2.1 ** FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("DECIMAL ** CHAR:");
+PRINTLN(2.0 ** 'C'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("DECIMAL ** STRING:");
+PRINTLN(2.0 ** "abc"); // RES: ERROR SEMÁNTICO
+
+// BOOLEANO
+
+PRINTLN("BOOL ** INT:");
+PRINTLN(TRUE ** 3); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL ** DECIMAL:");
+PRINTLN(FALSE ** 2.5); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL ** BOOL:");
+PRINTLN(TRUE ** FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL ** CHAR:");
+PRINTLN(FALSE ** 'Z'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL ** STRING:");
+PRINTLN(TRUE ** "nada"); // RES: ERROR SEMÁNTICO
+
+// CARÁCTER
+
+PRINTLN("CHAR ** INT:");
+PRINTLN('C' ** 2); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR ** DECIMAL:");
+PRINTLN('D' ** 1.5); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR ** BOOL:");
+PRINTLN('E' ** TRUE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR ** CHAR:");
+PRINTLN('F' ** 'G'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR ** STRING:");
+PRINTLN('H' ** "texto"); // RES: ERROR SEMÁNTICO
+
+// CADENA
+
+PRINTLN("STRING ** INT:");
+PRINTLN("abc" ** 3); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING ** DECIMAL:");
+PRINTLN("abc" ** 2.5); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING ** BOOL:");
+PRINTLN("abc" ** FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING ** CHAR:");
+PRINTLN("abc" ** 'X'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING ** STRING:");
+PRINTLN("abc" ** "def"); // RES: ERROR SEMÁNTICO
+
+println("---------------------------------------------------------------------------");
+println("------------------------------- MODULO ------------------------------------");
+println("---------------------------------------------------------------------------");
+
+// ENTERO
+
+PRINTLN("INT % INT:");
+PRINTLN(10 % 3); // RES: 1.0
+
+PRINTLN("INT % DECIMAL:");
+PRINTLN(10 % 4.5); // RES: 1.0 (decimal)
+
+PRINTLN("INT % BOOL:");
+PRINTLN(10 % TRUE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("INT % CHAR:");
+PRINTLN(10 % 'A'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("INT % STRING:");
+PRINTLN(10 % "texto"); // RES: ERROR SEMÁNTICO
+
+// DECIMAL
+
+PRINTLN("DECIMAL % INT:");
+PRINTLN(7.5 % 2); // RES: 1.5
+
+PRINTLN("DECIMAL % DECIMAL:");
+PRINTLN(8.8 % 3.3); // RES: 2.2
+
+PRINTLN("DECIMAL % BOOL:");
+PRINTLN(5.5 % FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("DECIMAL % CHAR:");
+PRINTLN(4.5 % 'C'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("DECIMAL % STRING:");
+PRINTLN(6.6 % "cadena"); // RES: ERROR SEMÁNTICO
+
+// BOOLEANO
+
+PRINTLN("BOOL % INT:");
+PRINTLN(TRUE % 1); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL % DECIMAL:");
+PRINTLN(FALSE % 2.0); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL % BOOL:");
+PRINTLN(TRUE % FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL % CHAR:");
+PRINTLN(TRUE % 'X'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL % STRING:");
+PRINTLN(FALSE % "hola"); // RES: ERROR SEMÁNTICO
+
+// CARÁCTER
+
+PRINTLN("CHAR % INT:");
+PRINTLN('C' % 2); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR % DECIMAL:");
+PRINTLN('D' % 1.5); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR % BOOL:");
+PRINTLN('E' % TRUE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR % CHAR:");
+PRINTLN('F' % 'G'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR % STRING:");
+PRINTLN('H' % "texto"); // RES: ERROR SEMÁNTICO
+
+// CADENA
+
+PRINTLN("STRING % INT:");
+PRINTLN("abc" % 3); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING % DECIMAL:");
+PRINTLN("abc" % 2.5); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING % BOOL:");
+PRINTLN("abc" % FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING % CHAR:");
+PRINTLN("abc" % 'X'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING % STRING:");
+PRINTLN("abc" % "def"); // RES: ERROR SEMÁNTICO
+
+println("---------------------------------------------------------------------------");
+println("------------------------- NEGACIÓN UNARIA ---------------------------------");
+println("---------------------------------------------------------------------------");
+
+// ENTERO
+
+PRINTLN("- INT:");
+PRINTLN(-5); // RES: -5
+
+// DECIMAL
+
+PRINTLN("- DECIMAL:");
+PRINTLN(-3.14); // RES: -3.14
+
+// BOOLEANO
+
+PRINTLN("- BOOL:");
+PRINTLN(-TRUE); // RES: ERROR SEMÁNTICO
+
+// CARÁCTER
+
+PRINTLN("- CHAR:");
+PRINTLN(-'A'); // RES: ERROR SEMÁNTICO
+
+// CADENA
+
+PRINTLN("- STRING:");
+PRINTLN(-"texto"); // RES: ERROR SEMÁNTICO
+
+println("---------------------------------------------------------------------------");
+println("------------------------- OPERADORES RELACIONALES ------------------------");
+println("---------------------------------------------------------------------------");
+
+// ----------------------------- ENTERO -----------------------------
+
+PRINTLN("INT == INT:");
+PRINTLN(5 == 5); // RES: TRUE
+
+PRINTLN("INT != DECIMAL:");
+PRINTLN(5 == 5.0); // RES: TRUE
+
+PRINTLN("INT < CHAR:");
+PRINTLN(65 < 'Z'); // RES: TRUE (ASCII Z = 90)
+
+PRINTLN("INT == BOOL:");
+PRINTLN(5 != TRUE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("INT == STRING:");
+PRINTLN(5 == "cinco"); // RES: ERROR SEMÁNTICO
+
+// ----------------------------- DECIMAL -----------------------------
+
+PRINTLN("DECIMAL == DECIMAL:");
+PRINTLN(4.2 == 4.2); // RES: TRUE
+
+PRINTLN("DECIMAL != CHAR:");
+PRINTLN(66.0 != 'A'); // RES: TRUE (ASCII A = 65)
+
+PRINTLN("DECIMAL >= INT:");
+PRINTLN(10.5 >= 10); // RES: TRUE
+
+PRINTLN("DECIMAL == BOOL:");
+PRINTLN(3.3 == FALSE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("DECIMAL == STRING:");
+PRINTLN(3.3 == "tres"); // RES: ERROR SEMÁNTICO
+
+// ----------------------------- BOOLEANO -----------------------------
+
+PRINTLN("BOOL == BOOL:");
+PRINTLN(TRUE == FALSE); // RES: FALSE
+
+PRINTLN("BOOL != BOOL:");
+PRINTLN(TRUE != TRUE); // RES: FALSE
+
+PRINTLN("BOOL < CHAR:");
+PRINTLN(TRUE < 'A'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL == DECIMAL:");
+PRINTLN(FALSE == 0.0); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL == STRING:");
+PRINTLN(TRUE == "verdadero"); // RES: ERROR SEMÁNTICO
+
+// ----------------------------- CARÁCTER -----------------------------
+
+PRINTLN("CHAR == CHAR:");
+PRINTLN('A' == 'A'); // RES: TRUE
+
+PRINTLN("CHAR < CHAR:");
+PRINTLN('A' < 'Z'); // RES: TRUE
+
+PRINTLN("CHAR >= INT:");
+PRINTLN('B' >= 65); // RES: TRUE (ASCII B = 66)
+
+PRINTLN("CHAR == BOOL:");
+PRINTLN('C' == TRUE); // RES: ERROR SEMÁNTICO
+
+PRINTLN("CHAR == STRING:");
+PRINTLN('A' == "A"); // RES: ERROR SEMÁNTICO
+
+// ----------------------------- CADENA -----------------------------
+
+PRINTLN("STRING == STRING:");
+PRINTLN("hola" == "hola"); // RES: TRUE
+
+PRINTLN("STRING != STRING:");
+PRINTLN("hola" != "adiós"); // RES: TRUE
+
+PRINTLN("STRING < STRING:");
+PRINTLN("abc" < "def"); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING == INT:");
+PRINTLN("5" == 5); // RES: ERROR SEMÁNTICO
+
+PRINTLN("STRING == CHAR:");
+PRINTLN("A" == 'A'); // RES: ERROR SEMÁNTICO
+
+/ESTE_COMENTARIO_SE_DISOCIO
+// ESTOS SON ERRORES LEXICOS
+######################################################################################
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+println("---------------------------------------------------------------------------");
+println("---------------------------- OPERADORES LÓGICOS ---------------------------");
+println("---------------------------------------------------------------------------");
+
+// OR (||)
+
+PRINTLN("BOOL || BOOL:");
+PRINTLN(TRUE || FALSE); // RES: TRUE
+
+PRINTLN("BOOL || INT:");
+PRINTLN(TRUE || 5); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL || STRING:");
+PRINTLN(FALSE || "hola"); // RES: ERROR SEMÁNTICO
+
+// AND (&&)
+
+PRINTLN("BOOL && BOOL:");
+PRINTLN(TRUE && TRUE); // RES: TRUE
+
+PRINTLN("BOOL && CHAR:");
+PRINTLN(TRUE && 'A'); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL && DECIMAL:");
+PRINTLN(FALSE && 3.14); // RES: ERROR SEMÁNTICO
+
+// XOR (^)
+
+PRINTLN("BOOL ^ BOOL:");
+PRINTLN(TRUE ^ FALSE); // RES: TRUE
+
+PRINTLN("BOOL ^ STRING:");
+PRINTLN(TRUE ^ "valor"); // RES: ERROR SEMÁNTICO
+
+PRINTLN("BOOL ^ INT:");
+PRINTLN(FALSE ^ 1); // RES: ERROR SEMÁNTICO
+
+// NOT (!)
+
+PRINTLN("!BOOL:");
+PRINTLN(!TRUE); // RES: FALSE
+
+PRINTLN("!INT:");
+PRINTLN(!1); // RES: ERROR SEMÁNTICO
+
+PRINTLN("!STRING:");
+PRINTLN(!"hola"); // RES: ERROR SEMÁNTICO
+
+
+// VALORES POR DEFECTO
+
+INT A;
+FLOAT B;
+CHAR C; // PUEDE O NO TENER REPRESENTACION PERO DEBE APARECER EL SALTO DE LINEA
+BOOL D;
+STRING E;
+
+PRINTLN(A);
+PRINTLN(B);
+PRINTLN(C);
+PRINTLN(D);
+PRINTLN(E);
+
+a++; // RES: 1
+b--; // RES: -1.0
+
+
+println("---------------------------------------------------------------------------");
+println("---------------------------- IF -------------------------------------------");
+println("---------------------------------------------------------------------------");
+
+// IF VERDADERO
+
+IF (A == 1 && B == -1 || D){
+	PRINTLN("CORRECTO");
+	$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+}ELSE{
+	PRINTLN("INCORRECTO");
+	$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+}
+
+
+// IF ANIDADO + SCOPE IF
+IF (A == 1 && B == -1 || D){
+	BOOL FLAG; 
+	PRINTLN("CORRECTO IF_ANIDADO_1");
+	IF (FLAG){
+		INT Z = "ERROR SEMANTICO";
+		INT X = 2; //VALIDAR SCOPE
+		PRINTLN("CORRECTO IF_ANIDADO_2");
+	}ELSE{
+		PRINTLN("INCORRECTO");
+	}
+	PRINT("ESTO DEBERIA EJECUTARSE");
+	PRINT(X); //ESTO NO DEBERIA EJECUTARSE
+}ELSE{
+	PRINTLN("INCORRECTO");
+
+}
+
+println("---------------------------------------------------------------------------");
+println("-------------------- IF - ELSE IF - ELSE ----------------------------------");
+println("---------------------------------------------------------------------------");
+
+INT numA = 1;
+INT numB = -1;
+BOOL flagD = TRUE;
+
+IF (numA == 1 && numB == -1 || flagD){
+	PRINTLN("CORRECTO"); // CONDICIÓN VERDADERA
+
+	INT numA = 10; // numA scope IF
+
+	// DECLARACIÓN VÁLIDA DE VARIABLE LOCAL
+	INT localVar = 99;
+	PRINTLN(localVar);
+}ELSE{
+	PRINTLN("INCORRECTO");
+}
+
+
+// ELSE IF CON ÁMBITO Y DECLARACIONES
+INT valorX = 0;
+
+IF (valorX > 0){
+	PRINTLN("valorX ES POSITIVO");
+}ELSE IF (valorX == 0){
+	PRINTLN("valorX ES CERO");
+	INT ceroTemp = 100;
+	PRINTLN(ceroTemp);
+}ELSE{
+	PRINTLN("valorX ES NEGATIVO");
+	INT negTemp = 200;
+	PRINTLN("VALOR TEMPORAL:");
+	PRINTLN(negTemp);
+}
+
+// ERROR SEMÁNTICO: uso de negTemp fuera de su scope
+PRINTLN(negTemp); // ERROR SEMÁNTICO
+
+
+BOOL condC = TRUE;
+
+IF (numA == 1){
+	PRINTLN("numA ES IGUAL A 1");
+
+	IF (condC){
+		// ERROR SEMÁNTICO: asignación de string a entero
+		INT testVar = "TEXTO"; // ERROR SEMÁNTICO
+		PRINTLN(testVar);
+	}ELSE{
+		PRINTLN("condC ES FALSO");
+	}
+}ELSE IF (FALSE){
+	PRINTLN("ESTO NO DEBERÍA IMPRIMIRSE");
+}ELSE{
+	PRINTLN("NINGUNA CONDICIÓN CUMPLIDA");
+}
+
+// ERROR SEMÁNTICO: uso de testVar fuera del scope
+PRINTLN(testVar); // ERROR SEMÁNTICO
+
+
+IF (1){
+	PRINTLN("ESTO ES UN ERROR");
+} ELSE IF (0) {
+	PRINTLN("ESTO TAMBIEN ESTA MAL");
+} ELSE { 
+	PRINTLN("ESTO IGUAL ESTA MAL");
+}
+
+
+IF (TRUE){
+	PRINT("LO SIGUIENTE TIENE QUE SER UN ERROR SEMANTICO");
+	CONTINUE;
+}
+
+println("---------------------------------------------------------------------------");
+println("------------------------------ SWITCH -------------------------------------");
+println("---------------------------------------------------------------------------");
+
+INT opcion = 2;
+
+SWITCH (opcion) {
+    CASE 1:
+        PRINTLN("OPCIÓN 1");
+        BREAK;
+    CASE 2:
+        PRINTLN("OPCIÓN 2");
+        // ERROR SEMÁNTICO: falta el break
+    CASE 3:
+        PRINTLN("OPCIÓN 3");
+        BREAK;
+    DEFAULT:
+        PRINTLN("OPCIÓN NO VÁLIDA");
+        BREAK;
+}
+
+SWITCH (opcion) {
+    CASE 1:
+        PRINTLN("OPCIÓN 1");
+        BREAK;
+    CASE 2:
+        PRINTLN("ESTO ES LO UNICO QUE TIENE QUE EJECUTARSE EN EL SWITCH");
+        break;
+    CASE 3:
+        PRINTLN("OPCIÓN 3");
+        BREAK;
+    DEFAULT:
+        PRINTLN("OPCIÓN NO VÁLIDA");
+        BREAK;
+}
+
+println("---------------------------------------------------------------------------");
+println("------------------------------ WHILE --------------------------------------");
+println("---------------------------------------------------------------------------");
+
+INT i = 0;
+
+WHILE (i < 5) {
+    IF (i == 2) {
+        i = i + 1;
+        CONTINUE; // SALTA LA IMPRESIÓN DE i == 2
+    }
+    PRINTLN(i);
+    IF (i == 4) {
+        BREAK; // FINALIZA EL WHILE ANTES DE i == 5
+    }
+    i = i + 1;
+}
+
+println("---------------------------------------------------------------------------");
+println("--------------------------- WHILE ANIDADO ---------------------------------");
+println("---------------------------------------------------------------------------");
+
+INT i = 0;
+
+WHILE (i < 3) {
+    INT j = 0;
+    WHILE (j < 3) {
+        IF (i == 1 && j == 1) {
+            PRINTLN("SALTO CON CONTINUE INTERNO");
+            j = j + 1;
+            CONTINUE;
+        }
+        PRINTLN("i = " + i + ", j = " + j);
+        IF (i == 2 && j == 0) {
+            PRINTLN("RUPTURA CON BREAK INTERNO");
+            BREAK;
+        }
+        j = j + 1;
+    }
+    i = i + 1;
+}
+
+
+println("---------------------------------------------------------------------------");
+println("----------------------------- DO WHILE ------------------------------------");
+println("---------------------------------------------------------------------------");
+
+INT j = 0;
+
+DO {
+    IF (j == 3) {
+        j = j + 1;
+        CONTINUE; // SALTA SOLO ESA ITERACIÓN
+    }
+    PRINTLN("VALOR DE J:");
+    PRINTLN(j);
+    j = j + 1;
+} WHILE (j < 5);
+
+println("---------------------------------------------------------------------------");
+println("------------------------ DO WHILE ANIDADO ---------------------------------");
+println("---------------------------------------------------------------------------");
+
+INT m = 0;
+
+DO {
+    INT n = 0;
+    DO {
+        IF (n == 1 && m == 1) {
+            n = n + 1;
+            CONTINUE;
+        }
+        PRINTLN("m = " + m + ", n = " + n);
+        IF (m == 2 && n == 0) {
+            BREAK;
+        }
+        n = n + 1;
+    } WHILE (n < 3);
+    m = m + 1;
+} WHILE (m < 3);
+
+println("---------------------------------------------------------------------------");
+println("------------------------------ FOR ----------------------------------------");
+println("---------------------------------------------------------------------------");
+
+FOR (INT k = 0; k < 6; K++) {		//DEPENDIENDO DE LA GRAMATICA DESARROLLADA ES PERMITIDO CAMBIAR A X++;
+    IF (k == 1) {
+        CONTINUE; // SALTA SOLO CUANDO k == 1
+    }
+    IF (k == 4) {
+        BREAK; // SALE DEL FOR CUANDO k == 4
+    }
+    PRINTLN("k = ");
+    PRINTLN(k);
+}
+
+
+
+println("---------------------------------------------------------------------------");
+println("--------------------------- FOR ANIDADO -----------------------------------");
+println("---------------------------------------------------------------------------");
+
+FOR (INT x = 0; x < 3; X++) {		//DEPENDIENDO DE LA GRAMATICA DESARROLLADA ES PERMITIDO CAMBIAR A X++;
+    FOR (INT y = 0; y < 3; Y++) {
+        IF (x == 0 && y == 2) {
+            CONTINUE; // Salta cuando x=0, y=2
+        }
+        IF (x == 2 && y == 1) {
+            BREAK; // Rompe el segundo for
+        }
+        PRINTLN("x = " + x + ", y = " + y);
+    }
+}

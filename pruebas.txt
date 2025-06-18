@@ -1,0 +1,132 @@
+// 1. SWITCH ANIDADOS CON IF - Con errores
+int opcion1 = 2;
+int opcion2 = 1;
+
+println("--- PRUEBA 1: SWITCH ANIDADOS CON IF (CON ERRORES) ---");
+switch(opcion1) {
+    case 1:
+        println("Opcion1 es 1");
+        break;
+    // ERROR: Caso duplicado
+    case 1:
+        println("Opcion1 es 1 de nuevo");
+        break;
+    case 2:
+        println("Opcion1 es 2");
+        
+        // Switch anidado con error
+        switch(opcion2 + true) {  // ERROR: Suma incompatible de tipos
+            case 1:
+                println("Opcion2 es 1");
+                
+                // If anidado con error
+                if(opcion1 + "error") {  // ERROR: Concatenación inválida
+                    println("Opcion1 es mayor que Opcion2");
+                } else {
+                    println("Opcion1 NO es mayor que Opcion2");
+                }
+                break;
+                
+            case 2:
+                println("Opcion2 es 2");
+                break;
+        }
+        break;
+        
+    default:
+        println("Opcion1 no es 1 ni 2");
+        // ERROR: Continue fuera de un ciclo
+        continue;
+}
+
+// 2. FOR ANIDADOS - Con errores
+println("\n--- PRUEBA 2: FOR ANIDADOS (CON ERRORES) ---");
+for(int i = 0; i < 3; i++) {
+    println("FOR externo: i = " + i);
+    
+    for(int j = 0; j + 1; j++) {  // ERROR: Condición no booleana
+        println("  FOR interno: j = " + j);
+        
+        // ERROR: Variable no declarada
+        if(i == k) {
+            println("    i es igual a k");
+        } else {
+            // ERROR: Variable declarada en scope interno intentando usarse en otro
+            int z = 5;
+        }
+    }
+    // ERROR: Intento de acceder a variable del for interno
+    //println("J final: " + j);
+}
+
+// 3. DO-WHILE ANIDADOS - Con errores
+println("\n--- PRUEBA 3: DO-WHILE ANIDADOS (CON ERRORES) ---");
+int a = 0;
+do {
+    println("DO-WHILE externo: a = " + a);
+    
+    int b = 0;
+    do {
+        println("  DO-WHILE interno: b = " + b);
+        b++;
+    } while(b);  // ERROR: Condición no booleana
+    
+    a++;
+} while(a < undeclared_var);  // ERROR: Variable no declarada
+
+// 4. COMBINACIÓN DE ESTRUCTURAS - Con errores
+println("\n--- PRUEBA 4: COMBINACIÓN DE ESTRUCTURAS (CON ERRORES) ---");
+int x = 1;
+
+switch(x) {
+    case "1":  // ERROR: Tipo incorrecto para case (string vs int)
+        println("x es 1");
+        
+        // For dentro de switch con error
+        for(int i = "cero"; i < 2; i++) {  // ERROR: Inicialización con tipo incorrecto
+            println("  FOR dentro de SWITCH: i = " + i);
+            
+            // ERROR: Operación inválida
+            i = i / 0;
+            
+            if(i == 0) {
+                // ERROR: Break anidado excesivo
+                break;
+            }
+        }
+        break;
+}
+
+// 5. FOR CON SWITCH ANIDADO - Con errores de scope
+println("\n--- PRUEBA 5: FOR CON SWITCH ANIDADO (CON ERRORES) ---");
+for(int i = 0; i < 3; i++) {
+    println("FOR: i = " + i);
+    
+    // ERROR: Variable redeclarada
+    int i = 10;
+    
+    switch(i) {
+        case 0:
+            println("  SWITCH: i es 0");
+            break;
+        case 1:
+            // ERROR: Variable asignada a tipo incorrecto
+            i = true;
+            
+            if(i < 2) {
+                
+                int j = 0;
+                do {
+                    println("DO-WHILE: j = " + j);
+                    j++;
+                } while(j < 1);
+            }
+            break;
+    }
+}
+
+// 6. ERRORES ADICIONALES
+// ERROR: Incremento en valor literal
+5++;
+
+println("\nFin de las pruebas de errores");

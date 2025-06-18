@@ -1,0 +1,137 @@
+from abc import ABC
+from src.abstracto.CInstruccion import Instruccion
+from src.simbolo.CTipo import Tipo, tipoDato
+from src.excepciones.CErrores import Errores
+from src.abstracto.CAST import clasAST
+
+
+class OperadoresRel:
+    MENOR_IGUAL = 1
+    MAYOR_QUE = 2
+    MAYOR_IGUAL = 3
+    IGUAL_IGUAL = 4
+    DIFERENTE = 5
+    MENOR_QUE = 6
+
+
+class Relacional(Instruccion, ABC):
+    def __init__(self, operador, linea, col, op1, op2):
+        super().__init__(Tipo(tipoDato.BOOL), linea, col)
+        self.operador = operador
+        self.op1 = op1
+        self.op2 = op2
+
+    def __str__(self):
+        return f"({self.op1} {self.getNOpe()} {self.op2})"
+
+    def interpretar(self, arbol, tabla):
+        val1 = self.op1.interpretar(arbol, tabla)
+        if isinstance(val1, Errores):
+            return val1
+        val2 = self.op2.interpretar(arbol, tabla)
+        if isinstance(val2, Errores):
+            return val2
+
+        tipos_validos = (int, float, str, bool)
+        if not isinstance(val1, tipos_validos) or not isinstance(val2, tipos_validos):
+            return Errores(
+                "SEMANTICO",
+                f"No se puede comparar valores de tipo {type(val1).__name__} y {type(val2).__name__}",
+                self.linea,
+                self.col,
+            )
+
+        # Comparación entre booleanos (solo con booleanos)
+        if isinstance(val1, bool) or isinstance(val2, bool):
+            if isinstance(val1, bool) and isinstance(val2, bool):
+                pass  # permitido
+            else:
+                return Errores(
+                    "SEMANTICO",
+                    f"No se puede comparar valores de tipo {type(val1).__name__} y {type(val2).__name__}",
+                    self.linea,
+                    self.col,
+                )
+        # Comparación entre int, float, char (char como int)
+        elif (
+            isinstance(val1, (int, float)) or (isinstance(val1, str) and len(val1) == 1)
+        ) and (
+            isinstance(val2, (int, float)) or (isinstance(val2, str) and len(val2) == 1)
+        ):
+            if isinstance(val1, str) and len(val1) == 1:
+                val1 = ord(val1)
+            if isinstance(val2, str) and len(val2) == 1:
+                val2 = ord(val2)
+        # Comparación entre cadenas completas
+        elif isinstance(val1, str) and isinstance(val2, str):
+            pass  # permitido
+        else:
+            return Errores(
+                "SEMANTICO",
+                f"No se puede comparar valores de tipo {type(val1).__name__} y {type(val2).__name__}",
+                self.linea,
+                self.col,
+            )
+
+        if self.operador == OperadoresRel.MENOR_IGUAL:
+            return val1 <= val2
+        elif self.operador == OperadoresRel.MAYOR_QUE:
+            return val1 > val2
+        elif self.operador == OperadoresRel.MAYOR_IGUAL:
+            return val1 >= val2
+        elif self.operador == OperadoresRel.IGUAL_IGUAL:
+            resultado = val1 == val2
+            return resultado
+        elif self.operador == OperadoresRel.DIFERENTE:
+            return val1 != val2
+        elif self.operador == OperadoresRel.MENOR_QUE:
+            return val1 < val2
+        else:
+            return Errores(
+                "SEMANTICO",
+                f"Operador relacional desconocido: {self.operador}",
+                self.linea,
+                self.col,
+            )
+
+    def graficar(self, grafo: clasAST, arbol=None, tabla=None):
+        # Evaluar ambos operandos antes de graficar
+        val1 = None
+        val2 = None
+        try:
+            if arbol is not None and tabla is not None:
+                val1 = self.op1.interpretar(arbol, tabla)
+                val2 = self.op2.interpretar(arbol, tabla)
+        except Exception:
+            val1 = val2 = None
+
+        from src.excepciones.CErrores import Errores
+
+        if isinstance(val1, Errores) or isinstance(val2, Errores):
+            return None
+
+        tipOperacion = self.getNOpe()
+        nodoPrincipal = grafo.agregar_nodo(f"{tipOperacion}", fillcolor="white")
+        nodoOp1 = self.op1.graficar(grafo, arbol, tabla)
+        if nodoOp1 is not None:
+            grafo.agregar_arista(nodoPrincipal, nodoOp1)
+        nodoOp2 = self.op2.graficar(grafo, arbol, tabla)
+        if nodoOp2 is not None:
+            grafo.agregar_arista(nodoPrincipal, nodoOp2)
+        return nodoPrincipal
+
+    def getNOpe(self):
+        if self.operador == OperadoresRel.IGUAL_IGUAL:
+            return "=="
+        elif self.operador == OperadoresRel.DIFERENTE:
+            return "!="
+        elif self.operador == OperadoresRel.MENOR_QUE:
+            return "<"
+        elif self.operador == OperadoresRel.MAYOR_QUE:
+            return ">"
+        elif self.operador == OperadoresRel.MENOR_IGUAL:
+            return "<="
+        elif self.operador == OperadoresRel.MAYOR_IGUAL:
+            return ">="
+        else:
+            return " "
