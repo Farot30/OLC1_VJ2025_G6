@@ -1,3 +1,4 @@
+// FOR con error en la condición (no booleana)
 for(int x41 = 0; x41 + 3; x41++) {
     println("holas");
     if(x41 == 2){
@@ -6,25 +7,69 @@ for(int x41 = 0; x41 + 3; x41++) {
         println("isis: " + isis);
     }
 }
+
+// IF correcto
 int stl = 0;
 if(stl == 0){
     println("hola");
 }
-/*
-switch(1<1){
-    case 0:
-        println("hola");
-        break;
-    case 1:
-        println("hola");
-        break;
-    case 2:
-        println("hola");
-        break;
-    default:
-        println("hola");
-}
-*/
 
+// Println con error semántico (suma de tipos incompatibles)
 println(true + 3);
+
+// Println correcto
 println("sapo peta sacumedeme la trompeta");
+
+// DO WHILE con error en la condición (no booleana)
+int dw = 0;
+do {
+    println("dentro del do while");
+    dw++;
+} while(dw + 2); // Error: condición no booleana
+
+// DO WHILE correcto
+int dw2 = 0;
+do {
+    println("do while correcto");
+    dw2++;
+} while(dw2 < 2);
+
+// FOR anidado con error en el ciclo interno
+for(int i = 0; i < 2; i++) {
+    println("Ciclo externo i: " + i);
+    for(int j = 0; j + 1; j++) { // Error: condición no booleana
+        println("Ciclo interno j: " + j);
+    }
+}
+
+// DO WHILE anidado dentro de FOR, con error en el do-while interno
+for(int k = 0; k < 2; k++) {
+    println("For externo k: " + k);
+    int dw_in = 0;
+    do {
+        println("DoWhile interno en for, dw_in: " + dw_in);
+        dw_in++;
+    } while(dw_in + 5); // Error: condición no booleana
+}
+
+// FOR dentro de DO WHILE, con error en el for interno
+int dw3 = 0;
+do {
+    println("DoWhile externo, dw3: " + dw3);
+    for(int m = 0; m + 2; m++) { // Error: condición no booleana
+        println("For interno en do while, m: " + m);
+    }
+    dw3++;
+} while(dw3 < 2);
+
+// DO WHILE anidado correcto
+int dw4 = 0;
+do {
+    println("DoWhile externo correcto, dw4: " + dw4);
+    int dw5 = 0;
+    do {
+        println("DoWhile interno correcto, dw5: " + dw5);
+        dw5++;
+    } while(dw5 < 2);
+    dw4++;
+} while(dw4 < 2);

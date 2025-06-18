@@ -10,7 +10,7 @@ def main():
     try:
         f = open("pruebaf.txt", "r", encoding="utf-8")
         entrada = f.read()
-
+        tablaSimbolo().setTabla([])
         ast = Arbol([])  # Crea el árbol antes de parsear
         instrucciones = parse_input(entrada, ast)
         # Filtra instrucciones válidas

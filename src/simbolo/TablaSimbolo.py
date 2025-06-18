@@ -34,7 +34,15 @@ class tablaSimbolo(metaclass=SingletonMeta):
 
     def borrarScope(self):
         if len(self.scopes) > 1:
-            return self.scopes.pop()
+            scope_to_remove = self.scopes.pop()
+
+            # Solo elimina variables si es un scope temporal
+            if scope_to_remove.startswith("temp"):
+                self.tabla_actual = [
+                    var for var in self.tabla_actual if var.scope != scope_to_remove
+                ]
+
+            return scope_to_remove
         raise RuntimeError("No se puede eliminar el scope global")
 
     def getTabla(self) -> []:  # type: ignore

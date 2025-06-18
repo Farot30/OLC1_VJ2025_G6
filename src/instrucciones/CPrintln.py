@@ -14,31 +14,40 @@ class Println(Instruccion):
         if isinstance(valor, Errores):
             print(valor)
             arbol.errores.append(valor)
+            self.valor_impreso = valor  # Guardar el error también
             return None
         arbol.setConsola(arbol.getConsola() + str(valor) + "\n")
-        self.valor_impreso = valor  # <-- Guarda el valor impreso
+        self.valor_impreso = valor
         return None
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
-        # Evaluar la expresión antes de graficar
-        valor_evaluable = None
-        try:
-            if arbol is not None and tabla is not None:
-                valor_evaluable = self.expresion.interpretar(arbol, tabla)
-        except Exception:
-            valor_evaluable = None
-
-        # Si hay error semántico, NO graficar nada
-        from src.excepciones.CErrores import Errores
-
-        if isinstance(valor_evaluable, Errores):
+        # No graficar si hay un error semántico
+        if hasattr(self, "valor_impreso") and isinstance(self.valor_impreso, Errores):
             return None
 
+        # Si estamos en modo verificación (cuando no se ha ejecutado aún)
+        if (
+            arbol is not None
+            and tabla is not None
+            and not hasattr(self, "valor_impreso")
+        ):
+            # Verificar si habría un error al evaluar la expresión
+            valor_temp = self.expresion.interpretar(arbol, tabla)
+            if isinstance(valor_temp, Errores):
+                return None  # No graficar si detectamos un error
+
+        # Continuar con la graficación normal
         nodoPrintln = grafo.agregar_nodo("Println")
-        if valor_evaluable is not None:
-            nodoValor = grafo.agregar_nodo(str(valor_evaluable))
-            grafo.agregar_arista(nodoPrintln, nodoValor)
+
+        if hasattr(self, "valor_impreso") and self.valor_impreso is not None:
+            nodo_valor = grafo.agregar_nodo(f"{self.valor_impreso}")
+            grafo.agregar_arista(nodoPrintln, nodo_valor)
         else:
-            nodoExp = grafo.agregar_nodo(str(self.expresion))
-            grafo.agregar_arista(nodoPrintln, nodoExp)
+            nodoExp = self.expresion.graficar(grafo, arbol, tabla)
+            if nodoExp is not None:
+                grafo.agregar_arista(nodoPrintln, nodoExp)
+            else:
+                nodo_fallback = grafo.agregar_nodo(f"Expr: {str(self.expresion)}")
+                grafo.agregar_arista(nodoPrintln, nodo_fallback)
+
         return nodoPrintln
