@@ -86,8 +86,6 @@ class Asignacion(Instruccion):
         except Exception:
             valor_evaluable = None
 
-        from src.excepciones.CErrores import Errores
-
         if isinstance(valor_evaluable, Errores):
             return None
 
