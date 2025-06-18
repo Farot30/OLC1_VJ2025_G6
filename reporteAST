@@ -1,0 +1,13 @@
+digraph ReporteAST {
+	node1 [label=Reporte color=black fillcolor=lightgray style=filled]
+	node2 [label="Declaración" color=purple fillcolor=white style=filled]
+	node3 [label="ID: s" color=purple fillcolor=white style=filled]
+	node2 -> node3
+	node4 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node2 -> node4
+	node5 [label=Valor color=purple fillcolor=white style=filled]
+	node2 -> node5
+	node6 [label=0 color=purple fillcolor=white style=filled]
+	node5 -> node6
+	node1 -> node2
+}
