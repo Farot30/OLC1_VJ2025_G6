@@ -4,7 +4,7 @@ PrInTlN("Println basico: 1");
 
 //---------------------------------- Prueba recuperacion errores ----------------------------------
 
-Print(Esto es un error);
+//Println(Esto es un error);
 
 /*
 	Esto deberia ignorarse
@@ -309,7 +309,7 @@ PRINTLN(10 / "algo"); // RES: ERROR SEMÁNTICO
 PRINTLN("DECIMAL / INT:");
 PRINTLN(9.0 / 3); // RES: 3.0
 
-PRINTLN("DECIMAL / DECIMAL:")
+PRINTLN("DECIMAL / DECIMAL:");
 PRINTLN(5.5 / 2.0); // RES: 2.75
 
 PRINTLN("DECIMAL / BOOL:");
@@ -729,7 +729,7 @@ INT A;
 FLOAT B;
 CHAR C; // PUEDE O NO TENER REPRESENTACION PERO DEBE APARECER EL SALTO DE LINEA
 BOOL D;
-STRING E;
+STR E;
 
 PRINTLN(A);
 PRINTLN(B);

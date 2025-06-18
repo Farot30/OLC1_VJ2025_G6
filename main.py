@@ -7,7 +7,7 @@ from src.abstracto.CAST import generarGrafica
 
 def main():
     try:
-        f = open("proban.txt", "r", encoding="utf-8")
+        f = open("pruebaf.txt", "r", encoding="utf-8")
         entrada = f.read()
         tablaSimbolo().setTabla([])
         ast = Arbol([])  # Crea el árbol antes de parsear
