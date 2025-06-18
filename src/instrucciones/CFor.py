@@ -85,6 +85,44 @@ class For(Instruccion):
         return None
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
+        # Comprobar errores en la inicialización, condición y actualización antes de graficar
+        if arbol and tabla:
+            # Crear copia de tabla para no afectar el scope original
+            tabla_temp = tabla
+            tabla_temp.nuevoScope("temp")
+
+            try:
+                # Validar inicialización
+                res_init = self.inicializacion.interpretar(arbol, tabla_temp)
+                if isinstance(res_init, Errores):
+                    # No graficar FOR si hay error en inicialización
+                    nodo_error = grafo.agregar_nodo(f"Error_FOR: {res_init.get_desc()}")
+                    return nodo_error
+
+                # Validar condición (debe ser booleana)
+                cond = self.condicion.interpretar(arbol, tabla)
+                if isinstance(cond, Errores) or not isinstance(cond, bool):
+                    # No graficar FOR si hay error en condición o no es booleana
+                    desc = (
+                        "La condición del ciclo for debe ser booleana"
+                        if not isinstance(cond, Errores)
+                        else cond.get_desc()
+                    )
+                    nodo_error = grafo.agregar_nodo(f"Error_FOR: {desc}")
+                    return nodo_error
+
+                # Validar actualización
+                res_upd = self.actualizacion.interpretar(arbol, tabla)
+                if isinstance(res_upd, Errores):
+                    # No graficar FOR si hay error en actualización
+                    nodo_error = grafo.agregar_nodo(f"Error_FOR: {res_upd.get_desc()}")
+                    return nodo_error
+
+            finally:
+                # Eliminar el scope temporal
+                tabla_temp.borrarScope()
+
+        # Si no hay errores, crear el nodo FOR normal
         nodoFor = grafo.agregar_nodo("For")
         nodoInicializacion = self.inicializacion.graficar(grafo, arbol, tabla)
         nodoCondicion = self.condicion.graficar(grafo, arbol, tabla)

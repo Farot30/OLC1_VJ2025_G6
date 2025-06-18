@@ -111,5 +111,5 @@ _lr_productions = [
   ('tipos -> CHAR','tipos',1,'p_tipos','gramatica.py',687),
   ('tipos -> BOOL','tipos',1,'p_tipos','gramatica.py',688),
   ('empty -> <empty>','empty',0,'p_empty','gramatica.py',703),
-  ('instruccion -> ID','instruccion',1,'p_instruccion_invalida','gramatica.py',768),
+  ('instruccion -> ID','instruccion',1,'p_instruccion_invalida','gramatica.py',780),
 ]

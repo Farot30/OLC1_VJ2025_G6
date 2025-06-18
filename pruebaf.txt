@@ -1,16 +1,10 @@
-INT opcion = 2;
-
-SWITCH (opcion) {
-    CASE 1:
-        PRINTLN("OPCIÓN 1");
-        BREAK;
-    CASE 2:
-        PRINTLN("OPCIÓN 2");
-        // ERROR SEMÁNTICO: falta el break
-    CASE 3:
-        PRINTLN("OPCIÓN 3");
-        BREAK;
-    DEFAULT:
-        PRINTLN("OPCIÓN NO VÁLIDA");
-        BREAK;
+for(int x41 = 0; x41 + 3; x41++) {
+    println("holas");
+    if(x41 == 2){
+        println("aas"); 
+        int isis = 1;
+        println("isis: " + isis);
+    }
 }
+
+println("sapo peta sacumedeme la trompeta");
