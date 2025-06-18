@@ -24,7 +24,7 @@ class sentIF(Instruccion):
                 res = instruccion.interpretar(arbol, tabla)
                 if isinstance(res, Errores):
                     arbol.errores.append(res)
-                elif res == "continue":
+                elif res in ["continue", "break"]:
                     tabla.borrarScope()
                     return res
                 tabla.borrarScope()
@@ -48,7 +48,7 @@ class sentIF(Instruccion):
                 resultado = instruccion.interpretar(arbol, tabla)
                 if isinstance(resultado, Errores):
                     arbol.errores.append(resultado)
-                elif resultado == "continue":
+                elif resultado in ["continue", "break"]:
                     tabla.borrarScope()
                     return resultado
             tabla.borrarScope()
