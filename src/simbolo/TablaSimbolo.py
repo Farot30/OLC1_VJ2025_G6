@@ -69,19 +69,22 @@ class tablaSimbolo(metaclass=SingletonMeta):
     def getVariable(self, id_, scope=None):
         key = id_.lower()
         scope = scope or self.current_scope
-        # Busca primero en el scope actual
-        for var in reversed(self.tabla_actual):
-            if var.entidad == "variable" and var.id == key and var.scope == scope:
-                return var
-        # Si no está, busca en global
-        if scope != "global":
+        # Busca en el scope actual y en los padres, de adentro hacia afuera
+        idx = len(self.scopes) - 1
+        while idx >= 0:
+            current_scope = self.scopes[idx]
             for var in reversed(self.tabla_actual):
                 if (
                     var.entidad == "variable"
                     and var.id == key
-                    and var.scope == "global"
+                    and var.scope == current_scope
                 ):
                     return var
+            idx -= 1
+        # Si no está, busca en global (por si acaso)
+        for var in reversed(self.tabla_actual):
+            if var.entidad == "variable" and var.id == key and var.scope == "global":
+                return var
         raise KeyError(
             f"La variable '{id_}' no ha sido declarada en el entorno '{scope}' ni en global"
         )

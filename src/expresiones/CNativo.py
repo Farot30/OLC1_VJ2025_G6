@@ -2,6 +2,7 @@ from src.abstracto.CInstruccion import Instruccion
 from src.simbolo.CTipo import Tipo
 from src.excepciones.CErrores import Errores
 from src.abstracto.CAST import clasAST
+from src.simbolo.CTipo import tipoDato
 
 
 class Nativo(Instruccion):
@@ -27,15 +28,21 @@ class Nativo(Instruccion):
                     self.linea,
                     self.col,
                 )
+        # --- CORRECCIÓN: Forzar booleano si el tipo es BOOL ---
+        if hasattr(self, "tipo") and hasattr(self.tipoDato, "tipo"):
+
+            if self.tipoDato.tipo == tipoDato.BOOL:
+                if self.valor is True or self.valor is False:
+                    return self.valor
+                if str(self.valor).lower() == "true":
+                    return True
+                if str(self.valor).lower() == "false":
+                    return False
+                if self.valor == 1:
+                    return True
+                if self.valor == 0:
+                    return False
         return self.valor
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
-        # Si tienes contexto y es identificador, muestra el valor actual
-        if (
-            arbol is not None
-            and tabla is not None
-            and getattr(self, "es_identificador", False)
-        ):
-            valor = self.interpretar(arbol, tabla)
-            return grafo.agregar_nodo(str(valor))
         return grafo.agregar_nodo(str(self.valor))

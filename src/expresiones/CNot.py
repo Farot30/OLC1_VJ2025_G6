@@ -16,7 +16,7 @@ class Not(Instruccion):
         valor = self.expresion.interpretar(arbol, tabla)
         if isinstance(valor, Errores):
             return valor
-        if isinstance(valor, bool):
+        if type(valor) is bool:
             return not valor
         else:
             return Errores(
@@ -29,5 +29,6 @@ class Not(Instruccion):
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         nodoNot = grafo.agregar_nodo("NOT")
         nodoExp = self.expresion.graficar(grafo, arbol, tabla)
-        grafo.agregar_arista(nodoNot, nodoExp)
+        if nodoExp is not None:
+            grafo.agregar_arista(nodoNot, nodoExp)
         return nodoNot

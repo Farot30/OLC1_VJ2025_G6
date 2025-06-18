@@ -69,6 +69,7 @@ class While(Instruccion):
 
         for instr in self.instrucciones:
             nodoInstr = instr.graficar(grafo, arbol, tabla)
-            grafo.agregar_arista(nodoCuerpo, nodoInstr)
+            if nodoInstr is not None:
+                grafo.agregar_arista(nodoCuerpo, nodoInstr)
 
         return nodoWhile

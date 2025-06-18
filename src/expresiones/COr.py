@@ -21,21 +21,22 @@ class Or(Instruccion):
         if isinstance(val2, Errores):
             return val2
 
-        # Permitir cualquier valor, pero advertir si no es lógico
-        try:
-            return bool(val1) or bool(val2)
-        except Exception:
+        # Ambos operandos deben ser booleanos
+        if type(val1) is not bool or type(val2) is not bool:
             return Errores(
                 "SEMANTICO",
-                f"Operador OR no puede aplicarse a tipos {type(val1).__name__} y {type(val2).__name__}",
+                f"Operador OR solo puede aplicarse a booleanos, no a {type(val1).__name__} y {type(val2).__name__}",
                 self.linea,
                 self.col,
             )
+        return val1 or val2
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         nodoOR = grafo.agregar_nodo("OR")
         nodoIzq = self.izq.graficar(grafo, arbol, tabla)
         nodoDer = self.der.graficar(grafo, arbol, tabla)
-        grafo.agregar_arista(nodoOR, nodoIzq)
-        grafo.agregar_arista(nodoOR, nodoDer)
+        if nodoIzq is not None:
+            grafo.agregar_arista(nodoOR, nodoIzq)
+        if nodoDer is not None:
+            grafo.agregar_arista(nodoOR, nodoDer)
         return nodoOR

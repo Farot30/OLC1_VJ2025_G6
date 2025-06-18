@@ -78,11 +78,25 @@ class Asignacion(Instruccion):
         return None
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
+        # Evaluar el valor antes de graficar
+        valor_evaluable = None
+        try:
+            if arbol is not None and tabla is not None:
+                valor_evaluable = self.valor.interpretar(arbol, tabla)
+        except Exception:
+            valor_evaluable = None
+
+        from src.excepciones.CErrores import Errores
+
+        if isinstance(valor_evaluable, Errores):
+            return None
+
         asignacion = grafo.agregar_nodo("Asignación")
         nodoID = grafo.agregar_nodo(f"{self.id}")
         nodoval = self.valor.graficar(grafo, arbol, tabla)
 
         grafo.agregar_arista(asignacion, nodoID)
-        grafo.agregar_arista(asignacion, nodoval)
+        if nodoval is not None:  # <-- Solo agrega si el nodo existe
+            grafo.agregar_arista(asignacion, nodoval)
 
         return asignacion

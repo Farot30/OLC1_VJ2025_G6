@@ -55,6 +55,17 @@ class DoWhile(Instruccion):
                 continue
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
+        # Evaluar la condición antes de graficar
+        valor_cond = None
+        try:
+            if arbol is not None and tabla is not None:
+                valor_cond = self.condicion.interpretar(arbol, tabla)
+        except Exception:
+            valor_cond = None
+
+        if isinstance(valor_cond, Errores) or not isinstance(valor_cond, bool):
+            return None
+
         nodoDoWhile = grafo.agregar_nodo("DoWhile")
         nodoCondicion = self.condicion.graficar(grafo, arbol, tabla)
         nodoCuerpo = grafo.agregar_nodo("Cuerpo")
@@ -64,6 +75,7 @@ class DoWhile(Instruccion):
 
         for instr in self.instrucciones:
             nodoInstr = instr.graficar(grafo, arbol, tabla)
-            grafo.agregar_arista(nodoCuerpo, nodoInstr)
+            if nodoInstr is not None:
+                grafo.agregar_arista(nodoCuerpo, nodoInstr)
 
         return nodoDoWhile
