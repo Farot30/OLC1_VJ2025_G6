@@ -1,4 +1,6 @@
-IF (TRUE){
-	PRINTln("LO SIGUIENTE TIENE QUE SER UN ERROR SEMANTICO");
-	CONTINUE;
+
+int s = 0;
+while("good") {
+    println("Esto es un error");
+    println("Esto tambien es un error");
 }

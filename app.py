@@ -36,7 +36,7 @@ def index():
 
             # Reinicia la tabla de símbolos (nueva instancia)
             tabla = tablaSimbolo()
-            tabla.limpiar()  # <-- Agrega este método en tu clase tablaSimbolo si no existe
+            tabla.limpiar()
             arbol.setTablaGlobal(tabla)
             arbol.setConsola("")
             # NO limpiar errores aquí: arbol.errores = []  <-- COMENTADO

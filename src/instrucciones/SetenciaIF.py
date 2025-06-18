@@ -51,7 +51,7 @@ class sentIF(Instruccion):
 
         if self.condicion.tipoDato.getTipo() != tipoDato.BOOL:
             self.enError = True
-            return Errores("Semantico", "La condición es errónea", self.linea, self.col)
+            return Errores("SEMANTICO", "La condición es errónea", self.linea, self.col)
 
         tabla.nuevoScope("If")
         if cond:
