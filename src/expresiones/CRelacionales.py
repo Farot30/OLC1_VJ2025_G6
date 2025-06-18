@@ -95,6 +95,21 @@ class Relacional(Instruccion, ABC):
             )
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
+        # Evaluar ambos operandos antes de graficar
+        val1 = None
+        val2 = None
+        try:
+            if arbol is not None and tabla is not None:
+                val1 = self.op1.interpretar(arbol, tabla)
+                val2 = self.op2.interpretar(arbol, tabla)
+        except Exception:
+            val1 = val2 = None
+
+        from src.excepciones.CErrores import Errores
+
+        if isinstance(val1, Errores) or isinstance(val2, Errores):
+            return None
+
         tipOperacion = self.getNOpe()
         nodoPrincipal = grafo.agregar_nodo(f"{tipOperacion}", fillcolor="white")
         nodoOp1 = self.op1.graficar(grafo, arbol, tabla)

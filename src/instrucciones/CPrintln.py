@@ -20,22 +20,25 @@ class Println(Instruccion):
         return None
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
+        # Evaluar la expresión antes de graficar
+        valor_evaluable = None
+        try:
+            if arbol is not None and tabla is not None:
+                valor_evaluable = self.expresion.interpretar(arbol, tabla)
+        except Exception:
+            valor_evaluable = None
+
+        # Si hay error semántico, NO graficar nada
+        from src.excepciones.CErrores import Errores
+
+        if isinstance(valor_evaluable, Errores):
+            return None
+
         nodoPrintln = grafo.agregar_nodo("Println")
-        if self.valor_impreso is not None:
-            nodoValor = grafo.agregar_nodo(str(self.valor_impreso))
+        if valor_evaluable is not None:
+            nodoValor = grafo.agregar_nodo(str(valor_evaluable))
             grafo.agregar_arista(nodoPrintln, nodoValor)
         else:
-            valor_evaluable = None
-            try:
-                if arbol is not None and tabla is not None:
-                    valor_evaluable = self.expresion.interpretar(arbol, tabla)
-            except Exception:
-                valor_evaluable = None
-
-            if valor_evaluable is not None and not isinstance(valor_evaluable, Errores):
-                nodoValor = grafo.agregar_nodo(str(valor_evaluable))
-                grafo.agregar_arista(nodoPrintln, nodoValor)
-            else:
-                nodoExp = grafo.agregar_nodo(str(self.expresion))
-                grafo.agregar_arista(nodoPrintln, nodoExp)
+            nodoExp = grafo.agregar_nodo(str(self.expresion))
+            grafo.agregar_arista(nodoPrintln, nodoExp)
         return nodoPrintln

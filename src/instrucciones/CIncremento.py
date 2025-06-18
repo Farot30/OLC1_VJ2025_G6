@@ -17,11 +17,13 @@ class Incremento(Instruccion):
                 simbolo = sym
                 break
         if simbolo is None:
+            self.error = True  # <-- Marca el error
             return Errores(
                 "SEMANTICO", f"Variable '{self.id}' no declarada", self.linea, self.col
             )
         valor = simbolo.getValor()
         if not isinstance(valor, (int, float)):
+            self.error = True  # <-- Marca el error
             return Errores(
                 "SEMANTICO",
                 f"No se puede incrementar un valor no numérico",
@@ -32,6 +34,7 @@ class Incremento(Instruccion):
         # simbolo.scope = tabla.current_scope
 
         simbolo.setValor(valor + 1)
+        self.error = False  # <-- Limpia el error si todo está bien
         return None
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
@@ -55,26 +58,28 @@ class Decremento(Instruccion):
                 simbolo = sym
                 break
         if simbolo is None:
+            self.error = True
             return Errores(
                 "SEMANTICO", f"Variable '{self.id}' no declarada", self.linea, self.col
             )
         valor = simbolo.getValor()
         if not isinstance(valor, (int, float)):
+            self.error = True
             return Errores(
                 "SEMANTICO",
                 f"No se puede decrementar un valor no numérico",
                 self.linea,
                 self.col,
             )
-        # Siempre actualiza el scope al actual cuando se decrementa
         # simbolo.scope = tabla.current_scope
 
         simbolo.setValor(valor - 1)
+        self.error = False
         return None
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         if getattr(self, "error", False):
-            return None  # <-- No grafica si hubo error
+            return None
         nodoDec = grafo.agregar_nodo("Decremento")
         nodoID = grafo.agregar_nodo(f"ID: {self.id}")
         grafo.agregar_arista(nodoDec, nodoID)

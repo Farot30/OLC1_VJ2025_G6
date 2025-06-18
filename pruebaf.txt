@@ -6,5 +6,25 @@ for(int x41 = 0; x41 + 3; x41++) {
         println("isis: " + isis);
     }
 }
+int stl = 0;
+if(stl == 0){
+    println("hola");
+}
+/*
+switch(1<1){
+    case 0:
+        println("hola");
+        break;
+    case 1:
+        println("hola");
+        break;
+    case 2:
+        println("hola");
+        break;
+    default:
+        println("hola");
+}
+*/
 
+println(true + 3);
 println("sapo peta sacumedeme la trompeta");
