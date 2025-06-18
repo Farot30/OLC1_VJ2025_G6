@@ -364,7 +364,7 @@ class Aritmeticas(Instruccion, ABC):
                 return float(op1) % float(op2)
             else:
                 return Errores(
-                    "SEMANTICO", "Mosulo entre tipos no valida", self.linea, self.col
+                    "SEMANTICO", "Modulo entre tipos no valida", self.linea, self.col
                 )
 
         elif tipo1 == tipoDato.DECIMAL:

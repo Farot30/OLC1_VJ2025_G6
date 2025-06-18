@@ -1,5 +1,4 @@
 from src.abstracto.CInstruccion import Instruccion
-from src.simbolo.CTipo import Tipo, tipoDato
 from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores

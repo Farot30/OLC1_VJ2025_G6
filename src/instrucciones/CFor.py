@@ -21,15 +21,13 @@ class For(Instruccion):
         self.instrucciones = instrucciones
 
     def interpretar(self, arbol, tabla):
-        # PRIMERO la inicialización, para que use el scope correcto
-        res_init = self.inicializacion.interpretar(arbol, tabla)
-        if isinstance(res_init, Errores):
-            return res_init
-
-        # Crear un scope único para este FOR
         scope_name = tabla.nuevoScope("For")
 
         try:
+            res_init = self.inicializacion.interpretar(arbol, tabla)
+            if isinstance(res_init, Errores):
+                return res_init
+
             while True:
                 cond = self.condicion.interpretar(arbol, tabla)
                 if isinstance(cond, Errores):
@@ -44,12 +42,11 @@ class For(Instruccion):
                 if not cond:
                     break
 
-                # Crear un nuevo scope INTERNO para cada iteración
-                # Esto es clave para los FOR anidados
                 tabla.nuevoScope(f"{scope_name}_iter")
 
                 try:
                     for instr in self.instrucciones:
+
                         if "entorno" in instr.interpretar.__code__.co_varnames:
                             if "en_ciclo" in instr.interpretar.__code__.co_varnames:
                                 res = instr.interpretar(
@@ -64,8 +61,12 @@ class For(Instruccion):
                                 res = instr.interpretar(arbol, tabla, en_ciclo=True)
                             else:
                                 res = instr.interpretar(arbol, tabla)
+
                         if isinstance(res, Errores):
-                            return res
+                            arbol.errores.append(res)
+                            continue
+
+                        # Mantener el comportamiento para break/continue
                         if res == "continue":
                             break
                         if res == "break":
@@ -75,51 +76,37 @@ class For(Instruccion):
                     if isinstance(res_upd, Errores):
                         return res_upd
                 finally:
-                    # Eliminar el scope de iteración
                     tabla.borrarScope()
 
         finally:
-            # Eliminar el scope principal del FOR
             tabla.borrarScope()
 
         return None
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
-        # Comprobar errores en la inicialización, condición y actualización antes de graficar
         if arbol and tabla:
-            # Crear copia de tabla para no afectar el scope original
             tabla_temp = tabla
             tabla_temp.nuevoScope("temp")
-
             try:
-                # Validar inicialización
                 res_init = self.inicializacion.interpretar(arbol, tabla_temp)
+                # print("FOR INIT:", res_init)
                 if isinstance(res_init, Errores):
-                    # No graficar FOR si hay error en inicialización
-                    nodo_error = grafo.agregar_nodo(f"Error_FOR: {res_init.get_desc()}")
-                    return nodo_error
+                    # print("NO GRAFICA FOR POR INIT")
+                    return None
 
-                # Validar condición (debe ser booleana)
                 cond = self.condicion.interpretar(arbol, tabla)
+                # print("FOR COND:", cond)
                 if isinstance(cond, Errores) or not isinstance(cond, bool):
-                    # No graficar FOR si hay error en condición o no es booleana
-                    desc = (
-                        "La condición del ciclo for debe ser booleana"
-                        if not isinstance(cond, Errores)
-                        else cond.get_desc()
-                    )
-                    nodo_error = grafo.agregar_nodo(f"Error_FOR: {desc}")
-                    return nodo_error
+                    # print("NO GRAFICA FOR POR COND")
+                    return None
 
-                # Validar actualización
                 res_upd = self.actualizacion.interpretar(arbol, tabla)
+                # print("FOR UPD:", res_upd)
                 if isinstance(res_upd, Errores):
-                    # No graficar FOR si hay error en actualización
-                    nodo_error = grafo.agregar_nodo(f"Error_FOR: {res_upd.get_desc()}")
-                    return nodo_error
+                    # print("NO GRAFICA FOR POR UPD")
+                    return None
 
             finally:
-                # Eliminar el scope temporal
                 tabla_temp.borrarScope()
 
         # Si no hay errores, crear el nodo FOR normal
@@ -129,14 +116,20 @@ class For(Instruccion):
         nodoActualizacion = self.actualizacion.graficar(grafo, arbol, tabla)
         nodoCuerpo = grafo.agregar_nodo("Cuerpo")
 
-        grafo.agregar_arista(nodoFor, nodoInicializacion)
-        grafo.agregar_arista(nodoFor, nodoCondicion)
-        grafo.agregar_arista(nodoFor, nodoActualizacion)
+        # Verificar si los nodos son None antes de agregarlos
+        if nodoInicializacion is not None:
+            grafo.agregar_arista(nodoFor, nodoInicializacion)
+        if nodoCondicion is not None:
+            grafo.agregar_arista(nodoFor, nodoCondicion)
+        if nodoActualizacion is not None:
+            grafo.agregar_arista(nodoFor, nodoActualizacion)
+
         grafo.agregar_arista(nodoFor, nodoCuerpo)
 
+        # El resto sigue igual...
         for instr in self.instrucciones:
             hijo = instr.graficar(grafo, arbol, tabla)
-            if hijo is not None:  # <-- Solo agrega si el hijo existe
+            if hijo is not None:
                 grafo.agregar_arista(nodoCuerpo, hijo)
 
         return nodoFor
