@@ -262,10 +262,8 @@ precedence = (
     ("right", "UMENOS"),
 )
 
+
 # 7. REGLAS DE GRAMÁTICA (SINTAXIS)
-
-
-# --- Inicio y lista de instrucciones ---
 def p_inicio(t):
     "inicio : instrucciones"
     t[0] = t[1]
