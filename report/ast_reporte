@@ -1,13 +1,121 @@
 digraph ReporteAST {
 	node1 [label=Reporte color=black fillcolor=lightgray style=filled]
-	node2 [label="Declaración" color=purple fillcolor=white style=filled]
-	node3 [label="ID: s" color=purple fillcolor=white style=filled]
+	node2 [label=Println color=purple fillcolor=white style=filled]
+	node3 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
 	node2 -> node3
-	node4 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
-	node2 -> node4
-	node5 [label=Valor color=purple fillcolor=white style=filled]
-	node2 -> node5
-	node6 [label=0 color=purple fillcolor=white style=filled]
-	node5 -> node6
 	node1 -> node2
+	node4 [label=Println color=purple fillcolor=white style=filled]
+	node5 [label="------------------------------ FOR ----------------------------------------" color=purple fillcolor=white style=filled]
+	node4 -> node5
+	node1 -> node4
+	node6 [label=Println color=purple fillcolor=white style=filled]
+	node7 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node6 -> node7
+	node1 -> node6
+	node8 [label=For color=purple fillcolor=white style=filled]
+	node9 [label="Declaración" color=purple fillcolor=white style=filled]
+	node10 [label="ID: k" color=purple fillcolor=white style=filled]
+	node9 -> node10
+	node11 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node9 -> node11
+	node12 [label=Valor color=purple fillcolor=white style=filled]
+	node9 -> node12
+	node13 [label=0 color=purple fillcolor=white style=filled]
+	node12 -> node13
+	node14 [label=Incremento color=purple fillcolor=white style=filled]
+	node15 [label="ID: K" color=purple fillcolor=white style=filled]
+	node14 -> node15
+	node16 [label=Cuerpo color=purple fillcolor=white style=filled]
+	node8 -> node9
+	node8 -> node14
+	node8 -> node16
+	node17 [label=If color=purple fillcolor=white style=filled]
+	node18 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node17 -> node18
+	node19 [label=Continue color=purple fillcolor=white style=filled]
+	node18 -> node19
+	node16 -> node17
+	node20 [label=If color=purple fillcolor=white style=filled]
+	node21 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node20 -> node21
+	node22 [label=Break color=purple fillcolor=white style=filled]
+	node21 -> node22
+	node16 -> node20
+	node23 [label=Println color=purple fillcolor=white style=filled]
+	node24 [label="k = " color=purple fillcolor=white style=filled]
+	node23 -> node24
+	node16 -> node23
+	node25 [label=Println color=purple fillcolor=white style=filled]
+	node26 [label=3 color=purple fillcolor=white style=filled]
+	node25 -> node26
+	node16 -> node25
+	node1 -> node8
+	node27 [label=Println color=purple fillcolor=white style=filled]
+	node28 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node27 -> node28
+	node1 -> node27
+	node29 [label=Println color=purple fillcolor=white style=filled]
+	node30 [label="--------------------------- FOR ANIDADO -----------------------------------" color=purple fillcolor=white style=filled]
+	node29 -> node30
+	node1 -> node29
+	node31 [label=Println color=purple fillcolor=white style=filled]
+	node32 [label="---------------------------------------------------------------------------" color=purple fillcolor=white style=filled]
+	node31 -> node32
+	node1 -> node31
+	node33 [label=For color=purple fillcolor=white style=filled]
+	node34 [label="Declaración" color=purple fillcolor=white style=filled]
+	node35 [label="ID: x" color=purple fillcolor=white style=filled]
+	node34 -> node35
+	node36 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node34 -> node36
+	node37 [label=Valor color=purple fillcolor=white style=filled]
+	node34 -> node37
+	node38 [label=0 color=purple fillcolor=white style=filled]
+	node37 -> node38
+	node39 [label=Incremento color=purple fillcolor=white style=filled]
+	node40 [label="ID: X" color=purple fillcolor=white style=filled]
+	node39 -> node40
+	node41 [label=Cuerpo color=purple fillcolor=white style=filled]
+	node33 -> node34
+	node33 -> node39
+	node33 -> node41
+	node42 [label=For color=purple fillcolor=white style=filled]
+	node43 [label="Declaración" color=purple fillcolor=white style=filled]
+	node44 [label="ID: y" color=purple fillcolor=white style=filled]
+	node43 -> node44
+	node45 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node43 -> node45
+	node46 [label=Valor color=purple fillcolor=white style=filled]
+	node43 -> node46
+	node47 [label=0 color=purple fillcolor=white style=filled]
+	node46 -> node47
+	node48 [label=Incremento color=purple fillcolor=white style=filled]
+	node49 [label="ID: Y" color=purple fillcolor=white style=filled]
+	node48 -> node49
+	node50 [label=Cuerpo color=purple fillcolor=white style=filled]
+	node42 -> node43
+	node42 -> node48
+	node42 -> node50
+	node51 [label=If color=purple fillcolor=white style=filled]
+	node52 [label=AND color=purple fillcolor=white style=filled]
+	node51 -> node52
+	node53 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node51 -> node53
+	node54 [label=Continue color=purple fillcolor=white style=filled]
+	node53 -> node54
+	node50 -> node51
+	node55 [label=If color=purple fillcolor=white style=filled]
+	node56 [label=AND color=purple fillcolor=white style=filled]
+	node55 -> node56
+	node57 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node55 -> node57
+	node58 [label=Break color=purple fillcolor=white style=filled]
+	node57 -> node58
+	node50 -> node55
+	node59 [label=Println color=purple fillcolor=white style=filled]
+	node60 [label="x = 2, y = 0" color=purple fillcolor=white style=filled]
+	node59 -> node60
+	node50 -> node59
+	node41 -> node42
+	node1 -> node33
 }

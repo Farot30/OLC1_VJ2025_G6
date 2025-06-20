@@ -21,6 +21,8 @@ from src.instrucciones.CWhile import While
 from src.instrucciones.CDoWhile import DoWhile
 from src.instrucciones.CSwitch import Switch, Case
 from src.instrucciones.CContinue import Continue
+from src.Vectores.DeclaracionVector import DeclaracionVector
+from src.Vectores.AsignacionVector import AsignacionVector
 
 # 2. TOKENS Y RESERVADAS
 tokens = [
@@ -73,6 +75,10 @@ tokens = [
     "DEFAULT",
     "DOSPT",
     "CONTINUE",
+    "VECTOR",
+    "LEFTCORCH",
+    "RIGHTCORCH",
+    "COMMA",
 ]
 
 reservadas = {
@@ -94,6 +100,7 @@ reservadas = {
     "default": "DEFAULT",
     "continue": "CONTINUE",
     "println": "PRINTLN",
+    "vector": "VECTOR",
 }
 
 # 3. EXPRESIONES REGULARES DE TOKENS
@@ -123,6 +130,9 @@ t_LLAVE1 = r"\{"
 t_LLAVE2 = r"\}"
 t_DOSPT = r":"
 t_ignore = " \t\r\f"
+t_LEFTCORCH = r"\["
+t_RIGHTCORCH = r"\]"
+t_COMMA = r","
 
 
 # 4. FUNCIONES DE TOKENS ESPECIALES
@@ -217,6 +227,17 @@ def t_ENTERO(t):
     return t
 
 
+"""
+def t_NUMBER(t):
+    r"\d+(\.\d+)?"
+    if "." in t.value:
+        t.value = float(t.value)
+    else:
+        t.value = int(t.value)
+    return t
+"""
+
+
 def t_newline(t):
     r"\n+"
     t.lexer.lineno += len(t.value)
@@ -262,10 +283,8 @@ precedence = (
     ("right", "UMENOS"),
 )
 
+
 # 7. REGLAS DE GRAMÁTICA (SINTAXIS)
-
-
-# --- Inicio y lista de instrucciones ---
 def p_inicio(t):
     "inicio : instrucciones"
     t[0] = t[1]
@@ -293,6 +312,8 @@ def p_instruccion_vacia(t):
 # --- Instrucción principal ---
 def p_instruccion(t):
     """instruccion : declaracion PUNTOCOMA
+    | declaracion_vector
+    | asignacion_vector
     | asignacion PUNTOCOMA
     | incremento PUNTOCOMA
     | decremento PUNTOCOMA
@@ -329,6 +350,88 @@ def p_declaracion_sinval(t):
     )
 
 
+# Vectores
+def p_declaracion_vector(t):
+    """declaracion_vector : VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector PUNTOCOMA"""
+    t[0] = DeclaracionVector(
+        t[3],
+        t[5],
+        t[7],
+        t[10],
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
+
+
+def p_asignacion_vector(t):
+    """asignacion_vector : ID dimension IGUAL expresion PUNTOCOMA"""
+    t[0] = AsignacionVector(
+        t[1],
+        t[2],
+        t[4],
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
+    )
+
+
+def p_dimension(t):
+    """dimension : LEFTCORCH ENTERO RIGHTCORCH
+    | dimension LEFTCORCH ENTERO RIGHTCORCH"""
+    if len(t) == 4:
+        # Primer índice: [0]
+        t[0] = [t[2]]
+    else:
+        # Índices adicionales: [0][1]
+        t[0] = t[1] + [t[3]]
+
+
+def p_dimensiones(t):
+    """dimensiones : ENTERO
+    | dimensiones COMMA ENTERO"""
+    if len(t) == 2:
+        # Guarda la primera dimensión en una lista
+        t[0] = [t[1]]
+    else:
+        # Concatena la nueva dimensión a la lista existente
+        t[0] = t[1] + [t[3]]
+
+
+def p_expresion_vector(t):
+    """expresion_vector : LEFTCORCH contenido_vector RIGHTCORCH"""
+    # El valor es el contenido entre los corchetes
+    t[0] = t[2]
+
+
+def p_contenido_vector(t):
+    """contenido_vector : lista_valores
+    | lista_vectores"""
+    # - lista_valores: elementos simples como [1, 2, 3]
+    # - lista_vectores: vectores anidados como [[1, 2], [3, 4]]
+    t[0] = t[1]
+
+
+def p_lista_valores(t):
+    """lista_valores : expresion
+    | expresion COMMA lista_valores"""
+    if len(t) == 2:
+        # Un solo elemento en una lista
+        t[0] = [t[1]]
+    else:
+        # Concatena el elemento actual con el resto de la lista
+        t[0] = [t[1]] + t[3]
+
+
+def p_lista_vectores(t):
+    """lista_vectores : LEFTCORCH lista_valores RIGHTCORCH
+    | LEFTCORCH lista_valores RIGHTCORCH COMMA lista_vectores"""
+    if len(t) == 4:
+        # Un solo vector anidado
+        t[0] = [t[2]]
+    else:
+        # Concatena el vector actual con el resto de vectores
+        t[0] = [t[2]] + t[5]
+
+
 # --- Asignación ---
 def p_asignacion(t):
     "asignacion : ID IGUAL expresion"
@@ -353,13 +456,12 @@ def p_bloque(t):
 
 
 # --- IF ---
-
-
 # 2. Mantén la función p_sent_if, pero ajusta las reglas para manejar IF en mayúsculas
 def p_sent_if(t):
     """sent_if : if_simple
     | if_else
-    | if_elseif"""
+    | if_elseif
+    | if_elseif_else"""  # Añadir esta línea
     t[0] = t[1]
 
 
@@ -383,8 +485,7 @@ def p_if_else(t):
 
 # 5. Añadir una nueva regla específica para ELSE IF (como se usa en tu código)
 def p_if_elseif(t):
-    """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""
-    # Esta implementación maneja explícitamente la secuencia "ELSE IF"
+    """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""  # Esta implementación maneja explícitamente la secuencia "ELSE IF"
     t[0] = sentIF(
         t[3],  # Condición del IF
         t[6],  # Cuerpo del IF
@@ -401,8 +502,7 @@ def p_if_elseif(t):
 
 # 6. Añadir una regla para IF-ELSE IF-ELSE completo
 def p_if_elseif_else(t):
-    """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""
-    # Maneja: IF (...) {...} ELSE IF (...) {...} ELSE {...}
+    """if_elseif_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""  # Maneja: IF (...) {...} ELSE IF (...) {...} ELSE {...}
     elseif_node = sentIF(
         t[11],  # Condición del ELSE IF
         t[14],  # Cuerpo del ELSE IF
@@ -819,6 +919,7 @@ parser = yacc.yacc(debug=True)
 def parse_input(input_text, arbol):
     setattr(lexer, "arbol", arbol)
     lexer.lineno = 1
+
     result = parser.parse(input_text, lexer=lexer)
     if result is None:
         return []

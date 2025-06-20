@@ -1,0 +1,12 @@
+// Vector unidimensional de enteros
+//Vector[int] vec1D (3) = [1, 2, 3];
+
+// Vector bidimensional (matriz 2x2)
+Vector[int] matriz (2, 2) = [[1, 2], [3, 4]];
+
+matriz[0][0] = 5;  // Asignación de elementos
+matriz[0][1] = 10;
+matriz[1][0] = 20;
+matriz[1][1] = 30;
+
+println(matriz);  // Imprimir elemento
