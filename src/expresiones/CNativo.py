@@ -17,6 +17,10 @@ class Nativo(Instruccion):
     def interpretar(self, arbol, tabla):
         # Si es un identificador, busca el valor en la tabla de símbolos SIEMPRE
         if getattr(self, "es_identificador", False):
+            if hasattr(arbol, "vectores") and self.valor in arbol.vectores:
+                # Si es un vector, devuelve el vector completo
+                return arbol.vectores[self.valor]
+
             try:
                 simbolo = tabla.getVariable(self.valor)
                 self.tipoDato = simbolo.getTipo()

@@ -56,7 +56,6 @@ class Declaracion(Instruccion):
                 var_existente.linea = self.linea
                 var_existente.columna = self.col
             except:
-                # La variable no existe, crearla normalmente
                 tabla.setVariable(sim)
 
         # caso <TIPO> <ID>; (Con valores por defecto)
