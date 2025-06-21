@@ -3,6 +3,7 @@ from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
 from src.abstracto.CAST import generarGrafica
+from src.Vectores.ReporteVector import ReporteVectores
 
 
 def main():
@@ -70,8 +71,15 @@ def imprimir_tabla_errores(errores):
         )
 
 
+# Añadir después de imprimir la tabla de errores
 if __name__ == "__main__":
     ast = main()
     if ast is not None:
         ast.get_tabla_global().ImprimirTabla()  # Usa el método de la clase
         imprimir_tabla_errores(ast.get_errores())
+
+        # Generar reporte de vectores si hay vectores declarados
+        if hasattr(ast, "vectores") and ast.vectores:
+
+            reporte = ReporteVectores(ast)
+            reporte.generar_reporte_consola()

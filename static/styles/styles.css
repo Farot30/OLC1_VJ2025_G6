@@ -204,3 +204,45 @@ label {
 .zoom-buttons button span {
     pointer-events: none;
 }
+
+/* Añadir al final del archivo: Estilos para Reporte de Vectores */
+.vector-container {
+    width: 90%;
+    max-width: var(--max-panel-width);
+    margin: 2rem auto;
+    background: #ffffff;
+    padding: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.linear-view {
+    background: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+}
+
+pre {
+    background: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.vector-container h2,
+.vector-container h3 {
+    color: var(--color-principal);
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.vector-container p {
+    margin: 0.5rem 0;
+}
+
+.vector-container p strong {
+    color: var(--color-principal);
+}

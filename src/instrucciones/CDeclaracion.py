@@ -8,17 +8,41 @@ from src.abstracto.CAST import clasAST
 
 
 class Declaracion(Instruccion):
-    def __init__(self, tipo, identificador, valor, linea, col):
+    def __init__(
+        self,
+        tipo: Tipo,
+        linea: int,
+        col: int,
+        identificador: str,
+        valor: Instruccion = None,
+    ):
         super().__init__(tipo, linea, col)
-        self.tipoDato = tipo
         self.identificador = identificador
         self.valor = valor
+
+    def _obtener_valor_por_defecto(self, tipo):
+        """Devuelve el valor por defecto según el tipo de dato"""
+        tipo_enum = tipo.getTipo()
+
+        if tipo_enum == tipoDato.ENTERO:
+            return 0
+        elif tipo_enum == tipoDato.DECIMAL:
+            return 0.0
+        elif tipo_enum == tipoDato.BOOL:
+            return False
+        elif tipo_enum == tipoDato.STRING:
+            return ""
+        elif tipo_enum == tipoDato.CHAR:
+            return ""
+        else:
+            return None  # Para tipos no especificados o personalizados
 
     def interpretar(self, arbol: Arbol, tabla: tablaSimbolo):
         scope_actual = tabla.current_scope  # obtiene el scope actual (entorno)
 
         # caso: <TIPO> <ID> = <EXPRESIÓN>;
         if self.valor:
+            # Código existente para cuando hay valor...
             res_valor = self.valor.interpretar(arbol, tabla)
             if isinstance(res_valor, Errores):
                 return res_valor
@@ -37,7 +61,6 @@ class Declaracion(Instruccion):
                     self.col,
                 )
 
-            # entidad="variable"
             sim = Simbolo(
                 tipo=self.tipoDato,
                 id=self.identificador,
@@ -48,82 +71,48 @@ class Declaracion(Instruccion):
                 columna=self.col,
             )
 
-            # MODIFICADO: Actualizar la variable si ya existe
-            try:
-                var_existente = tabla.getVariable(self.identificador)
-                var_existente.valor = res_valor
-                var_existente.tipo = self.tipoDato
-                var_existente.linea = self.linea
-                var_existente.columna = self.col
-            except:
-                tabla.setVariable(sim)
-
-        # caso <TIPO> <ID>; (Con valores por defecto)
+        # caso <TIPO> <ID>; (sin valor explícito)
         else:
-            # Asignar valor por defecto según el tipo
-            valor_default = self._obtener_valor_default(self.tipoDato.getTipo())
+            # Obtener valor por defecto según el tipo
+            valor_por_defecto = self._obtener_valor_por_defecto(self.tipoDato)
 
             sim = Simbolo(
                 tipo=self.tipoDato,
                 id=self.identificador,
                 entidad="variable",
-                valor=valor_default,
+                valor=valor_por_defecto,  # Usar el valor por defecto en lugar de None
                 scope=scope_actual,
                 linea=self.linea,
                 columna=self.col,
             )
 
-            # MODIFICADO: Actualizar la variable si ya existe
-            try:
-                var_existente = tabla.getVariable(self.identificador)
-                var_existente.valor = valor_default
-                var_existente.tipo = self.tipoDato
-                var_existente.linea = self.linea
-                var_existente.columna = self.col
-            except:
-                # La variable no existe, crearla normalmente
-                tabla.setVariable(sim)
+        # Código común para ambos casos
+        if not tabla.setVariable(sim):
+            return Errores(
+                "SEMANTICO",
+                f"La variable '{self.identificador}' ya existe",
+                self.linea,
+                self.col,
+            )
 
         return None
 
-    def _obtener_valor_default(self, tipo):
-        """Devuelve el valor por defecto según el tipo de dato"""
-        if tipo == tipoDato.ENTERO:
-            return 0
-        elif tipo == tipoDato.DECIMAL:
-            return 0.0
-        elif tipo == tipoDato.BOOL:
-            return False
-        elif tipo == tipoDato.STRING:
-            return ""
-        elif tipo == tipoDato.CHAR:
-            return "\0"  # Carácter nulo
-        elif tipo == tipoDato.VOID:
-            return None
-        else:
-            return None
-
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
-        # Nodo principal de la declaración
         nodoDeclaracion = grafo.agregar_nodo("Declaración")
 
-        # Nodo para el tipo
-        tipo_str = (
-            self.tipoDato.tipo.name
-            if hasattr(self.tipoDato, "tipo")
-            else str(self.tipoDato)
-        )
-        nodoTipo = grafo.agregar_nodo(f"Tipo: {tipo_str}")
+        # identificador
+        nodoID = grafo.agregar_nodo(f"ID: {self.identificador}")
+        grafo.agregar_arista(nodoDeclaracion, nodoID)
+
+        # tipo
+        nodoTipo = grafo.agregar_nodo(f"Tipo: {self.tipoDato.getTipo().name}")
         grafo.agregar_arista(nodoDeclaracion, nodoTipo)
 
-        # Nodo para el identificador
-        nodoId = grafo.agregar_nodo(f"ID: {self.identificador}")
-        grafo.agregar_arista(nodoDeclaracion, nodoId)
-
-        # Si hay un valor, graficarlo
-        if self.valor:
-            nodoValor = self.valor.graficar(grafo, arbol, tabla)
-            if nodoValor is not None:
-                grafo.agregar_arista(nodoDeclaracion, nodoValor)
+        # valor si fuera declaracion de variable con valor
+        if self.valor is not None:
+            nodoValor = grafo.agregar_nodo("Valor")
+            grafo.agregar_arista(nodoDeclaracion, nodoValor)
+            hijValor = self.valor.graficar(grafo, arbol, tabla)
+            grafo.agregar_arista(nodoValor, hijValor)
 
         return nodoDeclaracion

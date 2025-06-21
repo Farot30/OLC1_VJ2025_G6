@@ -12,6 +12,7 @@ class Arbol:
         self.consola = ""
         self.tabla_global = aTab
         self.errores = []
+        self.vectores = {}  # Inicializar el diccionario de vectores
 
     def getConsola(self) -> str:
         return self.consola

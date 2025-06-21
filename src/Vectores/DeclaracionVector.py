@@ -82,7 +82,6 @@ class DeclaracionVector(Instruccion):
         print(
             f"Vector declarado: {self.identificador} [{tipo_str}] {dimensiones_evaluadas} = {valores_str}"
         )
-        # Ya no llamamos a tabla.setVariable(vector)
         return None
 
     def _evaluar_valores(self, valores, arbol, tabla, nivel=0):
