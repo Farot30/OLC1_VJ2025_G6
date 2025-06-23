@@ -17,20 +17,31 @@ class tablaSimbolo(metaclass = SingletonMeta):
             #scopes las instancias 
             self.tabla_actual= []
             self.nombre_dato: str = ""
-          #  self.padre = padre  # <-- Nuevo
+            self.entorno_contadores = {}
 
     @property
     def current_scope(self):
         return self.scopes[-1]
     
-    def nuevoScope(self, id=None):
-        id = id or f"scope_{len(self.scopes)}"
-        self.scopes.append(id)
-        return id
+    def nuevoScope(self, tipo_entorno="scope"):
+        # Usa un contador para cada tipo de entorno
+        contador = self.entorno_contadores.get(tipo_entorno, 0) + 1
+        self.entorno_contadores[tipo_entorno] = contador
+        nombre_scope = f"{tipo_entorno}_{contador}"
+        self.scopes.append(nombre_scope)
+        return nombre_scope
     
     def borrarScope(self):
         if len(self.scopes) > 1:
-            return self.scopes.pop()
+            scope_to_remove = self.scopes.pop()
+
+            # Solo elimina variables si es un scope temporal
+            if scope_to_remove.startswith("temp"):
+                self.tabla_actual = [
+                    var for var in self.tabla_actual if var.scope != scope_to_remove
+                ]
+
+            return scope_to_remove
         raise RuntimeError("No se puede eliminar el scope global")
     
     def getTabla(self) -> []: # type: ignore
@@ -47,9 +58,18 @@ class tablaSimbolo(metaclass = SingletonMeta):
 
     def setVariable(self, simbolo: Simbolo) -> bool:
         key = simbolo.getId().lower()
-        for var in self.tabla_actual:
-            if var.id == key and var.scope == self.current_scope:
-                return False  # Ya existe
+        # Si estamos en global, solo debe fallar si ya existe en global
+        if self.current_scope == "global":
+            for var in self.tabla_actual:
+                if var.id == key and var.scope == "global":
+                    return False  # Ya existe en global
+        else:
+            # Si estamos en un entorno local, no debe existir en global ni en este entorno
+            for var in self.tabla_actual:
+                if var.id == key and (
+                    var.scope == "global" or var.scope == self.current_scope
+                ):
+                    return False  # Ya existe en global o en este entorno
         self.tabla_actual.append(simbolo)
         return True
 
@@ -57,16 +77,29 @@ class tablaSimbolo(metaclass = SingletonMeta):
         key = id_.lower()
         scope = scope or self.current_scope
 
-        for var in reversed(self.tabla_actual):
-            if var.entidad == 'variable' and var.id == key and var.scope == scope:
-                return var.valor
+        # Primero buscar en el scope actual y todos los scopes ancestros
+        idx = len(self.scopes) - 1
+        while idx >= 0:
+            current_scope = self.scopes[idx]
+            # Buscar directo en current_scope
+            for var in self.tabla_actual:
+                if (
+                    var.entidad == "variable"
+                    and var.id == key
+                    and var.scope == current_scope
+                ):
+                    return var
+            idx -= 1  # CORREGIDO: Ahora está dentro del while
 
-        varE = self.scopes.index(scope)
-        for enc in reversed(self.scopes[:varE]):
-            for var in reversed(self.tabla_actual):
-                if var.entidad == 'variable' and var.id == key and var.scope == enc:
-                    return var.valor
-        raise KeyError(f"La variable '{id_}' no ha sido declarada")
+        # Si no se encontró, buscar en global explícitamente
+        for var in self.tabla_actual:
+            if var.entidad == "variable" and var.id == key and var.scope == "global":
+                return var
+
+        # No se encontró la variable
+        raise KeyError(
+            f"La variable '{id_}' no ha sido declarada en el entorno '{scope}' ni en global"
+        )
         '''if key in self.tabla_actual:
             return self.tabla_actual[key]
         elif self.padre is not None:
@@ -106,8 +139,74 @@ class tablaSimbolo(metaclass = SingletonMeta):
             row = [str(d[h]) for h in headers]
             print(" | ".join(row))
 
+        for sym in self.tabla_actual:
+                # Tipo como texto
+                tipo_str = (
+                    sym.tipo.tipo.name
+                    if hasattr(sym.tipo, "tipo") and hasattr(sym.tipo.tipo, "name")
+                    else str(sym.tipo)
+                )
+                # Entorno: muestra el scope tal cual, solo cambia "global" por "Global"
+                entorno_str = "Global" if sym.scope == "global" else str(sym.scope)
+                # Valor como string
+                valor_str = str(sym.valor)
+                row = [
+                    str(
+                        getattr(sym, "nID", "")
+                    ),  # Si tienes un atributo nID, si no, déjalo vacío
+                    sym.id,
+                    sym.entidad,
+                    tipo_str,
+                    valor_str,
+                    entorno_str,
+                    str(sym.linea),
+                    str(sym.columna),
+                ]
+                print(" |\t ".join(row))
+
+    def tablaComoString(self):
+        headers = [
+            "id",
+            "nombre",
+            "entidad",
+            "tipo",
+            "valor",
+            "entorno",
+            "linea",
+            "columna",
+        ]
+        output = " |\t ".join(headers) + "\n"
+        output += "-" * (len(headers) * 15) + "\n"
+        for sym in self.tabla_actual:
+            tipo_str = (
+                sym.tipo.tipo.name
+                if hasattr(sym.tipo, "tipo") and hasattr(sym.tipo.tipo, "name")
+                else str(sym.tipo)
+            )
+            entorno_str = "Global" if sym.scope == "global" else str(sym.scope)
+            valor_str = str(sym.valor)
+            row = [
+                str(getattr(sym, "nID", "")),
+                sym.id,
+                sym.entidad,
+                tipo_str,
+                valor_str,
+                entorno_str,
+                str(sym.linea),
+                str(sym.columna),
+            ]
+            output += " |\t ".join(row) + "\n"
+        return output
+
     def existeVariable(self, id, scope) -> bool:
         for var in self.tabla_actual:
             if var.id == id.lower() and var.scope == scope:
                 return True
         return False
+
+    def limpiar(self):
+        self.tabla_actual = []
+        self.scopes = ["global"]  # <-- Reinicia los scopes también
+        self.entorno_contadores = {}  # <-- Reinicia los contadores de scopes
+
+        Simbolo._id_cc = 0  # Reinicia el contador de IDs

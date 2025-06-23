@@ -10,7 +10,7 @@ from src.gramatica import parse_input, errores_sintacticos_globales
 
 def main():
     try:
-        f = open("pp.txt", "r")
+        f = open("pp.txt", "r", encoding="utf-8")
         entrada = f.read()
 
         ast = Arbol([])  # Crea el árbol antes de parsear

@@ -1,23 +1,3 @@
 digraph ReporteAST {
 	node1 [label=REPORTE color=purple fillcolor=white style=filled]
-	node2 [label=If color=purple fillcolor=white style=filled]
-	node3 [label="Relacional: ==" color=purple fillcolor=white style=filled]
-	node4 [label=0 color=purple fillcolor=white style=filled]
-	node3 -> node4
-	node5 [label=0 color=purple fillcolor=white style=filled]
-	node3 -> node5
-	node2 -> node3
-	node6 [label=Instrucciones color=purple fillcolor=white style=filled]
-	node2 -> node6
-	node7 [label="Declaración" color=purple fillcolor=white style=filled]
-	node8 [label="ID: a" color=purple fillcolor=white style=filled]
-	node7 -> node8
-	node9 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
-	node7 -> node9
-	node10 [label=Valor color=purple fillcolor=white style=filled]
-	node7 -> node10
-	node11 [label=0 color=purple fillcolor=white style=filled]
-	node10 -> node11
-	node6 -> node7
-	node1 -> node2
 }

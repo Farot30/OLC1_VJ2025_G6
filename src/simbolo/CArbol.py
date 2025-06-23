@@ -1,4 +1,5 @@
 from __future__ import annotations 
+from src.instrucciones.CProcedimientos import Procedimientos
 from src.abstracto.CAST import clasAST
 from src.abstracto.CInstruccion import Instruccion
 from src.excepciones.CErrores import Errores
@@ -12,6 +13,7 @@ class Arbol:
         self.consola = ""
         self.tabla_global = aTab
         self.errores = []
+        self.procedimientos = []
 
     def getConsola(self) -> str:
         return self.consola
@@ -40,3 +42,18 @@ class Arbol:
             nodoHijo = instru.graficar(grafo)
             grafo.agregar_arista(nodoRaiz, nodoHijo)
         return nodoRaiz
+    
+    def setFuncion(self, prodec):
+        self.procedimientos.append(prodec)
+
+    def getFunciones(self):
+        return self.procedimientos
+    
+    def getFuncion(self, id):
+        for i in self.getFunciones():
+            if isinstance(i, Procedimientos):
+                if i.id.lower() == id.lower():
+                    return i
+        return None
+            
+        

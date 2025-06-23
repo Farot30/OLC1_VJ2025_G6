@@ -6,7 +6,7 @@ tokens = [
     'TRUE', 'FALSE', 'CHAR',
     'MENOS', 'MULT', 'DIVISION', 'POTENCIA', 'MODULO',
     'PUNTOCOMA', 'MAS', 
-    'PAR1', 'PAR2',
+    'PAR1', 'PAR2', 'COMA', 'PUNTOS',
     'IGUAL',
     'DECIMAL', 'ENTERO',
     'CADENA', 'CARACTER',
@@ -14,11 +14,14 @@ tokens = [
     'LLAVE1',
     "LLAVE2","BOOLEANO","MENOR_IGUAL", "MAYOR_QUE",
     "MAYOR_IGUAL",  "MENOR_QUE", "IGUAL_IGUAL",
-    "DIFERENTE", "PRINT",  "PRINTLN", 'BREAK'
+    "DIFERENTE", "PRINT",  "PRINTLN", 'BREAK',
+    'PROC', 'EXEC'
 ]
 
 # Simbolos
+t_COMA      = r','
 t_PUNTOCOMA = r';'
+t_PUNTOS    = r':'
 t_MAS       = r'\+'
 t_MENOS     = r'-'
 t_DIVISION  = r'/'
@@ -49,7 +52,9 @@ reservadas = {
     'if' : 'IF',
     "print": "PRINT",
     "println": "PRINTLN",
-    'break': 'BREAK'
+    'break': 'BREAK',
+    'proc' : 'PROC',
+    'exec' : 'EXEC'
 }
 
 def t_ID(t):
@@ -134,6 +139,9 @@ def t_error(t):
 # Construyendo el analizador léxico
 import ply.lex as lex
 
+from src.simbolo.CSimbolo import Simbolo
+from src.instrucciones.CProcedimientos import Procedimientos
+from src.instrucciones.CLlamada import Llamada
 from src.simbolo.CInstancia import tabla_S as aTab
 
 from src.instrucciones.CPrint import Print
@@ -185,13 +193,59 @@ def p_instruccion(t):
     '''instruccion : declaracion PUNTOCOMA
             | expresion PUNTOCOMA
             | sent_IF
-            | SBreak '''
+            | SBreak
+            | Procedimiento
+            | Llamada PUNTOCOMA'''
     t[0] = t[1]
 
 def p_SBreak(t):
     ''' SBreak : BREAK PUNTOCOMA'''
     t[0] = Break(0,0)
 
+def p_Procedimiento(t):#id: str, params:list, inst: list, linea: int, col: int):
+    '''Procedimiento : PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2'''
+    t[0] = Procedimientos(t[2], t[4], t[7], 0, 0)
+
+def p_PARAMETROS (t):
+    ''' PARAMETROS : tipos PUNTOS ID 
+                   | tipos PUNTOS ID COMA PARAMETROS'''
+    if len(t) == 4:
+        t[0] = [(t[1], t[3])] 
+    else:
+        t[5].insert(0, (t[1], t[3]))
+        t[0] = t[5]
+    
+def p_Llamada(t):
+    ''' Llamada : EXEC ID PAR1 PARAMLLAMADA PAR2'''
+    t[0] = Llamada(t[2], t[4],0,0)
+
+def p_PARAMLLAMADA(t):
+    '''PARAMLLAMADA : literal
+                    | ID
+                    | PARAMLLAMADA COMA literal
+                    | PARAMLLAMADA COMA ID'''
+    if len(t) == 2:
+        t[0] = [t[1]]
+    else:
+        t[1].append(t[3])
+        t[0] = t[1]
+
+def p_literal(t):
+    '''literal : ENTERO
+               | DECIMAL
+               | CARACTER
+               | CADENA'''
+    if isinstance(t[1], int):
+        tipo = Tipo(tipoDato.ENTERO)
+    elif isinstance(t[1], float):
+        tipo = Tipo(tipoDato.DECIMAL)
+    elif isinstance(t[1], str) and len(t[1]) == 1:
+        tipo = Tipo(tipoDato.CHAR)
+    else:
+        tipo = Tipo(tipoDato.STRING)
+    
+    t[0] = Nativo(tipo, t[1], 0, 0)
+    
 def p_sent_IF(t): 
     '''sent_IF : if_simple
             | if_else

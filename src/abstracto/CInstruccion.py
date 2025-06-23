@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-#from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.simbolo.CTipo import Tipo
 from src.simbolo.CInstancia import tabla_S as aTab
