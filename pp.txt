@@ -1,11 +1,8 @@
 
-proc Relacionales(int: w){
-
-
-    println ("--------------------------------------------------------");
-    println ("-----------------OPERACIONES RELACIONALES-----------------");
-    println ("--------------------------------------------------------");
-
+// Procedimiento con parámetros
+proc actualizar(int: actualizacion, char: mensaje) {
+   println("adffsda");
 }
 
-exec Relacionales(3);
+// Bloque principal: llamada a procedimientos
+exec actualizar(3, 'H');

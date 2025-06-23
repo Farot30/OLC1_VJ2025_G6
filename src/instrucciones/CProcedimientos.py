@@ -14,7 +14,14 @@ class Procedimientos(Instruccion):
         self.inst = inst
 
     def interpretar(self, arbol, tabla: tablaSimbolo):
-        if arbol.getFuncion(self.id):
+        tabla.nuevoScope("Procedimiento")
+        for instr in self.inst:
+            resultado = instr.interpretar(arbol, tabla)
+            if isinstance(resultado, Errores):
+                arbol.errores.append(resultado)
+        tabla.borrarScope()
+
+        """if arbol.getFuncion(self.id):
             return Errores("Semantico", f"El procedimiento '{self.id}' ya ha sido declarado", self.linea, self.col)
 
         arbol.setFuncion(self)
@@ -37,7 +44,7 @@ class Procedimientos(Instruccion):
                 arbol.errores.append(res)
 
         tabla.borrarScope()
-        return None
+        return None"""
 
     
     def graficar(self, grafo):
@@ -48,8 +55,8 @@ class Procedimientos(Instruccion):
 
         nodo_parametros = grafo.agregar_nodo("Parámetros")
         grafo.agregar_arista(nodo_procedimiento, nodo_parametros)
-        for param in self.parametros:
-            nodo_param = grafo.agregar_nodo(f"{param.tipo.getTipo().name} : {param.id}")
+        for tipo_param, id_param in self.parametros:
+            nodo_param = grafo.agregar_nodo(f"{tipo_param.getTipo().name} : {id_param}")
             grafo.agregar_arista(nodo_parametros, nodo_param)
 
         nodo_instrucciones = grafo.agregar_nodo("Instrucciones")

@@ -1,3 +1,4 @@
+from src.instrucciones.CProcedimientos import Procedimientos
 from src.gramatica import parse_input
 from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
@@ -13,11 +14,14 @@ def main():
         f = open("pp.txt", "r", encoding="utf-8")
         entrada = f.read()
 
+        tabla = aTab
+        tabla.limpiar()
+
         ast = Arbol([])  # Crea el árbol antes de parsear
         instrucciones = parse_input(entrada, ast)  # Pasa el árbol aquí
         ast.set_instrucciones(instrucciones)
         
-        tabla = aTab
+        #tabla = aTab
         ast.setTablaGlobal(tabla)
         ast.setConsola("")
 
@@ -26,21 +30,43 @@ def main():
             ast.errores.extend(errores_sintacticos_globales)
             errores_sintacticos_globales.clear()
 
+        # 1. Registrar todos los procedimientos (sin ejecutarlos)
+        for instr in ast.getInstrucciones():
+            if isinstance(instr, Procedimientos):
+                # Solo registrar, no ejecutar instrucciones
+                if ast.getFuncion(instr.id) is None:
+                    ast.setFuncion(instr)
+                else:
+                    error = Errores("Semantico", f"El procedimiento '{instr.id}' ya ha sido declarado", instr.linea, instr.col)
+                    ast.errores.append(error)
+                    print(error)
+
+        # 2. Ejecutar instrucciones no-procedimiento (incluye llamadas a procedimientos)
+        for instr in ast.getInstrucciones():
+            if not isinstance(instr, Procedimientos):
+                resultado = instr.interpretar(ast, tabla)
+                if isinstance(resultado, Errores):
+                    ast.errores.append(resultado)
+                    print(resultado)
+                elif resultado is not None:
+                    print("Prueba:", resultado)
+
         # Imprime errores ANTES de ejecutar instrucciones
-        if ast.errores:
+        """if ast.errores:
             print("Errores encontrados durante el análisis sintáctico:")
             for idx, error in enumerate(ast.errores, 1):
                 print(
                     f"{idx}\t{error.get_tipo_error()}\t{error.get_desc()}\t{error.get_linea()}\t{error.get_col()}"
                 )
 
-        for instr in ast.getInstrucciones():
-            resultado = instr.interpretar(ast, tabla)
-            if isinstance(resultado, Errores):
-                print(resultado)
-                ast.errores.append(resultado)
-            elif resultado is not None:
-                print("Prueba:", resultado)
+            for instr in ast.getInstrucciones():
+                resultado = instr.interpretar(ast, tabla)
+                if isinstance(resultado, Errores):
+                    print(resultado)
+                    ast.errores.append(resultado)
+                elif resultado is not None:
+                    print("Prueba:", resultado) """
+        
 
         generarGrafica(ast, "reporteAST")
 

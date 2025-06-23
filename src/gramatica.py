@@ -56,6 +56,14 @@ reservadas = {
     'proc' : 'PROC',
     'exec' : 'EXEC'
 }
+def t_COMMENT_SINGLELINE(t):
+    r"//.*"
+    pass
+
+def t_COMMENT_MULTILINE(t):
+    r"/\*(.|\n)*?\*/"
+    t.lexer.lineno += t.value.count("\n")
+    pass
 
 def t_ID(t):
     r'[a-z][a-z0-9_]*'
@@ -137,24 +145,7 @@ def t_error(t):
 
     
 # Construyendo el analizador léxico
-import ply.lex as lex
 
-from src.simbolo.CSimbolo import Simbolo
-from src.instrucciones.CProcedimientos import Procedimientos
-from src.instrucciones.CLlamada import Llamada
-from src.simbolo.CInstancia import tabla_S as aTab
-
-from src.instrucciones.CPrint import Print
-from src.instrucciones.CPrintln import Println
-from src.expresiones.CRelacionales import OperadoresRel, Relacional
-from src.instrucciones.SentenciaIF import sentIF
-from src.expresiones.CAritmeticas import Aritmeticas, Operadores
-from src.expresiones.CNativo import Nativo
-from src.instrucciones.CDeclaracion import Declaracion
-from src.simbolo.CTipo import Tipo, tipoDato
-from src.excepciones.CErrores import Errores
-from src.instrucciones.CBreak import Break
-lexer = lex.lex()
 
 # Asociación de operadores y precedencia
 precedence = (
@@ -173,7 +164,25 @@ precedence = (
 
 #### DEFINICION DE GRAMATICA (ANALISIS SINTACTICO) ----------------------------------------------------------------------------
 # Importar tus clases
+import ply.lex as lex
 
+from src.instrucciones.CAsignacion import Asignacion
+from src.simbolo.CSimbolo import Simbolo
+from src.instrucciones.CProcedimientos import Procedimientos
+from src.instrucciones.CLlamada import Llamada
+from src.simbolo.CInstancia import tabla_S as aTab
+
+from src.instrucciones.CPrint import Print
+from src.instrucciones.CPrintln import Println
+from src.expresiones.CRelacionales import OperadoresRel, Relacional
+from src.instrucciones.SentenciaIF import sentIF
+from src.expresiones.CAritmeticas import Aritmeticas, Operadores
+from src.expresiones.CNativo import Nativo
+from src.instrucciones.CDeclaracion import Declaracion
+from src.simbolo.CTipo import Tipo, tipoDato
+from src.excepciones.CErrores import Errores
+from src.instrucciones.CBreak import Break
+lexer = lex.lex()
 
 def p_inicio(t):
     'inicio : instrucciones'
@@ -195,8 +204,14 @@ def p_instruccion(t):
             | sent_IF
             | SBreak
             | Procedimiento
-            | Llamada PUNTOCOMA'''
+            | Llamada PUNTOCOMA
+            | asignacion PUNTOCOMA
+            | bloque'''
     t[0] = t[1]
+
+def p_bloque(t):
+    'bloque : LLAVE1 instrucciones LLAVE2'
+    t[0] = t[2]
 
 def p_SBreak(t):
     ''' SBreak : BREAK PUNTOCOMA'''
@@ -249,7 +264,8 @@ def p_literal(t):
 def p_sent_IF(t): 
     '''sent_IF : if_simple
             | if_else
-            | if_elseif'''
+            | if_elseif
+            | if_elseif_else'''
     t[0] = t[1]
 
 # if (expresion) { instrucciones }
@@ -264,8 +280,43 @@ def p_if_else(t):
 
 # if (expresion) { instrucciones } else if (expresion) { instrucciones }
 def p_if_elseif(t):
-    '''if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE if_simple'''
-    t[0] = sentIF(t[3], t[6],0, 0, t[9])
+    """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""  # Esta implementación maneja explícitamente la secuencia "ELSE IF"
+    t[0] = sentIF(
+        t[3],  # Condición del IF
+        t[6],  # Cuerpo del IF
+        0,
+        0,
+        sentIF(  t[11],  t[14],  0,  0),
+    )
+
+def p_if_elseif_else(t):
+    """if_elseif_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""  # Maneja: IF (...) {...} ELSE IF (...) {...} ELSE {...}
+    elseif_node = sentIF(
+        t[11],  # Condición del ELSE IF
+        t[14],  # Cuerpo del ELSE IF
+        0,
+        0,
+    )
+
+    else_node = sentIF(
+        None,  # No hay condición en ELSE
+        t[18],  # Cuerpo del ELSE
+        0,
+        0,
+    )
+
+    # Conectar el ELSE al ELSE IF
+    elseif_node.else_st = else_node
+
+    # Crear el nodo principal IF con su rama ELSE IF+ELSE
+    t[0] = sentIF(
+        t[3],  # Condición del IF
+        t[6],  # Cuerpo del IF
+        0,
+       0,
+        elseif_node,
+    )
+
 
 def p_declaracion_cvalor(t):
     'declaracion : tipos ID IGUAL expresion'
@@ -276,6 +327,11 @@ def p_declaracion_sinval(t):
     'declaracion : tipos ID '
     t[0] = Declaracion(t[1], 0, 0, t[2], None)
    # aTab.agregarVariable(id=t[2], tipo=t[1], valor=None,linea=0,columna=0)
+
+def p_asignacion(t):
+    "asignacion : ID IGUAL expresion"
+    t[0] = Asignacion(t[1], t[3], 0,0)
+
 
 def p_expresion_binaria(t):
     '''expresion : expresion MAS expresion
