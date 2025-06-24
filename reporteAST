@@ -220,4 +220,42 @@ digraph ReporteAST {
 	node111 [label="Seno del inverso de 2: 0.9092974268256817" color=purple fillcolor=white style=filled]
 	node110 -> node111
 	node1 -> node110
+	node112 [label="Declaración" color=purple fillcolor=white style=filled]
+	node113 [label="ID: a" color=purple fillcolor=white style=filled]
+	node112 -> node113
+	node114 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node112 -> node114
+	node115 [label=Valor color=purple fillcolor=white style=filled]
+	node112 -> node115
+	node116 [label=5 color=purple fillcolor=white style=filled]
+	node115 -> node116
+	node1 -> node112
+	node117 [label="Declaración" color=purple fillcolor=white style=filled]
+	node118 [label="ID: a" color=purple fillcolor=white style=filled]
+	node117 -> node118
+	node119 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node117 -> node119
+	node120 [label=Valor color=purple fillcolor=white style=filled]
+	node117 -> node120
+	node121 [label=10 color=purple fillcolor=white style=filled]
+	node120 -> node121
+	node1 -> node117
+	node122 [label=Println color=purple fillcolor=white style=filled]
+	node123 [label=10 color=purple fillcolor=white style=filled]
+	node122 -> node123
+	node1 -> node122
+	node124 [label="Declaración" color=purple fillcolor=white style=filled]
+	node125 [label="ID: a" color=purple fillcolor=white style=filled]
+	node124 -> node125
+	node126 [label="Tipo: STRING" color=purple fillcolor=white style=filled]
+	node124 -> node126
+	node127 [label=Valor color=purple fillcolor=white style=filled]
+	node124 -> node127
+	node128 [label=Hola color=purple fillcolor=white style=filled]
+	node127 -> node128
+	node1 -> node124
+	node129 [label=Println color=purple fillcolor=white style=filled]
+	node130 [label=Hola color=purple fillcolor=white style=filled]
+	node129 -> node130
+	node1 -> node129
 }

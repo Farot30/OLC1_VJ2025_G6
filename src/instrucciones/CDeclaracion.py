@@ -40,14 +40,13 @@ class Declaracion(Instruccion):
     def interpretar(self, arbol: Arbol, tabla: tablaSimbolo):
         scope_actual = tabla.current_scope  # obtiene el scope actual (entorno)
 
-        # caso: <TIPO> <ID> = <EXPRESIÓN>;
+        # Procesar el valor a asignar
         if self.valor:
-            # Código existente para cuando hay valor...
             res_valor = self.valor.interpretar(arbol, tabla)
             if isinstance(res_valor, Errores):
                 return res_valor
 
-            # Validar tipo solo si self.valor tiene tipoDato y getTipo
+            # Validar tipo si es necesario
             tipo_valor = None
             if hasattr(self.valor, "tipoDato") and hasattr(
                 self.valor.tipoDato, "getTipo"
@@ -60,40 +59,41 @@ class Declaracion(Instruccion):
                     self.linea,
                     self.col,
                 )
-
-            sim = Simbolo(
-                tipo=self.tipoDato,
-                id=self.identificador,
-                entidad="variable",
-                valor=res_valor,
-                scope=scope_actual,
-                linea=self.linea,
-                columna=self.col,
-            )
-
-        # caso <TIPO> <ID>; (sin valor explícito)
         else:
-            # Obtener valor por defecto según el tipo
-            valor_por_defecto = self._obtener_valor_por_defecto(self.tipoDato)
+            # Usar valor por defecto
+            res_valor = self._obtener_valor_por_defecto(self.tipoDato)
 
-            sim = Simbolo(
-                tipo=self.tipoDato,
-                id=self.identificador,
-                entidad="variable",
-                valor=valor_por_defecto,  # Usar el valor por defecto en lugar de None
-                scope=scope_actual,
-                linea=self.linea,
-                columna=self.col,
-            )
+        # Crear símbolo para la nueva variable
+        sim = Simbolo(
+            tipo=self.tipoDato,
+            id=self.identificador,
+            entidad="variable",
+            valor=res_valor,
+            scope=scope_actual,
+            linea=self.linea,
+            columna=self.col,
+        )
 
-        # Código común para ambos casos
+        # Intentar agregar la variable a la tabla
         if not tabla.setVariable(sim):
-            return Errores(
-                "SEMANTICO",
-                f"La variable '{self.identificador}' ya existe",
-                self.linea,
-                self.col,
-            )
+            try:
+                # La variable existe, actualizarla en lugar de mostrar error
+                tabla.actualizarVariable(
+                    name=self.identificador,
+                    nevValor=res_valor,
+                    nevTipo=self.tipoDato,
+                    linea=self.linea,
+                    columna=self.col,
+                    scope=scope_actual,
+                )
+            except KeyError:
+                # Por si acaso falla la actualización
+                return Errores(
+                    "SEMANTICO",
+                    f"Error al redeclarar la variable '{self.identificador}'",
+                    self.linea,
+                    self.col,
+                )
 
         return None
 

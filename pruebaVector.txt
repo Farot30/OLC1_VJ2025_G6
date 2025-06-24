@@ -87,3 +87,10 @@ vector[int] enteros (3) = [1, 2, 3];
 // Función shuffle con una expresión
 println(shuffle(enteros));
 */
+
+int a = 5;     // Primera declaración
+int a = 10;    // Redeclaración con el mismo tipo
+println(a);
+str a = "Hola";  // Redeclaración con tipo diferente
+
+println(a);

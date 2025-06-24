@@ -134,12 +134,25 @@ class tablaSimbolo(metaclass=SingletonMeta):
         self.tabla_actual.append(sym)
         return sym
 
-    def actualizarVariable(self, name, nevValor, scope=None):
+    def actualizarVariable(
+        self, name, nevValor, nevTipo=None, linea=None, columna=None, scope=None
+    ):
+        name = name.lower()  # Normalizar el identificador
         scope = scope or self.current_scope
+
         for sym in reversed(self.tabla_actual):
             if sym.entidad == "variable" and sym.id == name and sym.scope == scope:
+                # Actualizar todos los campos proporcionados
                 sym.valor = nevValor
+                if nevTipo is not None:
+                    sym.tipo = nevTipo
+                if linea is not None:
+                    sym.linea = linea
+                if columna is not None:
+                    sym.columna = columna
                 return sym
+
+        # Si llegamos aquí, no se encontró la variable
         raise KeyError(f"Variable '{name}' no declarada en scope '{scope}'")
 
     def ImprimirTabla(self):
