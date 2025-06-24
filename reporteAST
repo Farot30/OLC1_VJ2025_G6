@@ -1,85 +1,223 @@
 digraph ReporteAST {
 	node1 [label=Reporte color=black fillcolor=lightgray style=filled]
-	node2 [label="Declaración Vector" color=purple fillcolor=white style=filled]
-	node3 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node2 [label=Println color=purple fillcolor=white style=filled]
+	node3 [label="Funciones nativas con nÃºmeros:" color=purple fillcolor=white style=filled]
 	node2 -> node3
-	node4 [label="ID: vec1D" color=purple fillcolor=white style=filled]
-	node2 -> node4
-	node5 [label="Dimensiones: [3]" color=purple fillcolor=white style=filled]
-	node2 -> node5
-	node6 [label=Valores color=purple fillcolor=white style=filled]
-	node2 -> node6
-	node7 [label="[1, 2, 3]" color=purple fillcolor=white style=filled]
-	node6 -> node7
 	node1 -> node2
-	node8 [label="Declaración Vector" color=purple fillcolor=white style=filled]
-	node9 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node4 [label=Println color=purple fillcolor=white style=filled]
+	node5 [label=0.479425538604203 color=purple fillcolor=white style=filled]
+	node4 -> node5
+	node1 -> node4
+	node6 [label=Println color=purple fillcolor=white style=filled]
+	node7 [label=0.8775825618903728 color=purple fillcolor=white style=filled]
+	node6 -> node7
+	node1 -> node6
+	node8 [label=Println color=purple fillcolor=white style=filled]
+	node9 [label=4 color=purple fillcolor=white style=filled]
 	node8 -> node9
-	node10 [label="ID: matriz" color=purple fillcolor=white style=filled]
-	node8 -> node10
-	node11 [label="Dimensiones: [2, 2]" color=purple fillcolor=white style=filled]
-	node8 -> node11
-	node12 [label=Valores color=purple fillcolor=white style=filled]
-	node8 -> node12
-	node13 [label="[[1, 2], [3, 4]]" color=purple fillcolor=white style=filled]
-	node12 -> node13
 	node1 -> node8
-	node14 [label="Asignación Vector" color=purple fillcolor=white style=filled]
-	node15 [label="ID: matriz" color=purple fillcolor=white style=filled]
+	node10 [label="Declaración" color=purple fillcolor=white style=filled]
+	node11 [label="ID: angulo" color=purple fillcolor=white style=filled]
+	node10 -> node11
+	node12 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
+	node10 -> node12
+	node13 [label=Valor color=purple fillcolor=white style=filled]
+	node10 -> node13
+	node14 [label="/" color=purple fillcolor=white style=filled]
+	node15 [label=3.14159 color=purple fillcolor=white style=filled]
 	node14 -> node15
-	node16 [label="Índices: [0, 0]" color=purple fillcolor=white style=filled]
+	node16 [label=2 color=purple fillcolor=white style=filled]
 	node14 -> node16
-	node17 [label=5 color=purple fillcolor=white style=filled]
-	node14 -> node17
-	node1 -> node14
-	node18 [label="Asignación Vector" color=purple fillcolor=white style=filled]
-	node19 [label="ID: matriz" color=purple fillcolor=white style=filled]
-	node18 -> node19
-	node20 [label="Índices: [0, 1]" color=purple fillcolor=white style=filled]
-	node18 -> node20
-	node21 [label=10 color=purple fillcolor=white style=filled]
-	node18 -> node21
-	node1 -> node18
-	node22 [label="Asignación Vector" color=purple fillcolor=white style=filled]
-	node23 [label="ID: matriz" color=purple fillcolor=white style=filled]
-	node22 -> node23
-	node24 [label="Índices: [1, 0]" color=purple fillcolor=white style=filled]
-	node22 -> node24
-	node25 [label=20 color=purple fillcolor=white style=filled]
-	node22 -> node25
-	node1 -> node22
-	node26 [label="Asignación Vector" color=purple fillcolor=white style=filled]
-	node27 [label="ID: matriz" color=purple fillcolor=white style=filled]
-	node26 -> node27
-	node28 [label="Índices: [1, 1]" color=purple fillcolor=white style=filled]
-	node26 -> node28
-	node29 [label=30 color=purple fillcolor=white style=filled]
-	node26 -> node29
-	node1 -> node26
-	node30 [label=Println color=purple fillcolor=white style=filled]
-	node31 [label="Vector matriz [2, 2]: [[5, 10], [20, 30]]" color=purple fillcolor=white style=filled]
+	node13 -> node14
+	node1 -> node10
+	node17 [label=Println color=purple fillcolor=white style=filled]
+	node18 [label="seno(Ï/2) = 0.9999999999991198" color=purple fillcolor=white style=filled]
+	node17 -> node18
+	node1 -> node17
+	node19 [label=Println color=purple fillcolor=white style=filled]
+	node20 [label="coseno(Ï/2) = 1.3267948966775328e-06" color=purple fillcolor=white style=filled]
+	node19 -> node20
+	node1 -> node19
+	node21 [label=Println color=purple fillcolor=white style=filled]
+	node22 [label="inv(10) = 1" color=purple fillcolor=white style=filled]
+	node21 -> node22
+	node1 -> node21
+	node23 [label="Declaración Vector" color=purple fillcolor=white style=filled]
+	node24 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node23 -> node24
+	node25 [label="ID: numeros" color=purple fillcolor=white style=filled]
+	node23 -> node25
+	node26 [label="Dimensiones: [5]" color=purple fillcolor=white style=filled]
+	node23 -> node26
+	node27 [label=Valores color=purple fillcolor=white style=filled]
+	node23 -> node27
+	node1 -> node23
+	node28 [label=Println color=purple fillcolor=white style=filled]
+	node29 [label="Vector original: Vector numeros [5]: [10, 20, 30, 40, 50]" color=purple fillcolor=white style=filled]
+	node28 -> node29
+	node1 -> node28
+	node30 [label="Asignación Vector" color=purple fillcolor=white style=filled]
+	node31 [label="ID: numeros" color=purple fillcolor=white style=filled]
 	node30 -> node31
+	node32 [label="Índices: [2]" color=purple fillcolor=white style=filled]
+	node30 -> node32
+	node33 [label=300 color=purple fillcolor=white style=filled]
+	node30 -> node33
 	node1 -> node30
-	node32 [label="Declaración Vector" color=purple fillcolor=white style=filled]
-	node33 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
-	node32 -> node33
-	node34 [label="ID: matriz2" color=purple fillcolor=white style=filled]
-	node32 -> node34
-	node35 [label="Dimensiones: [4]" color=purple fillcolor=white style=filled]
-	node32 -> node35
-	node36 [label=Valores color=purple fillcolor=white style=filled]
-	node32 -> node36
-	node37 [label="[1, 2, 3, 4]" color=purple fillcolor=white style=filled]
+	node34 [label=Println color=purple fillcolor=white style=filled]
+	node35 [label="Vector modificado: Vector numeros [5]: [10, 20, 300, 40, 50]" color=purple fillcolor=white style=filled]
+	node34 -> node35
+	node1 -> node34
+	node36 [label=Println color=purple fillcolor=white style=filled]
+	node37 [label="seno del primer elemento: -0.9997558399011495" color=purple fillcolor=white style=filled]
 	node36 -> node37
-	node1 -> node32
-	node38 [label="Declaración" color=purple fillcolor=white style=filled]
-	node39 [label="ID: a" color=purple fillcolor=white style=filled]
+	node1 -> node36
+	node38 [label=Println color=purple fillcolor=white style=filled]
+	node39 [label="inverso del Ãºltimo elemento: 4" color=purple fillcolor=white style=filled]
 	node38 -> node39
-	node40 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
-	node38 -> node40
-	node41 [label=Valor color=purple fillcolor=white style=filled]
-	node38 -> node41
-	node42 [label=2 color=purple fillcolor=white style=filled]
-	node41 -> node42
 	node1 -> node38
+	node40 [label="Declaración Vector" color=purple fillcolor=white style=filled]
+	node41 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node40 -> node41
+	node42 [label="ID: matriz" color=purple fillcolor=white style=filled]
+	node40 -> node42
+	node43 [label="Dimensiones: [3, 3]" color=purple fillcolor=white style=filled]
+	node40 -> node43
+	node44 [label=Valores color=purple fillcolor=white style=filled]
+	node40 -> node44
+	node1 -> node40
+	node45 [label=Println color=purple fillcolor=white style=filled]
+	node46 [label="Matriz original:" color=purple fillcolor=white style=filled]
+	node45 -> node46
+	node1 -> node45
+	node47 [label=Println color=purple fillcolor=white style=filled]
+	node48 [label="Vector matriz [3, 3]: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]" color=purple fillcolor=white style=filled]
+	node47 -> node48
+	node1 -> node47
+	node49 [label="Asignación Vector" color=purple fillcolor=white style=filled]
+	node50 [label="ID: matriz" color=purple fillcolor=white style=filled]
+	node49 -> node50
+	node51 [label="Índices: [0, 0]" color=purple fillcolor=white style=filled]
+	node49 -> node51
+	node52 [label=100 color=purple fillcolor=white style=filled]
+	node49 -> node52
+	node1 -> node49
+	node53 [label="Asignación Vector" color=purple fillcolor=white style=filled]
+	node54 [label="ID: matriz" color=purple fillcolor=white style=filled]
+	node53 -> node54
+	node55 [label="Índices: [1, 1]" color=purple fillcolor=white style=filled]
+	node53 -> node55
+	node56 [label=500 color=purple fillcolor=white style=filled]
+	node53 -> node56
+	node1 -> node53
+	node57 [label="Asignación Vector" color=purple fillcolor=white style=filled]
+	node58 [label="ID: matriz" color=purple fillcolor=white style=filled]
+	node57 -> node58
+	node59 [label="Índices: [2, 2]" color=purple fillcolor=white style=filled]
+	node57 -> node59
+	node60 [label=900 color=purple fillcolor=white style=filled]
+	node57 -> node60
+	node1 -> node57
+	node61 [label=Println color=purple fillcolor=white style=filled]
+	node62 [label="Matriz modificada:" color=purple fillcolor=white style=filled]
+	node61 -> node62
+	node1 -> node61
+	node63 [label=Println color=purple fillcolor=white style=filled]
+	node64 [label="Vector matriz [3, 3]: [[100, 2, 3], [4, 500, 6], [7, 8, 900]]" color=purple fillcolor=white style=filled]
+	node63 -> node64
+	node1 -> node63
+	node65 [label="Declaración Vector" color=purple fillcolor=white style=filled]
+	node66 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node65 -> node66
+	node67 [label="ID: cubo" color=purple fillcolor=white style=filled]
+	node65 -> node67
+	node68 [label="Dimensiones: [2, 2, 2]" color=purple fillcolor=white style=filled]
+	node65 -> node68
+	node69 [label=Valores color=purple fillcolor=white style=filled]
+	node65 -> node69
+	node1 -> node65
+	node70 [label=Println color=purple fillcolor=white style=filled]
+	node71 [label="Cubo 3D:" color=purple fillcolor=white style=filled]
+	node70 -> node71
+	node1 -> node70
+	node72 [label=Println color=purple fillcolor=white style=filled]
+	node73 [label="Vector cubo [2, 2, 2]: [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]" color=purple fillcolor=white style=filled]
+	node72 -> node73
+	node1 -> node72
+	node74 [label="Asignación Vector" color=purple fillcolor=white style=filled]
+	node75 [label="ID: cubo" color=purple fillcolor=white style=filled]
+	node74 -> node75
+	node76 [label="Índices: [1, 0, 1]" color=purple fillcolor=white style=filled]
+	node74 -> node76
+	node77 [label=60 color=purple fillcolor=white style=filled]
+	node74 -> node77
+	node1 -> node74
+	node78 [label=Println color=purple fillcolor=white style=filled]
+	node79 [label="Cubo modificado:" color=purple fillcolor=white style=filled]
+	node78 -> node79
+	node1 -> node78
+	node80 [label=Println color=purple fillcolor=white style=filled]
+	node81 [label="Vector cubo [2, 2, 2]: [[[1, 2], [3, 4]], [[5, 60], [7, 8]]]" color=purple fillcolor=white style=filled]
+	node80 -> node81
+	node1 -> node80
+	node82 [label="Declaración Vector" color=purple fillcolor=white style=filled]
+	node83 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
+	node82 -> node83
+	node84 [label="ID: decimales" color=purple fillcolor=white style=filled]
+	node82 -> node84
+	node85 [label="Dimensiones: [3]" color=purple fillcolor=white style=filled]
+	node82 -> node85
+	node86 [label=Valores color=purple fillcolor=white style=filled]
+	node82 -> node86
+	node1 -> node82
+	node87 [label=Println color=purple fillcolor=white style=filled]
+	node88 [label="Vector de flotantes: Vector decimales [3]: [1.5, 2.7, 3.9]" color=purple fillcolor=white style=filled]
+	node87 -> node88
+	node1 -> node87
+	node89 [label="Declaración Vector" color=purple fillcolor=white style=filled]
+	node90 [label="Tipo: BOOL" color=purple fillcolor=white style=filled]
+	node89 -> node90
+	node91 [label="ID: banderas" color=purple fillcolor=white style=filled]
+	node89 -> node91
+	node92 [label="Dimensiones: [4]" color=purple fillcolor=white style=filled]
+	node89 -> node92
+	node93 [label=Valores color=purple fillcolor=white style=filled]
+	node89 -> node93
+	node1 -> node89
+	node94 [label=Println color=purple fillcolor=white style=filled]
+	node95 [label="Vector de booleanos: Vector banderas [4]: [True, False, True, True]" color=purple fillcolor=white style=filled]
+	node94 -> node95
+	node1 -> node94
+	node96 [label="Declaración Vector" color=purple fillcolor=white style=filled]
+	node97 [label="Tipo: STRING" color=purple fillcolor=white style=filled]
+	node96 -> node97
+	node98 [label="ID: palabras" color=purple fillcolor=white style=filled]
+	node96 -> node98
+	node99 [label="Dimensiones: [3]" color=purple fillcolor=white style=filled]
+	node96 -> node99
+	node100 [label=Valores color=purple fillcolor=white style=filled]
+	node96 -> node100
+	node1 -> node96
+	node101 [label=Println color=purple fillcolor=white style=filled]
+	node102 [label="Vector de cadenas: Vector palabras [3]: [Hola, Mundo, Vectorial]" color=purple fillcolor=white style=filled]
+	node101 -> node102
+	node1 -> node101
+	node103 [label="Declaración Vector" color=purple fillcolor=white style=filled]
+	node104 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node103 -> node104
+	node105 [label="ID: original" color=purple fillcolor=white style=filled]
+	node103 -> node105
+	node106 [label="Dimensiones: [5]" color=purple fillcolor=white style=filled]
+	node103 -> node106
+	node107 [label=Valores color=purple fillcolor=white style=filled]
+	node103 -> node107
+	node1 -> node103
+	node108 [label=Println color=purple fillcolor=white style=filled]
+	node109 [label="Original: Vector original [5]: [1, 2, 3, 4, 5]" color=purple fillcolor=white style=filled]
+	node108 -> node109
+	node1 -> node108
+	node110 [label=Println color=purple fillcolor=white style=filled]
+	node111 [label="Seno del inverso de 2: 0.9092974268256817" color=purple fillcolor=white style=filled]
+	node110 -> node111
+	node1 -> node110
 }

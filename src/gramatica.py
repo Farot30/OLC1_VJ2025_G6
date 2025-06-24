@@ -23,6 +23,10 @@ from src.instrucciones.CSwitch import Switch, Case
 from src.instrucciones.CContinue import Continue
 from src.Vectores.DeclaracionVector import DeclaracionVector
 from src.Vectores.AsignacionVector import AsignacionVector
+from src.F_nativas.seno import Seno
+from src.F_nativas.coseno import Coseno
+from src.F_nativas.inverso import Inverso
+from src.F_nativas.shuffle import Shuffle
 
 # 2. TOKENS Y RESERVADAS
 tokens = [
@@ -79,6 +83,10 @@ tokens = [
     "LEFTCORCH",
     "RIGHTCORCH",
     "COMMA",
+    "SENO",
+    "COSENO",
+    "INV",
+    "SHUFFLE",
 ]
 
 reservadas = {
@@ -101,6 +109,10 @@ reservadas = {
     "continue": "CONTINUE",
     "println": "PRINTLN",
     "vector": "VECTOR",
+    "seno": "SENO",
+    "coseno": "COSENO",
+    "inv": "INV",
+    "shuffle": "SHUFFLE",
 }
 
 # 3. EXPRESIONES REGULARES DE TOKENS
@@ -423,13 +435,41 @@ def p_lista_valores(t):
 
 def p_lista_vectores(t):
     """lista_vectores : LEFTCORCH lista_valores RIGHTCORCH
-    | LEFTCORCH lista_valores RIGHTCORCH COMMA lista_vectores"""
+    | LEFTCORCH lista_vectores RIGHTCORCH
+    | LEFTCORCH lista_valores RIGHTCORCH COMMA lista_vectores
+    | LEFTCORCH lista_vectores RIGHTCORCH COMMA lista_vectores"""
     if len(t) == 4:
         # Un solo vector anidado
         t[0] = [t[2]]
     else:
         # Concatena el vector actual con el resto de vectores
         t[0] = [t[2]] + t[5]
+
+
+# ---FUNCIONES NATIVAS---
+def p_expresion_seno(t):
+    "expresion : SENO PAR1 expresion PAR2"
+    t[0] = Seno(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_expresion_coseno(t):
+    "expresion : COSENO PAR1 expresion PAR2"
+    t[0] = Coseno(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_expresion_inverso(t):
+    "expresion : INV PAR1 expresion PAR2"
+    t[0] = Inverso(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_expresion_shuffle(t):
+    "expresion_vector : SHUFFLE PAR1 ID PAR2"
+    t[0] = Shuffle(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_expresion_general_shuffle(t):
+    "expresion : SHUFFLE PAR1 ID PAR2"
+    t[0] = Shuffle(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
 # --- Asignación ---
