@@ -12,20 +12,19 @@ class Procedimientos(Instruccion):
         self.id = id_
         self.parametros = parametros
         self.inst = inst
+        self.enErrores = False
 
     def interpretar(self, arbol, tabla: tablaSimbolo):
+        tabla.setProc(self.id)
         tabla.nuevoScope("Procedimiento")
-        for instr in self.inst:
+        """ for instr in self.inst:
             resultado = instr.interpretar(arbol, tabla)
             if isinstance(resultado, Errores):
                 arbol.errores.append(resultado)
         tabla.borrarScope()
 
-        """if arbol.getFuncion(self.id):
-            return Errores("Semantico", f"El procedimiento '{self.id}' ya ha sido declarado", self.linea, self.col)
-
         arbol.setFuncion(self)
-        scope_name = tabla.nuevoScope("Procedimiento")
+        scope_name = tabla.nuevoScope("Procedimiento")"""
 
         for tipo, ident in self.parametros:
             simbolo = Simbolo(
@@ -33,21 +32,33 @@ class Procedimientos(Instruccion):
                 ident, 
                 "variable", 
                 None, 
-                scope_name, 
+                "Pocedimiento", 
                 self.linea, self.col)
             if not tabla.setVariable(simbolo):
+                self.enErrores = True
+                tabla.borrarScope()
                 return Errores("Semantico", f"El parámetro '{ident}' ya existe en el entorno", self.linea, self.col)
 
         for instr in self.inst:
             res = instr.interpretar(arbol, tabla)
             if isinstance(res, Errores):
                 arbol.errores.append(res)
+                self.enErrores = True
 
+        tab_Proc = [
+            var for var in tabla.getTabla()
+            if var.scope != "global"
+        ]
+        tabla.tabla_Procedimientos[self.id] = tab_Proc
         tabla.borrarScope()
-        return None"""
+        tabla.setProc(None)
+        return None
 
     
     def graficar(self, grafo):
+        if self.enErrores:
+            return None
+        
         nodo_procedimiento = grafo.agregar_nodo("Procedimiento")
 
         nodo_id = grafo.agregar_nodo(f"ID: {self.id}")

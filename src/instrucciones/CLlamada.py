@@ -15,32 +15,30 @@ class Llamada(Instruccion):
         super().__init__(Tipo(tipoDato.VOID), linea, col)
         self.id = id
         self.parametros = params
+        self.enErrores = False
 
     def interpretar(self, arbol, tabla: tablaSimbolo):
         proc = arbol.getFuncion(self.id)
         if proc is None:
+            self.enErrores = True
             return Errores("SEMANTICO", f"El procedimiento '{self.id}' no existe", self.linea, self.col)
 
-        # Detectar recursividad directa
-        nombre_proc_actual = None
-        for scope in reversed(tabla.scopes):
-            if scope.startswith("procedimiento_") or scope.startswith("llamada_"):
-                if scope.startswith("procedimiento_"):
-                    nombre_proc_actual = scope[len("procedimiento_"):]
-                else:
-                    nombre_proc_actual = scope[len("llamada_"):]
-                break
-
-        if nombre_proc_actual is not None and nombre_proc_actual.lower() == self.id.lower():
-            return Errores("SEMANTICO", "No se permite la recursividad directa", self.linea, self.col)
-
-        if not isinstance(proc, Procedimientos):
-            return Errores("SEMANTICO", f"'{self.id}' no es un procedimiento válido", self.linea, self.col)
+        nombre_proc_actual = tabla.getProc()
+        if nombre_proc_actual is not None and nombre_proc_actual == self.id:
+            self.enErrores = True
+            return Errores("SEMANTICO", f"No se permite llamada al procedimiento '{self.id}' desde sí mismo", self.linea, self.col)
 
         if len(proc.parametros) != len(self.parametros):
+            self.enErrores = True
             return Errores("SEMANTICO", f"Número incorrecto de parámetros para '{self.id}'", self.linea, self.col)
 
-        nuevo_scope = tabla.nuevoScope(f"procedimiento_{self.id.lower()}")
+        
+        if not isinstance(proc, Procedimientos):
+            self.enErrores = True
+            return Errores("SEMANTICO", f"'{self.id}' no es un procedimiento válido", self.linea, self.col)
+
+        
+        tabla.nuevoScope(self.id.lower())
 
         for (tipo_def, id_def), valor_ast in zip(proc.parametros, self.parametros):
             valor_interpretado = None
@@ -55,18 +53,22 @@ class Llamada(Instruccion):
                     tipo_val = simbolo.getTipo().getTipo()
                     valor_interpretado = simbolo.getValor()
                 except KeyError:
+                    self.enErrores = True
                     tabla.borrarScope()
                     return Errores("SEMANTICO", f"Variable '{valor_ast}' no encontrada", self.linea, self.col)
             else:
+                self.enErrores = True
                 tabla.borrarScope()
                 return Errores("SEMANTICO", "Solo se permiten literales o IDs como parámetros", self.linea, self.col)
 
             if tipo_val != tipo_def.getTipo():
+                self.enErrores = True
                 tabla.borrarScope()
                 return Errores("SEMANTICO", f"Tipo de parámetro incorrecto para '{id_def}'", self.linea, self.col)
 
             simbolo = Simbolo(tipo_def, id_def, "variable", valor_interpretado, tabla.current_scope, self.linea, self.col)
             if not tabla.setVariable(simbolo):
+                self.enErrores = True
                 tabla.borrarScope()
                 return Errores("SEMANTICO", f"El parámetro '{id_def}' ya existe en el entorno", self.linea, self.col)
 
@@ -77,6 +79,8 @@ class Llamada(Instruccion):
 
 
     def graficar(self, grafo):
+        if self.enErrores:
+            return None
         nodo_llamada = grafo.agregar_nodo("Llamada")
 
         nodo_id = grafo.agregar_nodo(f"ID: {self.id}")

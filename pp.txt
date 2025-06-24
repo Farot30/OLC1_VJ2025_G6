@@ -1,8 +1,8 @@
-
+int a = 8;
 // Procedimiento con parámetros
 proc actualizar(int: actualizacion, char: mensaje) {
    println("adffsda");
 }
 
 // Bloque principal: llamada a procedimientos
-exec actualizar(3, 'H');
+ exec actualizar(3, 'H');

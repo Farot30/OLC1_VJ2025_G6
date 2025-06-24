@@ -18,6 +18,8 @@ class tablaSimbolo(metaclass = SingletonMeta):
             self.tabla_actual= []
             self.nombre_dato: str = ""
             self.entorno_contadores = {}
+            self.procActual = None
+            self.tabla_Procedimientos = {}
 
     @property
     def current_scope(self):
@@ -210,3 +212,10 @@ class tablaSimbolo(metaclass = SingletonMeta):
         self.entorno_contadores = {}  # <-- Reinicia los contadores de scopes
 
         Simbolo._id_cc = 0  # Reinicia el contador de IDs
+
+
+    def setProc(self, nom):
+        self.procActual = nom
+
+    def getProc(self):
+        return self.procActual

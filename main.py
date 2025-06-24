@@ -94,8 +94,6 @@ def main():
     except Exception as e:
         print(f"Error durante la ejecución: {e}")
 
-
-
 def imprimir_tabla_simbolos(tabla: tablaSimbolo):
     print("#\tID\tTIPO\t\tTIPO2\tENTORNO\tVALOR\tLINEA\tCOLUMNA")
     for idx, simbolo in enumerate(tabla.getTabla(), 1):
