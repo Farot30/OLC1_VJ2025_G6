@@ -32,13 +32,12 @@ class Llamada(Instruccion):
             self.enErrores = True
             return Errores("SEMANTICO", f"Número incorrecto de parámetros para '{self.id}'", self.linea, self.col)
 
-        
         if not isinstance(proc, Procedimientos):
             self.enErrores = True
             return Errores("SEMANTICO", f"'{self.id}' no es un procedimiento válido", self.linea, self.col)
 
-        
         tabla.nuevoScope(self.id.lower())
+        tabla.setProc(self.id)
 
         for (tipo_def, id_def), valor_ast in zip(proc.parametros, self.parametros):
             valor_interpretado = None
@@ -48,34 +47,41 @@ class Llamada(Instruccion):
                 valor_interpretado = valor_ast.interpretar(arbol, tabla)
                 tipo_val = valor_ast.tipoDato.getTipo()
             elif isinstance(valor_ast, str):  # Es ID
-                try:
-                    simbolo = tabla.getVariable(valor_ast)
-                    tipo_val = simbolo.getTipo().getTipo()
-                    valor_interpretado = simbolo.getValor()
-                except KeyError:
+                simbolo = tabla.getVariable(valor_ast)
+                if simbolo is None:
                     self.enErrores = True
                     tabla.borrarScope()
+                    tabla.setProc(None)
                     return Errores("SEMANTICO", f"Variable '{valor_ast}' no encontrada", self.linea, self.col)
+                tipo_val = simbolo.getTipo().getTipo()
+                valor_interpretado = simbolo.getValor()
             else:
                 self.enErrores = True
                 tabla.borrarScope()
+                tabla.setProc(None)
                 return Errores("SEMANTICO", "Solo se permiten literales o IDs como parámetros", self.linea, self.col)
 
             if tipo_val != tipo_def.getTipo():
                 self.enErrores = True
                 tabla.borrarScope()
+                tabla.setProc(None)
                 return Errores("SEMANTICO", f"Tipo de parámetro incorrecto para '{id_def}'", self.linea, self.col)
 
             simbolo = Simbolo(tipo_def, id_def, "variable", valor_interpretado, tabla.current_scope, self.linea, self.col)
             if not tabla.setVariable(simbolo):
                 self.enErrores = True
                 tabla.borrarScope()
-                return Errores("SEMANTICO", f"El parámetro '{id_def}' ya existe en el entorno", self.linea, self.col)
+                tabla.setProc(None)
+                return Errores("SEMANTICO", f"El parámetro '{id_def}' ya existe en el entorno llamada", self.linea, self.col)
 
         resultado = proc.interpretar(arbol, tabla)
+
         tabla.borrarScope()
+        tabla.setProc(None)
+
         if isinstance(resultado, Errores):
             return resultado
+
 
 
     def graficar(self, grafo):

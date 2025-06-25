@@ -11,7 +11,7 @@ from src.gramatica import parse_input, errores_sintacticos_globales
 
 def main():
     try:
-        f = open("pp.txt", "r", encoding="utf-8")
+        f = open("aaa.txt", "r", encoding="utf-8")
         entrada = f.read()
 
         tabla = aTab

@@ -60,18 +60,10 @@ class tablaSimbolo(metaclass = SingletonMeta):
 
     def setVariable(self, simbolo: Simbolo) -> bool:
         key = simbolo.getId().lower()
-        # Si estamos en global, solo debe fallar si ya existe en global
-        if self.current_scope == "global":
-            for var in self.tabla_actual:
-                if var.id == key and var.scope == "global":
-                    return False  # Ya existe en global
-        else:
-            # Si estamos en un entorno local, no debe existir en global ni en este entorno
-            for var in self.tabla_actual:
-                if var.id == key and (
-                    var.scope == "global" or var.scope == self.current_scope
-                ):
-                    return False  # Ya existe en global o en este entorno
+        # Solo verifica colisión en el scope actual
+        for var in self.tabla_actual:
+            if var.id == key and var.scope == self.current_scope:
+                return False  # Ya existe en el mismo scope
         self.tabla_actual.append(simbolo)
         return True
 

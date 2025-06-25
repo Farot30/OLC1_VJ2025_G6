@@ -15,8 +15,11 @@ class Procedimientos(Instruccion):
         self.enErrores = False
 
     def interpretar(self, arbol, tabla: tablaSimbolo):
-        tabla.setProc(self.id)
+        #tabla.setProc(self.id)
         tabla.nuevoScope("Procedimiento")
+        arbol.setFuncion(self)
+        tabla.borrarScope()
+        return None
         """ for instr in self.inst:
             resultado = instr.interpretar(arbol, tabla)
             if isinstance(resultado, Errores):
@@ -24,7 +27,7 @@ class Procedimientos(Instruccion):
         tabla.borrarScope()
 
         arbol.setFuncion(self)
-        scope_name = tabla.nuevoScope("Procedimiento")"""
+        scope_name = tabla.nuevoScope("Procedimiento")
 
         for tipo, ident in self.parametros:
             simbolo = Simbolo(
@@ -52,7 +55,7 @@ class Procedimientos(Instruccion):
         tabla.tabla_Procedimientos[self.id] = tab_Proc
         tabla.borrarScope()
         tabla.setProc(None)
-        return None
+        return None"""
 
     
     def graficar(self, grafo):

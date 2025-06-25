@@ -7,33 +7,269 @@ digraph ReporteAST {
 	node2 -> node4
 	node5 [label=Valor color=purple fillcolor=white style=filled]
 	node2 -> node5
-	node6 [label=8 color=purple fillcolor=white style=filled]
+	node6 [label=5 color=purple fillcolor=white style=filled]
 	node5 -> node6
 	node1 -> node2
-	node7 [label=Procedimiento color=purple fillcolor=white style=filled]
-	node8 [label="ID: actualizar" color=purple fillcolor=white style=filled]
+	node7 [label="Declaración" color=purple fillcolor=white style=filled]
+	node8 [label="ID: a" color=purple fillcolor=white style=filled]
 	node7 -> node8
-	node9 [label="Parámetros" color=purple fillcolor=white style=filled]
+	node9 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
 	node7 -> node9
-	node10 [label="ENTERO : actualizacion" color=purple fillcolor=white style=filled]
-	node9 -> node10
-	node11 [label="CHAR : mensaje" color=purple fillcolor=white style=filled]
-	node9 -> node11
-	node12 [label=Instrucciones color=purple fillcolor=white style=filled]
-	node7 -> node12
-	node13 [label=Println color=purple fillcolor=white style=filled]
-	node14 [label=adffsda color=purple fillcolor=white style=filled]
-	node13 -> node14
-	node12 -> node13
+	node10 [label=Valor color=purple fillcolor=white style=filled]
+	node7 -> node10
+	node11 [label=10 color=purple fillcolor=white style=filled]
+	node10 -> node11
 	node1 -> node7
-	node15 [label=Llamada color=purple fillcolor=white style=filled]
-	node16 [label="ID: actualizar" color=purple fillcolor=white style=filled]
-	node15 -> node16
-	node17 [label=Parametros color=purple fillcolor=white style=filled]
-	node15 -> node17
-	node18 [label=3 color=purple fillcolor=white style=filled]
+	node12 [label=Println color=purple fillcolor=white style=filled]
+	node13 [label=5 color=purple fillcolor=white style=filled]
+	node12 -> node13
+	node1 -> node12
+	node14 [label="Declaración" color=purple fillcolor=white style=filled]
+	node15 [label="ID: a" color=purple fillcolor=white style=filled]
+	node14 -> node15
+	node16 [label="Tipo: STRING" color=purple fillcolor=white style=filled]
+	node14 -> node16
+	node17 [label=Valor color=purple fillcolor=white style=filled]
+	node14 -> node17
+	node18 [label=Hola color=purple fillcolor=white style=filled]
 	node17 -> node18
-	node19 [label=H color=purple fillcolor=white style=filled]
-	node17 -> node19
-	node1 -> node15
+	node1 -> node14
+	node19 [label=Println color=purple fillcolor=white style=filled]
+	node20 [label=5 color=purple fillcolor=white style=filled]
+	node19 -> node20
+	node1 -> node19
+	node21 [label=Procedimiento color=purple fillcolor=white style=filled]
+	node22 [label="ID: mostrarNumero" color=purple fillcolor=white style=filled]
+	node21 -> node22
+	node23 [label="Parámetros" color=purple fillcolor=white style=filled]
+	node21 -> node23
+	node24 [label="ENTERO : valor" color=purple fillcolor=white style=filled]
+	node23 -> node24
+	node25 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node21 -> node25
+	node26 [label=Println color=purple fillcolor=white style=filled]
+	node27 [label=<src.expresiones.CAritmeticas.Aritmeticas object at 0x000001DB753F60B0> color=purple fillcolor=white style=filled]
+	node26 -> node27
+	node25 -> node26
+	node1 -> node21
+	node28 [label=Llamada color=purple fillcolor=white style=filled]
+	node29 [label="ID: mostrarNumero" color=purple fillcolor=white style=filled]
+	node28 -> node29
+	node30 [label=Parametros color=purple fillcolor=white style=filled]
+	node28 -> node30
+	node31 [label=42 color=purple fillcolor=white style=filled]
+	node30 -> node31
+	node1 -> node28
+	node32 [label="Declaración" color=purple fillcolor=white style=filled]
+	node33 [label="ID: numero" color=purple fillcolor=white style=filled]
+	node32 -> node33
+	node34 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node32 -> node34
+	node35 [label=Valor color=purple fillcolor=white style=filled]
+	node32 -> node35
+	node36 [label=100 color=purple fillcolor=white style=filled]
+	node35 -> node36
+	node1 -> node32
+	node37 [label=Llamada color=purple fillcolor=white style=filled]
+	node38 [label="ID: mostrarNumero" color=purple fillcolor=white style=filled]
+	node37 -> node38
+	node39 [label=Parametros color=purple fillcolor=white style=filled]
+	node37 -> node39
+	node40 [label=numero color=purple fillcolor=white style=filled]
+	node39 -> node40
+	node1 -> node37
+	node41 [label=Procedimiento color=purple fillcolor=white style=filled]
+	node42 [label="ID: sumar" color=purple fillcolor=white style=filled]
+	node41 -> node42
+	node43 [label="Parámetros" color=purple fillcolor=white style=filled]
+	node41 -> node43
+	node44 [label="ENTERO : a" color=purple fillcolor=white style=filled]
+	node43 -> node44
+	node45 [label="ENTERO : b" color=purple fillcolor=white style=filled]
+	node43 -> node45
+	node46 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node41 -> node46
+	node47 [label="Declaración" color=purple fillcolor=white style=filled]
+	node48 [label="ID: resultado" color=purple fillcolor=white style=filled]
+	node47 -> node48
+	node49 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node47 -> node49
+	node50 [label=Valor color=purple fillcolor=white style=filled]
+	node47 -> node50
+	node51 [label="Aritmética: +" color=purple fillcolor=white style=filled]
+	node52 [label=a color=purple fillcolor=white style=filled]
+	node51 -> node52
+	node53 [label=b color=purple fillcolor=white style=filled]
+	node51 -> node53
+	node50 -> node51
+	node46 -> node47
+	node54 [label=Println color=purple fillcolor=white style=filled]
+	node55 [label=<src.expresiones.CAritmeticas.Aritmeticas object at 0x000001DB753F7340> color=purple fillcolor=white style=filled]
+	node54 -> node55
+	node46 -> node54
+	node1 -> node41
+	node56 [label=Llamada color=purple fillcolor=white style=filled]
+	node57 [label="ID: sumar" color=purple fillcolor=white style=filled]
+	node56 -> node57
+	node58 [label=Parametros color=purple fillcolor=white style=filled]
+	node56 -> node58
+	node59 [label=5 color=purple fillcolor=white style=filled]
+	node58 -> node59
+	node60 [label=7 color=purple fillcolor=white style=filled]
+	node58 -> node60
+	node1 -> node56
+	node61 [label="Declaración" color=purple fillcolor=white style=filled]
+	node62 [label="ID: x" color=purple fillcolor=white style=filled]
+	node61 -> node62
+	node63 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node61 -> node63
+	node64 [label=Valor color=purple fillcolor=white style=filled]
+	node61 -> node64
+	node65 [label=10 color=purple fillcolor=white style=filled]
+	node64 -> node65
+	node1 -> node61
+	node66 [label="Declaración" color=purple fillcolor=white style=filled]
+	node67 [label="ID: y" color=purple fillcolor=white style=filled]
+	node66 -> node67
+	node68 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node66 -> node68
+	node69 [label=Valor color=purple fillcolor=white style=filled]
+	node66 -> node69
+	node70 [label=20 color=purple fillcolor=white style=filled]
+	node69 -> node70
+	node1 -> node66
+	node71 [label=Llamada color=purple fillcolor=white style=filled]
+	node72 [label="ID: sumar" color=purple fillcolor=white style=filled]
+	node71 -> node72
+	node73 [label=Parametros color=purple fillcolor=white style=filled]
+	node71 -> node73
+	node74 [label=x color=purple fillcolor=white style=filled]
+	node73 -> node74
+	node75 [label=y color=purple fillcolor=white style=filled]
+	node73 -> node75
+	node1 -> node71
+	node76 [label=Llamada color=purple fillcolor=white style=filled]
+	node77 [label="ID: sumar" color=purple fillcolor=white style=filled]
+	node76 -> node77
+	node78 [label=Parametros color=purple fillcolor=white style=filled]
+	node76 -> node78
+	node79 [label=x color=purple fillcolor=white style=filled]
+	node78 -> node79
+	node80 [label=30 color=purple fillcolor=white style=filled]
+	node78 -> node80
+	node1 -> node76
+	node81 [label=Procedimiento color=purple fillcolor=white style=filled]
+	node82 [label="ID: mostrarInfo" color=purple fillcolor=white style=filled]
+	node81 -> node82
+	node83 [label="Parámetros" color=purple fillcolor=white style=filled]
+	node81 -> node83
+	node84 [label="STRING : nombre" color=purple fillcolor=white style=filled]
+	node83 -> node84
+	node85 [label="ENTERO : edad" color=purple fillcolor=white style=filled]
+	node83 -> node85
+	node86 [label="BOOL : activo" color=purple fillcolor=white style=filled]
+	node83 -> node86
+	node87 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node81 -> node87
+	node88 [label=Println color=purple fillcolor=white style=filled]
+	node89 [label=<src.expresiones.CAritmeticas.Aritmeticas object at 0x000001DB753F7A60> color=purple fillcolor=white style=filled]
+	node88 -> node89
+	node87 -> node88
+	node90 [label=Println color=purple fillcolor=white style=filled]
+	node91 [label=<src.expresiones.CAritmeticas.Aritmeticas object at 0x000001DB753F7C70> color=purple fillcolor=white style=filled]
+	node90 -> node91
+	node87 -> node90
+	node92 [label=Println color=purple fillcolor=white style=filled]
+	node93 [label=<src.expresiones.CAritmeticas.Aritmeticas object at 0x000001DB754300D0> color=purple fillcolor=white style=filled]
+	node92 -> node93
+	node87 -> node92
+	node1 -> node81
+	node94 [label=Llamada color=purple fillcolor=white style=filled]
+	node95 [label="ID: mostrarInfo" color=purple fillcolor=white style=filled]
+	node94 -> node95
+	node96 [label=Parametros color=purple fillcolor=white style=filled]
+	node94 -> node96
+	node97 [label=Juan color=purple fillcolor=white style=filled]
+	node96 -> node97
+	node98 [label=25 color=purple fillcolor=white style=filled]
+	node96 -> node98
+	node99 [label=True color=purple fillcolor=white style=filled]
+	node96 -> node99
+	node1 -> node94
+	node100 [label="Declaración" color=purple fillcolor=white style=filled]
+	node101 [label="ID: nombre" color=purple fillcolor=white style=filled]
+	node100 -> node101
+	node102 [label="Tipo: STRING" color=purple fillcolor=white style=filled]
+	node100 -> node102
+	node103 [label=Valor color=purple fillcolor=white style=filled]
+	node100 -> node103
+	node104 [label=Maria color=purple fillcolor=white style=filled]
+	node103 -> node104
+	node1 -> node100
+	node105 [label=Llamada color=purple fillcolor=white style=filled]
+	node106 [label="ID: mostrarInfo" color=purple fillcolor=white style=filled]
+	node105 -> node106
+	node107 [label=Parametros color=purple fillcolor=white style=filled]
+	node105 -> node107
+	node108 [label=nombre color=purple fillcolor=white style=filled]
+	node107 -> node108
+	node109 [label=30 color=purple fillcolor=white style=filled]
+	node107 -> node109
+	node110 [label=False color=purple fillcolor=white style=filled]
+	node107 -> node110
+	node1 -> node105
+	node111 [label="Declaración" color=purple fillcolor=white style=filled]
+	node112 [label="ID: contador" color=purple fillcolor=white style=filled]
+	node111 -> node112
+	node113 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node111 -> node113
+	node114 [label=Valor color=purple fillcolor=white style=filled]
+	node111 -> node114
+	node115 [label=0 color=purple fillcolor=white style=filled]
+	node114 -> node115
+	node1 -> node111
+	node116 [label=Println color=purple fillcolor=white style=filled]
+	node117 [label="Valor final del contador: 0" color=purple fillcolor=white style=filled]
+	node116 -> node117
+	node1 -> node116
+	node118 [label=Procedimiento color=purple fillcolor=white style=filled]
+	node119 [label="ID: mensaje" color=purple fillcolor=white style=filled]
+	node118 -> node119
+	node120 [label="Parámetros" color=purple fillcolor=white style=filled]
+	node118 -> node120
+	node121 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node118 -> node121
+	node122 [label=Println color=purple fillcolor=white style=filled]
+	node123 [label=<src.expresiones.CNativo.Nativo object at 0x000001DB75430F10> color=purple fillcolor=white style=filled]
+	node122 -> node123
+	node121 -> node122
+	node1 -> node118
+	node124 [label=Procedimiento color=purple fillcolor=white style=filled]
+	node125 [label="ID: principal" color=purple fillcolor=white style=filled]
+	node124 -> node125
+	node126 [label="Parámetros" color=purple fillcolor=white style=filled]
+	node124 -> node126
+	node127 [label=Instrucciones color=purple fillcolor=white style=filled]
+	node124 -> node127
+	node128 [label=Println color=purple fillcolor=white style=filled]
+	node129 [label=<src.expresiones.CNativo.Nativo object at 0x000001DB75430FA0> color=purple fillcolor=white style=filled]
+	node128 -> node129
+	node127 -> node128
+	node130 [label=Llamada color=purple fillcolor=white style=filled]
+	node131 [label="ID: mensaje" color=purple fillcolor=white style=filled]
+	node130 -> node131
+	node132 [label=Parametros color=purple fillcolor=white style=filled]
+	node130 -> node132
+	node127 -> node130
+	node133 [label=Println color=purple fillcolor=white style=filled]
+	node134 [label=<src.expresiones.CNativo.Nativo object at 0x000001DB75431300> color=purple fillcolor=white style=filled]
+	node133 -> node134
+	node127 -> node133
+	node1 -> node124
+	node135 [label=Llamada color=purple fillcolor=white style=filled]
+	node136 [label="ID: principal" color=purple fillcolor=white style=filled]
+	node135 -> node136
+	node137 [label=Parametros color=purple fillcolor=white style=filled]
+	node135 -> node137
+	node1 -> node135
 }
