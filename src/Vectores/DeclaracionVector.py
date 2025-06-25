@@ -17,8 +17,12 @@ def _es_anidada(valores, dimensiones):
 
 
 def _reconstruir_anidado(lista, dimensiones):
+    """Reconstruye una lista plana en una estructura anidada según dimensiones"""
+    # Caso base: si solo queda una dimensión, devuelve un segmento de la lista
     if len(dimensiones) == 1:
         return lista
+
+    # Para vectores 2D, mantenemos el algoritmo original que es más eficiente
     if len(dimensiones) == 2:
         filas, columnas = dimensiones
         if len(lista) != filas * columnas:
@@ -32,7 +36,20 @@ def _reconstruir_anidado(lista, dimensiones):
                 idx += 1
             anidado.append(fila)
         return anidado
-    return lista
+
+    # Para 3D o más, usamos recursión
+    tamanio_restante = 1
+    for dim in dimensiones[1:]:
+        tamanio_restante *= dim
+
+    resultado = []
+    for i in range(dimensiones[0]):
+        inicio = i * tamanio_restante
+        fin = inicio + tamanio_restante
+        subvector = _reconstruir_anidado(lista[inicio:fin], dimensiones[1:])
+        resultado.append(subvector)
+
+    return resultado
 
 
 class DeclaracionVector(Instruccion):
@@ -151,16 +168,29 @@ class DeclaracionVector(Instruccion):
             arbol.vectores[self.identificador] = vector
             return None
 
-        # 6. Caso sin RHS: inicializar con ceros
+        # 6. Caso sin RHS: inicializar con valores por defecto según tipo
         prod = 1
         for d in dimensiones_evaluadas:
             prod *= d
-        default = 0
-        if self.tipo.getTipo() == tipoDato.DECIMAL:
+
+        # Valores por defecto según tipo
+        if self.tipo.getTipo() == tipoDato.ENTERO:
+            default = 0
+        elif self.tipo.getTipo() == tipoDato.DECIMAL:
             default = 0.0
+        elif self.tipo.getTipo() == tipoDato.STRING:
+            default = ""
+        elif self.tipo.getTipo() == tipoDato.BOOL:
+            default = True
+        elif self.tipo.getTipo() == tipoDato.CHAR:
+            default = ""
+        else:
+            default = None
+
         vals = [default] * prod
         if not _es_anidada(vals, dimensiones_evaluadas):
             vals = _reconstruir_anidado(vals, dimensiones_evaluadas)
+
         try:
             vector = Vector(
                 tipo=self.tipo,
@@ -183,6 +213,8 @@ class DeclaracionVector(Instruccion):
             arbol.vectores = {}
         arbol.vectores[self.identificador] = vector
         return None
+
+    # El resto de métodos se mantienen igual...
 
     def _evaluar_valores(self, valores, arbol, tabla, nivel=0):
         """Evalúa recursivamente valores de vectores multidimensionales"""

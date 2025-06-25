@@ -27,6 +27,9 @@ from src.F_nativas.seno import Seno
 from src.F_nativas.coseno import Coseno
 from src.F_nativas.inverso import Inverso
 from src.F_nativas.shuffle import Shuffle
+from src.instrucciones.CProcedimientos import Procedimientos
+from src.instrucciones.CLlamada import Llamada
+from src.simbolo.CSimbolo import Simbolo
 
 # 2. TOKENS Y RESERVADAS
 tokens = [
@@ -87,6 +90,8 @@ tokens = [
     "COSENO",
     "INV",
     "SHUFFLE",
+    "PROC",
+    "EXEC",
 ]
 
 reservadas = {
@@ -113,6 +118,8 @@ reservadas = {
     "coseno": "COSENO",
     "inv": "INV",
     "shuffle": "SHUFFLE",
+    "proc": "PROC",
+    "exec": "EXEC",
 }
 
 # 3. EXPRESIONES REGULARES DE TOKENS
@@ -239,17 +246,6 @@ def t_ENTERO(t):
     return t
 
 
-"""
-def t_NUMBER(t):
-    r"\d+(\.\d+)?"
-    if "." in t.value:
-        t.value = float(t.value)
-    else:
-        t.value = int(t.value)
-    return t
-"""
-
-
 def t_newline(t):
     r"\n+"
     t.lexer.lineno += len(t.value)
@@ -337,7 +333,9 @@ def p_instruccion(t):
     | sent_break PUNTOCOMA
     | sent_continue PUNTOCOMA
     | sent_println PUNTOCOMA
-    | bloque"""
+    | bloque
+    | Procedimiento
+    | Llamada PUNTOCOMA"""
     if len(t) == 2:
         if t[1] == ";":
             t[0] = None  # Instrucción vacía
@@ -501,7 +499,7 @@ def p_sent_if(t):
     """sent_if : if_simple
     | if_else
     | if_elseif
-    | if_elseif_else"""  # Añadir esta línea
+    | if_elseif_else"""
     t[0] = t[1]
 
 
@@ -819,6 +817,96 @@ def p_expresion_relacional(t):
     )
 
 
+def p_Procedimiento(t):  # id: str, params:list, inst: list, linea: int, col: int):
+    """Procedimiento : PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2"""
+    t[0] = Procedimientos(
+        t[2], t[4], t[7], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+    )
+
+
+def p_PARAMETROS(t):
+    """PARAMETROS : tipos DOSPT ID
+    | tipos DOSPT ID COMMA PARAMETROS"""
+    if len(t) == 4:
+        t[0] = [(t[1], t[3])]
+    else:
+        t[5].insert(0, (t[1], t[3]))
+        t[0] = t[5]
+
+
+def p_PARAMETROS_empty(t):
+    """PARAMETROS : empty"""
+    t[0] = []
+
+
+def p_Llamada(t):
+    """Llamada : EXEC ID PAR1 PARAMLLAMADA PAR2"""
+    t[0] = Llamada(t[2], t[4], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_PARAMLLAMADA(t):
+    """PARAMLLAMADA : literal
+    | ID
+    | BOOLEANO
+    | PARAMLLAMADA COMMA literal
+    | PARAMLLAMADA COMMA ID
+    | PARAMLLAMADA COMMA BOOLEANO"""
+    if len(t) == 2:
+        # Si es un BOOLEANO, crea un Nativo con el valor booleano
+        if t.slice[1].type == "BOOLEANO":
+            t[0] = [
+                Nativo(
+                    Tipo(tipoDato.BOOL),
+                    t[1],
+                    t.lineno(1),
+                    find_column(t.lexer.lexdata, t.slice[1]),
+                )
+            ]
+        else:
+            t[0] = [t[1]]
+    else:
+        # Si es un BOOLEANO en una lista de parámetros
+        if t.slice[3].type == "BOOLEANO":
+            nodo = Nativo(
+                Tipo(tipoDato.BOOL),
+                t[3],
+                t.lineno(3),
+                find_column(t.lexer.lexdata, t.slice[3]),
+            )
+            t[1].append(nodo)
+        else:
+            t[1].append(t[3])
+        t[0] = t[1]
+
+
+def p_PARAMLLAMADA_empty(t):
+    """PARAMLLAMADA : empty"""
+    t[0] = []
+
+
+def p_literal(t):
+    """literal : ENTERO
+    | DECIMAL
+    | CARACTER
+    | CADENA
+    | TRUE
+    | FALSE"""
+
+    if isinstance(t[1], int):
+        tipo = Tipo(tipoDato.ENTERO)
+    elif isinstance(t[1], float):
+        tipo = Tipo(tipoDato.DECIMAL)
+    elif isinstance(t[1], str) and len(t[1]) == 1:
+        tipo = Tipo(tipoDato.CHAR)
+    elif t.slice[1].type in ["TRUE", "FALSE"]:
+        tipo = Tipo(tipoDato.BOOL)
+        t[1] = True if t.slice[1].type == "TRUE" else False
+    else:
+        tipo = Tipo(tipoDato.STRING)
+
+    t[0] = Nativo(tipo, t[1], 0, 0)
+
+
 # --- TIPOS ---
 def p_tipos(t):
     """tipos : INT
@@ -858,7 +946,7 @@ def p_error(t):
 
         # Mensaje de error para el token encontrado
         error = Errores(
-            "Sintáctico",
+            "SINTACTICO",  # Usar mayúsculas para consistencia
             f"Se encontró {t.type} ('{t.value}') y se esperaba una expresión o instrucción válida.",
             t.lineno,
             find_column(t.lexer.lexdata, t) if hasattr(t.lexer, "lexdata") else 1,
@@ -871,19 +959,20 @@ def p_error(t):
 
         print(error)
 
-        # Recuperación de errores más inteligente
-        # Intentamos sincronizar con el siguiente punto y coma, llave o final de bloque
+        # Recuperación de errores mejorada
+        # Intenta sincronizar con tokens de sincronización (puntos clave en la gramática)
+        sync_tokens = ["PUNTOCOMA", "LLAVE1", "LLAVE2", "PAR2", "ELSE", "EXEC"]
         next_token = t
         while True:
             next_token = parser.token()  # Obtener siguiente token
-            if not next_token or next_token.type in ["PUNTOCOMA", "LLAVE1", "LLAVE2"]:
+            if not next_token or next_token.type in sync_tokens:
                 break
 
         # Indícale al parser que ya manejaste el error
         parser.errok()
 
-        # Si encontramos un punto y coma, regresamos ese token para continuar
-        if next_token and next_token.type == "PUNTOCOMA":
+        # Si encontramos un token de sincronización, regresamos ese token para continuar
+        if next_token and next_token.type in sync_tokens:
             return next_token
     else:
         # EOF

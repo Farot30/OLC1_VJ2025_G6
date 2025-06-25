@@ -17,7 +17,9 @@ class tablaSimbolo(metaclass=SingletonMeta):
             self.scopes = ["global"]
             self.tabla_actual = []
             self.nombre_dato: str = ""
-            self.entorno_contadores = {}  # <-- Agrega esto
+            self.entorno_contadores = {}  # <-- Agrega esto.
+            self.procActual = None
+            self.tabla_Procedimientos = {}
 
     @property
     def current_scope(self):
@@ -89,7 +91,7 @@ class tablaSimbolo(metaclass=SingletonMeta):
                     and var.scope == current_scope
                 ):
                     return var
-            idx -= 1  # CORREGIDO: Ahora está dentro del while
+            idx -= 1
 
         # Si no se encontró, buscar en global explícitamente
         for var in self.tabla_actual:
@@ -100,12 +102,6 @@ class tablaSimbolo(metaclass=SingletonMeta):
         raise KeyError(
             f"La variable '{id_}' no ha sido declarada en el entorno '{scope}' ni en global"
         )
-        """if key in self.tabla_actual:
-            return self.tabla_actual[key]
-        elif self.padre is not None:
-            return self.padre.getVariable(key)
-        else:
-            return None"""
 
     def agregarVariable(self, id, tipo, valor=None, linea=None, columna=None):
         sym = Simbolo(
@@ -239,3 +235,9 @@ class tablaSimbolo(metaclass=SingletonMeta):
         self.entorno_contadores = {}  # <-- Reinicia los contadores de scopes
 
         Simbolo._id_cc = 0  # Reinicia el contador de IDs
+
+    def setProc(self, nom):
+        self.procActual = nom
+
+    def getProc(self):
+        return self.procActual

@@ -29,7 +29,7 @@ class Declaracion(Instruccion):
         elif tipo_enum == tipoDato.DECIMAL:
             return 0.0
         elif tipo_enum == tipoDato.BOOL:
-            return False
+            return True
         elif tipo_enum == tipoDato.STRING:
             return ""
         elif tipo_enum == tipoDato.CHAR:

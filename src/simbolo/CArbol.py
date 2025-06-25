@@ -1,9 +1,9 @@
 from __future__ import annotations
 from src.abstracto.CInstruccion import Instruccion
 from src.excepciones.CErrores import Errores
-from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.simbolo.CInstancia import tabla_S as aTab
 from src.abstracto.CAST import clasAST
+from src.instrucciones.CProcedimientos import Procedimientos
 
 
 class Arbol:
@@ -13,6 +13,7 @@ class Arbol:
         self.tabla_global = aTab
         self.errores = []
         self.vectores = {}  # Inicializar el diccionario de vectores
+        self.procedimientos = []  # Lista de funciones declaradas
 
     def getConsola(self) -> str:
         return self.consola
@@ -43,3 +44,16 @@ class Arbol:
             if nodoHijo is not None:
                 grafo.agregar_arista(nodoRaiz, nodoHijo)
         return nodoRaiz
+
+    def setFuncion(self, prodec):
+        self.procedimientos.append(prodec)
+
+    def getFunciones(self):
+        return self.procedimientos
+
+    def getFuncion(self, id):
+        for i in self.getFunciones():
+            if isinstance(i, Procedimientos):
+                if i.id.lower() == id.lower():
+                    return i
+        return None

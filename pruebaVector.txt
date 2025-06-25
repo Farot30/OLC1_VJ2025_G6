@@ -94,3 +94,73 @@ println(a);
 str a = "Hola";  // Redeclaración con tipo diferente
 
 println(a);
+
+// Procedimiento simple sin parámetros
+proc saludar() {
+    println("¡Hola mundo desde un procedimiento!");
+}
+
+// Llamar al procedimiento
+exec saludar();
+
+// Procedimiento con un parámetro
+proc mostrarNumero(int: valor) {
+    println("El número es: " + valor);
+}
+
+// Llamar con valor literal
+exec mostrarNumero(42);
+
+// Llamar con variable
+int numero = 100;
+exec mostrarNumero(numero);
+
+// Procedimiento con múltiples parámetros
+proc sumar(int: a, int: b) {
+    int resultado = a + b;
+    println("La suma de " + a + " y " + b + " es: " + resultado);
+}
+
+// Llamar con diferentes combinaciones
+exec sumar(5, 7);
+int x = 10;
+int y = 20;
+exec sumar(x, y);
+exec sumar(x, 30);
+
+// Procedimiento con diferentes tipos de parámetros
+proc mostrarInfo(str: nombre, int: edad, bool: activo) {
+    println("Nombre: " + nombre);
+    println("Edad: " + edad);
+    println("Activo: " + activo);
+}
+
+// Llamar con diferentes tipos
+exec mostrarInfo("Juan", 25, true);
+str nombre = "María";
+exec mostrarInfo(nombre, 30, false);
+
+// Procedimiento que modifica una variable global
+int contador = 0;
+
+proc incrementar() {
+    contador = contador + 1;
+    println("Contador incrementado a: " + contador);
+}
+
+exec incrementar();
+exec incrementar();
+println("Valor final del contador: " + contador);
+
+// Procedimientos anidados (uno llama a otro)
+proc mensaje() {
+    println("Mensaje desde procedimiento secundario");
+}
+
+proc principal() {
+    println("Iniciando procedimiento principal");
+    exec mensaje();
+    println("Finalizando procedimiento principal");
+}
+
+exec principal();
