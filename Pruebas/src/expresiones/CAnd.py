@@ -20,21 +20,24 @@ class And(Instruccion):
         val2 = self.der.interpretar(arbol, tabla)
         if isinstance(val2, Errores):
             return val2
+        # print("DEBUG AND:", val1, type(val1), val2, type(val2))
 
-        try:
-            return bool(val1) and bool(val2)
-        except Exception:
+        # Ambos operandos deben ser booleanos
+        if type(val1) is not bool or type(val2) is not bool:
             return Errores(
                 "SEMANTICO",
-                f"Operador AND no puede aplicarse a tipos {type(val1).__name__} y {type(val2).__name__}",
+                f"Operador AND solo puede aplicarse a booleanos, no a {type(val1).__name__} y {type(val2).__name__}",
                 self.linea,
                 self.col,
             )
+        return val1 and val2
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         nodoAND = grafo.agregar_nodo("AND")
         nodoIzq = self.izq.graficar(grafo, arbol, tabla)
         nodoDer = self.der.graficar(grafo, arbol, tabla)
-        grafo.agregar_arista(nodoAND, nodoIzq)
-        grafo.agregar_arista(nodoAND, nodoDer)
+        if nodoIzq is not None:
+            grafo.agregar_arista(nodoAND, nodoIzq)
+        if nodoDer is not None:
+            grafo.agregar_arista(nodoAND, nodoDer)
         return nodoAND

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Vectores</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+<body>
+    <div class="header-bar">
+        <h1>Reporte de Vectores</h1>
+        <div class="top-buttons">
+            <a href="/" style="color: white; text-decoration: none;">
+                <button>Volver al inicio</button>
+            </a>
+        </div>
+    </div>
+
+    {% if vectores %}
+        {% for id_vector, vector_data in vectores.items() %}
+            <div class="vector-container">
+                <h2>Vector: {{ id_vector }}</h2>
+                <p><strong>Tipo:</strong> {{ vector_data.tipo }}</p>
+                <p><strong>Dimensiones:</strong> {{ vector_data.dimensiones }}</p>
+                
+                <h3>Representación Original</h3>
+                <pre>{{ vector_data.representacion_original }}</pre>
+                
+                <h3>Representación Lineal (Row-major)</h3>
+                <div class="linear-view">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Índice Lineal</th>
+                                <th>Valor</th>
+                                <th>Índices Originales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in vector_data.datos_lineales %}
+                                <tr>
+                                    <td>{{ item.indice }}</td>
+                                    <td>{{ item.valor }}</td>
+                                    <td>{{ item.indices_orig }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="vector-container">
+            <p>No hay vectores para mostrar.</p>
+        </div>
+    {% endif %}
+</body>
+</html>

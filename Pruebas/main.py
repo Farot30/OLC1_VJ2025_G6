@@ -3,16 +3,23 @@ from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
 from src.abstracto.CAST import generarGrafica
+from src.Vectores.ReporteVector import ReporteVectores
 
 
 def main():
     try:
-        f = open("entrada.txt", "r")
+        f = open("pruebaVector.txt", "r", encoding="utf-8")
         entrada = f.read()
-
+        tablaSimbolo().setTabla([])
         ast = Arbol([])  # Crea el árbol antes de parsear
-        instrucciones = parse_input(entrada, ast)  # Pasa el árbol aquí
+        instrucciones = parse_input(entrada, ast)
+        # Filtra instrucciones válidas
+        instrucciones = [instr for instr in instrucciones if instr is not None]
         ast.set_instrucciones(instrucciones)
+
+        if not instrucciones:
+            print("No hay instrucciones válidas para ejecutar.")
+            return
 
         tabla = tablaSimbolo()
         ast.setTablaGlobal(tabla)
@@ -24,12 +31,12 @@ def main():
             errores_sintacticos_globales.clear()
 
         # Imprime errores ANTES de ejecutar instrucciones
-        if ast.errores:
-            print("Errores encontrados durante el análisis sintáctico:")
-            for idx, error in enumerate(ast.errores, 1):
-                print(
-                    f"{idx}\t{error.get_tipo_error()}\t{error.get_desc()}\t{error.get_linea()}\t{error.get_col()}"
-                )
+        # if ast.errores:
+        #    print("Errores encontrados durante el análisis sintáctico:")
+        #    for idx, error in enumerate(ast.errores, 1):
+        #        print(
+        #           f"{idx}\t{error.get_tipo_error()}\t{error.get_desc()}\t{error.get_linea()}\t{error.get_col()}"
+        #        )
 
         for instr in ast.getInstrucciones():
             if instr is None:
@@ -64,8 +71,15 @@ def imprimir_tabla_errores(errores):
         )
 
 
+# Añadir después de imprimir la tabla de errores
 if __name__ == "__main__":
     ast = main()
     if ast is not None:
         ast.get_tabla_global().ImprimirTabla()  # Usa el método de la clase
         imprimir_tabla_errores(ast.get_errores())
+
+        # Generar reporte de vectores si hay vectores declarados
+        if hasattr(ast, "vectores") and ast.vectores:
+
+            reporte = ReporteVectores(ast)
+            reporte.generar_reporte_consola()

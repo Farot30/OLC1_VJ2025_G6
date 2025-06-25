@@ -1,4 +1,3 @@
-from typing import Dict, List
 from src.simbolo.CSimbolo import Simbolo
 
 
@@ -34,7 +33,15 @@ class tablaSimbolo(metaclass=SingletonMeta):
 
     def borrarScope(self):
         if len(self.scopes) > 1:
-            return self.scopes.pop()
+            scope_to_remove = self.scopes.pop()
+
+            # Solo elimina variables si es un scope temporal
+            if scope_to_remove.startswith("temp"):
+                self.tabla_actual = [
+                    var for var in self.tabla_actual if var.scope != scope_to_remove
+                ]
+
+            return scope_to_remove
         raise RuntimeError("No se puede eliminar el scope global")
 
     def getTabla(self) -> []:  # type: ignore
@@ -69,19 +76,27 @@ class tablaSimbolo(metaclass=SingletonMeta):
     def getVariable(self, id_, scope=None):
         key = id_.lower()
         scope = scope or self.current_scope
-        # Busca primero en el scope actual
-        for var in reversed(self.tabla_actual):
-            if var.entidad == "variable" and var.id == key and var.scope == scope:
-                return var
-        # Si no está, busca en global
-        if scope != "global":
-            for var in reversed(self.tabla_actual):
+
+        # Primero buscar en el scope actual y todos los scopes ancestros
+        idx = len(self.scopes) - 1
+        while idx >= 0:
+            current_scope = self.scopes[idx]
+            # Buscar directo en current_scope
+            for var in self.tabla_actual:
                 if (
                     var.entidad == "variable"
                     and var.id == key
-                    and var.scope == "global"
+                    and var.scope == current_scope
                 ):
                     return var
+            idx -= 1  # CORREGIDO: Ahora está dentro del while
+
+        # Si no se encontró, buscar en global explícitamente
+        for var in self.tabla_actual:
+            if var.entidad == "variable" and var.id == key and var.scope == "global":
+                return var
+
+        # No se encontró la variable
         raise KeyError(
             f"La variable '{id_}' no ha sido declarada en el entorno '{scope}' ni en global"
         )
@@ -119,12 +134,25 @@ class tablaSimbolo(metaclass=SingletonMeta):
         self.tabla_actual.append(sym)
         return sym
 
-    def actualizarVariable(self, name, nevValor, scope=None):
+    def actualizarVariable(
+        self, name, nevValor, nevTipo=None, linea=None, columna=None, scope=None
+    ):
+        name = name.lower()  # Normalizar el identificador
         scope = scope or self.current_scope
+
         for sym in reversed(self.tabla_actual):
             if sym.entidad == "variable" and sym.id == name and sym.scope == scope:
+                # Actualizar todos los campos proporcionados
                 sym.valor = nevValor
+                if nevTipo is not None:
+                    sym.tipo = nevTipo
+                if linea is not None:
+                    sym.linea = linea
+                if columna is not None:
+                    sym.columna = columna
                 return sym
+
+        # Si llegamos aquí, no se encontró la variable
         raise KeyError(f"Variable '{name}' no declarada en scope '{scope}'")
 
     def ImprimirTabla(self):
@@ -209,6 +237,5 @@ class tablaSimbolo(metaclass=SingletonMeta):
         self.tabla_actual = []
         self.scopes = ["global"]  # <-- Reinicia los scopes también
         self.entorno_contadores = {}  # <-- Reinicia los contadores de scopes
-        from src.simbolo.CSimbolo import Simbolo
 
         Simbolo._id_cc = 0  # Reinicia el contador de IDs

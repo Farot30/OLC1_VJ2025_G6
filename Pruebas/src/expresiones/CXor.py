@@ -21,20 +21,22 @@ class Xor(Instruccion):
         if isinstance(val2, Errores):
             return val2
 
-        try:
-            return bool(val1) ^ bool(val2)  # XOR lógico
-        except Exception:
+        # Ambos operandos deben ser booleanos
+        if type(val1) is not bool or type(val2) is not bool:
             return Errores(
                 "SEMANTICO",
-                f"Operador XOR no puede aplicarse a tipos {type(val1).__name__} y {type(val2).__name__}",
+                f"Operador XOR solo puede aplicarse a booleanos, no a {type(val1).__name__} y {type(val2).__name__}",
                 self.linea,
                 self.col,
             )
+        return val1 ^ val2  # XOR lógico
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         nodoXor = grafo.agregar_nodo("XOR")
         nodoIzq = self.izq.graficar(grafo, arbol, tabla)
         nodoDer = self.der.graficar(grafo, arbol, tabla)
-        grafo.agregar_arista(nodoXor, nodoIzq)
-        grafo.agregar_arista(nodoXor, nodoDer)
+        if nodoIzq is not None:
+            grafo.agregar_arista(nodoXor, nodoIzq)
+        if nodoDer is not None:
+            grafo.agregar_arista(nodoXor, nodoDer)
         return nodoXor

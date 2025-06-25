@@ -1,12 +1,15 @@
 import os
 from flask import Flask, render_template, request, send_from_directory
-from src.gramatica import parse_input
+from src.gramatica import parse_input, errores_sintacticos_globales
 from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
 from src.abstracto.CAST import generarGrafica
+from src.Vectores.ReporteVector import ReporteVectores
+
 
 app = Flask(__name__, static_folder="static")
+app.arbol_actual = None  # Variable global para almacenar el árbol actual
 
 
 @app.route("/report/<path:filename>")
@@ -27,12 +30,22 @@ def index():
             arbol = Arbol([])  # Crea un nuevo árbol
             instrucciones = parse_input(entrada, arbol)
             arbol.set_instrucciones(instrucciones)
+
+            # Guardar el árbol para usarlo en otras rutas
+            app.arbol_actual = arbol
+
+            # AÑADIDO: Transferir errores sintácticos al árbol
+            if errores_sintacticos_globales:
+                arbol.errores.extend(errores_sintacticos_globales)
+                errores_sintacticos_globales.clear()
+
             # Reinicia la tabla de símbolos (nueva instancia)
             tabla = tablaSimbolo()
-            tabla.limpiar()  # <-- Agrega este método en tu clase tablaSimbolo si no existe
+            tabla.limpiar()
             arbol.setTablaGlobal(tabla)
             arbol.setConsola("")
-            arbol.errores = []  # Limpia errores previos
+            # NO limpiar errores aquí: arbol.errores = []  <-- COMENTADO
+
             # Ejecutar instrucciones
             for instr in arbol.getInstrucciones():
                 if instr is None:
@@ -41,6 +54,7 @@ def index():
                 if isinstance(resultado, Errores):
                     arbol.errores.append(resultado)
             salida = arbol.getConsola()
+
             # Mostrar todos los errores del árbol
             if arbol.errores:
                 errores = "#\tTipo\tDescripcion\tLINEA\tCOLUMNA\n"
@@ -52,8 +66,10 @@ def index():
                 )
             else:
                 errores = "Sin errores."
+
             # Generar tabla de símbolos usando el método de la clase
             tabla_simbolos = tabla.tablaComoString()
+
             # Generar el AST y el archivo .svg en static/
             if arbol.getInstrucciones():
                 try:
@@ -61,6 +77,8 @@ def index():
                     ast_svg = "ast_reporte.svg"
                 except Exception as e:
                     ast_svg = ""
+                    print(f"Error al generar AST: {e}")
+
         elif "archivo" in request.files:
             archivo = request.files["archivo"]
             if archivo and archivo.filename:
@@ -117,6 +135,23 @@ def mostrar_ast():
         return render_template("ast.html", ast_svg="ast_reporte.svg")
     else:
         return "AST no generado aún."
+
+
+# Modificar la ruta existente
+@app.route("/vectores")
+def mostrar_vectores():
+    # Obtener el árbol de la variable global de la app
+    arbol = getattr(app, "arbol_actual", None)
+
+    if arbol is None or not hasattr(arbol, "vectores") or not arbol.vectores:
+        return render_template("ReportVector.html", vectores={})
+
+    # Preparar los datos usando el método que ya tienes
+    reporte = ReporteVectores(arbol)
+    vectores_data = reporte.preparar_datos_vectores()
+
+    # Renderizar la plantilla con los datos
+    return render_template("ReportVector.html", vectores=vectores_data)
 
 
 if __name__ == "__main__":

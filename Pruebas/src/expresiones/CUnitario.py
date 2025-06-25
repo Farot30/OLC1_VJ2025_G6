@@ -1,5 +1,4 @@
 from src.abstracto.CInstruccion import Instruccion
-from src.simbolo.CTipo import Tipo, tipoDato
 from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
@@ -43,5 +42,6 @@ class Unario(Instruccion):
         nodoOperador = grafo.agregar_nodo(self.operador)
         nodoExp = self.expresion.graficar(grafo, arbol, tabla)
         grafo.agregar_arista(unario, nodoOperador)
-        grafo.agregar_arista(unario, nodoExp)
+        if nodoExp is not None:
+            grafo.agregar_arista(unario, nodoExp)
         return unario

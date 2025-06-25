@@ -2,7 +2,8 @@ from src.abstracto.CInstruccion import Instruccion
 from src.excepciones.CErrores import Errores
 from src.abstracto.CAST import clasAST
 from src.instrucciones.CBreak import Break
-from src.simbolo.TablaSimbolo import tablaSimbolo 
+from src.simbolo.TablaSimbolo import tablaSimbolo
+
 
 class Switch(Instruccion):
     def __init__(self, expresion, casos, defecto, linea, col):
@@ -12,7 +13,7 @@ class Switch(Instruccion):
         self.defecto = defecto
 
     def interpretar(self, arbol, tabla: tablaSimbolo):
-        #Verificar que cada CASE tenga un BREAK al final
+        # Verificar que cada CASE tenga un BREAK al final
         for caso in self.casos:
             if not caso.tiene_break():
                 error = Errores(
@@ -33,12 +34,12 @@ class Switch(Instruccion):
             if not tiene_break_default:
                 error = Errores(
                     "SEMANTICO",
-                    f"Falta un 'break' al final del DEFAULT",
+                    "Falta un 'break' al final del DEFAULT",
                     self.linea,
                     self.col,
                 )
                 arbol.errores.append(error)
-                return error 
+                return error
         valor_expresion_switch = self.expresion.interpretar(arbol, tabla)
         if isinstance(valor_expresion_switch, Errores):
             return valor_expresion_switch
@@ -51,8 +52,10 @@ class Switch(Instruccion):
                 self.col,
             )
             arbol.errores.append(error)
-            return error # Retornar el error para detener la interpretación de este Switch
-        
+            return (
+                error  # Retornar el error para detener la interpretación de este Switch
+            )
+
         tabla.nuevoScope("Switch")
         ejecutando_casos = False
         romper_switch = False
@@ -61,17 +64,23 @@ class Switch(Instruccion):
             valor_caso_actual = caso.valor.interpretar(arbol, tabla)
             if isinstance(valor_caso_actual, Errores):
                 tabla.borrarScope()
-                return valor_caso_actual 
-
+                return valor_caso_actual
 
             if ejecutando_casos or valor_caso_actual == valor_expresion_switch:
                 ejecutando_casos = True
                 for instr in caso.instrucciones:
                     parametros_interpretar = instr.interpretar.__code__.co_varnames
-                    if "entorno" in parametros_interpretar and "en_ciclo" in parametros_interpretar:
-                        resultado_instr = instr.interpretar(arbol, tabla, entorno="Switch", en_ciclo=True)
+                    if (
+                        "entorno" in parametros_interpretar
+                        and "en_ciclo" in parametros_interpretar
+                    ):
+                        resultado_instr = instr.interpretar(
+                            arbol, tabla, entorno="Switch", en_ciclo=True
+                        )
                     elif "entorno" in parametros_interpretar:
-                        resultado_instr = instr.interpretar(arbol, tabla, entorno="Switch")
+                        resultado_instr = instr.interpretar(
+                            arbol, tabla, entorno="Switch"
+                        )
                     elif "en_ciclo" in parametros_interpretar:
                         resultado_instr = instr.interpretar(arbol, tabla, en_ciclo=True)
                     else:
@@ -81,7 +90,7 @@ class Switch(Instruccion):
                         arbol.errores.append(resultado_instr)
                     elif resultado_instr == "break":
                         romper_switch = True
-                        break 
+                        break
                     elif resultado_instr == "continue":
                         tabla.borrarScope()
                         return "continue"
@@ -91,8 +100,13 @@ class Switch(Instruccion):
         if not ejecutando_casos and self.defecto:
             for instr in self.defecto:
                 parametros_interpretar = instr.interpretar.__code__.co_varnames
-                if "entorno" in parametros_interpretar and "en_ciclo" in parametros_interpretar:
-                    resultado_instr = instr.interpretar(arbol, tabla, entorno="Switch", en_ciclo=True)
+                if (
+                    "entorno" in parametros_interpretar
+                    and "en_ciclo" in parametros_interpretar
+                ):
+                    resultado_instr = instr.interpretar(
+                        arbol, tabla, entorno="Switch", en_ciclo=True
+                    )
                 elif "entorno" in parametros_interpretar:
                     resultado_instr = instr.interpretar(arbol, tabla, entorno="Switch")
                 elif "en_ciclo" in parametros_interpretar:
@@ -109,7 +123,7 @@ class Switch(Instruccion):
                     return "continue"
 
         tabla.borrarScope()
-        return None 
+        return None
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         valor_expresion_para_graficar = None
@@ -117,18 +131,23 @@ class Switch(Instruccion):
             if arbol is not None and tabla is not None:
                 valor_expresion_para_graficar = self.expresion.interpretar(arbol, tabla)
         except Exception:
-            valor_expresion_para_graficar = None 
+            valor_expresion_para_graficar = None
 
-     
-        if isinstance(valor_expresion_para_graficar, Errores) or not isinstance(valor_expresion_para_graficar, int):
-         return None
+        if isinstance(valor_expresion_para_graficar, Errores) or not isinstance(
+            valor_expresion_para_graficar, int
+        ):
+            return None
 
         for caso in self.casos:
             if not caso.tiene_break():
                 return None
-        if self.defecto and len(self.defecto) > 0 and not isinstance(self.defecto[-1], Break):
+        if (
+            self.defecto
+            and len(self.defecto) > 0
+            and not isinstance(self.defecto[-1], Break)
+        ):
             return None
-        
+
         # Graficar el Switch
         nodoSwitch = grafo.agregar_nodo("Switch")
         nodoExp = self.expresion.graficar(grafo, arbol, tabla)

@@ -138,25 +138,8 @@ class Aritmeticas(Instruccion, ABC):
                 )
 
         elif tipo1 == tipoDato.STRING:
-            if tipo2 == tipoDato.ENTERO:
-                self.tipoDato.setTipo(tipoDato.STRING)
-                return op1 + str(op2)
-            elif tipo2 == tipoDato.DECIMAL:
-                self.tipoDato.setTipo(tipoDato.STRING)
-                return op1 + str(op2)
-            elif tipo2 == tipoDato.BOOL:
-                self.tipoDato.setTipo(tipoDato.STRING)
-                return op1 + str(op2)
-            elif tipo2 == tipoDato.CHAR:
-                self.tipoDato.setTipo(tipoDato.STRING)
-                return op1 + str(op2)
-            elif tipo2 == tipoDato.STRING:
-                self.tipoDato.setTipo(tipoDato.STRING)
-                return op1 + op2
-            else:
-                return Errores(
-                    "SEMANTICO", "Suma entre tipos no permitidos", self.linea, self.col
-                )
+            self.tipoDato.setTipo(tipoDato.STRING)
+            return op1 + str(op2)
 
         return Errores("SEMANTICO", "Suma erronea", self.linea, self.col)
 
@@ -364,7 +347,7 @@ class Aritmeticas(Instruccion, ABC):
                 return float(op1) % float(op2)
             else:
                 return Errores(
-                    "SEMANTICO", "Mosulo entre tipos no valida", self.linea, self.col
+                    "SEMANTICO", "Modulo entre tipos no valida", self.linea, self.col
                 )
 
         elif tipo1 == tipoDato.DECIMAL:
@@ -384,17 +367,14 @@ class Aritmeticas(Instruccion, ABC):
         )
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
-        # Si se pasa contexto de ejecución, grafica el valor evaluado
-        if arbol is not None and tabla is not None:
-            valor = self.interpretar(arbol, tabla)
-            return grafo.agregar_nodo(str(valor))
-        # Si no, grafica la estructura de la expresión
         tipOperacion = self.getNOpe()
         nodoPrincipal = grafo.agregar_nodo(f"{tipOperacion}", fillcolor="white")
         nodoOp1 = self.operando1.graficar(grafo)
-        grafo.agregar_arista(nodoPrincipal, nodoOp1)
+        if nodoOp1 is not None:
+            grafo.agregar_arista(nodoPrincipal, nodoOp1)
         nodoOp2 = self.operando2.graficar(grafo)
-        grafo.agregar_arista(nodoPrincipal, nodoOp2)
+        if nodoOp2 is not None:
+            grafo.agregar_arista(nodoPrincipal, nodoOp2)
         return nodoPrincipal
 
     def getNOpe(self):
