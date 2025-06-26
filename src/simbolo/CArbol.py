@@ -14,6 +14,7 @@ class Arbol:
         self.errores = []
         self.vectores = {}  # Inicializar el diccionario de vectores
         self.procedimientos = []  # Lista de funciones declaradas
+        self.procActual = None  # Procedimiento actual en ejecución
 
     def getConsola(self) -> str:
         return self.consola
@@ -50,6 +51,12 @@ class Arbol:
 
     def getFunciones(self):
         return self.procedimientos
+
+    def setProc(self, nom):
+        self.procActual = nom
+
+    def getProc(self):
+        return self.procActual
 
     def getFuncion(self, id):
         for i in self.getFunciones():

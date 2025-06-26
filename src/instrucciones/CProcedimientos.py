@@ -8,53 +8,27 @@ from src.abstracto.CAST import clasAST
 
 
 class Procedimientos(Instruccion):
-    def __init__(self, id_: str, parametros: list, inst: list, linea: int, col: int):
+    def __init__(
+        self, id_: str, parametros: list, instrucciones: list, linea: int, col: int
+    ):
         super().__init__(Tipo(tipoDato.VOID), linea, col)
         self.id = id_
         self.parametros = parametros
-        self.inst = inst
+        self.instrucciones = instrucciones
         self.enErrores = False
 
     def interpretar(self, arbol, tabla: tablaSimbolo):
-        # tabla.setProc(self.id)
-        tabla.nuevoScope("Procedimiento")
         arbol.setFuncion(self)
-        tabla.borrarScope()
+        tabla.nuevoScope("procedimiento")
+        tabla.setNombre(f"PROC_{self.id}")
 
-        """ for instr in self.inst:
-            resultado = instr.interpretar(arbol, tabla)
+        for instruccion in self.instrucciones:
+            resultado = instruccion.interpretar(arbol, tabla)
             if isinstance(resultado, Errores):
-                arbol.errores.append(resultado)
-        tabla.borrarScope()
-
-        arbol.setFuncion(self)
-        scope_name = tabla.nuevoScope("Procedimiento")
-
-        for tipo, ident in self.parametros:
-            simbolo = Simbolo(
-                tipo, ident, "variable", None, "Pocedimiento", self.linea, self.col
-            )
-            if not tabla.setVariable(simbolo):
                 self.enErrores = True
-                tabla.borrarScope()
-                return Errores(
-                    "Semantico",
-                    f"El parámetro '{ident}' ya existe en el entorno",
-                    self.linea,
-                    self.col,
-                )
+                arbol.get_errores().append(resultado)
 
-        for instr in self.inst:
-            res = instr.interpretar(arbol, tabla)
-            if isinstance(res, Errores):
-                arbol.errores.append(res)
-                self.enErrores = True
-
-        tab_Proc = [var for var in tabla.getTabla() if var.scope != "global"]
-        tabla.tabla_Procedimientos[self.id] = tab_Proc
         tabla.borrarScope()
-        tabla.setProc(None)
-        return None"""
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         if self.enErrores:
@@ -73,7 +47,7 @@ class Procedimientos(Instruccion):
 
         nodo_instrucciones = grafo.agregar_nodo("Instrucciones")
         grafo.agregar_arista(nodo_procedimiento, nodo_instrucciones)
-        for instruccion in self.inst:
+        for instruccion in self.instrucciones:
             if hasattr(instruccion, "graficar"):
                 hijo = instruccion.graficar(grafo)
                 grafo.agregar_arista(nodo_instrucciones, hijo)

@@ -14,7 +14,7 @@ Rule 8     instruccion -> asignacion_vector
 Rule 9     instruccion -> asignacion PUNTOCOMA
 Rule 10    instruccion -> incremento PUNTOCOMA
 Rule 11    instruccion -> decremento PUNTOCOMA
-Rule 12    instruccion -> sent_if
+Rule 12    instruccion -> sent_IF
 Rule 13    instruccion -> sent_while
 Rule 14    instruccion -> sent_do_while
 Rule 15    instruccion -> sent_for
@@ -59,14 +59,14 @@ Rule 53    incremento -> ID dimension INCREMENTO
 Rule 54    decremento -> ID DECREMENTO
 Rule 55    decremento -> ID dimension DECREMENTO
 Rule 56    bloque -> LLAVE1 instrucciones LLAVE2
-Rule 57    sent_if -> if_simple
-Rule 58    sent_if -> if_else
-Rule 59    sent_if -> if_elseif
-Rule 60    sent_if -> if_elseif_else
-Rule 61    if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-Rule 62    if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-Rule 63    if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-Rule 64    if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+Rule 57    sent_IF -> if_simple
+Rule 58    sent_IF -> if_else
+Rule 59    sent_IF -> if_elseif
+Rule 60    sent_IF -> if_elseif_else
+Rule 61    if_simple -> IF PAR1 expresion PAR2 bloque
+Rule 62    if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque
+Rule 63    if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+Rule 64    if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 Rule 65    sent_while -> WHILE PAR1 expresion PAR2 bloque
 Rule 66    sent_do_while -> DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
 Rule 67    sent_for -> FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
@@ -173,8 +173,8 @@ INCREMENTO           : 52 53
 INT                  : 130
 INV                  : 44
 LEFTCORCH            : 25 26 28 29 33 38 39 40 41
-LLAVE1               : 56 61 62 62 63 63 64 64 64 77 112
-LLAVE2               : 56 61 62 62 63 63 64 64 64 77 112
+LLAVE1               : 56 77 112
+LLAVE2               : 56 77 112
 MAS                  : 85
 MAYOR_IGUAL          : 108
 MAYOR_QUE            : 107
@@ -211,7 +211,7 @@ PARAMLLAMADA         : 116 120 121 122
 Procedimiento        : 21
 asignacion           : 9 69 73
 asignacion_vector    : 8
-bloque               : 20 65 66 67
+bloque               : 20 61 62 62 63 63 64 64 64 65 66 67
 caso                 : 78 79
 contenido_vector     : 33
 declaracion          : 6 68
@@ -231,16 +231,16 @@ if_simple            : 57
 incremento           : 10 70 74
 inicio               : 0
 instruccion          : 2 3
-instrucciones        : 1 2 56 61 62 62 63 63 64 64 64 80 81 112
+instrucciones        : 1 2 56 80 81 112
 lista_casos          : 77 78
 lista_valores        : 34 37 38 40
 lista_vectores       : 35 39 40 41 41
 literal              : 117 120
+sent_IF              : 12
 sent_break           : 17
 sent_continue        : 18
 sent_do_while        : 14
 sent_for             : 15
-sent_if              : 12
 sent_println         : 19
 sent_switch          : 16
 sent_while           : 13
@@ -262,7 +262,7 @@ state 0
     (9) instruccion -> . asignacion PUNTOCOMA
     (10) instruccion -> . incremento PUNTOCOMA
     (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
+    (12) instruccion -> . sent_IF
     (13) instruccion -> . sent_while
     (14) instruccion -> . sent_do_while
     (15) instruccion -> . sent_for
@@ -284,10 +284,10 @@ state 0
     (53) incremento -> . ID dimension INCREMENTO
     (54) decremento -> . ID DECREMENTO
     (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
+    (57) sent_IF -> . if_simple
+    (58) sent_IF -> . if_else
+    (59) sent_IF -> . if_elseif
+    (60) sent_IF -> . if_elseif_else
     (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
     (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
     (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
@@ -303,10 +303,10 @@ state 0
     (132) tipos -> . STRING
     (133) tipos -> . CHAR
     (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (62) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (63) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
   ! shift/reduce conflict for PUNTOCOMA resolved as shift
   ! shift/reduce conflict for VECTOR resolved as shift
@@ -378,7 +378,7 @@ state 0
     asignacion                     shift and go to state 9
     incremento                     shift and go to state 10
     decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
+    sent_IF                        shift and go to state 12
     sent_while                     shift and go to state 13
     sent_do_while                  shift and go to state 14
     sent_for                       shift and go to state 15
@@ -412,7 +412,7 @@ state 2
     (9) instruccion -> . asignacion PUNTOCOMA
     (10) instruccion -> . incremento PUNTOCOMA
     (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
+    (12) instruccion -> . sent_IF
     (13) instruccion -> . sent_while
     (14) instruccion -> . sent_do_while
     (15) instruccion -> . sent_for
@@ -433,10 +433,10 @@ state 2
     (53) incremento -> . ID dimension INCREMENTO
     (54) decremento -> . ID DECREMENTO
     (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
+    (57) sent_IF -> . if_simple
+    (58) sent_IF -> . if_else
+    (59) sent_IF -> . if_elseif
+    (60) sent_IF -> . if_elseif_else
     (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
     (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
     (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
@@ -452,10 +452,10 @@ state 2
     (132) tipos -> . STRING
     (133) tipos -> . CHAR
     (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (62) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (63) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
     $end            reduce using rule 1 (inicio -> instrucciones .)
     PUNTOCOMA       shift and go to state 5
@@ -485,7 +485,7 @@ state 2
     asignacion                     shift and go to state 9
     incremento                     shift and go to state 10
     decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
+    sent_IF                        shift and go to state 12
     sent_while                     shift and go to state 13
     sent_do_while                  shift and go to state 14
     sent_for                       shift and go to state 15
@@ -677,31 +677,31 @@ state 11
 
 state 12
 
-    (12) instruccion -> sent_if .
+    (12) instruccion -> sent_IF .
 
-    PUNTOCOMA       reduce using rule 12 (instruccion -> sent_if .)
-    VECTOR          reduce using rule 12 (instruccion -> sent_if .)
-    ID              reduce using rule 12 (instruccion -> sent_if .)
-    WHILE           reduce using rule 12 (instruccion -> sent_if .)
-    DO              reduce using rule 12 (instruccion -> sent_if .)
-    FOR             reduce using rule 12 (instruccion -> sent_if .)
-    SWITCH          reduce using rule 12 (instruccion -> sent_if .)
-    BREAK           reduce using rule 12 (instruccion -> sent_if .)
-    CONTINUE        reduce using rule 12 (instruccion -> sent_if .)
-    PRINTLN         reduce using rule 12 (instruccion -> sent_if .)
-    LLAVE1          reduce using rule 12 (instruccion -> sent_if .)
-    PROC            reduce using rule 12 (instruccion -> sent_if .)
-    EXEC            reduce using rule 12 (instruccion -> sent_if .)
-    INT             reduce using rule 12 (instruccion -> sent_if .)
-    DOUBLE          reduce using rule 12 (instruccion -> sent_if .)
-    STRING          reduce using rule 12 (instruccion -> sent_if .)
-    CHAR            reduce using rule 12 (instruccion -> sent_if .)
-    BOOL            reduce using rule 12 (instruccion -> sent_if .)
-    IF              reduce using rule 12 (instruccion -> sent_if .)
-    $end            reduce using rule 12 (instruccion -> sent_if .)
-    LLAVE2          reduce using rule 12 (instruccion -> sent_if .)
-    CASE            reduce using rule 12 (instruccion -> sent_if .)
-    DEFAULT         reduce using rule 12 (instruccion -> sent_if .)
+    PUNTOCOMA       reduce using rule 12 (instruccion -> sent_IF .)
+    VECTOR          reduce using rule 12 (instruccion -> sent_IF .)
+    ID              reduce using rule 12 (instruccion -> sent_IF .)
+    WHILE           reduce using rule 12 (instruccion -> sent_IF .)
+    DO              reduce using rule 12 (instruccion -> sent_IF .)
+    FOR             reduce using rule 12 (instruccion -> sent_IF .)
+    SWITCH          reduce using rule 12 (instruccion -> sent_IF .)
+    BREAK           reduce using rule 12 (instruccion -> sent_IF .)
+    CONTINUE        reduce using rule 12 (instruccion -> sent_IF .)
+    PRINTLN         reduce using rule 12 (instruccion -> sent_IF .)
+    LLAVE1          reduce using rule 12 (instruccion -> sent_IF .)
+    PROC            reduce using rule 12 (instruccion -> sent_IF .)
+    EXEC            reduce using rule 12 (instruccion -> sent_IF .)
+    INT             reduce using rule 12 (instruccion -> sent_IF .)
+    DOUBLE          reduce using rule 12 (instruccion -> sent_IF .)
+    STRING          reduce using rule 12 (instruccion -> sent_IF .)
+    CHAR            reduce using rule 12 (instruccion -> sent_IF .)
+    BOOL            reduce using rule 12 (instruccion -> sent_IF .)
+    IF              reduce using rule 12 (instruccion -> sent_IF .)
+    $end            reduce using rule 12 (instruccion -> sent_IF .)
+    LLAVE2          reduce using rule 12 (instruccion -> sent_IF .)
+    CASE            reduce using rule 12 (instruccion -> sent_IF .)
+    DEFAULT         reduce using rule 12 (instruccion -> sent_IF .)
 
 
 state 13
@@ -942,118 +942,118 @@ state 25
 
 state 26
 
-    (57) sent_if -> if_simple .
+    (57) sent_IF -> if_simple .
 
-    PUNTOCOMA       reduce using rule 57 (sent_if -> if_simple .)
-    VECTOR          reduce using rule 57 (sent_if -> if_simple .)
-    ID              reduce using rule 57 (sent_if -> if_simple .)
-    WHILE           reduce using rule 57 (sent_if -> if_simple .)
-    DO              reduce using rule 57 (sent_if -> if_simple .)
-    FOR             reduce using rule 57 (sent_if -> if_simple .)
-    SWITCH          reduce using rule 57 (sent_if -> if_simple .)
-    BREAK           reduce using rule 57 (sent_if -> if_simple .)
-    CONTINUE        reduce using rule 57 (sent_if -> if_simple .)
-    PRINTLN         reduce using rule 57 (sent_if -> if_simple .)
-    LLAVE1          reduce using rule 57 (sent_if -> if_simple .)
-    PROC            reduce using rule 57 (sent_if -> if_simple .)
-    EXEC            reduce using rule 57 (sent_if -> if_simple .)
-    INT             reduce using rule 57 (sent_if -> if_simple .)
-    DOUBLE          reduce using rule 57 (sent_if -> if_simple .)
-    STRING          reduce using rule 57 (sent_if -> if_simple .)
-    CHAR            reduce using rule 57 (sent_if -> if_simple .)
-    BOOL            reduce using rule 57 (sent_if -> if_simple .)
-    IF              reduce using rule 57 (sent_if -> if_simple .)
-    $end            reduce using rule 57 (sent_if -> if_simple .)
-    LLAVE2          reduce using rule 57 (sent_if -> if_simple .)
-    CASE            reduce using rule 57 (sent_if -> if_simple .)
-    DEFAULT         reduce using rule 57 (sent_if -> if_simple .)
+    PUNTOCOMA       reduce using rule 57 (sent_IF -> if_simple .)
+    VECTOR          reduce using rule 57 (sent_IF -> if_simple .)
+    ID              reduce using rule 57 (sent_IF -> if_simple .)
+    WHILE           reduce using rule 57 (sent_IF -> if_simple .)
+    DO              reduce using rule 57 (sent_IF -> if_simple .)
+    FOR             reduce using rule 57 (sent_IF -> if_simple .)
+    SWITCH          reduce using rule 57 (sent_IF -> if_simple .)
+    BREAK           reduce using rule 57 (sent_IF -> if_simple .)
+    CONTINUE        reduce using rule 57 (sent_IF -> if_simple .)
+    PRINTLN         reduce using rule 57 (sent_IF -> if_simple .)
+    LLAVE1          reduce using rule 57 (sent_IF -> if_simple .)
+    PROC            reduce using rule 57 (sent_IF -> if_simple .)
+    EXEC            reduce using rule 57 (sent_IF -> if_simple .)
+    INT             reduce using rule 57 (sent_IF -> if_simple .)
+    DOUBLE          reduce using rule 57 (sent_IF -> if_simple .)
+    STRING          reduce using rule 57 (sent_IF -> if_simple .)
+    CHAR            reduce using rule 57 (sent_IF -> if_simple .)
+    BOOL            reduce using rule 57 (sent_IF -> if_simple .)
+    IF              reduce using rule 57 (sent_IF -> if_simple .)
+    $end            reduce using rule 57 (sent_IF -> if_simple .)
+    LLAVE2          reduce using rule 57 (sent_IF -> if_simple .)
+    CASE            reduce using rule 57 (sent_IF -> if_simple .)
+    DEFAULT         reduce using rule 57 (sent_IF -> if_simple .)
 
 
 state 27
 
-    (58) sent_if -> if_else .
+    (58) sent_IF -> if_else .
 
-    PUNTOCOMA       reduce using rule 58 (sent_if -> if_else .)
-    VECTOR          reduce using rule 58 (sent_if -> if_else .)
-    ID              reduce using rule 58 (sent_if -> if_else .)
-    WHILE           reduce using rule 58 (sent_if -> if_else .)
-    DO              reduce using rule 58 (sent_if -> if_else .)
-    FOR             reduce using rule 58 (sent_if -> if_else .)
-    SWITCH          reduce using rule 58 (sent_if -> if_else .)
-    BREAK           reduce using rule 58 (sent_if -> if_else .)
-    CONTINUE        reduce using rule 58 (sent_if -> if_else .)
-    PRINTLN         reduce using rule 58 (sent_if -> if_else .)
-    LLAVE1          reduce using rule 58 (sent_if -> if_else .)
-    PROC            reduce using rule 58 (sent_if -> if_else .)
-    EXEC            reduce using rule 58 (sent_if -> if_else .)
-    INT             reduce using rule 58 (sent_if -> if_else .)
-    DOUBLE          reduce using rule 58 (sent_if -> if_else .)
-    STRING          reduce using rule 58 (sent_if -> if_else .)
-    CHAR            reduce using rule 58 (sent_if -> if_else .)
-    BOOL            reduce using rule 58 (sent_if -> if_else .)
-    IF              reduce using rule 58 (sent_if -> if_else .)
-    $end            reduce using rule 58 (sent_if -> if_else .)
-    LLAVE2          reduce using rule 58 (sent_if -> if_else .)
-    CASE            reduce using rule 58 (sent_if -> if_else .)
-    DEFAULT         reduce using rule 58 (sent_if -> if_else .)
+    PUNTOCOMA       reduce using rule 58 (sent_IF -> if_else .)
+    VECTOR          reduce using rule 58 (sent_IF -> if_else .)
+    ID              reduce using rule 58 (sent_IF -> if_else .)
+    WHILE           reduce using rule 58 (sent_IF -> if_else .)
+    DO              reduce using rule 58 (sent_IF -> if_else .)
+    FOR             reduce using rule 58 (sent_IF -> if_else .)
+    SWITCH          reduce using rule 58 (sent_IF -> if_else .)
+    BREAK           reduce using rule 58 (sent_IF -> if_else .)
+    CONTINUE        reduce using rule 58 (sent_IF -> if_else .)
+    PRINTLN         reduce using rule 58 (sent_IF -> if_else .)
+    LLAVE1          reduce using rule 58 (sent_IF -> if_else .)
+    PROC            reduce using rule 58 (sent_IF -> if_else .)
+    EXEC            reduce using rule 58 (sent_IF -> if_else .)
+    INT             reduce using rule 58 (sent_IF -> if_else .)
+    DOUBLE          reduce using rule 58 (sent_IF -> if_else .)
+    STRING          reduce using rule 58 (sent_IF -> if_else .)
+    CHAR            reduce using rule 58 (sent_IF -> if_else .)
+    BOOL            reduce using rule 58 (sent_IF -> if_else .)
+    IF              reduce using rule 58 (sent_IF -> if_else .)
+    $end            reduce using rule 58 (sent_IF -> if_else .)
+    LLAVE2          reduce using rule 58 (sent_IF -> if_else .)
+    CASE            reduce using rule 58 (sent_IF -> if_else .)
+    DEFAULT         reduce using rule 58 (sent_IF -> if_else .)
 
 
 state 28
 
-    (59) sent_if -> if_elseif .
+    (59) sent_IF -> if_elseif .
 
-    PUNTOCOMA       reduce using rule 59 (sent_if -> if_elseif .)
-    VECTOR          reduce using rule 59 (sent_if -> if_elseif .)
-    ID              reduce using rule 59 (sent_if -> if_elseif .)
-    WHILE           reduce using rule 59 (sent_if -> if_elseif .)
-    DO              reduce using rule 59 (sent_if -> if_elseif .)
-    FOR             reduce using rule 59 (sent_if -> if_elseif .)
-    SWITCH          reduce using rule 59 (sent_if -> if_elseif .)
-    BREAK           reduce using rule 59 (sent_if -> if_elseif .)
-    CONTINUE        reduce using rule 59 (sent_if -> if_elseif .)
-    PRINTLN         reduce using rule 59 (sent_if -> if_elseif .)
-    LLAVE1          reduce using rule 59 (sent_if -> if_elseif .)
-    PROC            reduce using rule 59 (sent_if -> if_elseif .)
-    EXEC            reduce using rule 59 (sent_if -> if_elseif .)
-    INT             reduce using rule 59 (sent_if -> if_elseif .)
-    DOUBLE          reduce using rule 59 (sent_if -> if_elseif .)
-    STRING          reduce using rule 59 (sent_if -> if_elseif .)
-    CHAR            reduce using rule 59 (sent_if -> if_elseif .)
-    BOOL            reduce using rule 59 (sent_if -> if_elseif .)
-    IF              reduce using rule 59 (sent_if -> if_elseif .)
-    $end            reduce using rule 59 (sent_if -> if_elseif .)
-    LLAVE2          reduce using rule 59 (sent_if -> if_elseif .)
-    CASE            reduce using rule 59 (sent_if -> if_elseif .)
-    DEFAULT         reduce using rule 59 (sent_if -> if_elseif .)
+    PUNTOCOMA       reduce using rule 59 (sent_IF -> if_elseif .)
+    VECTOR          reduce using rule 59 (sent_IF -> if_elseif .)
+    ID              reduce using rule 59 (sent_IF -> if_elseif .)
+    WHILE           reduce using rule 59 (sent_IF -> if_elseif .)
+    DO              reduce using rule 59 (sent_IF -> if_elseif .)
+    FOR             reduce using rule 59 (sent_IF -> if_elseif .)
+    SWITCH          reduce using rule 59 (sent_IF -> if_elseif .)
+    BREAK           reduce using rule 59 (sent_IF -> if_elseif .)
+    CONTINUE        reduce using rule 59 (sent_IF -> if_elseif .)
+    PRINTLN         reduce using rule 59 (sent_IF -> if_elseif .)
+    LLAVE1          reduce using rule 59 (sent_IF -> if_elseif .)
+    PROC            reduce using rule 59 (sent_IF -> if_elseif .)
+    EXEC            reduce using rule 59 (sent_IF -> if_elseif .)
+    INT             reduce using rule 59 (sent_IF -> if_elseif .)
+    DOUBLE          reduce using rule 59 (sent_IF -> if_elseif .)
+    STRING          reduce using rule 59 (sent_IF -> if_elseif .)
+    CHAR            reduce using rule 59 (sent_IF -> if_elseif .)
+    BOOL            reduce using rule 59 (sent_IF -> if_elseif .)
+    IF              reduce using rule 59 (sent_IF -> if_elseif .)
+    $end            reduce using rule 59 (sent_IF -> if_elseif .)
+    LLAVE2          reduce using rule 59 (sent_IF -> if_elseif .)
+    CASE            reduce using rule 59 (sent_IF -> if_elseif .)
+    DEFAULT         reduce using rule 59 (sent_IF -> if_elseif .)
 
 
 state 29
 
-    (60) sent_if -> if_elseif_else .
+    (60) sent_IF -> if_elseif_else .
 
-    PUNTOCOMA       reduce using rule 60 (sent_if -> if_elseif_else .)
-    VECTOR          reduce using rule 60 (sent_if -> if_elseif_else .)
-    ID              reduce using rule 60 (sent_if -> if_elseif_else .)
-    WHILE           reduce using rule 60 (sent_if -> if_elseif_else .)
-    DO              reduce using rule 60 (sent_if -> if_elseif_else .)
-    FOR             reduce using rule 60 (sent_if -> if_elseif_else .)
-    SWITCH          reduce using rule 60 (sent_if -> if_elseif_else .)
-    BREAK           reduce using rule 60 (sent_if -> if_elseif_else .)
-    CONTINUE        reduce using rule 60 (sent_if -> if_elseif_else .)
-    PRINTLN         reduce using rule 60 (sent_if -> if_elseif_else .)
-    LLAVE1          reduce using rule 60 (sent_if -> if_elseif_else .)
-    PROC            reduce using rule 60 (sent_if -> if_elseif_else .)
-    EXEC            reduce using rule 60 (sent_if -> if_elseif_else .)
-    INT             reduce using rule 60 (sent_if -> if_elseif_else .)
-    DOUBLE          reduce using rule 60 (sent_if -> if_elseif_else .)
-    STRING          reduce using rule 60 (sent_if -> if_elseif_else .)
-    CHAR            reduce using rule 60 (sent_if -> if_elseif_else .)
-    BOOL            reduce using rule 60 (sent_if -> if_elseif_else .)
-    IF              reduce using rule 60 (sent_if -> if_elseif_else .)
-    $end            reduce using rule 60 (sent_if -> if_elseif_else .)
-    LLAVE2          reduce using rule 60 (sent_if -> if_elseif_else .)
-    CASE            reduce using rule 60 (sent_if -> if_elseif_else .)
-    DEFAULT         reduce using rule 60 (sent_if -> if_elseif_else .)
+    PUNTOCOMA       reduce using rule 60 (sent_IF -> if_elseif_else .)
+    VECTOR          reduce using rule 60 (sent_IF -> if_elseif_else .)
+    ID              reduce using rule 60 (sent_IF -> if_elseif_else .)
+    WHILE           reduce using rule 60 (sent_IF -> if_elseif_else .)
+    DO              reduce using rule 60 (sent_IF -> if_elseif_else .)
+    FOR             reduce using rule 60 (sent_IF -> if_elseif_else .)
+    SWITCH          reduce using rule 60 (sent_IF -> if_elseif_else .)
+    BREAK           reduce using rule 60 (sent_IF -> if_elseif_else .)
+    CONTINUE        reduce using rule 60 (sent_IF -> if_elseif_else .)
+    PRINTLN         reduce using rule 60 (sent_IF -> if_elseif_else .)
+    LLAVE1          reduce using rule 60 (sent_IF -> if_elseif_else .)
+    PROC            reduce using rule 60 (sent_IF -> if_elseif_else .)
+    EXEC            reduce using rule 60 (sent_IF -> if_elseif_else .)
+    INT             reduce using rule 60 (sent_IF -> if_elseif_else .)
+    DOUBLE          reduce using rule 60 (sent_IF -> if_elseif_else .)
+    STRING          reduce using rule 60 (sent_IF -> if_elseif_else .)
+    CHAR            reduce using rule 60 (sent_IF -> if_elseif_else .)
+    BOOL            reduce using rule 60 (sent_IF -> if_elseif_else .)
+    IF              reduce using rule 60 (sent_IF -> if_elseif_else .)
+    $end            reduce using rule 60 (sent_IF -> if_elseif_else .)
+    LLAVE2          reduce using rule 60 (sent_IF -> if_elseif_else .)
+    CASE            reduce using rule 60 (sent_IF -> if_elseif_else .)
+    DEFAULT         reduce using rule 60 (sent_IF -> if_elseif_else .)
 
 
 state 30
@@ -1099,7 +1099,7 @@ state 34
     (9) instruccion -> . asignacion PUNTOCOMA
     (10) instruccion -> . incremento PUNTOCOMA
     (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
+    (12) instruccion -> . sent_IF
     (13) instruccion -> . sent_while
     (14) instruccion -> . sent_do_while
     (15) instruccion -> . sent_for
@@ -1121,10 +1121,10 @@ state 34
     (53) incremento -> . ID dimension INCREMENTO
     (54) decremento -> . ID DECREMENTO
     (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
+    (57) sent_IF -> . if_simple
+    (58) sent_IF -> . if_else
+    (59) sent_IF -> . if_elseif
+    (60) sent_IF -> . if_elseif_else
     (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
     (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
     (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
@@ -1140,10 +1140,10 @@ state 34
     (132) tipos -> . STRING
     (133) tipos -> . CHAR
     (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (62) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (63) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
   ! shift/reduce conflict for PUNTOCOMA resolved as shift
   ! shift/reduce conflict for VECTOR resolved as shift
@@ -1214,7 +1214,7 @@ state 34
     asignacion                     shift and go to state 9
     incremento                     shift and go to state 10
     decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
+    sent_IF                        shift and go to state 12
     sent_while                     shift and go to state 13
     sent_do_while                  shift and go to state 14
     sent_for                       shift and go to state 15
@@ -1313,10 +1313,10 @@ state 44
 
 state 45
 
-    (61) if_simple -> IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> IF . PAR1 expresion PAR2 bloque
+    (62) if_else -> IF . PAR1 expresion PAR2 bloque ELSE bloque
+    (63) if_elseif -> IF . PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> IF . PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
     PAR1            shift and go to state 70
 
@@ -1875,7 +1875,7 @@ state 66
     (9) instruccion -> . asignacion PUNTOCOMA
     (10) instruccion -> . incremento PUNTOCOMA
     (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
+    (12) instruccion -> . sent_IF
     (13) instruccion -> . sent_while
     (14) instruccion -> . sent_do_while
     (15) instruccion -> . sent_for
@@ -1896,10 +1896,10 @@ state 66
     (53) incremento -> . ID dimension INCREMENTO
     (54) decremento -> . ID DECREMENTO
     (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
+    (57) sent_IF -> . if_simple
+    (58) sent_IF -> . if_else
+    (59) sent_IF -> . if_elseif
+    (60) sent_IF -> . if_elseif_else
     (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
     (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
     (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
@@ -1915,10 +1915,10 @@ state 66
     (132) tipos -> . STRING
     (133) tipos -> . CHAR
     (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (62) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (63) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
     LLAVE2          shift and go to state 106
     PUNTOCOMA       shift and go to state 5
@@ -1948,7 +1948,7 @@ state 66
     asignacion                     shift and go to state 9
     incremento                     shift and go to state 10
     decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
+    sent_IF                        shift and go to state 12
     sent_while                     shift and go to state 13
     sent_do_while                  shift and go to state 14
     sent_for                       shift and go to state 15
@@ -2039,10 +2039,10 @@ state 69
 
 state 70
 
-    (61) if_simple -> IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> IF PAR1 . expresion PAR2 bloque
+    (62) if_else -> IF PAR1 . expresion PAR2 bloque ELSE bloque
+    (63) if_elseif -> IF PAR1 . expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> IF PAR1 . expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
     (32) expresion -> . ID dimension
     (42) expresion -> . SENO PAR1 expresion PAR2
     (43) expresion -> . COSENO PAR1 expresion PAR2
@@ -2906,6 +2906,7 @@ state 106
     LLAVE2          reduce using rule 56 (bloque -> LLAVE1 instrucciones LLAVE2 .)
     CASE            reduce using rule 56 (bloque -> LLAVE1 instrucciones LLAVE2 .)
     DEFAULT         reduce using rule 56 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    ELSE            reduce using rule 56 (bloque -> LLAVE1 instrucciones LLAVE2 .)
 
 
 state 107
@@ -3004,10 +3005,10 @@ state 109
 
 state 110
 
-    (61) if_simple -> IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> IF PAR1 expresion . PAR2 bloque
+    (62) if_else -> IF PAR1 expresion . PAR2 bloque ELSE bloque
+    (63) if_elseif -> IF PAR1 expresion . PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> IF PAR1 expresion . PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
     (85) expresion -> expresion . MAS expresion
     (86) expresion -> expresion . MENOS expresion
     (87) expresion -> expresion . MULT expresion
@@ -4715,13 +4716,15 @@ state 159
 
 state 160
 
-    (61) if_simple -> IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2
-    (62) if_else -> IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> IF PAR1 expresion PAR2 . bloque
+    (62) if_else -> IF PAR1 expresion PAR2 . bloque ELSE bloque
+    (63) if_elseif -> IF PAR1 expresion PAR2 . bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> IF PAR1 expresion PAR2 . bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
+    (56) bloque -> . LLAVE1 instrucciones LLAVE2
 
-    LLAVE1          shift and go to state 193
+    LLAVE1          shift and go to state 34
 
+    bloque                         shift and go to state 193
 
 state 161
 
@@ -5992,151 +5995,36 @@ state 192
 
 state 193
 
-    (61) if_simple -> IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2
-    (62) if_else -> IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (2) instrucciones -> . instrucciones instruccion
-    (3) instrucciones -> . instruccion
-    (4) instrucciones -> . empty
-    (5) instruccion -> . PUNTOCOMA
-    (6) instruccion -> . declaracion PUNTOCOMA
-    (7) instruccion -> . declaracion_vector
-    (8) instruccion -> . asignacion_vector
-    (9) instruccion -> . asignacion PUNTOCOMA
-    (10) instruccion -> . incremento PUNTOCOMA
-    (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
-    (13) instruccion -> . sent_while
-    (14) instruccion -> . sent_do_while
-    (15) instruccion -> . sent_for
-    (16) instruccion -> . sent_switch
-    (17) instruccion -> . sent_break PUNTOCOMA
-    (18) instruccion -> . sent_continue PUNTOCOMA
-    (19) instruccion -> . sent_println PUNTOCOMA
-    (20) instruccion -> . bloque
-    (21) instruccion -> . Procedimiento
-    (22) instruccion -> . Llamada PUNTOCOMA
-    (135) empty -> .
-    (23) declaracion -> . tipos ID IGUAL expresion
-    (24) declaracion -> . tipos ID
-    (25) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector PUNTOCOMA
-    (26) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 PUNTOCOMA
-    (27) asignacion_vector -> . ID dimension IGUAL expresion PUNTOCOMA
-    (51) asignacion -> . ID IGUAL expresion
-    (52) incremento -> . ID INCREMENTO
-    (53) incremento -> . ID dimension INCREMENTO
-    (54) decremento -> . ID DECREMENTO
-    (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
-    (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
-    (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
-    (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
-    (77) sent_switch -> . SWITCH PAR1 expresion PAR2 LLAVE1 lista_casos LLAVE2
-    (82) sent_break -> . BREAK
-    (83) sent_continue -> . CONTINUE
-    (84) sent_println -> . PRINTLN PAR1 expresion PAR2
-    (56) bloque -> . LLAVE1 instrucciones LLAVE2
-    (112) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (116) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (130) tipos -> . INT
-    (131) tipos -> . DOUBLE
-    (132) tipos -> . STRING
-    (133) tipos -> . CHAR
-    (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> IF PAR1 expresion PAR2 bloque .
+    (62) if_else -> IF PAR1 expresion PAR2 bloque . ELSE bloque
+    (63) if_elseif -> IF PAR1 expresion PAR2 bloque . ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> IF PAR1 expresion PAR2 bloque . ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
-  ! shift/reduce conflict for PUNTOCOMA resolved as shift
-  ! shift/reduce conflict for VECTOR resolved as shift
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-  ! shift/reduce conflict for DO resolved as shift
-  ! shift/reduce conflict for FOR resolved as shift
-  ! shift/reduce conflict for SWITCH resolved as shift
-  ! shift/reduce conflict for BREAK resolved as shift
-  ! shift/reduce conflict for CONTINUE resolved as shift
-  ! shift/reduce conflict for PRINTLN resolved as shift
-  ! shift/reduce conflict for LLAVE1 resolved as shift
-  ! shift/reduce conflict for PROC resolved as shift
-  ! shift/reduce conflict for EXEC resolved as shift
-  ! shift/reduce conflict for INT resolved as shift
-  ! shift/reduce conflict for DOUBLE resolved as shift
-  ! shift/reduce conflict for STRING resolved as shift
-  ! shift/reduce conflict for CHAR resolved as shift
-  ! shift/reduce conflict for BOOL resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-    PUNTOCOMA       shift and go to state 5
-    LLAVE2          reduce using rule 135 (empty -> .)
-    VECTOR          shift and go to state 25
-    ID              shift and go to state 24
-    WHILE           shift and go to state 30
-    DO              shift and go to state 31
-    FOR             shift and go to state 32
-    SWITCH          shift and go to state 33
-    BREAK           shift and go to state 35
-    CONTINUE        shift and go to state 36
-    PRINTLN         shift and go to state 37
-    LLAVE1          shift and go to state 34
-    PROC            shift and go to state 38
-    EXEC            shift and go to state 39
-    INT             shift and go to state 40
-    DOUBLE          shift and go to state 41
-    STRING          shift and go to state 42
-    CHAR            shift and go to state 43
-    BOOL            shift and go to state 44
-    IF              shift and go to state 45
+    PUNTOCOMA       reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    VECTOR          reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    ID              reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    WHILE           reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    DO              reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    FOR             reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    SWITCH          reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    BREAK           reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    CONTINUE        reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    PRINTLN         reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    LLAVE1          reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    PROC            reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    EXEC            reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    INT             reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    DOUBLE          reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    STRING          reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    CHAR            reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    BOOL            reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    IF              reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    $end            reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    LLAVE2          reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    CASE            reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    DEFAULT         reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    ELSE            shift and go to state 212
 
-  ! PUNTOCOMA       [ reduce using rule 135 (empty -> .) ]
-  ! VECTOR          [ reduce using rule 135 (empty -> .) ]
-  ! ID              [ reduce using rule 135 (empty -> .) ]
-  ! WHILE           [ reduce using rule 135 (empty -> .) ]
-  ! DO              [ reduce using rule 135 (empty -> .) ]
-  ! FOR             [ reduce using rule 135 (empty -> .) ]
-  ! SWITCH          [ reduce using rule 135 (empty -> .) ]
-  ! BREAK           [ reduce using rule 135 (empty -> .) ]
-  ! CONTINUE        [ reduce using rule 135 (empty -> .) ]
-  ! PRINTLN         [ reduce using rule 135 (empty -> .) ]
-  ! LLAVE1          [ reduce using rule 135 (empty -> .) ]
-  ! PROC            [ reduce using rule 135 (empty -> .) ]
-  ! EXEC            [ reduce using rule 135 (empty -> .) ]
-  ! INT             [ reduce using rule 135 (empty -> .) ]
-  ! DOUBLE          [ reduce using rule 135 (empty -> .) ]
-  ! STRING          [ reduce using rule 135 (empty -> .) ]
-  ! CHAR            [ reduce using rule 135 (empty -> .) ]
-  ! BOOL            [ reduce using rule 135 (empty -> .) ]
-  ! IF              [ reduce using rule 135 (empty -> .) ]
-
-    instrucciones                  shift and go to state 212
-    instruccion                    shift and go to state 3
-    empty                          shift and go to state 4
-    declaracion                    shift and go to state 6
-    declaracion_vector             shift and go to state 7
-    asignacion_vector              shift and go to state 8
-    asignacion                     shift and go to state 9
-    incremento                     shift and go to state 10
-    decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
-    sent_while                     shift and go to state 13
-    sent_do_while                  shift and go to state 14
-    sent_for                       shift and go to state 15
-    sent_switch                    shift and go to state 16
-    sent_break                     shift and go to state 17
-    sent_continue                  shift and go to state 18
-    sent_println                   shift and go to state 19
-    bloque                         shift and go to state 20
-    Procedimiento                  shift and go to state 21
-    Llamada                        shift and go to state 22
-    tipos                          shift and go to state 23
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
 
 state 194
 
@@ -6467,7 +6355,7 @@ state 207
     (9) instruccion -> . asignacion PUNTOCOMA
     (10) instruccion -> . incremento PUNTOCOMA
     (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
+    (12) instruccion -> . sent_IF
     (13) instruccion -> . sent_while
     (14) instruccion -> . sent_do_while
     (15) instruccion -> . sent_for
@@ -6489,10 +6377,10 @@ state 207
     (53) incremento -> . ID dimension INCREMENTO
     (54) decremento -> . ID DECREMENTO
     (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
+    (57) sent_IF -> . if_simple
+    (58) sent_IF -> . if_else
+    (59) sent_IF -> . if_elseif
+    (60) sent_IF -> . if_elseif_else
     (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
     (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
     (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
@@ -6508,10 +6396,10 @@ state 207
     (132) tipos -> . STRING
     (133) tipos -> . CHAR
     (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (62) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (63) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
   ! shift/reduce conflict for PUNTOCOMA resolved as shift
   ! shift/reduce conflict for VECTOR resolved as shift
@@ -6582,7 +6470,7 @@ state 207
     asignacion                     shift and go to state 9
     incremento                     shift and go to state 10
     decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
+    sent_IF                        shift and go to state 12
     sent_while                     shift and go to state 13
     sent_do_while                  shift and go to state 14
     sent_for                       shift and go to state 15
@@ -6634,107 +6522,15 @@ state 211
 
 state 212
 
-    (61) if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2
-    (62) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (2) instrucciones -> instrucciones . instruccion
-    (5) instruccion -> . PUNTOCOMA
-    (6) instruccion -> . declaracion PUNTOCOMA
-    (7) instruccion -> . declaracion_vector
-    (8) instruccion -> . asignacion_vector
-    (9) instruccion -> . asignacion PUNTOCOMA
-    (10) instruccion -> . incremento PUNTOCOMA
-    (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
-    (13) instruccion -> . sent_while
-    (14) instruccion -> . sent_do_while
-    (15) instruccion -> . sent_for
-    (16) instruccion -> . sent_switch
-    (17) instruccion -> . sent_break PUNTOCOMA
-    (18) instruccion -> . sent_continue PUNTOCOMA
-    (19) instruccion -> . sent_println PUNTOCOMA
-    (20) instruccion -> . bloque
-    (21) instruccion -> . Procedimiento
-    (22) instruccion -> . Llamada PUNTOCOMA
-    (23) declaracion -> . tipos ID IGUAL expresion
-    (24) declaracion -> . tipos ID
-    (25) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector PUNTOCOMA
-    (26) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 PUNTOCOMA
-    (27) asignacion_vector -> . ID dimension IGUAL expresion PUNTOCOMA
-    (51) asignacion -> . ID IGUAL expresion
-    (52) incremento -> . ID INCREMENTO
-    (53) incremento -> . ID dimension INCREMENTO
-    (54) decremento -> . ID DECREMENTO
-    (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
-    (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
-    (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
-    (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
-    (77) sent_switch -> . SWITCH PAR1 expresion PAR2 LLAVE1 lista_casos LLAVE2
-    (82) sent_break -> . BREAK
-    (83) sent_continue -> . CONTINUE
-    (84) sent_println -> . PRINTLN PAR1 expresion PAR2
+    (62) if_else -> IF PAR1 expresion PAR2 bloque ELSE . bloque
+    (63) if_elseif -> IF PAR1 expresion PAR2 bloque ELSE . IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE . IF PAR1 expresion PAR2 bloque ELSE bloque
     (56) bloque -> . LLAVE1 instrucciones LLAVE2
-    (112) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (116) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (130) tipos -> . INT
-    (131) tipos -> . DOUBLE
-    (132) tipos -> . STRING
-    (133) tipos -> . CHAR
-    (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
 
-    LLAVE2          shift and go to state 228
-    PUNTOCOMA       shift and go to state 5
-    VECTOR          shift and go to state 25
-    ID              shift and go to state 24
-    WHILE           shift and go to state 30
-    DO              shift and go to state 31
-    FOR             shift and go to state 32
-    SWITCH          shift and go to state 33
-    BREAK           shift and go to state 35
-    CONTINUE        shift and go to state 36
-    PRINTLN         shift and go to state 37
+    IF              shift and go to state 228
     LLAVE1          shift and go to state 34
-    PROC            shift and go to state 38
-    EXEC            shift and go to state 39
-    INT             shift and go to state 40
-    DOUBLE          shift and go to state 41
-    STRING          shift and go to state 42
-    CHAR            shift and go to state 43
-    BOOL            shift and go to state 44
-    IF              shift and go to state 45
 
-    instruccion                    shift and go to state 46
-    declaracion                    shift and go to state 6
-    declaracion_vector             shift and go to state 7
-    asignacion_vector              shift and go to state 8
-    asignacion                     shift and go to state 9
-    incremento                     shift and go to state 10
-    decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
-    sent_while                     shift and go to state 13
-    sent_do_while                  shift and go to state 14
-    sent_for                       shift and go to state 15
-    sent_switch                    shift and go to state 16
-    sent_break                     shift and go to state 17
-    sent_continue                  shift and go to state 18
-    sent_println                   shift and go to state 19
-    bloque                         shift and go to state 20
-    Procedimiento                  shift and go to state 21
-    Llamada                        shift and go to state 22
-    tipos                          shift and go to state 23
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
+    bloque                         shift and go to state 229
 
 state 213
 
@@ -6755,7 +6551,7 @@ state 213
     (110) expresion -> expresion . IGUAL_IGUAL expresion
     (111) expresion -> expresion . DIFERENTE expresion
 
-    PAR2            shift and go to state 229
+    PAR2            shift and go to state 230
     MAS             shift and go to state 115
     MENOS           shift and go to state 116
     MULT            shift and go to state 117
@@ -6779,8 +6575,8 @@ state 214
     (26) declaracion_vector -> VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones . PAR2 PUNTOCOMA
     (31) dimensiones -> dimensiones . COMMA ENTERO
 
-    PAR2            shift and go to state 230
-    COMMA           shift and go to state 231
+    PAR2            shift and go to state 231
+    COMMA           shift and go to state 232
 
 
 state 215
@@ -6824,7 +6620,7 @@ state 217
 
     (67) sent_for -> FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update . PAR2 bloque
 
-    PAR2            shift and go to state 232
+    PAR2            shift and go to state 233
 
 
 state 218
@@ -6912,7 +6708,7 @@ state 224
     (110) expresion -> expresion . IGUAL_IGUAL expresion
     (111) expresion -> expresion . DIFERENTE expresion
 
-    DOSPT           shift and go to state 233
+    DOSPT           shift and go to state 234
     MAS             shift and go to state 115
     MENOS           shift and go to state 116
     MULT            shift and go to state 117
@@ -6943,7 +6739,7 @@ state 225
     (9) instruccion -> . asignacion PUNTOCOMA
     (10) instruccion -> . incremento PUNTOCOMA
     (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
+    (12) instruccion -> . sent_IF
     (13) instruccion -> . sent_while
     (14) instruccion -> . sent_do_while
     (15) instruccion -> . sent_for
@@ -6965,10 +6761,10 @@ state 225
     (53) incremento -> . ID dimension INCREMENTO
     (54) decremento -> . ID DECREMENTO
     (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
+    (57) sent_IF -> . if_simple
+    (58) sent_IF -> . if_else
+    (59) sent_IF -> . if_elseif
+    (60) sent_IF -> . if_elseif_else
     (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
     (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
     (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
@@ -6984,10 +6780,10 @@ state 225
     (132) tipos -> . STRING
     (133) tipos -> . CHAR
     (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (62) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (63) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
   ! shift/reduce conflict for PUNTOCOMA resolved as shift
   ! shift/reduce conflict for VECTOR resolved as shift
@@ -7051,7 +6847,7 @@ state 225
   ! BOOL            [ reduce using rule 135 (empty -> .) ]
   ! IF              [ reduce using rule 135 (empty -> .) ]
 
-    instrucciones                  shift and go to state 234
+    instrucciones                  shift and go to state 235
     instruccion                    shift and go to state 3
     empty                          shift and go to state 4
     declaracion                    shift and go to state 6
@@ -7060,7 +6856,7 @@ state 225
     asignacion                     shift and go to state 9
     incremento                     shift and go to state 10
     decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
+    sent_IF                        shift and go to state 12
     sent_while                     shift and go to state 13
     sent_do_while                  shift and go to state 14
     sent_for                       shift and go to state 15
@@ -7088,7 +6884,7 @@ state 226
     (9) instruccion -> . asignacion PUNTOCOMA
     (10) instruccion -> . incremento PUNTOCOMA
     (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
+    (12) instruccion -> . sent_IF
     (13) instruccion -> . sent_while
     (14) instruccion -> . sent_do_while
     (15) instruccion -> . sent_for
@@ -7109,10 +6905,10 @@ state 226
     (53) incremento -> . ID dimension INCREMENTO
     (54) decremento -> . ID DECREMENTO
     (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
+    (57) sent_IF -> . if_simple
+    (58) sent_IF -> . if_else
+    (59) sent_IF -> . if_elseif
+    (60) sent_IF -> . if_elseif_else
     (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
     (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
     (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
@@ -7128,12 +6924,12 @@ state 226
     (132) tipos -> . STRING
     (133) tipos -> . CHAR
     (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (62) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (63) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
-    LLAVE2          shift and go to state 235
+    LLAVE2          shift and go to state 236
     PUNTOCOMA       shift and go to state 5
     VECTOR          shift and go to state 25
     ID              shift and go to state 24
@@ -7161,7 +6957,7 @@ state 226
     asignacion                     shift and go to state 9
     incremento                     shift and go to state 10
     decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
+    sent_IF                        shift and go to state 12
     sent_while                     shift and go to state 13
     sent_do_while                  shift and go to state 14
     sent_for                       shift and go to state 15
@@ -7199,43 +6995,47 @@ state 227
     PAR2            reduce using rule 135 (empty -> .)
 
     tipos                          shift and go to state 147
-    PARAMETROS                     shift and go to state 236
+    PARAMETROS                     shift and go to state 237
     empty                          shift and go to state 148
 
 state 228
 
-    (61) if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .
-    (62) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 . ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 . ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 . ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (63) if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF . PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF . PAR1 expresion PAR2 bloque ELSE bloque
 
-    PUNTOCOMA       reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    VECTOR          reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    ID              reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    WHILE           reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    DO              reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    FOR             reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    SWITCH          reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    BREAK           reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CONTINUE        reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    PRINTLN         reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    LLAVE1          reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    PROC            reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    EXEC            reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    INT             reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    DOUBLE          reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    STRING          reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CHAR            reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    BOOL            reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    IF              reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    $end            reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    LLAVE2          reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CASE            reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    DEFAULT         reduce using rule 61 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    ELSE            shift and go to state 237
+    PAR1            shift and go to state 238
 
 
 state 229
+
+    (62) if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .
+
+    PUNTOCOMA       reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    VECTOR          reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    ID              reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    WHILE           reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    DO              reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    FOR             reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    SWITCH          reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    BREAK           reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    CONTINUE        reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    PRINTLN         reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    LLAVE1          reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    PROC            reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    EXEC            reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    INT             reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    DOUBLE          reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    STRING          reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    CHAR            reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    BOOL            reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    IF              reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    $end            reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    LLAVE2          reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    CASE            reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    DEFAULT         reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+
+
+state 230
 
     (50) expresion -> SORT PAR1 expresion COMMA expresion PAR2 .
 
@@ -7261,32 +7061,32 @@ state 229
     RIGHTCORCH      reduce using rule 50 (expresion -> SORT PAR1 expresion COMMA expresion PAR2 .)
 
 
-state 230
+state 231
 
     (25) declaracion_vector -> VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 . IGUAL expresion_vector PUNTOCOMA
     (26) declaracion_vector -> VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 . PUNTOCOMA
 
-    IGUAL           shift and go to state 238
-    PUNTOCOMA       shift and go to state 239
-
-
-state 231
-
-    (31) dimensiones -> dimensiones COMMA . ENTERO
-
-    ENTERO          shift and go to state 240
+    IGUAL           shift and go to state 239
+    PUNTOCOMA       shift and go to state 240
 
 
 state 232
+
+    (31) dimensiones -> dimensiones COMMA . ENTERO
+
+    ENTERO          shift and go to state 241
+
+
+state 233
 
     (67) sent_for -> FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 . bloque
     (56) bloque -> . LLAVE1 instrucciones LLAVE2
 
     LLAVE1          shift and go to state 34
 
-    bloque                         shift and go to state 241
+    bloque                         shift and go to state 242
 
-state 233
+state 234
 
     (80) caso -> CASE expresion DOSPT . instrucciones
     (2) instrucciones -> . instrucciones instruccion
@@ -7299,7 +7099,7 @@ state 233
     (9) instruccion -> . asignacion PUNTOCOMA
     (10) instruccion -> . incremento PUNTOCOMA
     (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
+    (12) instruccion -> . sent_IF
     (13) instruccion -> . sent_while
     (14) instruccion -> . sent_do_while
     (15) instruccion -> . sent_for
@@ -7321,10 +7121,10 @@ state 233
     (53) incremento -> . ID dimension INCREMENTO
     (54) decremento -> . ID DECREMENTO
     (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
+    (57) sent_IF -> . if_simple
+    (58) sent_IF -> . if_else
+    (59) sent_IF -> . if_elseif
+    (60) sent_IF -> . if_elseif_else
     (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
     (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
     (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
@@ -7340,10 +7140,10 @@ state 233
     (132) tipos -> . STRING
     (133) tipos -> . CHAR
     (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (62) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (63) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
   ! shift/reduce conflict for PUNTOCOMA resolved as shift
   ! shift/reduce conflict for VECTOR resolved as shift
@@ -7407,7 +7207,7 @@ state 233
   ! BOOL            [ reduce using rule 135 (empty -> .) ]
   ! IF              [ reduce using rule 135 (empty -> .) ]
 
-    instrucciones                  shift and go to state 242
+    instrucciones                  shift and go to state 243
     instruccion                    shift and go to state 3
     empty                          shift and go to state 4
     declaracion                    shift and go to state 6
@@ -7416,7 +7216,7 @@ state 233
     asignacion                     shift and go to state 9
     incremento                     shift and go to state 10
     decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
+    sent_IF                        shift and go to state 12
     sent_while                     shift and go to state 13
     sent_do_while                  shift and go to state 14
     sent_for                       shift and go to state 15
@@ -7433,7 +7233,7 @@ state 233
     if_elseif                      shift and go to state 28
     if_elseif_else                 shift and go to state 29
 
-state 234
+state 235
 
     (81) caso -> DEFAULT DOSPT instrucciones .
     (2) instrucciones -> instrucciones . instruccion
@@ -7444,7 +7244,7 @@ state 234
     (9) instruccion -> . asignacion PUNTOCOMA
     (10) instruccion -> . incremento PUNTOCOMA
     (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
+    (12) instruccion -> . sent_IF
     (13) instruccion -> . sent_while
     (14) instruccion -> . sent_do_while
     (15) instruccion -> . sent_for
@@ -7465,10 +7265,10 @@ state 234
     (53) incremento -> . ID dimension INCREMENTO
     (54) decremento -> . ID DECREMENTO
     (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
+    (57) sent_IF -> . if_simple
+    (58) sent_IF -> . if_else
+    (59) sent_IF -> . if_elseif
+    (60) sent_IF -> . if_elseif_else
     (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
     (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
     (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
@@ -7484,10 +7284,10 @@ state 234
     (132) tipos -> . STRING
     (133) tipos -> . CHAR
     (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (62) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (63) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
     LLAVE2          reduce using rule 81 (caso -> DEFAULT DOSPT instrucciones .)
     CASE            reduce using rule 81 (caso -> DEFAULT DOSPT instrucciones .)
@@ -7519,7 +7319,7 @@ state 234
     asignacion                     shift and go to state 9
     incremento                     shift and go to state 10
     decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
+    sent_IF                        shift and go to state 12
     sent_while                     shift and go to state 13
     sent_do_while                  shift and go to state 14
     sent_for                       shift and go to state 15
@@ -7536,7 +7336,7 @@ state 234
     if_elseif                      shift and go to state 28
     if_elseif_else                 shift and go to state 29
 
-state 235
+state 236
 
     (112) Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .
 
@@ -7565,24 +7365,73 @@ state 235
     DEFAULT         reduce using rule 112 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
 
 
-state 236
+state 237
 
     (114) PARAMETROS -> tipos DOSPT ID COMMA PARAMETROS .
 
     PAR2            reduce using rule 114 (PARAMETROS -> tipos DOSPT ID COMMA PARAMETROS .)
 
 
-state 237
-
-    (62) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE . LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    LLAVE1          shift and go to state 244
-    IF              shift and go to state 243
-
-
 state 238
+
+    (63) if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 . expresion PAR2 bloque
+    (64) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 . expresion PAR2 bloque ELSE bloque
+    (32) expresion -> . ID dimension
+    (42) expresion -> . SENO PAR1 expresion PAR2
+    (43) expresion -> . COSENO PAR1 expresion PAR2
+    (44) expresion -> . INV PAR1 expresion PAR2
+    (46) expresion -> . SHUFFLE PAR1 ID PAR2
+    (49) expresion -> . SORT PAR1 expresion PAR2
+    (50) expresion -> . SORT PAR1 expresion COMMA expresion PAR2
+    (85) expresion -> . expresion MAS expresion
+    (86) expresion -> . expresion MENOS expresion
+    (87) expresion -> . expresion MULT expresion
+    (88) expresion -> . expresion DIVISION expresion
+    (89) expresion -> . expresion POTENCIA expresion
+    (90) expresion -> . expresion MODULO expresion
+    (91) expresion -> . MENOS expresion
+    (92) expresion -> . PAR1 expresion PAR2
+    (93) expresion -> . ENTERO
+    (94) expresion -> . DECIMAL
+    (95) expresion -> . CADENA
+    (96) expresion -> . TRUE
+    (97) expresion -> . FALSE
+    (98) expresion -> . BOOLEANO
+    (99) expresion -> . CHAR
+    (100) expresion -> . CARACTER
+    (101) expresion -> . ID
+    (102) expresion -> . expresion OR expresion
+    (103) expresion -> . expresion AND expresion
+    (104) expresion -> . expresion XOR expresion
+    (105) expresion -> . NOT expresion
+    (106) expresion -> . expresion MENOR_IGUAL expresion
+    (107) expresion -> . expresion MAYOR_QUE expresion
+    (108) expresion -> . expresion MAYOR_IGUAL expresion
+    (109) expresion -> . expresion MENOR_QUE expresion
+    (110) expresion -> . expresion IGUAL_IGUAL expresion
+    (111) expresion -> . expresion DIFERENTE expresion
+
+    ID              shift and go to state 76
+    SENO            shift and go to state 78
+    COSENO          shift and go to state 80
+    INV             shift and go to state 81
+    SHUFFLE         shift and go to state 82
+    SORT            shift and go to state 83
+    MENOS           shift and go to state 84
+    PAR1            shift and go to state 79
+    ENTERO          shift and go to state 85
+    DECIMAL         shift and go to state 86
+    CADENA          shift and go to state 87
+    TRUE            shift and go to state 88
+    FALSE           shift and go to state 89
+    BOOLEANO        shift and go to state 90
+    CHAR            shift and go to state 91
+    CARACTER        shift and go to state 92
+    NOT             shift and go to state 93
+
+    expresion                      shift and go to state 244
+
+state 239
 
     (25) declaracion_vector -> VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL . expresion_vector PUNTOCOMA
     (33) expresion_vector -> . LEFTCORCH contenido_vector RIGHTCORCH
@@ -7596,7 +7445,7 @@ state 238
 
     expresion_vector               shift and go to state 246
 
-state 239
+state 240
 
     (26) declaracion_vector -> VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 PUNTOCOMA .
 
@@ -7625,7 +7474,7 @@ state 239
     DEFAULT         reduce using rule 26 (declaracion_vector -> VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 PUNTOCOMA .)
 
 
-state 240
+state 241
 
     (31) dimensiones -> dimensiones COMMA ENTERO .
 
@@ -7633,7 +7482,7 @@ state 240
     COMMA           reduce using rule 31 (dimensiones -> dimensiones COMMA ENTERO .)
 
 
-state 241
+state 242
 
     (67) sent_for -> FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque .
 
@@ -7662,7 +7511,7 @@ state 241
     DEFAULT         reduce using rule 67 (sent_for -> FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque .)
 
 
-state 242
+state 243
 
     (80) caso -> CASE expresion DOSPT instrucciones .
     (2) instrucciones -> instrucciones . instruccion
@@ -7673,7 +7522,7 @@ state 242
     (9) instruccion -> . asignacion PUNTOCOMA
     (10) instruccion -> . incremento PUNTOCOMA
     (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
+    (12) instruccion -> . sent_IF
     (13) instruccion -> . sent_while
     (14) instruccion -> . sent_do_while
     (15) instruccion -> . sent_for
@@ -7694,10 +7543,10 @@ state 242
     (53) incremento -> . ID dimension INCREMENTO
     (54) decremento -> . ID DECREMENTO
     (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
+    (57) sent_IF -> . if_simple
+    (58) sent_IF -> . if_else
+    (59) sent_IF -> . if_elseif
+    (60) sent_IF -> . if_elseif_else
     (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
     (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
     (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
@@ -7713,10 +7562,10 @@ state 242
     (132) tipos -> . STRING
     (133) tipos -> . CHAR
     (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (61) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (62) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (63) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (64) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
     LLAVE2          reduce using rule 80 (caso -> CASE expresion DOSPT instrucciones .)
     CASE            reduce using rule 80 (caso -> CASE expresion DOSPT instrucciones .)
@@ -7748,7 +7597,7 @@ state 242
     asignacion                     shift and go to state 9
     incremento                     shift and go to state 10
     decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
+    sent_IF                        shift and go to state 12
     sent_while                     shift and go to state 13
     sent_do_while                  shift and go to state 14
     sent_for                       shift and go to state 15
@@ -7764,159 +7613,44 @@ state 242
     if_else                        shift and go to state 27
     if_elseif                      shift and go to state 28
     if_elseif_else                 shift and go to state 29
-
-state 243
-
-    (63) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    PAR1            shift and go to state 249
-
 
 state 244
 
-    (62) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 . instrucciones LLAVE2
-    (2) instrucciones -> . instrucciones instruccion
-    (3) instrucciones -> . instruccion
-    (4) instrucciones -> . empty
-    (5) instruccion -> . PUNTOCOMA
-    (6) instruccion -> . declaracion PUNTOCOMA
-    (7) instruccion -> . declaracion_vector
-    (8) instruccion -> . asignacion_vector
-    (9) instruccion -> . asignacion PUNTOCOMA
-    (10) instruccion -> . incremento PUNTOCOMA
-    (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
-    (13) instruccion -> . sent_while
-    (14) instruccion -> . sent_do_while
-    (15) instruccion -> . sent_for
-    (16) instruccion -> . sent_switch
-    (17) instruccion -> . sent_break PUNTOCOMA
-    (18) instruccion -> . sent_continue PUNTOCOMA
-    (19) instruccion -> . sent_println PUNTOCOMA
-    (20) instruccion -> . bloque
-    (21) instruccion -> . Procedimiento
-    (22) instruccion -> . Llamada PUNTOCOMA
-    (135) empty -> .
-    (23) declaracion -> . tipos ID IGUAL expresion
-    (24) declaracion -> . tipos ID
-    (25) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector PUNTOCOMA
-    (26) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 PUNTOCOMA
-    (27) asignacion_vector -> . ID dimension IGUAL expresion PUNTOCOMA
-    (51) asignacion -> . ID IGUAL expresion
-    (52) incremento -> . ID INCREMENTO
-    (53) incremento -> . ID dimension INCREMENTO
-    (54) decremento -> . ID DECREMENTO
-    (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
-    (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
-    (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
-    (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
-    (77) sent_switch -> . SWITCH PAR1 expresion PAR2 LLAVE1 lista_casos LLAVE2
-    (82) sent_break -> . BREAK
-    (83) sent_continue -> . CONTINUE
-    (84) sent_println -> . PRINTLN PAR1 expresion PAR2
-    (56) bloque -> . LLAVE1 instrucciones LLAVE2
-    (112) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (116) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (130) tipos -> . INT
-    (131) tipos -> . DOUBLE
-    (132) tipos -> . STRING
-    (133) tipos -> . CHAR
-    (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (63) if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion . PAR2 bloque
+    (64) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion . PAR2 bloque ELSE bloque
+    (85) expresion -> expresion . MAS expresion
+    (86) expresion -> expresion . MENOS expresion
+    (87) expresion -> expresion . MULT expresion
+    (88) expresion -> expresion . DIVISION expresion
+    (89) expresion -> expresion . POTENCIA expresion
+    (90) expresion -> expresion . MODULO expresion
+    (102) expresion -> expresion . OR expresion
+    (103) expresion -> expresion . AND expresion
+    (104) expresion -> expresion . XOR expresion
+    (106) expresion -> expresion . MENOR_IGUAL expresion
+    (107) expresion -> expresion . MAYOR_QUE expresion
+    (108) expresion -> expresion . MAYOR_IGUAL expresion
+    (109) expresion -> expresion . MENOR_QUE expresion
+    (110) expresion -> expresion . IGUAL_IGUAL expresion
+    (111) expresion -> expresion . DIFERENTE expresion
 
-  ! shift/reduce conflict for PUNTOCOMA resolved as shift
-  ! shift/reduce conflict for VECTOR resolved as shift
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-  ! shift/reduce conflict for DO resolved as shift
-  ! shift/reduce conflict for FOR resolved as shift
-  ! shift/reduce conflict for SWITCH resolved as shift
-  ! shift/reduce conflict for BREAK resolved as shift
-  ! shift/reduce conflict for CONTINUE resolved as shift
-  ! shift/reduce conflict for PRINTLN resolved as shift
-  ! shift/reduce conflict for LLAVE1 resolved as shift
-  ! shift/reduce conflict for PROC resolved as shift
-  ! shift/reduce conflict for EXEC resolved as shift
-  ! shift/reduce conflict for INT resolved as shift
-  ! shift/reduce conflict for DOUBLE resolved as shift
-  ! shift/reduce conflict for STRING resolved as shift
-  ! shift/reduce conflict for CHAR resolved as shift
-  ! shift/reduce conflict for BOOL resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-    PUNTOCOMA       shift and go to state 5
-    LLAVE2          reduce using rule 135 (empty -> .)
-    VECTOR          shift and go to state 25
-    ID              shift and go to state 24
-    WHILE           shift and go to state 30
-    DO              shift and go to state 31
-    FOR             shift and go to state 32
-    SWITCH          shift and go to state 33
-    BREAK           shift and go to state 35
-    CONTINUE        shift and go to state 36
-    PRINTLN         shift and go to state 37
-    LLAVE1          shift and go to state 34
-    PROC            shift and go to state 38
-    EXEC            shift and go to state 39
-    INT             shift and go to state 40
-    DOUBLE          shift and go to state 41
-    STRING          shift and go to state 42
-    CHAR            shift and go to state 43
-    BOOL            shift and go to state 44
-    IF              shift and go to state 45
+    PAR2            shift and go to state 249
+    MAS             shift and go to state 115
+    MENOS           shift and go to state 116
+    MULT            shift and go to state 117
+    DIVISION        shift and go to state 118
+    POTENCIA        shift and go to state 119
+    MODULO          shift and go to state 120
+    OR              shift and go to state 121
+    AND             shift and go to state 122
+    XOR             shift and go to state 123
+    MENOR_IGUAL     shift and go to state 124
+    MAYOR_QUE       shift and go to state 125
+    MAYOR_IGUAL     shift and go to state 126
+    MENOR_QUE       shift and go to state 127
+    IGUAL_IGUAL     shift and go to state 128
+    DIFERENTE       shift and go to state 129
 
-  ! PUNTOCOMA       [ reduce using rule 135 (empty -> .) ]
-  ! VECTOR          [ reduce using rule 135 (empty -> .) ]
-  ! ID              [ reduce using rule 135 (empty -> .) ]
-  ! WHILE           [ reduce using rule 135 (empty -> .) ]
-  ! DO              [ reduce using rule 135 (empty -> .) ]
-  ! FOR             [ reduce using rule 135 (empty -> .) ]
-  ! SWITCH          [ reduce using rule 135 (empty -> .) ]
-  ! BREAK           [ reduce using rule 135 (empty -> .) ]
-  ! CONTINUE        [ reduce using rule 135 (empty -> .) ]
-  ! PRINTLN         [ reduce using rule 135 (empty -> .) ]
-  ! LLAVE1          [ reduce using rule 135 (empty -> .) ]
-  ! PROC            [ reduce using rule 135 (empty -> .) ]
-  ! EXEC            [ reduce using rule 135 (empty -> .) ]
-  ! INT             [ reduce using rule 135 (empty -> .) ]
-  ! DOUBLE          [ reduce using rule 135 (empty -> .) ]
-  ! STRING          [ reduce using rule 135 (empty -> .) ]
-  ! CHAR            [ reduce using rule 135 (empty -> .) ]
-  ! BOOL            [ reduce using rule 135 (empty -> .) ]
-  ! IF              [ reduce using rule 135 (empty -> .) ]
-
-    instrucciones                  shift and go to state 250
-    instruccion                    shift and go to state 3
-    empty                          shift and go to state 4
-    declaracion                    shift and go to state 6
-    declaracion_vector             shift and go to state 7
-    asignacion_vector              shift and go to state 8
-    asignacion                     shift and go to state 9
-    incremento                     shift and go to state 10
-    decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
-    sent_while                     shift and go to state 13
-    sent_do_while                  shift and go to state 14
-    sent_for                       shift and go to state 15
-    sent_switch                    shift and go to state 16
-    sent_break                     shift and go to state 17
-    sent_continue                  shift and go to state 18
-    sent_println                   shift and go to state 19
-    bloque                         shift and go to state 20
-    Procedimiento                  shift and go to state 21
-    Llamada                        shift and go to state 22
-    tipos                          shift and go to state 23
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
 
 state 245
 
@@ -7964,7 +7698,7 @@ state 245
     (110) expresion -> . expresion IGUAL_IGUAL expresion
     (111) expresion -> . expresion DIFERENTE expresion
 
-    LEFTCORCH       shift and go to state 251
+    LEFTCORCH       shift and go to state 250
     ID              shift and go to state 76
     SENO            shift and go to state 78
     COSENO          shift and go to state 80
@@ -7983,23 +7717,23 @@ state 245
     CARACTER        shift and go to state 92
     NOT             shift and go to state 93
 
-    contenido_vector               shift and go to state 252
-    lista_valores                  shift and go to state 253
-    lista_vectores                 shift and go to state 254
-    expresion                      shift and go to state 255
+    contenido_vector               shift and go to state 251
+    lista_valores                  shift and go to state 252
+    lista_vectores                 shift and go to state 253
+    expresion                      shift and go to state 254
 
 state 246
 
     (25) declaracion_vector -> VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector . PUNTOCOMA
 
-    PUNTOCOMA       shift and go to state 256
+    PUNTOCOMA       shift and go to state 255
 
 
 state 247
 
     (45) expresion_vector -> SHUFFLE . PAR1 ID PAR2
 
-    PAR1            shift and go to state 257
+    PAR1            shift and go to state 256
 
 
 state 248
@@ -8007,170 +7741,20 @@ state 248
     (47) expresion_vector -> SORT . PAR1 expresion PAR2
     (48) expresion_vector -> SORT . PAR1 expresion COMMA expresion PAR2
 
-    PAR1            shift and go to state 258
+    PAR1            shift and go to state 257
 
 
 state 249
 
-    (63) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (32) expresion -> . ID dimension
-    (42) expresion -> . SENO PAR1 expresion PAR2
-    (43) expresion -> . COSENO PAR1 expresion PAR2
-    (44) expresion -> . INV PAR1 expresion PAR2
-    (46) expresion -> . SHUFFLE PAR1 ID PAR2
-    (49) expresion -> . SORT PAR1 expresion PAR2
-    (50) expresion -> . SORT PAR1 expresion COMMA expresion PAR2
-    (85) expresion -> . expresion MAS expresion
-    (86) expresion -> . expresion MENOS expresion
-    (87) expresion -> . expresion MULT expresion
-    (88) expresion -> . expresion DIVISION expresion
-    (89) expresion -> . expresion POTENCIA expresion
-    (90) expresion -> . expresion MODULO expresion
-    (91) expresion -> . MENOS expresion
-    (92) expresion -> . PAR1 expresion PAR2
-    (93) expresion -> . ENTERO
-    (94) expresion -> . DECIMAL
-    (95) expresion -> . CADENA
-    (96) expresion -> . TRUE
-    (97) expresion -> . FALSE
-    (98) expresion -> . BOOLEANO
-    (99) expresion -> . CHAR
-    (100) expresion -> . CARACTER
-    (101) expresion -> . ID
-    (102) expresion -> . expresion OR expresion
-    (103) expresion -> . expresion AND expresion
-    (104) expresion -> . expresion XOR expresion
-    (105) expresion -> . NOT expresion
-    (106) expresion -> . expresion MENOR_IGUAL expresion
-    (107) expresion -> . expresion MAYOR_QUE expresion
-    (108) expresion -> . expresion MAYOR_IGUAL expresion
-    (109) expresion -> . expresion MENOR_QUE expresion
-    (110) expresion -> . expresion IGUAL_IGUAL expresion
-    (111) expresion -> . expresion DIFERENTE expresion
+    (63) if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 . bloque
+    (64) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 . bloque ELSE bloque
+    (56) bloque -> . LLAVE1 instrucciones LLAVE2
 
-    ID              shift and go to state 76
-    SENO            shift and go to state 78
-    COSENO          shift and go to state 80
-    INV             shift and go to state 81
-    SHUFFLE         shift and go to state 82
-    SORT            shift and go to state 83
-    MENOS           shift and go to state 84
-    PAR1            shift and go to state 79
-    ENTERO          shift and go to state 85
-    DECIMAL         shift and go to state 86
-    CADENA          shift and go to state 87
-    TRUE            shift and go to state 88
-    FALSE           shift and go to state 89
-    BOOLEANO        shift and go to state 90
-    CHAR            shift and go to state 91
-    CARACTER        shift and go to state 92
-    NOT             shift and go to state 93
+    LLAVE1          shift and go to state 34
 
-    expresion                      shift and go to state 259
+    bloque                         shift and go to state 258
 
 state 250
-
-    (62) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones . LLAVE2
-    (2) instrucciones -> instrucciones . instruccion
-    (5) instruccion -> . PUNTOCOMA
-    (6) instruccion -> . declaracion PUNTOCOMA
-    (7) instruccion -> . declaracion_vector
-    (8) instruccion -> . asignacion_vector
-    (9) instruccion -> . asignacion PUNTOCOMA
-    (10) instruccion -> . incremento PUNTOCOMA
-    (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
-    (13) instruccion -> . sent_while
-    (14) instruccion -> . sent_do_while
-    (15) instruccion -> . sent_for
-    (16) instruccion -> . sent_switch
-    (17) instruccion -> . sent_break PUNTOCOMA
-    (18) instruccion -> . sent_continue PUNTOCOMA
-    (19) instruccion -> . sent_println PUNTOCOMA
-    (20) instruccion -> . bloque
-    (21) instruccion -> . Procedimiento
-    (22) instruccion -> . Llamada PUNTOCOMA
-    (23) declaracion -> . tipos ID IGUAL expresion
-    (24) declaracion -> . tipos ID
-    (25) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector PUNTOCOMA
-    (26) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 PUNTOCOMA
-    (27) asignacion_vector -> . ID dimension IGUAL expresion PUNTOCOMA
-    (51) asignacion -> . ID IGUAL expresion
-    (52) incremento -> . ID INCREMENTO
-    (53) incremento -> . ID dimension INCREMENTO
-    (54) decremento -> . ID DECREMENTO
-    (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
-    (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
-    (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
-    (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
-    (77) sent_switch -> . SWITCH PAR1 expresion PAR2 LLAVE1 lista_casos LLAVE2
-    (82) sent_break -> . BREAK
-    (83) sent_continue -> . CONTINUE
-    (84) sent_println -> . PRINTLN PAR1 expresion PAR2
-    (56) bloque -> . LLAVE1 instrucciones LLAVE2
-    (112) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (116) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (130) tipos -> . INT
-    (131) tipos -> . DOUBLE
-    (132) tipos -> . STRING
-    (133) tipos -> . CHAR
-    (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    LLAVE2          shift and go to state 260
-    PUNTOCOMA       shift and go to state 5
-    VECTOR          shift and go to state 25
-    ID              shift and go to state 24
-    WHILE           shift and go to state 30
-    DO              shift and go to state 31
-    FOR             shift and go to state 32
-    SWITCH          shift and go to state 33
-    BREAK           shift and go to state 35
-    CONTINUE        shift and go to state 36
-    PRINTLN         shift and go to state 37
-    LLAVE1          shift and go to state 34
-    PROC            shift and go to state 38
-    EXEC            shift and go to state 39
-    INT             shift and go to state 40
-    DOUBLE          shift and go to state 41
-    STRING          shift and go to state 42
-    CHAR            shift and go to state 43
-    BOOL            shift and go to state 44
-    IF              shift and go to state 45
-
-    instruccion                    shift and go to state 46
-    declaracion                    shift and go to state 6
-    declaracion_vector             shift and go to state 7
-    asignacion_vector              shift and go to state 8
-    asignacion                     shift and go to state 9
-    incremento                     shift and go to state 10
-    decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
-    sent_while                     shift and go to state 13
-    sent_do_while                  shift and go to state 14
-    sent_for                       shift and go to state 15
-    sent_switch                    shift and go to state 16
-    sent_break                     shift and go to state 17
-    sent_continue                  shift and go to state 18
-    sent_println                   shift and go to state 19
-    bloque                         shift and go to state 20
-    Procedimiento                  shift and go to state 21
-    Llamada                        shift and go to state 22
-    tipos                          shift and go to state 23
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
-
-state 251
 
     (38) lista_vectores -> LEFTCORCH . lista_valores RIGHTCORCH
     (39) lista_vectores -> LEFTCORCH . lista_vectores RIGHTCORCH
@@ -8217,7 +7801,7 @@ state 251
     (110) expresion -> . expresion IGUAL_IGUAL expresion
     (111) expresion -> . expresion DIFERENTE expresion
 
-    LEFTCORCH       shift and go to state 251
+    LEFTCORCH       shift and go to state 250
     ID              shift and go to state 76
     SENO            shift and go to state 78
     COSENO          shift and go to state 80
@@ -8236,32 +7820,32 @@ state 251
     CARACTER        shift and go to state 92
     NOT             shift and go to state 93
 
-    lista_valores                  shift and go to state 261
-    lista_vectores                 shift and go to state 262
-    expresion                      shift and go to state 255
+    lista_valores                  shift and go to state 259
+    lista_vectores                 shift and go to state 260
+    expresion                      shift and go to state 254
 
-state 252
+state 251
 
     (33) expresion_vector -> LEFTCORCH contenido_vector . RIGHTCORCH
 
-    RIGHTCORCH      shift and go to state 263
+    RIGHTCORCH      shift and go to state 261
 
 
-state 253
+state 252
 
     (34) contenido_vector -> lista_valores .
 
     RIGHTCORCH      reduce using rule 34 (contenido_vector -> lista_valores .)
 
 
-state 254
+state 253
 
     (35) contenido_vector -> lista_vectores .
 
     RIGHTCORCH      reduce using rule 35 (contenido_vector -> lista_vectores .)
 
 
-state 255
+state 254
 
     (36) lista_valores -> expresion .
     (37) lista_valores -> expresion . COMMA lista_valores
@@ -8282,7 +7866,7 @@ state 255
     (111) expresion -> expresion . DIFERENTE expresion
 
     RIGHTCORCH      reduce using rule 36 (lista_valores -> expresion .)
-    COMMA           shift and go to state 264
+    COMMA           shift and go to state 262
     MAS             shift and go to state 115
     MENOS           shift and go to state 116
     MULT            shift and go to state 117
@@ -8300,7 +7884,7 @@ state 255
     DIFERENTE       shift and go to state 129
 
 
-state 256
+state 255
 
     (25) declaracion_vector -> VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector PUNTOCOMA .
 
@@ -8329,14 +7913,14 @@ state 256
     DEFAULT         reduce using rule 25 (declaracion_vector -> VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector PUNTOCOMA .)
 
 
-state 257
+state 256
 
     (45) expresion_vector -> SHUFFLE PAR1 . ID PAR2
 
-    ID              shift and go to state 265
+    ID              shift and go to state 263
 
 
-state 258
+state 257
 
     (47) expresion_vector -> SORT PAR1 . expresion PAR2
     (48) expresion_vector -> SORT PAR1 . expresion COMMA expresion PAR2
@@ -8393,99 +7977,63 @@ state 258
     CARACTER        shift and go to state 92
     NOT             shift and go to state 93
 
-    expresion                      shift and go to state 266
+    expresion                      shift and go to state 264
+
+state 258
+
+    (63) if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .
+    (64) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque . ELSE bloque
+
+    PUNTOCOMA       reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    VECTOR          reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    ID              reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    WHILE           reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    DO              reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    FOR             reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    SWITCH          reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    BREAK           reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    CONTINUE        reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    PRINTLN         reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    LLAVE1          reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    PROC            reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    EXEC            reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    INT             reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    DOUBLE          reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    STRING          reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    CHAR            reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    BOOL            reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    IF              reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    $end            reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    LLAVE2          reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    CASE            reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    DEFAULT         reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    ELSE            shift and go to state 265
+
 
 state 259
-
-    (63) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (85) expresion -> expresion . MAS expresion
-    (86) expresion -> expresion . MENOS expresion
-    (87) expresion -> expresion . MULT expresion
-    (88) expresion -> expresion . DIVISION expresion
-    (89) expresion -> expresion . POTENCIA expresion
-    (90) expresion -> expresion . MODULO expresion
-    (102) expresion -> expresion . OR expresion
-    (103) expresion -> expresion . AND expresion
-    (104) expresion -> expresion . XOR expresion
-    (106) expresion -> expresion . MENOR_IGUAL expresion
-    (107) expresion -> expresion . MAYOR_QUE expresion
-    (108) expresion -> expresion . MAYOR_IGUAL expresion
-    (109) expresion -> expresion . MENOR_QUE expresion
-    (110) expresion -> expresion . IGUAL_IGUAL expresion
-    (111) expresion -> expresion . DIFERENTE expresion
-
-    PAR2            shift and go to state 267
-    MAS             shift and go to state 115
-    MENOS           shift and go to state 116
-    MULT            shift and go to state 117
-    DIVISION        shift and go to state 118
-    POTENCIA        shift and go to state 119
-    MODULO          shift and go to state 120
-    OR              shift and go to state 121
-    AND             shift and go to state 122
-    XOR             shift and go to state 123
-    MENOR_IGUAL     shift and go to state 124
-    MAYOR_QUE       shift and go to state 125
-    MAYOR_IGUAL     shift and go to state 126
-    MENOR_QUE       shift and go to state 127
-    IGUAL_IGUAL     shift and go to state 128
-    DIFERENTE       shift and go to state 129
-
-
-state 260
-
-    (62) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .
-
-    PUNTOCOMA       reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    VECTOR          reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    ID              reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    WHILE           reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    DO              reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    FOR             reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    SWITCH          reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    BREAK           reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    CONTINUE        reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    PRINTLN         reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    LLAVE1          reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    PROC            reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    EXEC            reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    INT             reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    DOUBLE          reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    STRING          reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    CHAR            reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    BOOL            reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    IF              reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    $end            reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    LLAVE2          reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    CASE            reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    DEFAULT         reduce using rule 62 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-
-
-state 261
 
     (38) lista_vectores -> LEFTCORCH lista_valores . RIGHTCORCH
     (40) lista_vectores -> LEFTCORCH lista_valores . RIGHTCORCH COMMA lista_vectores
 
-    RIGHTCORCH      shift and go to state 268
+    RIGHTCORCH      shift and go to state 266
 
 
-state 262
+state 260
 
     (39) lista_vectores -> LEFTCORCH lista_vectores . RIGHTCORCH
     (41) lista_vectores -> LEFTCORCH lista_vectores . RIGHTCORCH COMMA lista_vectores
 
-    RIGHTCORCH      shift and go to state 269
+    RIGHTCORCH      shift and go to state 267
 
 
-state 263
+state 261
 
     (33) expresion_vector -> LEFTCORCH contenido_vector RIGHTCORCH .
 
     PUNTOCOMA       reduce using rule 33 (expresion_vector -> LEFTCORCH contenido_vector RIGHTCORCH .)
 
 
-state 264
+state 262
 
     (37) lista_valores -> expresion COMMA . lista_valores
     (36) lista_valores -> . expresion
@@ -8543,17 +8091,17 @@ state 264
     CARACTER        shift and go to state 92
     NOT             shift and go to state 93
 
-    expresion                      shift and go to state 255
-    lista_valores                  shift and go to state 270
+    expresion                      shift and go to state 254
+    lista_valores                  shift and go to state 268
 
-state 265
+state 263
 
     (45) expresion_vector -> SHUFFLE PAR1 ID . PAR2
 
-    PAR2            shift and go to state 271
+    PAR2            shift and go to state 269
 
 
-state 266
+state 264
 
     (47) expresion_vector -> SORT PAR1 expresion . PAR2
     (48) expresion_vector -> SORT PAR1 expresion . COMMA expresion PAR2
@@ -8573,8 +8121,8 @@ state 266
     (110) expresion -> expresion . IGUAL_IGUAL expresion
     (111) expresion -> expresion . DIFERENTE expresion
 
-    PAR2            shift and go to state 272
-    COMMA           shift and go to state 273
+    PAR2            shift and go to state 270
+    COMMA           shift and go to state 271
     MAS             shift and go to state 115
     MENOS           shift and go to state 116
     MULT            shift and go to state 117
@@ -8592,54 +8140,55 @@ state 266
     DIFERENTE       shift and go to state 129
 
 
-state 267
+state 265
 
-    (63) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (64) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE . bloque
+    (56) bloque -> . LLAVE1 instrucciones LLAVE2
 
-    LLAVE1          shift and go to state 274
+    LLAVE1          shift and go to state 34
 
+    bloque                         shift and go to state 272
 
-state 268
+state 266
 
     (38) lista_vectores -> LEFTCORCH lista_valores RIGHTCORCH .
     (40) lista_vectores -> LEFTCORCH lista_valores RIGHTCORCH . COMMA lista_vectores
 
     RIGHTCORCH      reduce using rule 38 (lista_vectores -> LEFTCORCH lista_valores RIGHTCORCH .)
-    COMMA           shift and go to state 275
+    COMMA           shift and go to state 273
 
 
-state 269
+state 267
 
     (39) lista_vectores -> LEFTCORCH lista_vectores RIGHTCORCH .
     (41) lista_vectores -> LEFTCORCH lista_vectores RIGHTCORCH . COMMA lista_vectores
 
     RIGHTCORCH      reduce using rule 39 (lista_vectores -> LEFTCORCH lista_vectores RIGHTCORCH .)
-    COMMA           shift and go to state 276
+    COMMA           shift and go to state 274
 
 
-state 270
+state 268
 
     (37) lista_valores -> expresion COMMA lista_valores .
 
     RIGHTCORCH      reduce using rule 37 (lista_valores -> expresion COMMA lista_valores .)
 
 
-state 271
+state 269
 
     (45) expresion_vector -> SHUFFLE PAR1 ID PAR2 .
 
     PUNTOCOMA       reduce using rule 45 (expresion_vector -> SHUFFLE PAR1 ID PAR2 .)
 
 
-state 272
+state 270
 
     (47) expresion_vector -> SORT PAR1 expresion PAR2 .
 
     PUNTOCOMA       reduce using rule 47 (expresion_vector -> SORT PAR1 expresion PAR2 .)
 
 
-state 273
+state 271
 
     (48) expresion_vector -> SORT PAR1 expresion COMMA . expresion PAR2
     (32) expresion -> . ID dimension
@@ -8695,155 +8244,38 @@ state 273
     CARACTER        shift and go to state 92
     NOT             shift and go to state 93
 
-    expresion                      shift and go to state 277
+    expresion                      shift and go to state 275
 
-state 274
+state 272
 
-    (63) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (2) instrucciones -> . instrucciones instruccion
-    (3) instrucciones -> . instruccion
-    (4) instrucciones -> . empty
-    (5) instruccion -> . PUNTOCOMA
-    (6) instruccion -> . declaracion PUNTOCOMA
-    (7) instruccion -> . declaracion_vector
-    (8) instruccion -> . asignacion_vector
-    (9) instruccion -> . asignacion PUNTOCOMA
-    (10) instruccion -> . incremento PUNTOCOMA
-    (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
-    (13) instruccion -> . sent_while
-    (14) instruccion -> . sent_do_while
-    (15) instruccion -> . sent_for
-    (16) instruccion -> . sent_switch
-    (17) instruccion -> . sent_break PUNTOCOMA
-    (18) instruccion -> . sent_continue PUNTOCOMA
-    (19) instruccion -> . sent_println PUNTOCOMA
-    (20) instruccion -> . bloque
-    (21) instruccion -> . Procedimiento
-    (22) instruccion -> . Llamada PUNTOCOMA
-    (135) empty -> .
-    (23) declaracion -> . tipos ID IGUAL expresion
-    (24) declaracion -> . tipos ID
-    (25) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector PUNTOCOMA
-    (26) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 PUNTOCOMA
-    (27) asignacion_vector -> . ID dimension IGUAL expresion PUNTOCOMA
-    (51) asignacion -> . ID IGUAL expresion
-    (52) incremento -> . ID INCREMENTO
-    (53) incremento -> . ID dimension INCREMENTO
-    (54) decremento -> . ID DECREMENTO
-    (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
-    (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
-    (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
-    (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
-    (77) sent_switch -> . SWITCH PAR1 expresion PAR2 LLAVE1 lista_casos LLAVE2
-    (82) sent_break -> . BREAK
-    (83) sent_continue -> . CONTINUE
-    (84) sent_println -> . PRINTLN PAR1 expresion PAR2
-    (56) bloque -> . LLAVE1 instrucciones LLAVE2
-    (112) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (116) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (130) tipos -> . INT
-    (131) tipos -> . DOUBLE
-    (132) tipos -> . STRING
-    (133) tipos -> . CHAR
-    (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (64) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .
 
-  ! shift/reduce conflict for PUNTOCOMA resolved as shift
-  ! shift/reduce conflict for VECTOR resolved as shift
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-  ! shift/reduce conflict for DO resolved as shift
-  ! shift/reduce conflict for FOR resolved as shift
-  ! shift/reduce conflict for SWITCH resolved as shift
-  ! shift/reduce conflict for BREAK resolved as shift
-  ! shift/reduce conflict for CONTINUE resolved as shift
-  ! shift/reduce conflict for PRINTLN resolved as shift
-  ! shift/reduce conflict for LLAVE1 resolved as shift
-  ! shift/reduce conflict for PROC resolved as shift
-  ! shift/reduce conflict for EXEC resolved as shift
-  ! shift/reduce conflict for INT resolved as shift
-  ! shift/reduce conflict for DOUBLE resolved as shift
-  ! shift/reduce conflict for STRING resolved as shift
-  ! shift/reduce conflict for CHAR resolved as shift
-  ! shift/reduce conflict for BOOL resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-    PUNTOCOMA       shift and go to state 5
-    LLAVE2          reduce using rule 135 (empty -> .)
-    VECTOR          shift and go to state 25
-    ID              shift and go to state 24
-    WHILE           shift and go to state 30
-    DO              shift and go to state 31
-    FOR             shift and go to state 32
-    SWITCH          shift and go to state 33
-    BREAK           shift and go to state 35
-    CONTINUE        shift and go to state 36
-    PRINTLN         shift and go to state 37
-    LLAVE1          shift and go to state 34
-    PROC            shift and go to state 38
-    EXEC            shift and go to state 39
-    INT             shift and go to state 40
-    DOUBLE          shift and go to state 41
-    STRING          shift and go to state 42
-    CHAR            shift and go to state 43
-    BOOL            shift and go to state 44
-    IF              shift and go to state 45
+    PUNTOCOMA       reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    VECTOR          reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    ID              reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    WHILE           reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    DO              reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    FOR             reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    SWITCH          reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    BREAK           reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    CONTINUE        reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    PRINTLN         reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    LLAVE1          reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    PROC            reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    EXEC            reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    INT             reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    DOUBLE          reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    STRING          reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    CHAR            reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    BOOL            reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    IF              reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    $end            reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    LLAVE2          reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    CASE            reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    DEFAULT         reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
 
-  ! PUNTOCOMA       [ reduce using rule 135 (empty -> .) ]
-  ! VECTOR          [ reduce using rule 135 (empty -> .) ]
-  ! ID              [ reduce using rule 135 (empty -> .) ]
-  ! WHILE           [ reduce using rule 135 (empty -> .) ]
-  ! DO              [ reduce using rule 135 (empty -> .) ]
-  ! FOR             [ reduce using rule 135 (empty -> .) ]
-  ! SWITCH          [ reduce using rule 135 (empty -> .) ]
-  ! BREAK           [ reduce using rule 135 (empty -> .) ]
-  ! CONTINUE        [ reduce using rule 135 (empty -> .) ]
-  ! PRINTLN         [ reduce using rule 135 (empty -> .) ]
-  ! LLAVE1          [ reduce using rule 135 (empty -> .) ]
-  ! PROC            [ reduce using rule 135 (empty -> .) ]
-  ! EXEC            [ reduce using rule 135 (empty -> .) ]
-  ! INT             [ reduce using rule 135 (empty -> .) ]
-  ! DOUBLE          [ reduce using rule 135 (empty -> .) ]
-  ! STRING          [ reduce using rule 135 (empty -> .) ]
-  ! CHAR            [ reduce using rule 135 (empty -> .) ]
-  ! BOOL            [ reduce using rule 135 (empty -> .) ]
-  ! IF              [ reduce using rule 135 (empty -> .) ]
 
-    instrucciones                  shift and go to state 278
-    instruccion                    shift and go to state 3
-    empty                          shift and go to state 4
-    declaracion                    shift and go to state 6
-    declaracion_vector             shift and go to state 7
-    asignacion_vector              shift and go to state 8
-    asignacion                     shift and go to state 9
-    incremento                     shift and go to state 10
-    decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
-    sent_while                     shift and go to state 13
-    sent_do_while                  shift and go to state 14
-    sent_for                       shift and go to state 15
-    sent_switch                    shift and go to state 16
-    sent_break                     shift and go to state 17
-    sent_continue                  shift and go to state 18
-    sent_println                   shift and go to state 19
-    bloque                         shift and go to state 20
-    Procedimiento                  shift and go to state 21
-    Llamada                        shift and go to state 22
-    tipos                          shift and go to state 23
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
-
-state 275
+state 273
 
     (40) lista_vectores -> LEFTCORCH lista_valores RIGHTCORCH COMMA . lista_vectores
     (38) lista_vectores -> . LEFTCORCH lista_valores RIGHTCORCH
@@ -8851,11 +8283,11 @@ state 275
     (40) lista_vectores -> . LEFTCORCH lista_valores RIGHTCORCH COMMA lista_vectores
     (41) lista_vectores -> . LEFTCORCH lista_vectores RIGHTCORCH COMMA lista_vectores
 
-    LEFTCORCH       shift and go to state 251
+    LEFTCORCH       shift and go to state 250
 
-    lista_vectores                 shift and go to state 279
+    lista_vectores                 shift and go to state 276
 
-state 276
+state 274
 
     (41) lista_vectores -> LEFTCORCH lista_vectores RIGHTCORCH COMMA . lista_vectores
     (38) lista_vectores -> . LEFTCORCH lista_valores RIGHTCORCH
@@ -8863,11 +8295,11 @@ state 276
     (40) lista_vectores -> . LEFTCORCH lista_valores RIGHTCORCH COMMA lista_vectores
     (41) lista_vectores -> . LEFTCORCH lista_vectores RIGHTCORCH COMMA lista_vectores
 
-    LEFTCORCH       shift and go to state 251
+    LEFTCORCH       shift and go to state 250
 
-    lista_vectores                 shift and go to state 280
+    lista_vectores                 shift and go to state 277
 
-state 277
+state 275
 
     (48) expresion_vector -> SORT PAR1 expresion COMMA expresion . PAR2
     (85) expresion -> expresion . MAS expresion
@@ -8886,7 +8318,7 @@ state 277
     (110) expresion -> expresion . IGUAL_IGUAL expresion
     (111) expresion -> expresion . DIFERENTE expresion
 
-    PAR2            shift and go to state 281
+    PAR2            shift and go to state 278
     MAS             shift and go to state 115
     MENOS           shift and go to state 116
     MULT            shift and go to state 117
@@ -8904,440 +8336,25 @@ state 277
     DIFERENTE       shift and go to state 129
 
 
-state 278
-
-    (63) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (2) instrucciones -> instrucciones . instruccion
-    (5) instruccion -> . PUNTOCOMA
-    (6) instruccion -> . declaracion PUNTOCOMA
-    (7) instruccion -> . declaracion_vector
-    (8) instruccion -> . asignacion_vector
-    (9) instruccion -> . asignacion PUNTOCOMA
-    (10) instruccion -> . incremento PUNTOCOMA
-    (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
-    (13) instruccion -> . sent_while
-    (14) instruccion -> . sent_do_while
-    (15) instruccion -> . sent_for
-    (16) instruccion -> . sent_switch
-    (17) instruccion -> . sent_break PUNTOCOMA
-    (18) instruccion -> . sent_continue PUNTOCOMA
-    (19) instruccion -> . sent_println PUNTOCOMA
-    (20) instruccion -> . bloque
-    (21) instruccion -> . Procedimiento
-    (22) instruccion -> . Llamada PUNTOCOMA
-    (23) declaracion -> . tipos ID IGUAL expresion
-    (24) declaracion -> . tipos ID
-    (25) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector PUNTOCOMA
-    (26) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 PUNTOCOMA
-    (27) asignacion_vector -> . ID dimension IGUAL expresion PUNTOCOMA
-    (51) asignacion -> . ID IGUAL expresion
-    (52) incremento -> . ID INCREMENTO
-    (53) incremento -> . ID dimension INCREMENTO
-    (54) decremento -> . ID DECREMENTO
-    (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
-    (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
-    (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
-    (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
-    (77) sent_switch -> . SWITCH PAR1 expresion PAR2 LLAVE1 lista_casos LLAVE2
-    (82) sent_break -> . BREAK
-    (83) sent_continue -> . CONTINUE
-    (84) sent_println -> . PRINTLN PAR1 expresion PAR2
-    (56) bloque -> . LLAVE1 instrucciones LLAVE2
-    (112) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (116) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (130) tipos -> . INT
-    (131) tipos -> . DOUBLE
-    (132) tipos -> . STRING
-    (133) tipos -> . CHAR
-    (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    LLAVE2          shift and go to state 282
-    PUNTOCOMA       shift and go to state 5
-    VECTOR          shift and go to state 25
-    ID              shift and go to state 24
-    WHILE           shift and go to state 30
-    DO              shift and go to state 31
-    FOR             shift and go to state 32
-    SWITCH          shift and go to state 33
-    BREAK           shift and go to state 35
-    CONTINUE        shift and go to state 36
-    PRINTLN         shift and go to state 37
-    LLAVE1          shift and go to state 34
-    PROC            shift and go to state 38
-    EXEC            shift and go to state 39
-    INT             shift and go to state 40
-    DOUBLE          shift and go to state 41
-    STRING          shift and go to state 42
-    CHAR            shift and go to state 43
-    BOOL            shift and go to state 44
-    IF              shift and go to state 45
-
-    instruccion                    shift and go to state 46
-    declaracion                    shift and go to state 6
-    declaracion_vector             shift and go to state 7
-    asignacion_vector              shift and go to state 8
-    asignacion                     shift and go to state 9
-    incremento                     shift and go to state 10
-    decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
-    sent_while                     shift and go to state 13
-    sent_do_while                  shift and go to state 14
-    sent_for                       shift and go to state 15
-    sent_switch                    shift and go to state 16
-    sent_break                     shift and go to state 17
-    sent_continue                  shift and go to state 18
-    sent_println                   shift and go to state 19
-    bloque                         shift and go to state 20
-    Procedimiento                  shift and go to state 21
-    Llamada                        shift and go to state 22
-    tipos                          shift and go to state 23
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
-
-state 279
+state 276
 
     (40) lista_vectores -> LEFTCORCH lista_valores RIGHTCORCH COMMA lista_vectores .
 
     RIGHTCORCH      reduce using rule 40 (lista_vectores -> LEFTCORCH lista_valores RIGHTCORCH COMMA lista_vectores .)
 
 
-state 280
+state 277
 
     (41) lista_vectores -> LEFTCORCH lista_vectores RIGHTCORCH COMMA lista_vectores .
 
     RIGHTCORCH      reduce using rule 41 (lista_vectores -> LEFTCORCH lista_vectores RIGHTCORCH COMMA lista_vectores .)
 
 
-state 281
+state 278
 
     (48) expresion_vector -> SORT PAR1 expresion COMMA expresion PAR2 .
 
     PUNTOCOMA       reduce using rule 48 (expresion_vector -> SORT PAR1 expresion COMMA expresion PAR2 .)
-
-
-state 282
-
-    (63) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 . ELSE LLAVE1 instrucciones LLAVE2
-
-    PUNTOCOMA       reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    VECTOR          reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    ID              reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    WHILE           reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    DO              reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    FOR             reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    SWITCH          reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    BREAK           reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CONTINUE        reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    PRINTLN         reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    LLAVE1          reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    PROC            reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    EXEC            reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    INT             reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    DOUBLE          reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    STRING          reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CHAR            reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    BOOL            reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    IF              reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    $end            reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    LLAVE2          reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CASE            reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    DEFAULT         reduce using rule 63 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    ELSE            shift and go to state 283
-
-
-state 283
-
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE . LLAVE1 instrucciones LLAVE2
-
-    LLAVE1          shift and go to state 284
-
-
-state 284
-
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 . instrucciones LLAVE2
-    (2) instrucciones -> . instrucciones instruccion
-    (3) instrucciones -> . instruccion
-    (4) instrucciones -> . empty
-    (5) instruccion -> . PUNTOCOMA
-    (6) instruccion -> . declaracion PUNTOCOMA
-    (7) instruccion -> . declaracion_vector
-    (8) instruccion -> . asignacion_vector
-    (9) instruccion -> . asignacion PUNTOCOMA
-    (10) instruccion -> . incremento PUNTOCOMA
-    (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
-    (13) instruccion -> . sent_while
-    (14) instruccion -> . sent_do_while
-    (15) instruccion -> . sent_for
-    (16) instruccion -> . sent_switch
-    (17) instruccion -> . sent_break PUNTOCOMA
-    (18) instruccion -> . sent_continue PUNTOCOMA
-    (19) instruccion -> . sent_println PUNTOCOMA
-    (20) instruccion -> . bloque
-    (21) instruccion -> . Procedimiento
-    (22) instruccion -> . Llamada PUNTOCOMA
-    (135) empty -> .
-    (23) declaracion -> . tipos ID IGUAL expresion
-    (24) declaracion -> . tipos ID
-    (25) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector PUNTOCOMA
-    (26) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 PUNTOCOMA
-    (27) asignacion_vector -> . ID dimension IGUAL expresion PUNTOCOMA
-    (51) asignacion -> . ID IGUAL expresion
-    (52) incremento -> . ID INCREMENTO
-    (53) incremento -> . ID dimension INCREMENTO
-    (54) decremento -> . ID DECREMENTO
-    (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
-    (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
-    (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
-    (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
-    (77) sent_switch -> . SWITCH PAR1 expresion PAR2 LLAVE1 lista_casos LLAVE2
-    (82) sent_break -> . BREAK
-    (83) sent_continue -> . CONTINUE
-    (84) sent_println -> . PRINTLN PAR1 expresion PAR2
-    (56) bloque -> . LLAVE1 instrucciones LLAVE2
-    (112) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (116) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (130) tipos -> . INT
-    (131) tipos -> . DOUBLE
-    (132) tipos -> . STRING
-    (133) tipos -> . CHAR
-    (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-  ! shift/reduce conflict for PUNTOCOMA resolved as shift
-  ! shift/reduce conflict for VECTOR resolved as shift
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-  ! shift/reduce conflict for DO resolved as shift
-  ! shift/reduce conflict for FOR resolved as shift
-  ! shift/reduce conflict for SWITCH resolved as shift
-  ! shift/reduce conflict for BREAK resolved as shift
-  ! shift/reduce conflict for CONTINUE resolved as shift
-  ! shift/reduce conflict for PRINTLN resolved as shift
-  ! shift/reduce conflict for LLAVE1 resolved as shift
-  ! shift/reduce conflict for PROC resolved as shift
-  ! shift/reduce conflict for EXEC resolved as shift
-  ! shift/reduce conflict for INT resolved as shift
-  ! shift/reduce conflict for DOUBLE resolved as shift
-  ! shift/reduce conflict for STRING resolved as shift
-  ! shift/reduce conflict for CHAR resolved as shift
-  ! shift/reduce conflict for BOOL resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-    PUNTOCOMA       shift and go to state 5
-    LLAVE2          reduce using rule 135 (empty -> .)
-    VECTOR          shift and go to state 25
-    ID              shift and go to state 24
-    WHILE           shift and go to state 30
-    DO              shift and go to state 31
-    FOR             shift and go to state 32
-    SWITCH          shift and go to state 33
-    BREAK           shift and go to state 35
-    CONTINUE        shift and go to state 36
-    PRINTLN         shift and go to state 37
-    LLAVE1          shift and go to state 34
-    PROC            shift and go to state 38
-    EXEC            shift and go to state 39
-    INT             shift and go to state 40
-    DOUBLE          shift and go to state 41
-    STRING          shift and go to state 42
-    CHAR            shift and go to state 43
-    BOOL            shift and go to state 44
-    IF              shift and go to state 45
-
-  ! PUNTOCOMA       [ reduce using rule 135 (empty -> .) ]
-  ! VECTOR          [ reduce using rule 135 (empty -> .) ]
-  ! ID              [ reduce using rule 135 (empty -> .) ]
-  ! WHILE           [ reduce using rule 135 (empty -> .) ]
-  ! DO              [ reduce using rule 135 (empty -> .) ]
-  ! FOR             [ reduce using rule 135 (empty -> .) ]
-  ! SWITCH          [ reduce using rule 135 (empty -> .) ]
-  ! BREAK           [ reduce using rule 135 (empty -> .) ]
-  ! CONTINUE        [ reduce using rule 135 (empty -> .) ]
-  ! PRINTLN         [ reduce using rule 135 (empty -> .) ]
-  ! LLAVE1          [ reduce using rule 135 (empty -> .) ]
-  ! PROC            [ reduce using rule 135 (empty -> .) ]
-  ! EXEC            [ reduce using rule 135 (empty -> .) ]
-  ! INT             [ reduce using rule 135 (empty -> .) ]
-  ! DOUBLE          [ reduce using rule 135 (empty -> .) ]
-  ! STRING          [ reduce using rule 135 (empty -> .) ]
-  ! CHAR            [ reduce using rule 135 (empty -> .) ]
-  ! BOOL            [ reduce using rule 135 (empty -> .) ]
-  ! IF              [ reduce using rule 135 (empty -> .) ]
-
-    instrucciones                  shift and go to state 285
-    instruccion                    shift and go to state 3
-    empty                          shift and go to state 4
-    declaracion                    shift and go to state 6
-    declaracion_vector             shift and go to state 7
-    asignacion_vector              shift and go to state 8
-    asignacion                     shift and go to state 9
-    incremento                     shift and go to state 10
-    decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
-    sent_while                     shift and go to state 13
-    sent_do_while                  shift and go to state 14
-    sent_for                       shift and go to state 15
-    sent_switch                    shift and go to state 16
-    sent_break                     shift and go to state 17
-    sent_continue                  shift and go to state 18
-    sent_println                   shift and go to state 19
-    bloque                         shift and go to state 20
-    Procedimiento                  shift and go to state 21
-    Llamada                        shift and go to state 22
-    tipos                          shift and go to state 23
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
-
-state 285
-
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones . LLAVE2
-    (2) instrucciones -> instrucciones . instruccion
-    (5) instruccion -> . PUNTOCOMA
-    (6) instruccion -> . declaracion PUNTOCOMA
-    (7) instruccion -> . declaracion_vector
-    (8) instruccion -> . asignacion_vector
-    (9) instruccion -> . asignacion PUNTOCOMA
-    (10) instruccion -> . incremento PUNTOCOMA
-    (11) instruccion -> . decremento PUNTOCOMA
-    (12) instruccion -> . sent_if
-    (13) instruccion -> . sent_while
-    (14) instruccion -> . sent_do_while
-    (15) instruccion -> . sent_for
-    (16) instruccion -> . sent_switch
-    (17) instruccion -> . sent_break PUNTOCOMA
-    (18) instruccion -> . sent_continue PUNTOCOMA
-    (19) instruccion -> . sent_println PUNTOCOMA
-    (20) instruccion -> . bloque
-    (21) instruccion -> . Procedimiento
-    (22) instruccion -> . Llamada PUNTOCOMA
-    (23) declaracion -> . tipos ID IGUAL expresion
-    (24) declaracion -> . tipos ID
-    (25) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector PUNTOCOMA
-    (26) declaracion_vector -> . VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 PUNTOCOMA
-    (27) asignacion_vector -> . ID dimension IGUAL expresion PUNTOCOMA
-    (51) asignacion -> . ID IGUAL expresion
-    (52) incremento -> . ID INCREMENTO
-    (53) incremento -> . ID dimension INCREMENTO
-    (54) decremento -> . ID DECREMENTO
-    (55) decremento -> . ID dimension DECREMENTO
-    (57) sent_if -> . if_simple
-    (58) sent_if -> . if_else
-    (59) sent_if -> . if_elseif
-    (60) sent_if -> . if_elseif_else
-    (65) sent_while -> . WHILE PAR1 expresion PAR2 bloque
-    (66) sent_do_while -> . DO bloque WHILE PAR1 expresion PAR2 PUNTOCOMA
-    (67) sent_for -> . FOR PAR1 for_init PUNTOCOMA expresion PUNTOCOMA for_update PAR2 bloque
-    (77) sent_switch -> . SWITCH PAR1 expresion PAR2 LLAVE1 lista_casos LLAVE2
-    (82) sent_break -> . BREAK
-    (83) sent_continue -> . CONTINUE
-    (84) sent_println -> . PRINTLN PAR1 expresion PAR2
-    (56) bloque -> . LLAVE1 instrucciones LLAVE2
-    (112) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (116) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (130) tipos -> . INT
-    (131) tipos -> . DOUBLE
-    (132) tipos -> . STRING
-    (133) tipos -> . CHAR
-    (134) tipos -> . BOOL
-    (61) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (62) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (63) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (64) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    LLAVE2          shift and go to state 286
-    PUNTOCOMA       shift and go to state 5
-    VECTOR          shift and go to state 25
-    ID              shift and go to state 24
-    WHILE           shift and go to state 30
-    DO              shift and go to state 31
-    FOR             shift and go to state 32
-    SWITCH          shift and go to state 33
-    BREAK           shift and go to state 35
-    CONTINUE        shift and go to state 36
-    PRINTLN         shift and go to state 37
-    LLAVE1          shift and go to state 34
-    PROC            shift and go to state 38
-    EXEC            shift and go to state 39
-    INT             shift and go to state 40
-    DOUBLE          shift and go to state 41
-    STRING          shift and go to state 42
-    CHAR            shift and go to state 43
-    BOOL            shift and go to state 44
-    IF              shift and go to state 45
-
-    instruccion                    shift and go to state 46
-    declaracion                    shift and go to state 6
-    declaracion_vector             shift and go to state 7
-    asignacion_vector              shift and go to state 8
-    asignacion                     shift and go to state 9
-    incremento                     shift and go to state 10
-    decremento                     shift and go to state 11
-    sent_if                        shift and go to state 12
-    sent_while                     shift and go to state 13
-    sent_do_while                  shift and go to state 14
-    sent_for                       shift and go to state 15
-    sent_switch                    shift and go to state 16
-    sent_break                     shift and go to state 17
-    sent_continue                  shift and go to state 18
-    sent_println                   shift and go to state 19
-    bloque                         shift and go to state 20
-    Procedimiento                  shift and go to state 21
-    Llamada                        shift and go to state 22
-    tipos                          shift and go to state 23
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
-
-state 286
-
-    (64) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .
-
-    PUNTOCOMA       reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    VECTOR          reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    ID              reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    WHILE           reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    DO              reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    FOR             reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    SWITCH          reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    BREAK           reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    CONTINUE        reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    PRINTLN         reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    LLAVE1          reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    PROC            reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    EXEC            reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    INT             reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    DOUBLE          reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    STRING          reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    CHAR            reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    BOOL            reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    IF              reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    $end            reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    LLAVE2          reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    CASE            reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    DEFAULT         reduce using rule 64 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
 
 WARNING: 
 WARNING: Conflicts:
@@ -9380,25 +8397,6 @@ WARNING: shift/reduce conflict for STRING in state 34 resolved as shift
 WARNING: shift/reduce conflict for CHAR in state 34 resolved as shift
 WARNING: shift/reduce conflict for BOOL in state 34 resolved as shift
 WARNING: shift/reduce conflict for IF in state 34 resolved as shift
-WARNING: shift/reduce conflict for PUNTOCOMA in state 193 resolved as shift
-WARNING: shift/reduce conflict for VECTOR in state 193 resolved as shift
-WARNING: shift/reduce conflict for ID in state 193 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 193 resolved as shift
-WARNING: shift/reduce conflict for DO in state 193 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 193 resolved as shift
-WARNING: shift/reduce conflict for SWITCH in state 193 resolved as shift
-WARNING: shift/reduce conflict for BREAK in state 193 resolved as shift
-WARNING: shift/reduce conflict for CONTINUE in state 193 resolved as shift
-WARNING: shift/reduce conflict for PRINTLN in state 193 resolved as shift
-WARNING: shift/reduce conflict for LLAVE1 in state 193 resolved as shift
-WARNING: shift/reduce conflict for PROC in state 193 resolved as shift
-WARNING: shift/reduce conflict for EXEC in state 193 resolved as shift
-WARNING: shift/reduce conflict for INT in state 193 resolved as shift
-WARNING: shift/reduce conflict for DOUBLE in state 193 resolved as shift
-WARNING: shift/reduce conflict for STRING in state 193 resolved as shift
-WARNING: shift/reduce conflict for CHAR in state 193 resolved as shift
-WARNING: shift/reduce conflict for BOOL in state 193 resolved as shift
-WARNING: shift/reduce conflict for IF in state 193 resolved as shift
 WARNING: shift/reduce conflict for PUNTOCOMA in state 207 resolved as shift
 WARNING: shift/reduce conflict for VECTOR in state 207 resolved as shift
 WARNING: shift/reduce conflict for ID in state 207 resolved as shift
@@ -9437,79 +8435,22 @@ WARNING: shift/reduce conflict for STRING in state 225 resolved as shift
 WARNING: shift/reduce conflict for CHAR in state 225 resolved as shift
 WARNING: shift/reduce conflict for BOOL in state 225 resolved as shift
 WARNING: shift/reduce conflict for IF in state 225 resolved as shift
-WARNING: shift/reduce conflict for PUNTOCOMA in state 233 resolved as shift
-WARNING: shift/reduce conflict for VECTOR in state 233 resolved as shift
-WARNING: shift/reduce conflict for ID in state 233 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 233 resolved as shift
-WARNING: shift/reduce conflict for DO in state 233 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 233 resolved as shift
-WARNING: shift/reduce conflict for SWITCH in state 233 resolved as shift
-WARNING: shift/reduce conflict for BREAK in state 233 resolved as shift
-WARNING: shift/reduce conflict for CONTINUE in state 233 resolved as shift
-WARNING: shift/reduce conflict for PRINTLN in state 233 resolved as shift
-WARNING: shift/reduce conflict for LLAVE1 in state 233 resolved as shift
-WARNING: shift/reduce conflict for PROC in state 233 resolved as shift
-WARNING: shift/reduce conflict for EXEC in state 233 resolved as shift
-WARNING: shift/reduce conflict for INT in state 233 resolved as shift
-WARNING: shift/reduce conflict for DOUBLE in state 233 resolved as shift
-WARNING: shift/reduce conflict for STRING in state 233 resolved as shift
-WARNING: shift/reduce conflict for CHAR in state 233 resolved as shift
-WARNING: shift/reduce conflict for BOOL in state 233 resolved as shift
-WARNING: shift/reduce conflict for IF in state 233 resolved as shift
-WARNING: shift/reduce conflict for PUNTOCOMA in state 244 resolved as shift
-WARNING: shift/reduce conflict for VECTOR in state 244 resolved as shift
-WARNING: shift/reduce conflict for ID in state 244 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 244 resolved as shift
-WARNING: shift/reduce conflict for DO in state 244 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 244 resolved as shift
-WARNING: shift/reduce conflict for SWITCH in state 244 resolved as shift
-WARNING: shift/reduce conflict for BREAK in state 244 resolved as shift
-WARNING: shift/reduce conflict for CONTINUE in state 244 resolved as shift
-WARNING: shift/reduce conflict for PRINTLN in state 244 resolved as shift
-WARNING: shift/reduce conflict for LLAVE1 in state 244 resolved as shift
-WARNING: shift/reduce conflict for PROC in state 244 resolved as shift
-WARNING: shift/reduce conflict for EXEC in state 244 resolved as shift
-WARNING: shift/reduce conflict for INT in state 244 resolved as shift
-WARNING: shift/reduce conflict for DOUBLE in state 244 resolved as shift
-WARNING: shift/reduce conflict for STRING in state 244 resolved as shift
-WARNING: shift/reduce conflict for CHAR in state 244 resolved as shift
-WARNING: shift/reduce conflict for BOOL in state 244 resolved as shift
-WARNING: shift/reduce conflict for IF in state 244 resolved as shift
-WARNING: shift/reduce conflict for PUNTOCOMA in state 274 resolved as shift
-WARNING: shift/reduce conflict for VECTOR in state 274 resolved as shift
-WARNING: shift/reduce conflict for ID in state 274 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 274 resolved as shift
-WARNING: shift/reduce conflict for DO in state 274 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 274 resolved as shift
-WARNING: shift/reduce conflict for SWITCH in state 274 resolved as shift
-WARNING: shift/reduce conflict for BREAK in state 274 resolved as shift
-WARNING: shift/reduce conflict for CONTINUE in state 274 resolved as shift
-WARNING: shift/reduce conflict for PRINTLN in state 274 resolved as shift
-WARNING: shift/reduce conflict for LLAVE1 in state 274 resolved as shift
-WARNING: shift/reduce conflict for PROC in state 274 resolved as shift
-WARNING: shift/reduce conflict for EXEC in state 274 resolved as shift
-WARNING: shift/reduce conflict for INT in state 274 resolved as shift
-WARNING: shift/reduce conflict for DOUBLE in state 274 resolved as shift
-WARNING: shift/reduce conflict for STRING in state 274 resolved as shift
-WARNING: shift/reduce conflict for CHAR in state 274 resolved as shift
-WARNING: shift/reduce conflict for BOOL in state 274 resolved as shift
-WARNING: shift/reduce conflict for IF in state 274 resolved as shift
-WARNING: shift/reduce conflict for PUNTOCOMA in state 284 resolved as shift
-WARNING: shift/reduce conflict for VECTOR in state 284 resolved as shift
-WARNING: shift/reduce conflict for ID in state 284 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 284 resolved as shift
-WARNING: shift/reduce conflict for DO in state 284 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 284 resolved as shift
-WARNING: shift/reduce conflict for SWITCH in state 284 resolved as shift
-WARNING: shift/reduce conflict for BREAK in state 284 resolved as shift
-WARNING: shift/reduce conflict for CONTINUE in state 284 resolved as shift
-WARNING: shift/reduce conflict for PRINTLN in state 284 resolved as shift
-WARNING: shift/reduce conflict for LLAVE1 in state 284 resolved as shift
-WARNING: shift/reduce conflict for PROC in state 284 resolved as shift
-WARNING: shift/reduce conflict for EXEC in state 284 resolved as shift
-WARNING: shift/reduce conflict for INT in state 284 resolved as shift
-WARNING: shift/reduce conflict for DOUBLE in state 284 resolved as shift
-WARNING: shift/reduce conflict for STRING in state 284 resolved as shift
-WARNING: shift/reduce conflict for CHAR in state 284 resolved as shift
-WARNING: shift/reduce conflict for BOOL in state 284 resolved as shift
-WARNING: shift/reduce conflict for IF in state 284 resolved as shift
+WARNING: shift/reduce conflict for PUNTOCOMA in state 234 resolved as shift
+WARNING: shift/reduce conflict for VECTOR in state 234 resolved as shift
+WARNING: shift/reduce conflict for ID in state 234 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 234 resolved as shift
+WARNING: shift/reduce conflict for DO in state 234 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 234 resolved as shift
+WARNING: shift/reduce conflict for SWITCH in state 234 resolved as shift
+WARNING: shift/reduce conflict for BREAK in state 234 resolved as shift
+WARNING: shift/reduce conflict for CONTINUE in state 234 resolved as shift
+WARNING: shift/reduce conflict for PRINTLN in state 234 resolved as shift
+WARNING: shift/reduce conflict for LLAVE1 in state 234 resolved as shift
+WARNING: shift/reduce conflict for PROC in state 234 resolved as shift
+WARNING: shift/reduce conflict for EXEC in state 234 resolved as shift
+WARNING: shift/reduce conflict for INT in state 234 resolved as shift
+WARNING: shift/reduce conflict for DOUBLE in state 234 resolved as shift
+WARNING: shift/reduce conflict for STRING in state 234 resolved as shift
+WARNING: shift/reduce conflict for CHAR in state 234 resolved as shift
+WARNING: shift/reduce conflict for BOOL in state 234 resolved as shift
+WARNING: shift/reduce conflict for IF in state 234 resolved as shift

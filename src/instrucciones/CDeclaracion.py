@@ -74,27 +74,21 @@ class Declaracion(Instruccion):
             columna=self.col,
         )
 
-        # Intentar agregar la variable a la tabla
-        if not tabla.setVariable(sim):
-            try:
-                # La variable existe, actualizarla en lugar de mostrar error
-                tabla.actualizarVariable(
-                    name=self.identificador,
-                    nevValor=res_valor,
-                    nevTipo=self.tipoDato,
-                    linea=self.linea,
-                    columna=self.col,
-                    scope=scope_actual,
-                )
-            except KeyError:
-                # Por si acaso falla la actualización
+        # MODIFICACIÓN CLAVE: Verificar redeclaración solo en el ámbito actual
+        # Comprobar si la variable ya existe en el ámbito actual
+        for var in tabla.getTabla():
+            if var.id == self.identificador.lower() and var.scope == scope_actual:
+                # Variable ya declarada en este mismo ámbito - ERROR
                 return Errores(
                     "SEMANTICO",
-                    f"Error al redeclarar la variable '{self.identificador}'",
+                    f"Error al redeclarar la variable '{self.identificador}' en el mismo ámbito",
                     self.linea,
                     self.col,
                 )
 
+        # Si llegamos aquí, la variable no existe en el ámbito actual
+        # (aunque podría existir en un ámbito superior, lo cual es válido)
+        tabla.tabla_actual.append(sim)
         return None
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):

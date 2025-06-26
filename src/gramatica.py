@@ -327,7 +327,7 @@ def p_instruccion(t):
     | asignacion PUNTOCOMA
     | incremento PUNTOCOMA
     | decremento PUNTOCOMA
-    | sent_if
+    | sent_IF
     | sent_while
     | sent_do_while
     | sent_for
@@ -557,73 +557,69 @@ def p_bloque(t):
 
 # --- IF ---
 # 2. Mantén la función p_sent_if, pero ajusta las reglas para manejar IF en mayúsculas
-def p_sent_if(t):
-    """sent_if : if_simple
+
+
+def p_sent_IF(t):
+    """sent_IF : if_simple
     | if_else
     | if_elseif
     | if_elseif_else"""
     t[0] = t[1]
 
 
-# 3. Modifica la regla if_simple para usar IF en mayúsculas
+# if (expresion) { instrucciones }
 def p_if_simple(t):
-    """if_simple : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""
-    t[0] = sentIF(t[3], t[6], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+    """if_simple : IF PAR1 expresion PAR2 bloque"""
+    t[0] = sentIF(t[3], t[5], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
-# 4. Modifica la regla if_else para usar IF y ELSE en mayúsculas
+# if (expresion) { instrucciones } else { instrucciones }
 def p_if_else(t):
-    """if_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""
+    """if_else : IF PAR1 expresion PAR2 bloque ELSE bloque"""
     t[0] = sentIF(
         t[3],
-        t[6],
+        t[5],
         t.lineno(1),
         find_column(t.lexer.lexdata, t.slice[1]),
-        sentIF(None, t[10], t.lineno(8), find_column(t.lexer.lexdata, t.slice[8])),
-    )
+        sentIF(None, t[7], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])),
+    )  # else sin condición
 
 
-# 5. Añadir una nueva regla específica para ELSE IF (como se usa en tu código)
+# if (expresion) { instrucciones } else if (expresion) { instrucciones }
 def p_if_elseif(t):
-    """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""  # Esta implementación maneja explícitamente la secuencia "ELSE IF"
+    """if_elseif : IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque"""  # Esta implementación maneja explícitamente la secuencia "ELSE IF"
     t[0] = sentIF(
         t[3],  # Condición del IF
-        t[6],  # Cuerpo del IF
+        t[5],  # Cuerpo del IF
         t.lineno(1),
         find_column(t.lexer.lexdata, t.slice[1]),
-        sentIF(
-            t[11],  # Condición del ELSE IF
-            t[14],  # Cuerpo del ELSE IF
-            t.lineno(9),
-            find_column(t.lexer.lexdata, t.slice[9]),
-        ),
+        sentIF(t[9], t[11], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])),
     )
 
 
-# 6. Añadir una regla para IF-ELSE IF-ELSE completo
 def p_if_elseif_else(t):
-    """if_elseif_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""  # Maneja: IF (...) {...} ELSE IF (...) {...} ELSE {...}
+    """if_elseif_else : IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque"""  # Maneja: IF (...) {...} ELSE IF (...) {...} ELSE {...}
     elseif_node = sentIF(
-        t[11],  # Condición del ELSE IF
-        t[14],  # Cuerpo del ELSE IF
-        t.lineno(9),
-        find_column(t.lexer.lexdata, t.slice[9]),
+        t[9],  # Condición del ELSE IF
+        t[11],  # Cuerpo del ELSE IF
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
     )
 
     else_node = sentIF(
         None,  # No hay condición en ELSE
-        t[18],  # Cuerpo del ELSE
-        t.lineno(16),
-        find_column(t.lexer.lexdata, t.slice[16]),
+        t[13],  # Cuerpo del ELSE
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
     )
 
     # Conectar el ELSE al ELSE IF
-    elseif_node.else_st = else_node
+    elseif_node.sig = else_node
 
     # Crear el nodo principal IF con su rama ELSE IF+ELSE
     t[0] = sentIF(
         t[3],  # Condición del IF
-        t[6],  # Cuerpo del IF
+        t[5],  # Cuerpo del IF
         t.lineno(1),
         find_column(t.lexer.lexdata, t.slice[1]),
         elseif_node,

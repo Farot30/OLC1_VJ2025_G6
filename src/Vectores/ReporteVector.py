@@ -72,6 +72,7 @@ class ReporteVectores:
                 ),
                 "dimensiones": vector.dimensiones,
                 "representacion_original": vector._formato_vector(vector.valores),
+                "entorno": vector.entorno,  # if hasattr(vector, "entorno") else None
                 "datos_lineales": [],
             }
 
@@ -121,8 +122,13 @@ class ReporteVectores:
             print(f"Tipo: {tipo_str}")
             print(f"Dimensiones: {vector.dimensiones}")
 
+            # Usar getattr para manejar atributos que pueden no existir
+            print(f"Entorno: {getattr(vector, 'entorno', 'Global')}")
+
             print("\nRepresentación Original:")
             print(vector._formato_vector(vector.valores))
+
+            # Resto del código...
 
             print("\nRepresentación Lineal (Row-major):")
 
