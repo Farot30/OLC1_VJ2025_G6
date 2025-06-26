@@ -11,8 +11,35 @@ class clasAST:
         return f"node{self.counter}"
 
     def agregar_nodo(self, label, color="purple", style="filled", fillcolor="white"):
+        """Agrega un nodo al grafo con manejo seguro de caracteres especiales"""
+        # Manejo seguro de None
+        if label is None:
+            label = "null"
+
+        # Convertir a string
+        label_str = str(label)
+
+        # Manejar caracteres especiales y valores problemáticos
+        if label_str == "":
+            label_str = "(cadena vacía)"
+        elif label_str == " " or label_str == "\u0000":
+            label_str = "(carácter nulo)"
+
+        # Escapar otros caracteres problemáticos
+        label_str = (
+            label_str.replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+            .replace("--", "-&#45;")
+            .replace('"', "'")
+            .replace("\\", "/")
+        )
+
+        # Crear el nodo
         node_id = self._get_id()
-        self.graph.node(node_id, label, color=color, style=style, fillcolor=fillcolor)
+        self.graph.node(
+            node_id, label_str, color=color, style=style, fillcolor=fillcolor
+        )
         return node_id
 
     def agregar_arista(self, padre_id, hijo_id):

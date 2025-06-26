@@ -27,7 +27,7 @@ int numero = 100;
 exec mostrarNumero(numero);
 
 // Procedimiento con múltiples parámetros
-proc sumar(int: a, int: b) {
+proc sumar(int: l, int: b) {
     int resultado = a + b;
     println("La suma de " + a + " y " + b + " es: " + resultado);
 }
@@ -40,15 +40,15 @@ exec sumar(x, y);
 exec sumar(x, 30);
 
 // Procedimiento con diferentes tipos de parámetros
-proc mostrarInfo(str: nombre, int: edad, bool: activo) {
-    println("Nombre: " + nombre);
+proc mostrarInfo(str: nombrea, int: edad, bool: activo) {
+    println("Nombre: " + nombrea);
     println("Edad: " + edad);
     println("Activo: " + activo);
 }
 
 // Llamar con diferentes tipos
 exec mostrarInfo("Juan", 25, true);
-str nombre = "María";
+str nombre = "Maria";
 exec mostrarInfo(nombre, 30, false);
 
 // Procedimiento que modifica una variable global

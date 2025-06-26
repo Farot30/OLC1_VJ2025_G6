@@ -1,164 +1,77 @@
-// Declaraciones de variables
-int a;
-int b = 10;
-float c = 3.5;
-bool d = true;
-char e = 'x';
-str f = "Hola mundo";
+println("-----------------------");
+println("Vector de una dimension");
+println("-----------------------");
 
-// Asignaciones
-a = 5;
-d = false;
-f = "Nuevo texto";
+Vector[int] ud(3) = [1,2,3];
 
-// Incremento y decremento
-a++;
-b--;
-c++;
-c--;
+println(ud[0]);
+println(ud[1]);
+println(ud[2]);
+println(ud[3]); // Error semantico
+println(ud[0][1]); // Error semantico
 
-// Operaciones aritméticas
-int B1;
-a = a + 1;
-b = 2 - 3.5;
-B1 = 2 - 3.5;
-c = c * 2;
-c = c / 2;
+// Actualizacion del ultimo elemento
 
+ud[2] = "error semantico";
 
-// Booleanos y reasignación
-d = true;
-d = false;
+println(ud[2]); // RES: 3
 
-// Prueba de caracteres y cadenas
-e = 'z';
-f = "Texto";
+ud[2]++;
 
-// Comentarios
-// Esto es un comentario de línea
-/* Esto es un
-   comentario multilinea */
+println(ud[2]);
 
-// Asignacion de variables
-int j = 5;
-//b = b + 2;
-//c = c * 2.0;
-bool h = false;
-int p;
+println("Valores por defecto");
 
-j = false;
+Vector[int] default_int(2);
+Vector[float] default_float(2);
+Vector[bool] default_bool(2);
+Vector[str] default_str(2);
+Vector[char] default_char(2);
 
-int o;
-o = 5 + 7;
-int k;
-k = o - 1;
+println(default_int[0]);
+println(default_float[0]);
+println(default_bool[0]);
+println(default_str[0]);
+println(default_char[0]);
 
-p = k * 2;
-float x;
-float z;
-float w;
+println("-------------------------");
+println("Vector de dos dimensiones");
+println("-------------------------");
 
-x = p / 2;
-z = x % 2;
-w = p + 2;
+Vector[int] dd(3,2) = [[1,2,3],[1,2,3]]; // Los corchetes de la ultima dimension pueden o no venir, dependiendo de la gramatica trabajada
 
-float q;
-q =  'b' +2;
+println(dd[0][0]);
+println(dd[0][1]);
+println(dd[0][2]);
+println(dd[1][0]);
+println(dd[1][1]);
+println(dd[1][2]);
+println(dd[2][0]);
+println(dd[2][1]);
+println(dd[2][2]);
+println(dd[0][3]); // Error semantico
+println(dd[0][1][1]); // Error semantico
 
-str s1;
-s1 = 'A' + "BC";  // Resultado esperado: "ABC"
+// Actualizacion del ultimo elemento
 
-str s2;
-s2 = "Hola " + 'M';  // Resultado esperado: "Hola M"
+dd[2][2] = "error semantico";
 
-float f1;
-f1 = 'A' + 0.5;   // 65 + 0.5 = 65.5
+println(dd[2][2]); // RES: 3
 
-float f2;
-f2 = 1.5 + 'a';   // 1.5 + 97 = 98.5
+dd[2][2]++;
 
-str s3;
-s3 = 3 + " pana";   // Debe dar error semántico
+println(dd[2][2]);
 
-char s4;
-s4 = 'A' + 'B';    // 65 + 66 = 131
+println("Valores por defecto");
 
-b = -(2 - 'a');
+Vector[int] default_int2(2,2);
+Vector[float] default_float2(2,2);
+Vector[bool] default_bool2(2,2);
+Vector[str] default_str2(2,2);
+Vector[char] default_char2(2,2);
 
-a = 2.5 - 3;
-a = 4.5 - 'w';
-
-b = -5;
-
-bool resultado;
-resultado = a >= b;
-
-println(a + b);
-println("Hola mundo");
-
-println(true || 5);
-println(27 && c);
-println(true ^ false);
-println(!true);
-
-println("C:\\miCarpeta");
-println("\"esto es una cadena\"");
-println("\tEsto es una tabulacion");
-println("\'Estas son comillas simples\'");
-println("Hola\nMundo");
-
-println((2 + 3) * 4);
-println((true || false) && (5 > 2));
-println((a + b) / (c - w));
-
-int A = ( 5 + 5 ) * 4 ;
-
-println(5 < "hola");         // Error: int y string
-println("abc" > 10);         // Error: string y int
-println(true < 5);           // Error: bool y int
-println('a' == "a");         // Error: char y string
-println(3.5 != 3.5);
-
-println(5.5 < 5);
-println(5.5 < 'a');
-println("paco" != "hola");
-
-int x41;
-for(x41 = 0; x41 < 3; x41++) {
-    println("holas");
-    println("hola");
-}
-
-println(x41);
-
-if (0==0){
-    println("a"); 
-    println("hola");
-    if(2==3){
-        break;
-        println("aas"); 
-
-    }
-}
-
-int x4 = 2;
-
-switch(x4) {
-    case 1:
-        println("Es uno");
-        break;
-    case 2:
-        println("Es dos");
-        break;
-    case 3:
-        println("Es tres");
-        println("sola");
-        break;
-    default:
-        println("No es uno, dos ni tres");
-        println(1+2);
-        println(x4 +b);
-        break;
-}
-
-println("Fin del switch");
+println(default_int2[0][0]);
+println(default_float2[0][1]);
+println(default_bool2[1][0]);
+println(default_str2[1][1]);
+println(default_char2[0][0]);

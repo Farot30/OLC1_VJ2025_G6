@@ -14,13 +14,24 @@ class Coseno(Instruccion):
         val = self.expresion.interpretar(arbol, tabla)
         if isinstance(val, Errores):
             return val
-        if not isinstance(val, (int, float)):
+
+        # Rechazar booleanos explícitamente
+        if isinstance(val, bool):
+            return Errores(
+                "SEMANTICO",
+                f"Coseno requiere número (int/float), no bool",
+                self.linea,
+                self.col,
+            )
+        # Verificar si es un entero o flotante
+        elif not isinstance(val, (int, float)):
             return Errores(
                 "SEMANTICO",
                 f"Coseno requiere número, no {type(val).__name__}",
                 self.linea,
                 self.col,
             )
+
         try:
             res = math.cos(val)
             self.tipoDato = Tipo(tipoDato.DECIMAL)

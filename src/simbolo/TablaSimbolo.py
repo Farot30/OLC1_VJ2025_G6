@@ -130,6 +130,20 @@ class tablaSimbolo(metaclass=SingletonMeta):
         self.tabla_actual.append(sym)
         return sym
 
+    def agregarVector(self, id, tipo, dimensiones, linea=None, columna=None):
+        """Agregar una referencia a un vector en la tabla de símbolos."""
+        sym = Simbolo(
+            tipo=tipo,
+            id=id,
+            entidad="vector",
+            valor=f"Vector{dimensiones}",  # Solo guardamos dimensiones como referencia
+            scope=self.current_scope,
+            linea=linea,
+            columna=columna,
+        )
+        self.tabla_actual.append(sym)
+        return sym
+
     def actualizarVariable(
         self, name, nevValor, nevTipo=None, linea=None, columna=None, scope=None
     ):
@@ -171,10 +185,25 @@ class tablaSimbolo(metaclass=SingletonMeta):
                 if hasattr(sym.tipo, "tipo") and hasattr(sym.tipo.tipo, "name")
                 else str(sym.tipo)
             )
+
             # Entorno: muestra el scope tal cual, solo cambia "global" por "Global"
             entorno_str = "Global" if sym.scope == "global" else str(sym.scope)
-            # Valor como string
-            valor_str = str(sym.valor)
+
+            # Valor como string, con formato especial para vectores
+            if sym.entidad == "vector":
+                # Obtener las dimensiones del string "Vector[2, 3, 2, 2]"
+                dims_str = str(sym.valor)
+                # Extraer solo los números entre corchetes
+                if "[" in dims_str and "]" in dims_str:
+                    dims_part = dims_str[dims_str.find("[") + 1 : dims_str.find("]")]
+                    # Reemplazar comas por símbolo de multiplicación
+                    dims_formatted = dims_part.replace(", ", "×")
+                    valor_str = f"Vector {dims_formatted}"
+                else:
+                    valor_str = str(sym.valor)
+            else:
+                valor_str = str(sym.valor)
+
             row = [
                 str(
                     getattr(sym, "nID", "")
@@ -209,6 +238,18 @@ class tablaSimbolo(metaclass=SingletonMeta):
                 else str(sym.tipo)
             )
             entorno_str = "Global" if sym.scope == "global" else str(sym.scope)
+
+            if sym.entidad == "vector":
+                dims_str = str(sym.valor)
+                if "[" in dims_str and "]" in dims_str:
+                    dims_part = dims_str[dims_str.find("[") + 1 : dims_str.find("]")]
+                    dims_formatted = dims_part.replace(", ", "×")
+                    valor_str = f"Vector {dims_formatted}"
+                else:
+                    valor_str = str(sym.valor)
+            else:
+                valor_str = str(sym.valor)
+
             valor_str = str(sym.valor)
             row = [
                 str(getattr(sym, "nID", "")),

@@ -9,7 +9,7 @@ from src.simbolo.CInstancia import tabla_S as aTab
 import sys
 
 
-def main(archivo="pruebas.txt", usar_singleton=False):
+def main(archivo="entrada.txt", usar_singleton=False):
     try:
         # Abrir el archivo especificado
         f = open(archivo, "r", encoding="utf-8")

@@ -33,7 +33,7 @@ class Declaracion(Instruccion):
         elif tipo_enum == tipoDato.STRING:
             return ""
         elif tipo_enum == tipoDato.CHAR:
-            return ""
+            return "\u0000"  # Carácter nulo, valor correcto para char
         else:
             return None  # Para tipos no especificados o personalizados
 

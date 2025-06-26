@@ -1,5 +1,6 @@
 from src.simbolo.CTipo import Tipo
 from src.excepciones.CErrores import Errores
+from src.simbolo.CTipo import tipoDato
 
 
 class Vector:
@@ -73,60 +74,123 @@ class Vector:
 
         return verificar_nivel(self.dimensiones, valores)
 
-    def _es_tipo_compatible(self, valor):
-        """Verifica si el valor es compatible con el tipo del vector"""
-        from src.simbolo.CTipo import tipoDato
+    def asignar_valores(self, dimensiones, valor_nuevo, arbol, tabla):
+        """
+        Asigna un valor a una posición específica del vector
+        """
+        # 1. Evaluar el valor a asignar
+        valor_evaluado = valor_nuevo.interpretar(arbol, tabla)
+        if isinstance(valor_evaluado, Errores):
+            return valor_evaluado
 
+        # 2. VALIDACIÓN DE TIPOS: Verificar que el tipo del valor coincida con el tipo del vector
+        if not self._es_tipo_compatible(valor_evaluado):
+            return Errores(
+                "SEMANTICO",
+                f"No se puede asignar un valor de tipo {type(valor_evaluado).__name__} a un vector de tipo {self.tipo.tipo.name}",
+                self.linea,
+                self.col,
+            )
+
+        # 3. Evaluar todos los índices
+        indices_evaluados = []
+        for dim in dimensiones:
+            valor_indice = dim.interpretar(arbol, tabla)
+            if isinstance(valor_indice, Errores):
+                return valor_indice
+            if not isinstance(valor_indice, int):
+                return Errores(
+                    "SEMANTICO",
+                    f"Los índices deben ser enteros, no {type(valor_indice).__name__}",
+                    self.linea,
+                    self.col,
+                )
+            indices_evaluados.append(valor_indice)
+
+        # 4. Verificar si estamos asignando a un vector 2D (matriz)
+        if len(self.dimensiones) == 2 and len(indices_evaluados) == 2:
+            # Vector 2D (matriz)
+            columnas, filas = self.dimensiones
+            columna, fila = indices_evaluados
+
+            # Validar límites
+            if columna < 0 or columna >= columnas:
+                return Errores(
+                    "SEMANTICO",
+                    f"Índice de columna fuera de rango (0-{columnas-1}): {columna}",
+                    self.linea,
+                    self.col,
+                )
+            if fila < 0 or fila >= filas:
+                return Errores(
+                    "SEMANTICO",
+                    f"Índice de fila fuera de rango (0-{filas-1}): {fila}",
+                    self.linea,
+                    self.col,
+                )
+
+            # Asignar valor
+            try:
+                self.valores[fila][columna] = valor_evaluado
+                return None
+            except Exception as e:
+                return Errores(
+                    "SEMANTICO",
+                    f"Error al asignar valor: {str(e)}",
+                    self.linea,
+                    self.col,
+                )
+        else:
+            # Vector 1D u otras dimensiones
+            try:
+                # Navegar a la posición correcta
+                container = self.valores
+                for i in range(len(indices_evaluados) - 1):
+                    idx = indices_evaluados[i]
+                    # Validar límites en cada nivel
+                    if idx < 0 or idx >= len(container):
+                        return Errores(
+                            "SEMANTICO",
+                            f"Índice fuera de rango: {idx}",
+                            self.linea,
+                            self.col,
+                        )
+                    container = container[idx]
+
+                # Asignar en el último nivel
+                ultimo_indice = indices_evaluados[-1]
+                if ultimo_indice < 0 or ultimo_indice >= len(container):
+                    return Errores(
+                        "SEMANTICO",
+                        f"Índice fuera de rango: {ultimo_indice}",
+                        self.linea,
+                        self.col,
+                    )
+
+                container[ultimo_indice] = valor_evaluado
+                return None
+            except Exception as e:
+                return Errores(
+                    "SEMANTICO",
+                    f"Error al asignar valor: {str(e)}",
+                    self.linea,
+                    self.col,
+                )
+
+    def _es_tipo_compatible(self, valor):
+        """Verifica si un valor es compatible con el tipo del vector"""
         if self.tipo.getTipo() == tipoDato.ENTERO:
             return isinstance(valor, int)
         elif self.tipo.getTipo() == tipoDato.DECIMAL:
-            return isinstance(valor, (int, float))
+            return isinstance(valor, (int, float))  # Permitimos enteros en decimales
         elif self.tipo.getTipo() == tipoDato.STRING:
             return isinstance(valor, str)
         elif self.tipo.getTipo() == tipoDato.BOOL:
             return isinstance(valor, bool)
-        # Agregar otros tipos según sea necesario
+        elif self.tipo.getTipo() == tipoDato.CHAR:
+            return isinstance(valor, str) and len(valor) == 1
+        # Si llegamos aquí, el tipo no está soportado
         return False
-
-    def asignar_valores(self, indices, valor, arbol, tabla):
-        """Asigna un valor a una posición específica del vector"""
-        # Validar que los índices sean correctos
-        if len(indices) != len(self.dimensiones):
-            return Errores(
-                "SEMANTICO",
-                f"Dimensiones incorrectas: se esperaban {len(self.dimensiones)}, se recibieron {len(indices)}",
-                self.linea,
-                self.col,
-            )
-
-        # Evaluar el valor a asignar
-        valor_evaluado = valor.interpretar(arbol, tabla)
-        if isinstance(valor_evaluado, Errores):
-            return valor_evaluado
-
-        # Verificar que el tipo sea compatible
-        if not self._es_tipo_compatible(valor_evaluado):
-            return Errores(
-                "SEMANTICO",
-                f"Tipo incompatible: no se puede asignar {type(valor_evaluado)} a un vector de tipo {self.tipo.tipo.name}",
-                self.linea,
-                self.col,
-            )
-
-        # Acceder a la posición correcta
-        try:
-            contenedor = self.valores
-            for i in range(len(indices) - 1):
-                contenedor = contenedor[indices[i]]
-
-            # Asignar el valor
-            contenedor[indices[-1]] = valor_evaluado
-            print(
-                f"Se asignó {valor_evaluado} a {self.id}[{']['.join(map(str, indices))}]"
-            )
-            return None
-        except IndexError:
-            return Errores("SEMANTICO", "Índice fuera de rango", self.linea, self.col)
 
     def getLinea(self) -> int:
         return self.linea
@@ -146,9 +210,7 @@ class Vector:
 
     def __str__(self):
         """Devuelve una representación en cadena del vector"""
-        return (
-            f"Vector {self.id} {self.dimensiones}: {self._formato_vector(self.valores)}"
-        )
+        return f"{self._formato_vector(self.valores)}"
 
     def _formato_vector(self, valores):
         """Convierte recursivamente un vector en una cadena formateada"""

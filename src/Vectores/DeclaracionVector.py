@@ -6,8 +6,26 @@ from src.Vectores.Vector import Vector
 
 
 def _es_anidada(valores, dimensiones):
+    """
+    Verifica si una estructura anidada coincide con las dimensiones.
+    Para 2D, dimensiones[0] = columnas, dimensiones[1] = filas
+    """
     if len(dimensiones) == 0:
         return not isinstance(valores, list)
+
+    # Caso especial para 2D
+    if len(dimensiones) == 2:
+        columnas, filas = dimensiones
+        # Verificar número de filas
+        if not isinstance(valores, list) or len(valores) != filas:
+            return False
+        # Verificar número de columnas en cada fila
+        for fila in valores:
+            if not isinstance(fila, list) or len(fila) != columnas:
+                return False
+        return True
+
+    # Para otras dimensiones
     if not isinstance(valores, list) or len(valores) != dimensiones[0]:
         return False
     for v in valores:
@@ -17,14 +35,18 @@ def _es_anidada(valores, dimensiones):
 
 
 def _reconstruir_anidado(lista, dimensiones):
-    """Reconstruye una lista plana en una estructura anidada según dimensiones"""
+    """
+    Reconstruye una lista plana en una estructura anidada según dimensiones.
+    Para 2D, dimensiones[0] = columnas, dimensiones[1] = filas
+    Para 3D, dimensiones[0] = columnas, dimensiones[1] = filas, dimensiones[2] = capas
+    """
     # Caso base: si solo queda una dimensión, devuelve un segmento de la lista
     if len(dimensiones) == 1:
         return lista
 
-    # Para vectores 2D, mantenemos el algoritmo original que es más eficiente
+    # Para vectores 2D
     if len(dimensiones) == 2:
-        filas, columnas = dimensiones
+        columnas, filas = dimensiones  # Primera dimensión = columnas, segunda = filas
         if len(lista) != filas * columnas:
             return lista
         anidado = []
@@ -37,7 +59,26 @@ def _reconstruir_anidado(lista, dimensiones):
             anidado.append(fila)
         return anidado
 
-    # Para 3D o más, usamos recursión
+    # NUEVO: Caso especial para vectores 3D
+    if len(dimensiones) == 3:
+        columnas, filas, capas = dimensiones  # [columnas, filas, capas]
+        if len(lista) != capas * filas * columnas:
+            return lista
+
+        resultado = []
+        for capa in range(capas):
+            matriz_capa = []
+            for fila in range(filas):
+                fila_actual = []
+                for col in range(columnas):
+                    # Calcular índice lineal basado en convención [columnas, filas, capas]
+                    idx = capa * (filas * columnas) + fila * columnas + col
+                    fila_actual.append(lista[idx])
+                matriz_capa.append(fila_actual)
+            resultado.append(matriz_capa)
+        return resultado
+
+    # Para 4D o más, usamos recursión general
     tamanio_restante = 1
     for dim in dimensiones[1:]:
         tamanio_restante *= dim
@@ -68,7 +109,7 @@ class DeclaracionVector(Instruccion):
         )
 
     def interpretar(self, arbol, tabla):
-        # 1. Evaluar dimensiones declaradas
+        # 1. Evaluar dimensiones declaradas (columnas, filas)
         dimensiones_evaluadas = []
         for dim in self.dimensiones:
             if isinstance(dim, int):
@@ -92,7 +133,7 @@ class DeclaracionVector(Instruccion):
         vals = None
         dims_res = None
 
-        # 2. Si hay RHS
+        # 2. Si hay RHS (valores proporcionados)
         if self.valores is not None:
             # Caso 2a: self.valores es lista literal de ASTs/nested lists
             if isinstance(self.valores, list):
@@ -102,23 +143,81 @@ class DeclaracionVector(Instruccion):
                     self.en_error = True
                     return valores_evaluados
                 vals = valores_evaluados
-                # Determinar dims_res: si ya anidada, coincide; si no, asumimos plana con dimensiones declaradas
-                if _es_anidada(vals, dimensiones_evaluadas):
-                    dims_res = dimensiones_evaluadas
-                else:
-                    dims_res = dimensiones_evaluadas
+
+                # VALIDACIÓN NUEVA: Verificar estructura antes de continuar
+                if not self._verificar_dimensiones(dimensiones_evaluadas, vals):
+                    self.en_error = True
+                    return Errores(
+                        "SEMANTICO",
+                        f"La estructura de los datos proporcionados no coincide con las dimensiones declaradas {dimensiones_evaluadas}. En una matriz, el primer valor es COLUMNAS y el segundo es FILAS.",
+                        self.linea,
+                        self.col,
+                    )
+
+                dims_res = dimensiones_evaluadas
             else:
                 # Caso 2b: self.valores es un nodo AST (Nativo, Shuffle, etc.)
                 res = self.valores.interpretar(arbol, tabla)
                 if isinstance(res, Errores):
                     self.en_error = True
                     return res
+
+                # VALIDACIÓN DE TIPOS PARA VECTORES
                 if isinstance(res, Vector):
-                    vals = res.valores
+                    # Verificar compatibilidad de tipos entre vectores
+                    if not self._son_tipos_compatibles(
+                        self.tipo.getTipo(), res.tipo.getTipo()
+                    ):
+                        self.en_error = True
+                        return Errores(
+                            "SEMANTICO",
+                            f"No se puede asignar un vector de tipo {res.tipo.tipo.name} a un vector de tipo {self.tipo.tipo.name}",
+                            self.linea,
+                            self.col,
+                        )
+
+                    # Si es compatible, podemos intentar convertir los valores
+                    try:
+                        vals = self._convertir_valores_si_necesario(
+                            res.valores, res.tipo.getTipo()
+                        )
+                    except Exception as e:
+                        self.en_error = True
+                        return Errores(
+                            "SEMANTICO",
+                            f"Error al convertir valores: {str(e)}",
+                            self.linea,
+                            self.col,
+                        )
+
                     dims_res = res.dimensiones
+
                 elif isinstance(res, list):
-                    # lista resultante de interpretar alguna llamada que devuelve lista plana o anidada
-                    vals = res
+                    # Lista resultante de interpretar alguna llamada
+                    # Verificar compatibilidad de tipos para cada elemento de la lista
+                    try:
+                        # Primero aplanamos la lista para verificar cada elemento
+                        lista_plana = self._aplanar_lista(res)
+                        for valor in lista_plana:
+                            if not self._es_tipo_compatible(valor):
+                                self.en_error = True
+                                return Errores(
+                                    "SEMANTICO",
+                                    f"El valor '{valor}' de tipo {type(valor).__name__} no es compatible con el tipo {self.tipo.tipo.name}",
+                                    self.linea,
+                                    self.col,
+                                )
+
+                        vals = res
+                    except Exception as e:
+                        self.en_error = True
+                        return Errores(
+                            "SEMANTICO",
+                            f"Error al verificar tipos: {str(e)}",
+                            self.linea,
+                            self.col,
+                        )
+
                     if _es_anidada(vals, dimensiones_evaluadas):
                         dims_res = dimensiones_evaluadas
                     else:
@@ -132,12 +231,12 @@ class DeclaracionVector(Instruccion):
                         self.col,
                     )
 
-            # 3. Verificar coincidencia de dimensiones
+            # 3. Verificar coincidencia de dimensiones (mantener esta verificación)
             if dims_res != dimensiones_evaluadas:
                 self.en_error = True
                 return Errores(
                     "SEMANTICO",
-                    "Dimensiones no coinciden en declaración",
+                    f"Las dimensiones declaradas {dimensiones_evaluadas} no coinciden con las dimensiones de los datos {dims_res}",
                     self.linea,
                     self.col,
                 )
@@ -166,6 +265,14 @@ class DeclaracionVector(Instruccion):
             if not hasattr(arbol, "vectores"):
                 arbol.vectores = {}
             arbol.vectores[self.identificador] = vector
+
+            tabla.agregarVector(
+                self.identificador,
+                self.tipo,
+                dimensiones_evaluadas,
+                self.linea,
+                self.col,
+            )
             return None
 
         # 6. Caso sin RHS: inicializar con valores por defecto según tipo
@@ -183,7 +290,7 @@ class DeclaracionVector(Instruccion):
         elif self.tipo.getTipo() == tipoDato.BOOL:
             default = True
         elif self.tipo.getTipo() == tipoDato.CHAR:
-            default = ""
+            default = "\u0000"  # Carácter nulo en lugar de cadena vacía
         else:
             default = None
 
@@ -214,7 +321,32 @@ class DeclaracionVector(Instruccion):
         arbol.vectores[self.identificador] = vector
         return None
 
-    # El resto de métodos se mantienen igual...
+    # Método para convertir valores según el tipo destino
+    def _convertir_valores_si_necesario(self, valores, tipo_origen):
+        """Convierte los valores al tipo destino si es necesario"""
+        # Si son listas anidadas, aplicar recursivamente
+        if isinstance(valores, list):
+            return [
+                self._convertir_valores_si_necesario(v, tipo_origen) for v in valores
+            ]
+
+        # Conversión basada en el tipo destino
+        tipo_destino = self.tipo.getTipo()
+
+        # Si el tipo origen y destino son iguales, no necesitamos convertir
+        if tipo_destino == tipo_origen:
+            return valores
+
+        # Convertir enteros a decimales
+        if tipo_destino == tipoDato.DECIMAL and tipo_origen == tipoDato.ENTERO:
+            return float(valores)
+
+        # Convertir cualquier cosa a string
+        if tipo_destino == tipoDato.STRING:
+            return str(valores)
+
+        # Si llegamos aquí, no podemos convertir
+        raise ValueError(f"No se puede convertir de {tipo_origen} a {tipo_destino}")
 
     def _evaluar_valores(self, valores, arbol, tabla, nivel=0):
         """Evalúa recursivamente valores de vectores multidimensionales"""
@@ -243,6 +375,34 @@ class DeclaracionVector(Instruccion):
             resultado.append(evaluado)
         return resultado
 
+    def _son_tipos_compatibles(self, tipo_destino, tipo_origen):
+        """Verifica si un tipo de origen es compatible con un tipo de destino"""
+        # Reglas de compatibilidad:
+        # 1. Mismos tipos siempre son compatibles
+        if tipo_destino == tipo_origen:
+            return True
+
+        # 2. Enteros son compatibles con decimales (promoción)
+        if tipo_destino == tipoDato.DECIMAL and tipo_origen == tipoDato.ENTERO:
+            return True
+
+        # 3. Cualquier cosa puede convertirse a string (representación textual)
+        if tipo_destino == tipoDato.STRING:
+            return True
+
+        # 4. Todos los demás casos son incompatibles
+        return False
+
+    def _aplanar_lista(self, lista):
+        """Convierte una lista anidada en una lista plana"""
+        resultado = []
+        for item in lista:
+            if isinstance(item, list):
+                resultado.extend(self._aplanar_lista(item))
+            else:
+                resultado.append(item)
+        return resultado
+
     def _es_tipo_compatible(self, valor):
         """Verifica si el valor es compatible con el tipo del vector"""
         if self.tipo.getTipo() == tipoDato.ENTERO:
@@ -253,21 +413,82 @@ class DeclaracionVector(Instruccion):
             return isinstance(valor, str)
         elif self.tipo.getTipo() == tipoDato.BOOL:
             return isinstance(valor, bool)
+        elif self.tipo.getTipo() == tipoDato.CHAR:
+            return isinstance(valor, str) and len(valor) == 1
         # Agregar otros tipos según sea necesario
         return False
 
     def _verificar_dimensiones(self, dims_declaradas, valores):
-        def verificar_nivel(dims, vals, nivel=0):
-            if nivel >= len(dims):
-                return not isinstance(vals, list)
-            if not isinstance(vals, list) or len(vals) != dims[nivel]:
+        """
+        Verifica que las dimensiones declaradas coincidan con la estructura de los datos.
+        Para 2D, dims_declaradas[0] = columnas, dims_declaradas[1] = filas
+        """
+        if not isinstance(valores, list):
+            return False
+
+        # Para un vector 2D
+        if len(dims_declaradas) == 2:
+            columnas, filas = (
+                dims_declaradas  # Primera dimensión = columnas, segunda = filas
+            )
+
+            # Verificar número de filas
+            if len(valores) != filas:
                 return False
-            for v in vals:
-                if not verificar_nivel(dims, v, nivel + 1):
+
+            # Verificar número de columnas en cada fila
+            for fila in valores:
+                if not isinstance(fila, list) or len(fila) != columnas:
                     return False
             return True
 
-        return verificar_nivel(dims_declaradas, valores)
+        # Para dimensiones mayores, usar recursión
+        return self._verificar_recursivo(dims_declaradas, valores)
+
+    def _verificar_recursivo(self, dims, valores, nivel=0):
+        """Verifica recursivamente que una estructura anidada coincida con las dimensiones."""
+        if nivel >= len(dims):
+            return not isinstance(valores, list)
+
+        # Caso especial para nivel 0 de una matriz 2D
+        if nivel == 0 and len(dims) == 2:
+            columnas, filas = dims
+            if not isinstance(valores, list) or len(valores) != filas:
+                return False
+            for fila in valores:
+                if not isinstance(fila, list) or len(fila) != columnas:
+                    return False
+            return True
+
+        # Caso especial para nivel 0 de un tensor 3D (nuevo caso)
+        if nivel == 0 and len(dims) == 3:
+            # dims = [columnas, filas, capas]
+            columnas, filas, capas = dims
+
+            # Verificar número de capas
+            if not isinstance(valores, list) or len(valores) != capas:
+                return False
+
+            # Verificar número de filas en cada capa
+            for capa in valores:
+                if not isinstance(capa, list) or len(capa) != filas:
+                    return False
+
+                # Verificar número de columnas en cada fila
+                for fila in capa:
+                    if not isinstance(fila, list) or len(fila) != columnas:
+                        return False
+
+            return True
+
+        # Caso general para dimensiones 4D o mayores
+        # Para estos casos, los índices siguen siendo de exterior a interior
+        if not isinstance(valores, list) or len(valores) != dims[nivel]:
+            return False
+        for v in valores:
+            if not self._verificar_recursivo(dims, v, nivel + 1):
+                return False
+        return True
 
     def _obtener_representacion_valores(self, valores):
         """Obtiene una representación legible de los valores para graficar"""
@@ -291,8 +512,14 @@ class DeclaracionVector(Instruccion):
         grafo.agregar_arista(nodoDeclaracionVector, nodoTipo)
         nodoId = grafo.agregar_nodo(f"ID: {self.identificador}")
         grafo.agregar_arista(nodoDeclaracionVector, nodoId)
-        nodoDims = grafo.agregar_nodo(f"Dimensiones: {self.dimensiones}")
+
+        # Actualizar el mensaje de dimensiones para aclarar la convención
+        dims_str = self.dimensiones
+        if len(self.dimensiones) == 2:
+            dims_str = f"{self.dimensiones} (columnas, filas)"
+        nodoDims = grafo.agregar_nodo(f"Dimensiones: {dims_str}")
         grafo.agregar_arista(nodoDeclaracionVector, nodoDims)
+
         if self.valores is not None:
             nodoValores = grafo.agregar_nodo("Valores")
             grafo.agregar_arista(nodoDeclaracionVector, nodoValores)

@@ -58,20 +58,41 @@ class AsignacionVector(Instruccion):
         return vector.asignar_valores(self.dimensiones, self.valores, arbol, tabla)
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
-        if hasattr(self, "en_error") and self.en_error:
+        try:
+            # No graficar si hay error semántico
+            if hasattr(self, "en_error") and self.en_error:
+                return None
+
+            nodoAsignacionVector = grafo.agregar_nodo("Asignación Vector")
+
+            nodoId = grafo.agregar_nodo(f"ID: {self.identificador}")
+            grafo.agregar_arista(nodoAsignacionVector, nodoId)
+
+            # Graficar dimensiones (índices)
+            if self.dimensiones:
+                nodoDimensiones = grafo.agregar_nodo("Índices")
+                grafo.agregar_arista(nodoAsignacionVector, nodoDimensiones)
+
+                for dim in self.dimensiones:
+                    if hasattr(dim, "graficar"):
+                        nodoDim = dim.graficar(grafo, arbol, tabla)
+                        if nodoDim:  # Verificar que no sea None
+                            grafo.agregar_arista(nodoDimensiones, nodoDim)
+                    else:
+                        nodoDim = grafo.agregar_nodo(f"[{dim}]")
+                        grafo.agregar_arista(nodoDimensiones, nodoDim)
+
+            # Graficar valor a asignar
+            if self.valores:
+                nodoValor = (
+                    self.valores.graficar(grafo, arbol, tabla)
+                    if hasattr(self.valores, "graficar")
+                    else None
+                )
+                if nodoValor:  # Verificar explícitamente que no sea None
+                    grafo.agregar_arista(nodoAsignacionVector, nodoValor)
+
+            return nodoAsignacionVector
+        except Exception as e:
+            print(f"Error al graficar AsignacionVector: {e}")
             return None
-
-        nodoAsignacionVector = grafo.agregar_nodo("Asignación Vector")
-
-        nodoId = grafo.agregar_nodo(f"ID: {self.identificador}")
-        grafo.agregar_arista(nodoAsignacionVector, nodoId)
-
-        nodoDimensiones = grafo.agregar_nodo(f"Índices: {self.dimensiones}")
-        grafo.agregar_arista(nodoAsignacionVector, nodoDimensiones)
-
-        if self.valores:
-            nodoValor = self.valores.graficar(grafo, arbol, tabla)
-            if nodoValor:
-                grafo.agregar_arista(nodoAsignacionVector, nodoValor)
-
-        return nodoAsignacionVector

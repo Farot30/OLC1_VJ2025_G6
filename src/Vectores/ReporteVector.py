@@ -98,11 +98,27 @@ class ReporteVectores:
 
         print("\n===== REPORTE DE VECTORES =====\n")
 
+        # Para evitar procesar vectores duplicados
+        vectores_procesados = set()
+
         for id_vector, vector in self.arbol.vectores.items():
+            # Evitar vectores temporales o ya procesados
+            if id_vector in vectores_procesados or id_vector == "sort_result":
+                continue
+
+            vectores_procesados.add(id_vector)
+
+            # Verificar que el vector sea válido
+            if not hasattr(vector, "dimensiones") or not hasattr(vector, "valores"):
+                continue
+
             print(f"Vector: {id_vector}")
-            print(
-                f"Tipo: {vector.tipo.tipo.name if hasattr(vector.tipo, 'tipo') else str(vector.tipo)}"
+            tipo_str = (
+                vector.tipo.tipo.name
+                if hasattr(vector.tipo, "tipo")
+                else str(vector.tipo)
             )
+            print(f"Tipo: {tipo_str}")
             print(f"Dimensiones: {vector.dimensiones}")
 
             print("\nRepresentación Original:")
@@ -110,7 +126,7 @@ class ReporteVectores:
 
             print("\nRepresentación Lineal (Row-major):")
 
-            # Linearizar el vector
+            # Linearizar el vector (creamos una nueva lista para evitar modificar la original)
             datos_lineales = []
             self._aplanar_recursivo(vector.valores, datos_lineales)
 
