@@ -55,7 +55,9 @@ class AsignacionVector(Instruccion):
                 self.col,
             )
 
-        return vector.asignar_valores(self.dimensiones, self.valores, arbol, tabla)
+        return vector.asignar_valores(
+            self.dimensiones, self.valores, arbol, tabla, self.linea, self.col
+        )
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         try:

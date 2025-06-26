@@ -3,6 +3,7 @@ from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.simbolo.CArbol import Arbol
 from src.excepciones.CErrores import Errores
 from src.abstracto.CAST import clasAST
+from src.Vectores.AccesoVector import AccesoVector
 
 
 class Incremento(Instruccion):
@@ -51,57 +52,22 @@ class Incremento(Instruccion):
         return None
 
     def _incrementar_vector(self, arbol, tabla):
-        # Nueva lógica para incrementar elementos de vectores
-        if not hasattr(arbol, "vectores") or self.id not in arbol.vectores:
+        # Crear un objeto AccesoVector con los mismos parámetros
+        acceso = AccesoVector(self.id, self.dimensiones, self.linea, self.col)
+
+        # Obtener referencia al elemento que queremos incrementar
+        contenedor, indice, tipo, error = acceso.obtener_referencia(arbol, tabla)
+
+        # Verificar si hubo error en el acceso
+        if error:
             self.error = True
-            return Errores(
-                "SEMANTICO",
-                f"El vector '{self.id}' no ha sido declarado",
-                self.linea,
-                self.col,
-            )
-
-        vector = arbol.vectores[self.id]
-
-        # Evaluar índices
-        indices = []
-        for dim in self.dimensiones:
-            val = dim.interpretar(arbol, tabla) if hasattr(dim, "interpretar") else dim
-            if isinstance(val, Errores):
-                self.error = True
-                return val
-            if not isinstance(val, int):
-                self.error = True
-                return Errores(
-                    "SEMANTICO",
-                    f"Índice debe ser entero, no {type(val).__name__}",
-                    self.linea,
-                    self.col,
-                )
-            indices.append(val)
+            return error
 
         # Obtener el valor actual
-        try:
-            contenedor = vector.valores
-            for i in range(len(indices) - 1):
-                contenedor = contenedor[indices[i]]
-            valor_actual = contenedor[indices[-1]]
-        except (IndexError, TypeError):
-            self.error = True
-            return Errores(
-                "SEMANTICO",
-                f"Índice fuera de límites o tipo inválido",
-                self.linea,
-                self.col,
-            )
+        valor_actual = contenedor[indice]
 
-        # Incrementar si es numérico
-        if isinstance(valor_actual, (int, float)):
-            nuevo_valor = valor_actual + 1
-            contenedor[indices[-1]] = nuevo_valor
-            self.error = False
-            return None
-        else:
+        # Verificar que sea un valor numérico
+        if not isinstance(valor_actual, (int, float)):
             self.error = True
             return Errores(
                 "SEMANTICO",
@@ -109,6 +75,11 @@ class Incremento(Instruccion):
                 self.linea,
                 self.col,
             )
+
+        # Incrementar el valor
+        contenedor[indice] = valor_actual + 1
+        self.error = False
+        return None
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         if getattr(self, "error", False):

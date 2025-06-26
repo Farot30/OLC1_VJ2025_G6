@@ -999,15 +999,15 @@ errores_sintacticos_globales = []
 
 
 def p_error(t):
-    global errores_sintacticos_globales, ultimo_error_reportado
+    global errores_sintacticos_globales
 
     # Si no hay token (error al final del archivo)
     if not t:
         error = Errores(
-            "Sintáctico",
+            "SINTACTICO",
             "Error de sintaxis al final del archivo. Se esperaba una expresión o instrucción válida.",
-            1,
-            1,
+            1,  # Línea predeterminada al final del archivo
+            1,  # Columna predeterminada al final del archivo
         )
         arbol = getattr(lexer, "arbol", None)
         if arbol:
@@ -1017,10 +1017,12 @@ def p_error(t):
         print(error)
         return
 
-    # Inicializar variables si no existen
+    # Inicializar variables para controlar errores múltiples
     if not hasattr(parser, "ultimo_error_linea"):
         parser.ultimo_error_linea = -1
         parser.ultimo_error_columna = -1
+        parser.modo_recuperacion = False
+        parser.contador_errores = 0
 
     # Obtener información de la posición
     linea = t.lineno
@@ -1031,7 +1033,12 @@ def p_error(t):
         abs(linea - parser.ultimo_error_linea) <= 1
         and abs(columna - parser.ultimo_error_columna) <= 5
     ):
-        # Simplemente descartamos el token y continuamos
+        parser.contador_errores += 1
+        if parser.contador_errores > 3:
+            # Si hay demasiados errores consecutivos, activar modo pánico avanzado
+            parser.modo_recuperacion = True
+
+        # Descartamos el token y continuamos
         parser.errok()
         parser.token()  # Avanzar al siguiente token
         return
@@ -1039,63 +1046,77 @@ def p_error(t):
     # Actualizar la última posición de error reportada
     parser.ultimo_error_linea = linea
     parser.ultimo_error_columna = columna
+    parser.contador_errores = 1
 
-    # Crear mensaje de error
-    error_msg = f"Se encontró {t.type} ('{t.value}') y se esperaba una expresión o instrucción válida."
+    # Obtener el estado actual del parser para un mejor diagnóstico
+    estado = parser.state
+
+    # Crear mensaje de error más descriptivo basado en el contexto
+    token_esperado = "una expresión o instrucción válida"
+
+    # Podemos refinar esto basándonos en el estado del parser
+    if estado < 10:  # Ejemplo: estados iniciales
+        token_esperado = "una declaración o instrucción"
+    elif estado < 20:  # Ejemplo: dentro de expresiones
+        token_esperado = "un operador o valor"
+    elif estado < 30:  # Ejemplo: dentro de bloques
+        token_esperado = "una instrucción o fin de bloque"
+
+    error_msg = f"Se encontró {t.type} ('{t.value}') y se esperaba {token_esperado}."
 
     # Crear y registrar el error
     error = Errores("SINTACTICO", error_msg, linea, columna)
-
-    arbol = getattr(t.lexer, "arbol", None)
+    arbol = getattr(lexer, "arbol", None)
     if arbol:
         arbol.errores.append(error)
     else:
         errores_sintacticos_globales.append(error)
-
     print(error)
 
-    # ESTRATEGIA DE RECUPERACIÓN MEJORADA:
-    # 1. Buscar puntos de sincronización robustos
-    sync_tokens = ["PUNTOCOMA", "LLAVE2", "RIGHTCORCH"]
+    # ESTRATEGIA DE RECUPERACIÓN CONTEXTUAL:
+    # Diferentes tokens de sincronización según el contexto
+    stmt_sync = ["PUNTOCOMA", "LLAVE1", "LLAVE2", "IF", "WHILE", "FOR", "DO", "SWITCH"]
+    expr_sync = ["PUNTOCOMA", "COMMA", "PAR2", "RIGHTCORCH", "LLAVE2"]
 
-    # 2. Buscar el siguiente token de sincronización
-    while True:
-        tok = parser.token()
-        if not tok or tok.type in sync_tokens:
-            break
-
-    # 3. Informar al parser que hemos manejado el error
-    parser.errok()
-
-    # 4. Si encontramos un punto de sincronización, devolverlo para continuar el análisis
-    if tok and tok.type in sync_tokens:
-        return tok
-
-
-# Añade esta nueva regla para capturar identificadores sueltos como instrucciones inválidas
-def p_instruccion_invalida(t):
-    "instruccion : ID"
-    # Un ID suelto como instrucción es un error
-    error = Errores(
-        "Sintáctico",
-        f"La palabra '{t[1]}' no es una instrucción válida",
-        t.lineno(1),
-        find_column(t.lexer.lexdata, t.slice[1]),
-    )
-
-    # Registra el error
-    arbol = getattr(t.lexer, "arbol", None)
-    if arbol:
-        arbol.errores.append(error)
+    # Seleccionar tokens de sincronización según el contexto
+    if parser.modo_recuperacion:
+        # En modo pánico avanzado, sincronizar solo con tokens de nivel superior
+        sync_tokens = ["LLAVE2", "PUNTOCOMA"]
+    elif estado < 10:
+        sync_tokens = stmt_sync
+    elif estado < 20:
+        sync_tokens = expr_sync
     else:
-        errores_sintacticos_globales.append(error)
+        sync_tokens = stmt_sync + expr_sync
 
-    print(
-        f"----- Error Sintáctico: La palabra '{t[1]}' no es una instrucción válida. en la linea {t.lineno(1)} y columna {find_column(t.lexer.lexdata, t.slice[1])} ----"
-    )
+    # Descartar tokens hasta encontrar un punto de sincronización
+    contador_tokens = 0
+    max_tokens = 30  # Límite para evitar bucles infinitos
 
-    # Devolvemos None para que no se agregue al AST
-    t[0] = None
+    while contador_tokens < max_tokens:
+        contador_tokens += 1
+        token = parser.token()  # Obtener el siguiente token
+
+        if not token:
+            break  # Fin del archivo
+
+        if token.type in sync_tokens:
+            # Si encontramos un token de sincronización útil
+            if token.type == "PUNTOCOMA":
+                # Retornar punto y coma para terminar la instrucción actual
+                parser.errok()
+                return token
+            else:
+                # Para otros tokens, solo sincronizar
+                break
+
+    # Desactivar modo pánico si hemos avanzado lo suficiente
+    if contador_tokens >= 5:
+        parser.modo_recuperacion = False
+
+    # Informar al parser que hemos manejado el error
+    parser.errok()
+    return None  # No devolver ningún token
 
 
 # --- FUNCIONES AUXILIARES ---

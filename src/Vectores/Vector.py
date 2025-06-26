@@ -74,10 +74,16 @@ class Vector:
 
         return verificar_nivel(self.dimensiones, valores)
 
-    def asignar_valores(self, dimensiones, valor_nuevo, arbol, tabla):
+    def asignar_valores(
+        self, dimensiones, valor_nuevo, arbol, tabla, linea=None, col=None
+    ):
         """
         Asigna un valor a una posición específica del vector
         """
+
+        linea = linea if linea is not None else self.linea
+        col = col if col is not None else self.col
+
         # 1. Evaluar el valor a asignar
         valor_evaluado = valor_nuevo.interpretar(arbol, tabla)
         if isinstance(valor_evaluado, Errores):
@@ -88,8 +94,8 @@ class Vector:
             return Errores(
                 "SEMANTICO",
                 f"No se puede asignar un valor de tipo {type(valor_evaluado).__name__} a un vector de tipo {self.tipo.tipo.name}",
-                self.linea,
-                self.col,
+                linea,
+                col,
             )
 
         # 3. Evaluar todos los índices

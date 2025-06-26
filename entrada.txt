@@ -1,77 +1,70 @@
-println("-----------------------");
-println("Vector de una dimension");
-println("-----------------------");
 
-Vector[int] ud(3) = [1,2,3];
+println("-------------------------");
+println("Vector de tres dimensiones");
+println("-------------------------");
 
-println(ud[0]);
-println(ud[1]);
-println(ud[2]);
-println(ud[3]); // Error semantico
-println(ud[0][1]); // Error semantico
+Vector[int] t3(2,2,3) = [
+  [ [1,2], [3,4] ],
+  [ [5,6], [7,8] ],
+  [ [9,10], [11,12] ]
+];
 
-// Actualizacion del ultimo elemento
+println(t3[0][0][0]);
+println(t3[0][1][1]);
+println(t3[1][0][1]);
+println(t3[2][1][1]);
+println(t3[3][0][0]); // Error semantico
+println(t3[0][2][0]); // Error semantico
+println(t3[0][0][1][1]); // Error semantico
 
-ud[2] = "error semantico";
+t3[2][1][1] = "error semantico";
 
-println(ud[2]); // RES: 3
+println(t3[2][1][1]); // RES: 12
 
-ud[2]++;
+t3[2][1][1]++;
 
-println(ud[2]);
+println(t3[2][1][1]);
 
 println("Valores por defecto");
 
-Vector[int] default_int(2);
-Vector[float] default_float(2);
-Vector[bool] default_bool(2);
-Vector[str] default_str(2);
-Vector[char] default_char(2);
+Vector[int] default_t3(2,2,3);
 
-println(default_int[0]);
-println(default_float[0]);
-println(default_bool[0]);
-println(default_str[0]);
-println(default_char[0]);
+println(default_t3[0][0][0]);
 
 println("-------------------------");
-println("Vector de dos dimensiones");
+println("Vector de cuatro dimensiones");
 println("-------------------------");
 
-Vector[int] dd(3,2) = [[1,2,3],[1,2,3]]; // Los corchetes de la ultima dimension pueden o no venir, dependiendo de la gramatica trabajada
+Vector[int] t4(2,2,2,2) = [
+  [
+    [ [1,2], [3,4] ],
+    [ [5,6], [7,8] ]
+  ],
+  [
+    [ [9,10], [11,12] ],
+    [ [13,14], [15,16] ]
+  ]
+];
 
-println(dd[0][0]);
-println(dd[0][1]);
-println(dd[0][2]);
-println(dd[1][0]);
-println(dd[1][1]);
-println(dd[1][2]);
-println(dd[2][0]);
-println(dd[2][1]);
-println(dd[2][2]);
-println(dd[0][3]); // Error semantico
-println(dd[0][1][1]); // Error semantico
+println(t4[0][0][0][0]);
+println(t4[0][1][1][1]);
+println(t4[1][0][1][0]);
+println(t4[1][1][1][1]);
+println(t4[2][0][0][0]); // Error semantico
+println(t4[0][1][0][2]); // Error semantico
+println(t4[1][1][1][1][0]); // Error semantico
 
-// Actualizacion del ultimo elemento
+t4[1][1][1][1] = "error semantico";
 
-dd[2][2] = "error semantico";
+println(t4[1][1][1][1]); // RES: 16
 
-println(dd[2][2]); // RES: 3
+t4[1][1][1][1]--;
 
-dd[2][2]++;
-
-println(dd[2][2]);
+println(t4[1][1][1][1]);
 
 println("Valores por defecto");
 
-Vector[int] default_int2(2,2);
-Vector[float] default_float2(2,2);
-Vector[bool] default_bool2(2,2);
-Vector[str] default_str2(2,2);
-Vector[char] default_char2(2,2);
+Vector[int] default_t4(2,2,2,2);
 
-println(default_int2[0][0]);
-println(default_float2[0][1]);
-println(default_bool2[1][0]);
-println(default_str2[1][1]);
-println(default_char2[0][0]);
+println(default_t4[0][0][0][0]);
+println(default_t4[1][1][1][1]);

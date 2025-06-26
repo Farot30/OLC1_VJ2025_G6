@@ -1,229 +1,133 @@
 digraph ReporteAST {
 	node1 [label=Reporte color=black fillcolor=lightgray style=filled]
 	node2 [label=Println color=purple fillcolor=white style=filled]
-	node3 [label="-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-" color=purple fillcolor=white style=filled]
+	node3 [label="-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-" color=purple fillcolor=white style=filled]
 	node2 -> node3
 	node1 -> node2
 	node4 [label=Println color=purple fillcolor=white style=filled]
-	node5 [label="Vector de una dimension" color=purple fillcolor=white style=filled]
+	node5 [label="Vector de tres dimensiones" color=purple fillcolor=white style=filled]
 	node4 -> node5
 	node1 -> node4
 	node6 [label=Println color=purple fillcolor=white style=filled]
-	node7 [label="-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-" color=purple fillcolor=white style=filled]
+	node7 [label="-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-" color=purple fillcolor=white style=filled]
 	node6 -> node7
 	node1 -> node6
-	node8 [label=Println color=purple fillcolor=white style=filled]
-	node9 [label=1 color=purple fillcolor=white style=filled]
+	node8 [label="Declaración Vector" color=purple fillcolor=white style=filled]
+	node9 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
 	node8 -> node9
+	node10 [label="ID: t3" color=purple fillcolor=white style=filled]
+	node8 -> node10
+	node11 [label="Dimensiones: [2, 2, 3]" color=purple fillcolor=white style=filled]
+	node8 -> node11
+	node12 [label=Valores color=purple fillcolor=white style=filled]
+	node8 -> node12
 	node1 -> node8
-	node10 [label=Println color=purple fillcolor=white style=filled]
-	node11 [label=2 color=purple fillcolor=white style=filled]
-	node10 -> node11
-	node1 -> node10
-	node12 [label=Println color=purple fillcolor=white style=filled]
-	node13 [label=3 color=purple fillcolor=white style=filled]
-	node12 -> node13
-	node1 -> node12
-	node14 [label="Asignación Vector" color=purple fillcolor=white style=filled]
-	node15 [label="ID: ud" color=purple fillcolor=white style=filled]
-	node14 -> node15
-	node16 [label="Índices" color=purple fillcolor=white style=filled]
-	node14 -> node16
-	node17 [label="[2]" color=purple fillcolor=white style=filled]
-	node16 -> node17
-	node18 [label="error semantico" color=purple fillcolor=white style=filled]
-	node14 -> node18
-	node1 -> node14
+	node13 [label=Println color=purple fillcolor=white style=filled]
+	node14 [label=1 color=purple fillcolor=white style=filled]
+	node13 -> node14
+	node1 -> node13
+	node15 [label=Println color=purple fillcolor=white style=filled]
+	node16 [label=4 color=purple fillcolor=white style=filled]
+	node15 -> node16
+	node1 -> node15
+	node17 [label=Println color=purple fillcolor=white style=filled]
+	node18 [label=6 color=purple fillcolor=white style=filled]
+	node17 -> node18
+	node1 -> node17
 	node19 [label=Println color=purple fillcolor=white style=filled]
-	node20 [label=3 color=purple fillcolor=white style=filled]
+	node20 [label="Valores por defecto" color=purple fillcolor=white style=filled]
 	node19 -> node20
 	node1 -> node19
-	node21 [label=IncrementoVector color=purple fillcolor=white style=filled]
-	node22 [label="ID: ud" color=purple fillcolor=white style=filled]
+	node21 [label="Declaración Vector" color=purple fillcolor=white style=filled]
+	node22 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
 	node21 -> node22
-	node23 [label=Indices color=purple fillcolor=white style=filled]
+	node23 [label="ID: default_t3" color=purple fillcolor=white style=filled]
 	node21 -> node23
-	node24 [label="[2]" color=purple fillcolor=white style=filled]
-	node23 -> node24
+	node24 [label="Dimensiones: [2, 2, 3]" color=purple fillcolor=white style=filled]
+	node21 -> node24
 	node1 -> node21
 	node25 [label=Println color=purple fillcolor=white style=filled]
-	node26 [label=4 color=purple fillcolor=white style=filled]
+	node26 [label=0 color=purple fillcolor=white style=filled]
 	node25 -> node26
 	node1 -> node25
 	node27 [label=Println color=purple fillcolor=white style=filled]
-	node28 [label="Valores por defecto" color=purple fillcolor=white style=filled]
+	node28 [label="-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-" color=purple fillcolor=white style=filled]
 	node27 -> node28
 	node1 -> node27
-	node29 [label="Declaración Vector" color=purple fillcolor=white style=filled]
-	node30 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node29 [label=Println color=purple fillcolor=white style=filled]
+	node30 [label="Vector de cuatro dimensiones" color=purple fillcolor=white style=filled]
 	node29 -> node30
-	node31 [label="ID: default_int" color=purple fillcolor=white style=filled]
-	node29 -> node31
-	node32 [label="Dimensiones: [2]" color=purple fillcolor=white style=filled]
-	node29 -> node32
 	node1 -> node29
+	node31 [label=Println color=purple fillcolor=white style=filled]
+	node32 [label="-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-" color=purple fillcolor=white style=filled]
+	node31 -> node32
+	node1 -> node31
 	node33 [label="Declaración Vector" color=purple fillcolor=white style=filled]
-	node34 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
+	node34 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
 	node33 -> node34
-	node35 [label="ID: default_float" color=purple fillcolor=white style=filled]
+	node35 [label="ID: t4" color=purple fillcolor=white style=filled]
 	node33 -> node35
-	node36 [label="Dimensiones: [2]" color=purple fillcolor=white style=filled]
+	node36 [label="Dimensiones: [2, 2, 2, 2]" color=purple fillcolor=white style=filled]
 	node33 -> node36
+	node37 [label=Valores color=purple fillcolor=white style=filled]
+	node33 -> node37
 	node1 -> node33
-	node37 [label="Declaración Vector" color=purple fillcolor=white style=filled]
-	node38 [label="Tipo: BOOL" color=purple fillcolor=white style=filled]
-	node37 -> node38
-	node39 [label="ID: default_bool" color=purple fillcolor=white style=filled]
-	node37 -> node39
-	node40 [label="Dimensiones: [2]" color=purple fillcolor=white style=filled]
-	node37 -> node40
-	node1 -> node37
-	node41 [label="Declaración Vector" color=purple fillcolor=white style=filled]
-	node42 [label="Tipo: STRING" color=purple fillcolor=white style=filled]
-	node41 -> node42
-	node43 [label="ID: default_str" color=purple fillcolor=white style=filled]
-	node41 -> node43
-	node44 [label="Dimensiones: [2]" color=purple fillcolor=white style=filled]
-	node41 -> node44
-	node1 -> node41
-	node45 [label="Declaración Vector" color=purple fillcolor=white style=filled]
-	node46 [label="Tipo: CHAR" color=purple fillcolor=white style=filled]
-	node45 -> node46
-	node47 [label="ID: default_char" color=purple fillcolor=white style=filled]
-	node45 -> node47
-	node48 [label="Dimensiones: [2]" color=purple fillcolor=white style=filled]
-	node45 -> node48
-	node1 -> node45
-	node49 [label=Println color=purple fillcolor=white style=filled]
-	node50 [label=0 color=purple fillcolor=white style=filled]
-	node49 -> node50
-	node1 -> node49
-	node51 [label=Println color=purple fillcolor=white style=filled]
-	node52 [label=0.0 color=purple fillcolor=white style=filled]
-	node51 -> node52
-	node1 -> node51
-	node53 [label=Println color=purple fillcolor=white style=filled]
-	node54 [label=True color=purple fillcolor=white style=filled]
-	node53 -> node54
-	node1 -> node53
+	node38 [label=Println color=purple fillcolor=white style=filled]
+	node39 [label=1 color=purple fillcolor=white style=filled]
+	node38 -> node39
+	node1 -> node38
+	node40 [label=Println color=purple fillcolor=white style=filled]
+	node41 [label=8 color=purple fillcolor=white style=filled]
+	node40 -> node41
+	node1 -> node40
+	node42 [label=Println color=purple fillcolor=white style=filled]
+	node43 [label=11 color=purple fillcolor=white style=filled]
+	node42 -> node43
+	node1 -> node42
+	node44 [label=Println color=purple fillcolor=white style=filled]
+	node45 [label=16 color=purple fillcolor=white style=filled]
+	node44 -> node45
+	node1 -> node44
+	node46 [label=Println color=purple fillcolor=white style=filled]
+	node47 [label=16 color=purple fillcolor=white style=filled]
+	node46 -> node47
+	node1 -> node46
+	node48 [label=DecrementoVector color=purple fillcolor=white style=filled]
+	node49 [label="ID: t4" color=purple fillcolor=white style=filled]
+	node48 -> node49
+	node50 [label=Indices color=purple fillcolor=white style=filled]
+	node48 -> node50
+	node51 [label="[1]" color=purple fillcolor=white style=filled]
+	node50 -> node51
+	node52 [label="[1]" color=purple fillcolor=white style=filled]
+	node50 -> node52
+	node53 [label="[1]" color=purple fillcolor=white style=filled]
+	node50 -> node53
+	node54 [label="[1]" color=purple fillcolor=white style=filled]
+	node50 -> node54
+	node1 -> node48
 	node55 [label=Println color=purple fillcolor=white style=filled]
-	node56 [label="(cadena vacía)" color=purple fillcolor=white style=filled]
+	node56 [label=15 color=purple fillcolor=white style=filled]
 	node55 -> node56
 	node1 -> node55
 	node57 [label=Println color=purple fillcolor=white style=filled]
-	node58 [label="(carácter nulo)" color=purple fillcolor=white style=filled]
+	node58 [label="Valores por defecto" color=purple fillcolor=white style=filled]
 	node57 -> node58
 	node1 -> node57
-	node59 [label=Println color=purple fillcolor=white style=filled]
-	node60 [label="-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-" color=purple fillcolor=white style=filled]
+	node59 [label="Declaración Vector" color=purple fillcolor=white style=filled]
+	node60 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
 	node59 -> node60
+	node61 [label="ID: default_t4" color=purple fillcolor=white style=filled]
+	node59 -> node61
+	node62 [label="Dimensiones: [2, 2, 2, 2]" color=purple fillcolor=white style=filled]
+	node59 -> node62
 	node1 -> node59
-	node61 [label=Println color=purple fillcolor=white style=filled]
-	node62 [label="Vector de dos dimensiones" color=purple fillcolor=white style=filled]
-	node61 -> node62
-	node1 -> node61
 	node63 [label=Println color=purple fillcolor=white style=filled]
-	node64 [label="-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-" color=purple fillcolor=white style=filled]
+	node64 [label=0 color=purple fillcolor=white style=filled]
 	node63 -> node64
 	node1 -> node63
 	node65 [label=Println color=purple fillcolor=white style=filled]
-	node66 [label=1 color=purple fillcolor=white style=filled]
+	node66 [label=0 color=purple fillcolor=white style=filled]
 	node65 -> node66
 	node1 -> node65
-	node67 [label=Println color=purple fillcolor=white style=filled]
-	node68 [label=1 color=purple fillcolor=white style=filled]
-	node67 -> node68
-	node1 -> node67
-	node69 [label=Println color=purple fillcolor=white style=filled]
-	node70 [label=2 color=purple fillcolor=white style=filled]
-	node69 -> node70
-	node1 -> node69
-	node71 [label=Println color=purple fillcolor=white style=filled]
-	node72 [label=2 color=purple fillcolor=white style=filled]
-	node71 -> node72
-	node1 -> node71
-	node73 [label=Println color=purple fillcolor=white style=filled]
-	node74 [label=3 color=purple fillcolor=white style=filled]
-	node73 -> node74
-	node1 -> node73
-	node75 [label=Println color=purple fillcolor=white style=filled]
-	node76 [label=3 color=purple fillcolor=white style=filled]
-	node75 -> node76
-	node1 -> node75
-	node77 [label="Asignación Vector" color=purple fillcolor=white style=filled]
-	node78 [label="ID: dd" color=purple fillcolor=white style=filled]
-	node77 -> node78
-	node79 [label="Índices" color=purple fillcolor=white style=filled]
-	node77 -> node79
-	node80 [label="[2]" color=purple fillcolor=white style=filled]
-	node79 -> node80
-	node81 [label="[2]" color=purple fillcolor=white style=filled]
-	node79 -> node81
-	node82 [label="error semantico" color=purple fillcolor=white style=filled]
-	node77 -> node82
-	node1 -> node77
-	node83 [label=Println color=purple fillcolor=white style=filled]
-	node84 [label="Valores por defecto" color=purple fillcolor=white style=filled]
-	node83 -> node84
-	node1 -> node83
-	node85 [label="Declaración Vector" color=purple fillcolor=white style=filled]
-	node86 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
-	node85 -> node86
-	node87 [label="ID: default_int2" color=purple fillcolor=white style=filled]
-	node85 -> node87
-	node88 [label="Dimensiones: [2, 2] (columnas, filas)" color=purple fillcolor=white style=filled]
-	node85 -> node88
-	node1 -> node85
-	node89 [label="Declaración Vector" color=purple fillcolor=white style=filled]
-	node90 [label="Tipo: DECIMAL" color=purple fillcolor=white style=filled]
-	node89 -> node90
-	node91 [label="ID: default_float2" color=purple fillcolor=white style=filled]
-	node89 -> node91
-	node92 [label="Dimensiones: [2, 2] (columnas, filas)" color=purple fillcolor=white style=filled]
-	node89 -> node92
-	node1 -> node89
-	node93 [label="Declaración Vector" color=purple fillcolor=white style=filled]
-	node94 [label="Tipo: BOOL" color=purple fillcolor=white style=filled]
-	node93 -> node94
-	node95 [label="ID: default_bool2" color=purple fillcolor=white style=filled]
-	node93 -> node95
-	node96 [label="Dimensiones: [2, 2] (columnas, filas)" color=purple fillcolor=white style=filled]
-	node93 -> node96
-	node1 -> node93
-	node97 [label="Declaración Vector" color=purple fillcolor=white style=filled]
-	node98 [label="Tipo: STRING" color=purple fillcolor=white style=filled]
-	node97 -> node98
-	node99 [label="ID: default_str2" color=purple fillcolor=white style=filled]
-	node97 -> node99
-	node100 [label="Dimensiones: [2, 2] (columnas, filas)" color=purple fillcolor=white style=filled]
-	node97 -> node100
-	node1 -> node97
-	node101 [label="Declaración Vector" color=purple fillcolor=white style=filled]
-	node102 [label="Tipo: CHAR" color=purple fillcolor=white style=filled]
-	node101 -> node102
-	node103 [label="ID: default_char2" color=purple fillcolor=white style=filled]
-	node101 -> node103
-	node104 [label="Dimensiones: [2, 2] (columnas, filas)" color=purple fillcolor=white style=filled]
-	node101 -> node104
-	node1 -> node101
-	node105 [label=Println color=purple fillcolor=white style=filled]
-	node106 [label=0 color=purple fillcolor=white style=filled]
-	node105 -> node106
-	node1 -> node105
-	node107 [label=Println color=purple fillcolor=white style=filled]
-	node108 [label=0.0 color=purple fillcolor=white style=filled]
-	node107 -> node108
-	node1 -> node107
-	node109 [label=Println color=purple fillcolor=white style=filled]
-	node110 [label=True color=purple fillcolor=white style=filled]
-	node109 -> node110
-	node1 -> node109
-	node111 [label=Println color=purple fillcolor=white style=filled]
-	node112 [label="(cadena vacía)" color=purple fillcolor=white style=filled]
-	node111 -> node112
-	node1 -> node111
-	node113 [label=Println color=purple fillcolor=white style=filled]
-	node114 [label="(carácter nulo)" color=purple fillcolor=white style=filled]
-	node113 -> node114
-	node1 -> node113
 }

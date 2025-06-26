@@ -11,27 +11,44 @@ class AccesoVector(Instruccion):
         self.indices = indices
 
     def interpretar(self, arbol, tabla):
+        """Obtiene el valor en la posición indicada por los índices"""
+        contenedor, indice_final, tipo, error = self.obtener_referencia(arbol, tabla)
+
+        if error:
+            return error
+
+        # Devolver el valor
+        return contenedor[indice_final]
+
+    def obtener_referencia(self, arbol, tabla):
+        """
+        Obtiene una referencia al elemento accedido.
+        Retorna una tupla (contenedor, indice_final, tipo, error)
+        donde:
+        """
         # Verificar que el vector exista
         if not hasattr(arbol, "vectores") or self.id not in arbol.vectores:
-            return Errores(
-                "SEMANTICO",
-                f"El vector '{self.id}' no ha sido declarado",
-                self.linea,
-                self.col,
+            return (
+                None,
+                None,
+                None,
+                Errores(
+                    "SEMANTICO",
+                    f"El vector '{self.id}' no ha sido declarado",
+                    self.linea,
+                    self.col,
+                ),
             )
 
         vector = arbol.vectores[self.id]
+        tipo = vector.tipo if hasattr(vector, "tipo") else None
 
-        # Si el valor guardado no es una instancia de Vector (puede ser lista literal por alguna operación)
+        # Si el valor guardado no es una instancia de Vector
         if hasattr(vector, "valores"):
             valores = vector.valores
         else:
             valores = vector
 
-        # NUEVA LÓGICA: Verificar si tenemos una matriz 2D y la convención es (columnas, filas)
-        es_matriz_2d = hasattr(vector, "dimensiones") and len(vector.dimensiones) == 2
-
-        # Navegar por los índices para obtener el valor deseado
         try:
             # CASO 1: Vector 2D (Matriz)
             if (
@@ -39,34 +56,41 @@ class AccesoVector(Instruccion):
                 and len(vector.dimensiones) == 2
                 and len(self.indices) == 2
             ):
-                # En dd[columna][fila], queremos acceder a valores[fila][columna]
                 columna = self.indices[0]
                 fila = self.indices[1]
 
-                # Verificar límites según las dimensiones declaradas
+                # Verificar límites
                 columnas_totales = vector.dimensiones[0]
                 filas_totales = vector.dimensiones[1]
 
-                # Verificar que columna esté en rango
                 if columna < 0 or columna >= columnas_totales:
-                    return Errores(
-                        "SEMANTICO",
-                        f"Índice de columna fuera de rango (0-{columnas_totales-1})",
-                        self.linea,
-                        self.col,
+                    return (
+                        None,
+                        None,
+                        tipo,
+                        Errores(
+                            "SEMANTICO",
+                            f"Índice de columna fuera de rango (0-{columnas_totales-1})",
+                            self.linea,
+                            self.col,
+                        ),
                     )
 
-                # Verificar que fila esté en rango
                 if fila < 0 or fila >= filas_totales:
-                    return Errores(
-                        "SEMANTICO",
-                        f"Índice de fila fuera de rango (0-{filas_totales-1})",
-                        self.linea,
-                        self.col,
+                    return (
+                        None,
+                        None,
+                        tipo,
+                        Errores(
+                            "SEMANTICO",
+                            f"Índice de fila fuera de rango (0-{filas_totales-1})",
+                            self.linea,
+                            self.col,
+                        ),
                     )
 
-                # Acceder con los índices invertidos
-                return valores[fila][columna]
+                # Devolver la fila como contenedor y la columna como índice (inversión)
+                return valores[fila], columna, tipo, None
 
             # CASO 2: Vector 3D
             elif (
@@ -78,35 +102,50 @@ class AccesoVector(Instruccion):
                 columnas, filas, capas = vector.dimensiones
 
                 # Extraer índices proporcionados
-                idx_capa, idx_fila, idx_columna = self.indices
+                idx_columna, idx_fila, idx_capa = self.indices
 
-                # Verificar límites de índices
-                if idx_capa < 0 or idx_capa >= capas:
-                    return Errores(
-                        "SEMANTICO",
-                        f"Índice de capa fuera de rango (0-{capas-1})",
-                        self.linea,
-                        self.col,
+                # Validar todos los índices
+                if idx_columna < 0 or idx_columna >= columnas:
+                    return (
+                        None,
+                        None,
+                        tipo,
+                        Errores(
+                            "SEMANTICO",
+                            f"Índice de columna fuera de rango (0-{columnas-1})",
+                            self.linea,
+                            self.col,
+                        ),
                     )
 
                 if idx_fila < 0 or idx_fila >= filas:
-                    return Errores(
-                        "SEMANTICO",
-                        f"Índice de fila fuera de rango (0-{filas-1})",
-                        self.linea,
-                        self.col,
+                    return (
+                        None,
+                        None,
+                        tipo,
+                        Errores(
+                            "SEMANTICO",
+                            f"Índice de fila fuera de rango (0-{filas-1})",
+                            self.linea,
+                            self.col,
+                        ),
                     )
 
-                if idx_columna < 0 or idx_columna >= columnas:
-                    return Errores(
-                        "SEMANTICO",
-                        f"Índice de columna fuera de rango (0-{columnas-1})",
-                        self.linea,
-                        self.col,
+                if idx_capa < 0 or idx_capa >= capas:
+                    return (
+                        None,
+                        None,
+                        tipo,
+                        Errores(
+                            "SEMANTICO",
+                            f"Índice de capa fuera de rango (0-{capas-1})",
+                            self.linea,
+                            self.col,
+                        ),
                     )
 
-                # Acceder con el orden correcto
-                return valores[idx_capa][idx_fila][idx_columna]
+                # Devolver el elemento adecuado para acceso
+                return valores[idx_columna][idx_fila], idx_capa, tipo, None
 
             # CASO 3: Vector 4D
             elif (
@@ -114,76 +153,146 @@ class AccesoVector(Instruccion):
                 and len(vector.dimensiones) == 4
                 and len(self.indices) == 4
             ):
-                # Extraer dimensiones: [dim1, dim2, dim3, dim4]
+                # Similar a 2D y 3D, con validación para 4 dimensiones
                 dim1, dim2, dim3, dim4 = vector.dimensiones
-
-                # Extraer índices
                 idx1, idx2, idx3, idx4 = self.indices
 
-                # Verificar límites
-                if (
-                    idx1 < 0 or idx1 >= dim4
-                ):  # La última dimensión declarada es la primera en indexación
-                    return Errores(
-                        "SEMANTICO",
-                        f"Primer índice fuera de rango (0-{dim4-1})",
-                        self.linea,
-                        self.col,
+                # Validación de límites
+                if idx1 < 0 or idx1 >= dim1:
+                    return (
+                        None,
+                        None,
+                        tipo,
+                        Errores(
+                            "SEMANTICO",
+                            f"Primer índice fuera de rango (0-{dim1-1})",
+                            self.linea,
+                            self.col,
+                        ),
                     )
 
-                if idx2 < 0 or idx2 >= dim3:
-                    return Errores(
-                        "SEMANTICO",
-                        f"Segundo índice fuera de rango (0-{dim3-1})",
-                        self.linea,
-                        self.col,
+                if idx2 < 0 or idx2 >= dim2:
+                    return (
+                        None,
+                        None,
+                        tipo,
+                        Errores(
+                            "SEMANTICO",
+                            f"Segundo índice fuera de rango (0-{dim2-1})",
+                            self.linea,
+                            self.col,
+                        ),
                     )
 
-                if idx3 < 0 or idx3 >= dim2:
-                    return Errores(
-                        "SEMANTICO",
-                        f"Tercer índice fuera de rango (0-{dim2-1})",
-                        self.linea,
-                        self.col,
+                if idx3 < 0 or idx3 >= dim3:
+                    return (
+                        None,
+                        None,
+                        tipo,
+                        Errores(
+                            "SEMANTICO",
+                            f"Tercer índice fuera de rango (0-{dim3-1})",
+                            self.linea,
+                            self.col,
+                        ),
                     )
 
-                if idx4 < 0 or idx4 >= dim1:
-                    return Errores(
-                        "SEMANTICO",
-                        f"Cuarto índice fuera de rango (0-{dim1-1})",
-                        self.linea,
-                        self.col,
+                if idx4 < 0 or idx4 >= dim4:
+                    return (
+                        None,
+                        None,
+                        tipo,
+                        Errores(
+                            "SEMANTICO",
+                            f"Cuarto índice fuera de rango (0-{dim4-1})",
+                            self.linea,
+                            self.col,
+                        ),
                     )
 
-                # Acceder con el orden correcto
-                return valores[idx1][idx2][idx3][idx4]
+                # Devolver referencia para 4D
+                return valores[idx1][idx2][idx3], idx4, tipo, None
 
-            # CASO GENERAL: Para otras dimensiones o cuando no coincide número de índices
+            # CASO GENERAL: Para otras dimensiones
             else:
-                resultado = valores
-                for i in self.indices:
-                    if not isinstance(resultado, list):
-                        return Errores(
+                # Verificar número de dimensiones
+                if hasattr(vector, "dimensiones") and len(self.indices) != len(
+                    vector.dimensiones
+                ):
+                    return (
+                        None,
+                        None,
+                        tipo,
+                        Errores(
+                            "SEMANTICO",
+                            f"El vector tiene {len(vector.dimensiones)} dimensiones pero se proporcionaron {len(self.indices)} índices",
+                            self.linea,
+                            self.col,
+                        ),
+                    )
+
+                # Navegar por la estructura hasta el penúltimo índice
+                contenedor = valores
+                for i in range(len(self.indices) - 1):
+                    if (
+                        not isinstance(contenedor, list)
+                        or self.indices[i] < 0
+                        or self.indices[i] >= len(contenedor)
+                    ):
+                        return (
+                            None,
+                            None,
+                            tipo,
+                            Errores(
+                                "SEMANTICO",
+                                "Índice fuera de rango o estructura inválida",
+                                self.linea,
+                                self.col,
+                            ),
+                        )
+                    contenedor = contenedor[self.indices[i]]
+
+                # Verificar el último índice
+                if not isinstance(contenedor, list):
+                    return (
+                        None,
+                        None,
+                        tipo,
+                        Errores(
                             "SEMANTICO",
                             "Acceso inválido: se intentó indexar sobre un valor no indexable",
                             self.linea,
                             self.col,
-                        )
-                    if i < 0 or i >= len(resultado):
-                        return Errores(
-                            "SEMANTICO", "Índice fuera de rango", self.linea, self.col
-                        )
+                        ),
+                    )
 
-                    resultado = resultado[i]
+                ultimo_indice = self.indices[-1]
+                if ultimo_indice < 0 or ultimo_indice >= len(contenedor):
+                    return (
+                        None,
+                        None,
+                        tipo,
+                        Errores(
+                            "SEMANTICO",
+                            f"Índice fuera de rango (0-{len(contenedor)-1})",
+                            self.linea,
+                            self.col,
+                        ),
+                    )
 
-                return resultado
+                return contenedor, ultimo_indice, tipo, None
 
         except Exception as e:
-            return Errores(
-                "SEMANTICO",
-                f"Error inesperado al acceder al vector: {str(e)}",
-                self.linea,
-                self.col,
+            return (
+                None,
+                None,
+                tipo,
+                Errores(
+                    "SEMANTICO",
+                    f"Error inesperado al acceder al vector: {str(e)}",
+                    self.linea,
+                    self.col,
+                ),
             )
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
