@@ -14,7 +14,8 @@ class Arbol:
         self.tabla_global = aTab
         self.errores = []
         self.procedimientos = []
-
+        self.procActual = None
+        
     def getConsola(self) -> str:
         return self.consola
 
@@ -42,6 +43,12 @@ class Arbol:
             nodoHijo = instru.graficar(grafo)
             grafo.agregar_arista(nodoRaiz, nodoHijo)
         return nodoRaiz
+    
+    def setProc(self, nom):
+        self.procActual = nom
+
+    def getProc(self):
+        return self.procActual
     
     def setFuncion(self, prodec):
         self.procedimientos.append(prodec)

@@ -1,62 +1,20 @@
-int a = 5;     // Primera declaración
-int a = 10;    // Redeclaración con el mismo tipo
+
+println("-----------------------");
+println("Procedimientos");
+println("-----------------------");
+
+int a;
+
+PROC actualizar_a(int: b, bool: mult){
+	if (mult) {
+		a = a * b;
+	} else {
+		a = a + b;
+	}
+}
+
+EXEC actualizar_a(1,false);
 println(a);
-str a = "Hola";  // Redeclaración con tipo diferente
 
+EXEC actualizar_a(2,true);
 println(a);
-
-// Procedimiento con un parámetro
-proc mostrarNumero(int: valor) {
-    println("El numero es: " + valor);
-}
-
-// Llamar con valor literal
-exec mostrarNumero(42);
-
-// Llamar con variable
-int numero = 100;
-exec mostrarNumero(numero);
-
-// Procedimiento con múltiples parámetros
-proc sumar(int: a, int: b) {
-    int resultado = a + b;
-    println("La suma de " + a + " y " + b + " es: " + resultado);
-}
-
-// Llamar con diferentes combinaciones
-exec sumar(5, 7);
-int x = 10;
-int y = 20;
-exec sumar(x, y);
-exec sumar(x, 30);
-
-// Procedimiento con diferentes tipos de parámetros
-proc mostrarInfo(str: nombre, int: edad, bool: activo) {
-    println("Nombre: " + nombre);
-    println("Edad: " + edad);
-    println("Activo: " + activo);
-}
-
-// Llamar con diferentes tipos
-exec mostrarInfo("Juan", 25, true);
-str nombre = "Maria";
-exec mostrarInfo(nombre, 30, false);
-
-// Procedimiento que modifica una variable global
-int contador = 0;
-
-
-println("Valor final del contador: " + contador);
-
-// Procedimientos anidados (uno llama a otro)
-proc mensaje() {
-    println("Mensaje desde procedimiento secundario");
-}
-
-proc principal() {
-    println("Iniciando procedimiento principa");
-    exec mensaje();
-    println("Finalizando procedimiento principal");
-}
-
-exec principal();

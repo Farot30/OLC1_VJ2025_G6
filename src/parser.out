@@ -8,41 +8,41 @@ Rule 2     instrucciones -> instrucciones instruccion
 Rule 3     instrucciones -> instruccion
 Rule 4     instruccion -> declaracion PUNTOCOMA
 Rule 5     instruccion -> expresion PUNTOCOMA
-Rule 6     instruccion -> sent_IF
-Rule 7     instruccion -> SBreak
-Rule 8     instruccion -> Procedimiento
-Rule 9     instruccion -> Llamada PUNTOCOMA
-Rule 10    instruccion -> asignacion PUNTOCOMA
-Rule 11    instruccion -> bloque
-Rule 12    bloque -> LLAVE1 instrucciones LLAVE2
-Rule 13    SBreak -> BREAK PUNTOCOMA
-Rule 14    Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-Rule 15    PARAMETROS -> tipos PUNTOS ID
-Rule 16    PARAMETROS -> tipos PUNTOS ID COMA PARAMETROS
-Rule 17    PARAMETROS -> empty
-Rule 18    Llamada -> EXEC ID PAR1 PARAMLLAMADA PAR2
-Rule 19    PARAMLLAMADA -> literal
-Rule 20    PARAMLLAMADA -> ID
-Rule 21    PARAMLLAMADA -> BOOLEANO
-Rule 22    PARAMLLAMADA -> PARAMLLAMADA COMA literal
-Rule 23    PARAMLLAMADA -> PARAMLLAMADA COMA ID
-Rule 24    PARAMLLAMADA -> PARAMLLAMADA COMA BOOLEANO
-Rule 25    PARAMLLAMADA -> empty
-Rule 26    literal -> ENTERO
-Rule 27    literal -> DECIMAL
-Rule 28    literal -> CARACTER
-Rule 29    literal -> CADENA
-Rule 30    literal -> TRUE
-Rule 31    literal -> FALSE
-Rule 32    empty -> <empty>
+Rule 6     instruccion -> SBreak
+Rule 7     instruccion -> Procedimiento
+Rule 8     instruccion -> Llamada PUNTOCOMA
+Rule 9     instruccion -> asignacion PUNTOCOMA
+Rule 10    instruccion -> bloque
+Rule 11    bloque -> LLAVE1 instrucciones LLAVE2
+Rule 12    SBreak -> BREAK PUNTOCOMA
+Rule 13    Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
+Rule 14    PARAMETROS -> tipos PUNTOS ID
+Rule 15    PARAMETROS -> tipos PUNTOS ID COMA PARAMETROS
+Rule 16    PARAMETROS -> empty
+Rule 17    Llamada -> EXEC ID PAR1 PARAMLLAMADA PAR2
+Rule 18    PARAMLLAMADA -> literal
+Rule 19    PARAMLLAMADA -> ID
+Rule 20    PARAMLLAMADA -> BOOLEANO
+Rule 21    PARAMLLAMADA -> PARAMLLAMADA COMA literal
+Rule 22    PARAMLLAMADA -> PARAMLLAMADA COMA ID
+Rule 23    PARAMLLAMADA -> PARAMLLAMADA COMA BOOLEANO
+Rule 24    PARAMLLAMADA -> empty
+Rule 25    literal -> ENTERO
+Rule 26    literal -> DECIMAL
+Rule 27    literal -> CARACTER
+Rule 28    literal -> CADENA
+Rule 29    literal -> TRUE
+Rule 30    literal -> FALSE
+Rule 31    empty -> <empty>
+Rule 32    instruccion -> sent_IF
 Rule 33    sent_IF -> if_simple
 Rule 34    sent_IF -> if_else
 Rule 35    sent_IF -> if_elseif
 Rule 36    sent_IF -> if_elseif_else
-Rule 37    if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-Rule 38    if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-Rule 39    if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-Rule 40    if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+Rule 37    if_simple -> IF PAR1 expresion PAR2 bloque
+Rule 38    if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque
+Rule 39    if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+Rule 40    if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 Rule 41    declaracion -> tipos ID IGUAL expresion
 Rule 42    declaracion -> tipos ID
 Rule 43    asignacion -> ID IGUAL expresion
@@ -80,27 +80,27 @@ Rule 73    tipos -> BOOL
 Terminals, with rules where they appear
 
 BOOL                 : 73
-BOOLEANO             : 21 24 60
-BREAK                : 13
-CADENA               : 29 57
-CARACTER             : 28 62
+BOOLEANO             : 20 23 60
+BREAK                : 12
+CADENA               : 28 57
+CARACTER             : 27 62
 CHAR                 : 61 72
-COMA                 : 16 22 23 24
-DECIMAL              : 27 56
+COMA                 : 15 21 22 23
+DECIMAL              : 26 56
 DIFERENTE            : 68
 DIVISION             : 47
 DOUBLE               : 70
 ELSE                 : 38 39 40 40
-ENTERO               : 26 55
-EXEC                 : 18
-FALSE                : 31 59
-ID                   : 14 15 16 18 20 23 41 42 43 50
+ENTERO               : 25 55
+EXEC                 : 17
+FALSE                : 30 59
+ID                   : 13 14 15 17 19 22 41 42 43 50
 IF                   : 37 38 39 39 40 40
 IGUAL                : 41 43
 IGUAL_IGUAL          : 67
 INT                  : 69
-LLAVE1               : 12 14 37 38 38 39 39 40 40 40
-LLAVE2               : 12 14 37 38 38 39 39 40 40 40
+LLAVE1               : 11 13
+LLAVE2               : 11 13
 MAS                  : 44
 MAYOR_IGUAL          : 65
 MAYOR_QUE            : 64
@@ -109,29 +109,29 @@ MENOR_QUE            : 66
 MENOS                : 45 51
 MODULO               : 49
 MULT                 : 46
-PAR1                 : 14 18 37 38 39 39 40 40 52 53 54
-PAR2                 : 14 18 37 38 39 39 40 40 52 53 54
+PAR1                 : 13 17 37 38 39 39 40 40 52 53 54
+PAR2                 : 13 17 37 38 39 39 40 40 52 53 54
 POTENCIA             : 48
 PRINT                : 52
 PRINTLN              : 53
-PROC                 : 14
-PUNTOCOMA            : 4 5 9 10 13 52 53
-PUNTOS               : 15 16
+PROC                 : 13
+PUNTOCOMA            : 4 5 8 9 12 52 53
+PUNTOS               : 14 15
 STRING               : 71
-TRUE                 : 30 58
+TRUE                 : 29 58
 error                : 
 
 Nonterminals, with rules where they appear
 
-Llamada              : 9
-PARAMETROS           : 14 16
-PARAMLLAMADA         : 18 22 23 24
-Procedimiento        : 8
-SBreak               : 7
-asignacion           : 10
-bloque               : 11
+Llamada              : 8
+PARAMETROS           : 13 15
+PARAMLLAMADA         : 17 21 22 23
+Procedimiento        : 7
+SBreak               : 6
+asignacion           : 9
+bloque               : 10 37 38 38 39 39 40 40 40
 declaracion          : 4
-empty                : 17 25
+empty                : 16 24
 expresion            : 5 37 38 39 39 40 40 41 43 44 44 45 45 46 46 47 47 48 48 49 49 51 52 53 54 63 63 64 64 65 65 66 66 67 67 68 68
 if_else              : 34
 if_elseif            : 35
@@ -139,10 +139,10 @@ if_elseif_else       : 36
 if_simple            : 33
 inicio               : 0
 instruccion          : 2 3
-instrucciones        : 1 2 12 14 37 38 38 39 39 40 40 40
-literal              : 19 22
-sent_IF              : 6
-tipos                : 15 16 41 42
+instrucciones        : 1 2 11 13
+literal              : 18 21
+sent_IF              : 32
+tipos                : 14 15 41 42
 
 Parsing method: LALR
 
@@ -154,12 +154,12 @@ state 0
     (3) instrucciones -> . instruccion
     (4) instruccion -> . declaracion PUNTOCOMA
     (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
+    (6) instruccion -> . SBreak
+    (7) instruccion -> . Procedimiento
+    (8) instruccion -> . Llamada PUNTOCOMA
+    (9) instruccion -> . asignacion PUNTOCOMA
+    (10) instruccion -> . bloque
+    (32) instruccion -> . sent_IF
     (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
     (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
     (41) declaracion -> . tipos ID IGUAL expresion
@@ -187,24 +187,24 @@ state 0
     (66) expresion -> . expresion MENOR_QUE expresion
     (67) expresion -> . expresion IGUAL_IGUAL expresion
     (68) expresion -> . expresion DIFERENTE expresion
+    (12) SBreak -> . BREAK PUNTOCOMA
+    (13) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
+    (17) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
+    (43) asignacion -> . ID IGUAL expresion
+    (11) bloque -> . LLAVE1 instrucciones LLAVE2
     (33) sent_IF -> . if_simple
     (34) sent_IF -> . if_else
     (35) sent_IF -> . if_elseif
     (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
     (69) tipos -> . INT
     (70) tipos -> . DOUBLE
     (71) tipos -> . STRING
     (72) tipos -> . CHAR
     (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (37) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (38) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (39) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (40) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
     PRINT           shift and go to state 12
     PRINTLN         shift and go to state 14
@@ -219,10 +219,10 @@ state 0
     BOOLEANO        shift and go to state 23
     CHAR            shift and go to state 24
     CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
+    BREAK           shift and go to state 26
+    PROC            shift and go to state 27
+    EXEC            shift and go to state 29
+    LLAVE1          shift and go to state 28
     INT             shift and go to state 34
     DOUBLE          shift and go to state 35
     STRING          shift and go to state 36
@@ -234,17 +234,17 @@ state 0
     instruccion                    shift and go to state 3
     declaracion                    shift and go to state 4
     expresion                      shift and go to state 5
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
+    SBreak                         shift and go to state 6
+    Procedimiento                  shift and go to state 7
+    Llamada                        shift and go to state 8
+    asignacion                     shift and go to state 9
+    bloque                         shift and go to state 10
+    sent_IF                        shift and go to state 11
     tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
+    if_simple                      shift and go to state 30
+    if_else                        shift and go to state 31
+    if_elseif                      shift and go to state 32
+    if_elseif_else                 shift and go to state 33
 
 state 1
 
@@ -258,12 +258,12 @@ state 2
     (2) instrucciones -> instrucciones . instruccion
     (4) instruccion -> . declaracion PUNTOCOMA
     (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
+    (6) instruccion -> . SBreak
+    (7) instruccion -> . Procedimiento
+    (8) instruccion -> . Llamada PUNTOCOMA
+    (9) instruccion -> . asignacion PUNTOCOMA
+    (10) instruccion -> . bloque
+    (32) instruccion -> . sent_IF
     (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
     (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
     (41) declaracion -> . tipos ID IGUAL expresion
@@ -291,24 +291,24 @@ state 2
     (66) expresion -> . expresion MENOR_QUE expresion
     (67) expresion -> . expresion IGUAL_IGUAL expresion
     (68) expresion -> . expresion DIFERENTE expresion
+    (12) SBreak -> . BREAK PUNTOCOMA
+    (13) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
+    (17) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
+    (43) asignacion -> . ID IGUAL expresion
+    (11) bloque -> . LLAVE1 instrucciones LLAVE2
     (33) sent_IF -> . if_simple
     (34) sent_IF -> . if_else
     (35) sent_IF -> . if_elseif
     (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
     (69) tipos -> . INT
     (70) tipos -> . DOUBLE
     (71) tipos -> . STRING
     (72) tipos -> . CHAR
     (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (37) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (38) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (39) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (40) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
     $end            reduce using rule 1 (inicio -> instrucciones .)
     PRINT           shift and go to state 12
@@ -324,10 +324,10 @@ state 2
     BOOLEANO        shift and go to state 23
     CHAR            shift and go to state 24
     CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
+    BREAK           shift and go to state 26
+    PROC            shift and go to state 27
+    EXEC            shift and go to state 29
+    LLAVE1          shift and go to state 28
     INT             shift and go to state 34
     DOUBLE          shift and go to state 35
     STRING          shift and go to state 36
@@ -337,17 +337,17 @@ state 2
     instruccion                    shift and go to state 39
     declaracion                    shift and go to state 4
     expresion                      shift and go to state 5
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
+    SBreak                         shift and go to state 6
+    Procedimiento                  shift and go to state 7
+    Llamada                        shift and go to state 8
+    asignacion                     shift and go to state 9
+    bloque                         shift and go to state 10
+    sent_IF                        shift and go to state 11
     tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
+    if_simple                      shift and go to state 30
+    if_else                        shift and go to state 31
+    if_elseif                      shift and go to state 32
+    if_elseif_else                 shift and go to state 33
 
 state 3
 
@@ -419,136 +419,136 @@ state 5
 
 state 6
 
-    (6) instruccion -> sent_IF .
+    (6) instruccion -> SBreak .
 
-    PRINT           reduce using rule 6 (instruccion -> sent_IF .)
-    PRINTLN         reduce using rule 6 (instruccion -> sent_IF .)
-    ID              reduce using rule 6 (instruccion -> sent_IF .)
-    MENOS           reduce using rule 6 (instruccion -> sent_IF .)
-    PAR1            reduce using rule 6 (instruccion -> sent_IF .)
-    ENTERO          reduce using rule 6 (instruccion -> sent_IF .)
-    DECIMAL         reduce using rule 6 (instruccion -> sent_IF .)
-    CADENA          reduce using rule 6 (instruccion -> sent_IF .)
-    TRUE            reduce using rule 6 (instruccion -> sent_IF .)
-    FALSE           reduce using rule 6 (instruccion -> sent_IF .)
-    BOOLEANO        reduce using rule 6 (instruccion -> sent_IF .)
-    CHAR            reduce using rule 6 (instruccion -> sent_IF .)
-    CARACTER        reduce using rule 6 (instruccion -> sent_IF .)
-    BREAK           reduce using rule 6 (instruccion -> sent_IF .)
-    PROC            reduce using rule 6 (instruccion -> sent_IF .)
-    EXEC            reduce using rule 6 (instruccion -> sent_IF .)
-    LLAVE1          reduce using rule 6 (instruccion -> sent_IF .)
-    INT             reduce using rule 6 (instruccion -> sent_IF .)
-    DOUBLE          reduce using rule 6 (instruccion -> sent_IF .)
-    STRING          reduce using rule 6 (instruccion -> sent_IF .)
-    BOOL            reduce using rule 6 (instruccion -> sent_IF .)
-    IF              reduce using rule 6 (instruccion -> sent_IF .)
-    $end            reduce using rule 6 (instruccion -> sent_IF .)
-    LLAVE2          reduce using rule 6 (instruccion -> sent_IF .)
+    PRINT           reduce using rule 6 (instruccion -> SBreak .)
+    PRINTLN         reduce using rule 6 (instruccion -> SBreak .)
+    ID              reduce using rule 6 (instruccion -> SBreak .)
+    MENOS           reduce using rule 6 (instruccion -> SBreak .)
+    PAR1            reduce using rule 6 (instruccion -> SBreak .)
+    ENTERO          reduce using rule 6 (instruccion -> SBreak .)
+    DECIMAL         reduce using rule 6 (instruccion -> SBreak .)
+    CADENA          reduce using rule 6 (instruccion -> SBreak .)
+    TRUE            reduce using rule 6 (instruccion -> SBreak .)
+    FALSE           reduce using rule 6 (instruccion -> SBreak .)
+    BOOLEANO        reduce using rule 6 (instruccion -> SBreak .)
+    CHAR            reduce using rule 6 (instruccion -> SBreak .)
+    CARACTER        reduce using rule 6 (instruccion -> SBreak .)
+    BREAK           reduce using rule 6 (instruccion -> SBreak .)
+    PROC            reduce using rule 6 (instruccion -> SBreak .)
+    EXEC            reduce using rule 6 (instruccion -> SBreak .)
+    LLAVE1          reduce using rule 6 (instruccion -> SBreak .)
+    INT             reduce using rule 6 (instruccion -> SBreak .)
+    DOUBLE          reduce using rule 6 (instruccion -> SBreak .)
+    STRING          reduce using rule 6 (instruccion -> SBreak .)
+    BOOL            reduce using rule 6 (instruccion -> SBreak .)
+    IF              reduce using rule 6 (instruccion -> SBreak .)
+    $end            reduce using rule 6 (instruccion -> SBreak .)
+    LLAVE2          reduce using rule 6 (instruccion -> SBreak .)
 
 
 state 7
 
-    (7) instruccion -> SBreak .
+    (7) instruccion -> Procedimiento .
 
-    PRINT           reduce using rule 7 (instruccion -> SBreak .)
-    PRINTLN         reduce using rule 7 (instruccion -> SBreak .)
-    ID              reduce using rule 7 (instruccion -> SBreak .)
-    MENOS           reduce using rule 7 (instruccion -> SBreak .)
-    PAR1            reduce using rule 7 (instruccion -> SBreak .)
-    ENTERO          reduce using rule 7 (instruccion -> SBreak .)
-    DECIMAL         reduce using rule 7 (instruccion -> SBreak .)
-    CADENA          reduce using rule 7 (instruccion -> SBreak .)
-    TRUE            reduce using rule 7 (instruccion -> SBreak .)
-    FALSE           reduce using rule 7 (instruccion -> SBreak .)
-    BOOLEANO        reduce using rule 7 (instruccion -> SBreak .)
-    CHAR            reduce using rule 7 (instruccion -> SBreak .)
-    CARACTER        reduce using rule 7 (instruccion -> SBreak .)
-    BREAK           reduce using rule 7 (instruccion -> SBreak .)
-    PROC            reduce using rule 7 (instruccion -> SBreak .)
-    EXEC            reduce using rule 7 (instruccion -> SBreak .)
-    LLAVE1          reduce using rule 7 (instruccion -> SBreak .)
-    INT             reduce using rule 7 (instruccion -> SBreak .)
-    DOUBLE          reduce using rule 7 (instruccion -> SBreak .)
-    STRING          reduce using rule 7 (instruccion -> SBreak .)
-    BOOL            reduce using rule 7 (instruccion -> SBreak .)
-    IF              reduce using rule 7 (instruccion -> SBreak .)
-    $end            reduce using rule 7 (instruccion -> SBreak .)
-    LLAVE2          reduce using rule 7 (instruccion -> SBreak .)
+    PRINT           reduce using rule 7 (instruccion -> Procedimiento .)
+    PRINTLN         reduce using rule 7 (instruccion -> Procedimiento .)
+    ID              reduce using rule 7 (instruccion -> Procedimiento .)
+    MENOS           reduce using rule 7 (instruccion -> Procedimiento .)
+    PAR1            reduce using rule 7 (instruccion -> Procedimiento .)
+    ENTERO          reduce using rule 7 (instruccion -> Procedimiento .)
+    DECIMAL         reduce using rule 7 (instruccion -> Procedimiento .)
+    CADENA          reduce using rule 7 (instruccion -> Procedimiento .)
+    TRUE            reduce using rule 7 (instruccion -> Procedimiento .)
+    FALSE           reduce using rule 7 (instruccion -> Procedimiento .)
+    BOOLEANO        reduce using rule 7 (instruccion -> Procedimiento .)
+    CHAR            reduce using rule 7 (instruccion -> Procedimiento .)
+    CARACTER        reduce using rule 7 (instruccion -> Procedimiento .)
+    BREAK           reduce using rule 7 (instruccion -> Procedimiento .)
+    PROC            reduce using rule 7 (instruccion -> Procedimiento .)
+    EXEC            reduce using rule 7 (instruccion -> Procedimiento .)
+    LLAVE1          reduce using rule 7 (instruccion -> Procedimiento .)
+    INT             reduce using rule 7 (instruccion -> Procedimiento .)
+    DOUBLE          reduce using rule 7 (instruccion -> Procedimiento .)
+    STRING          reduce using rule 7 (instruccion -> Procedimiento .)
+    BOOL            reduce using rule 7 (instruccion -> Procedimiento .)
+    IF              reduce using rule 7 (instruccion -> Procedimiento .)
+    $end            reduce using rule 7 (instruccion -> Procedimiento .)
+    LLAVE2          reduce using rule 7 (instruccion -> Procedimiento .)
 
 
 state 8
 
-    (8) instruccion -> Procedimiento .
-
-    PRINT           reduce using rule 8 (instruccion -> Procedimiento .)
-    PRINTLN         reduce using rule 8 (instruccion -> Procedimiento .)
-    ID              reduce using rule 8 (instruccion -> Procedimiento .)
-    MENOS           reduce using rule 8 (instruccion -> Procedimiento .)
-    PAR1            reduce using rule 8 (instruccion -> Procedimiento .)
-    ENTERO          reduce using rule 8 (instruccion -> Procedimiento .)
-    DECIMAL         reduce using rule 8 (instruccion -> Procedimiento .)
-    CADENA          reduce using rule 8 (instruccion -> Procedimiento .)
-    TRUE            reduce using rule 8 (instruccion -> Procedimiento .)
-    FALSE           reduce using rule 8 (instruccion -> Procedimiento .)
-    BOOLEANO        reduce using rule 8 (instruccion -> Procedimiento .)
-    CHAR            reduce using rule 8 (instruccion -> Procedimiento .)
-    CARACTER        reduce using rule 8 (instruccion -> Procedimiento .)
-    BREAK           reduce using rule 8 (instruccion -> Procedimiento .)
-    PROC            reduce using rule 8 (instruccion -> Procedimiento .)
-    EXEC            reduce using rule 8 (instruccion -> Procedimiento .)
-    LLAVE1          reduce using rule 8 (instruccion -> Procedimiento .)
-    INT             reduce using rule 8 (instruccion -> Procedimiento .)
-    DOUBLE          reduce using rule 8 (instruccion -> Procedimiento .)
-    STRING          reduce using rule 8 (instruccion -> Procedimiento .)
-    BOOL            reduce using rule 8 (instruccion -> Procedimiento .)
-    IF              reduce using rule 8 (instruccion -> Procedimiento .)
-    $end            reduce using rule 8 (instruccion -> Procedimiento .)
-    LLAVE2          reduce using rule 8 (instruccion -> Procedimiento .)
-
-
-state 9
-
-    (9) instruccion -> Llamada . PUNTOCOMA
+    (8) instruccion -> Llamada . PUNTOCOMA
 
     PUNTOCOMA       shift and go to state 54
 
 
-state 10
+state 9
 
-    (10) instruccion -> asignacion . PUNTOCOMA
+    (9) instruccion -> asignacion . PUNTOCOMA
 
     PUNTOCOMA       shift and go to state 55
 
 
+state 10
+
+    (10) instruccion -> bloque .
+
+    PRINT           reduce using rule 10 (instruccion -> bloque .)
+    PRINTLN         reduce using rule 10 (instruccion -> bloque .)
+    ID              reduce using rule 10 (instruccion -> bloque .)
+    MENOS           reduce using rule 10 (instruccion -> bloque .)
+    PAR1            reduce using rule 10 (instruccion -> bloque .)
+    ENTERO          reduce using rule 10 (instruccion -> bloque .)
+    DECIMAL         reduce using rule 10 (instruccion -> bloque .)
+    CADENA          reduce using rule 10 (instruccion -> bloque .)
+    TRUE            reduce using rule 10 (instruccion -> bloque .)
+    FALSE           reduce using rule 10 (instruccion -> bloque .)
+    BOOLEANO        reduce using rule 10 (instruccion -> bloque .)
+    CHAR            reduce using rule 10 (instruccion -> bloque .)
+    CARACTER        reduce using rule 10 (instruccion -> bloque .)
+    BREAK           reduce using rule 10 (instruccion -> bloque .)
+    PROC            reduce using rule 10 (instruccion -> bloque .)
+    EXEC            reduce using rule 10 (instruccion -> bloque .)
+    LLAVE1          reduce using rule 10 (instruccion -> bloque .)
+    INT             reduce using rule 10 (instruccion -> bloque .)
+    DOUBLE          reduce using rule 10 (instruccion -> bloque .)
+    STRING          reduce using rule 10 (instruccion -> bloque .)
+    BOOL            reduce using rule 10 (instruccion -> bloque .)
+    IF              reduce using rule 10 (instruccion -> bloque .)
+    $end            reduce using rule 10 (instruccion -> bloque .)
+    LLAVE2          reduce using rule 10 (instruccion -> bloque .)
+
+
 state 11
 
-    (11) instruccion -> bloque .
+    (32) instruccion -> sent_IF .
 
-    PRINT           reduce using rule 11 (instruccion -> bloque .)
-    PRINTLN         reduce using rule 11 (instruccion -> bloque .)
-    ID              reduce using rule 11 (instruccion -> bloque .)
-    MENOS           reduce using rule 11 (instruccion -> bloque .)
-    PAR1            reduce using rule 11 (instruccion -> bloque .)
-    ENTERO          reduce using rule 11 (instruccion -> bloque .)
-    DECIMAL         reduce using rule 11 (instruccion -> bloque .)
-    CADENA          reduce using rule 11 (instruccion -> bloque .)
-    TRUE            reduce using rule 11 (instruccion -> bloque .)
-    FALSE           reduce using rule 11 (instruccion -> bloque .)
-    BOOLEANO        reduce using rule 11 (instruccion -> bloque .)
-    CHAR            reduce using rule 11 (instruccion -> bloque .)
-    CARACTER        reduce using rule 11 (instruccion -> bloque .)
-    BREAK           reduce using rule 11 (instruccion -> bloque .)
-    PROC            reduce using rule 11 (instruccion -> bloque .)
-    EXEC            reduce using rule 11 (instruccion -> bloque .)
-    LLAVE1          reduce using rule 11 (instruccion -> bloque .)
-    INT             reduce using rule 11 (instruccion -> bloque .)
-    DOUBLE          reduce using rule 11 (instruccion -> bloque .)
-    STRING          reduce using rule 11 (instruccion -> bloque .)
-    BOOL            reduce using rule 11 (instruccion -> bloque .)
-    IF              reduce using rule 11 (instruccion -> bloque .)
-    $end            reduce using rule 11 (instruccion -> bloque .)
-    LLAVE2          reduce using rule 11 (instruccion -> bloque .)
+    PRINT           reduce using rule 32 (instruccion -> sent_IF .)
+    PRINTLN         reduce using rule 32 (instruccion -> sent_IF .)
+    ID              reduce using rule 32 (instruccion -> sent_IF .)
+    MENOS           reduce using rule 32 (instruccion -> sent_IF .)
+    PAR1            reduce using rule 32 (instruccion -> sent_IF .)
+    ENTERO          reduce using rule 32 (instruccion -> sent_IF .)
+    DECIMAL         reduce using rule 32 (instruccion -> sent_IF .)
+    CADENA          reduce using rule 32 (instruccion -> sent_IF .)
+    TRUE            reduce using rule 32 (instruccion -> sent_IF .)
+    FALSE           reduce using rule 32 (instruccion -> sent_IF .)
+    BOOLEANO        reduce using rule 32 (instruccion -> sent_IF .)
+    CHAR            reduce using rule 32 (instruccion -> sent_IF .)
+    CARACTER        reduce using rule 32 (instruccion -> sent_IF .)
+    BREAK           reduce using rule 32 (instruccion -> sent_IF .)
+    PROC            reduce using rule 32 (instruccion -> sent_IF .)
+    EXEC            reduce using rule 32 (instruccion -> sent_IF .)
+    LLAVE1          reduce using rule 32 (instruccion -> sent_IF .)
+    INT             reduce using rule 32 (instruccion -> sent_IF .)
+    DOUBLE          reduce using rule 32 (instruccion -> sent_IF .)
+    STRING          reduce using rule 32 (instruccion -> sent_IF .)
+    BOOL            reduce using rule 32 (instruccion -> sent_IF .)
+    IF              reduce using rule 32 (instruccion -> sent_IF .)
+    $end            reduce using rule 32 (instruccion -> sent_IF .)
+    LLAVE2          reduce using rule 32 (instruccion -> sent_IF .)
 
 
 state 12
@@ -839,6 +839,125 @@ state 25
 
 state 26
 
+    (12) SBreak -> BREAK . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 64
+
+
+state 27
+
+    (13) Procedimiento -> PROC . ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
+
+    ID              shift and go to state 65
+
+
+state 28
+
+    (11) bloque -> LLAVE1 . instrucciones LLAVE2
+    (2) instrucciones -> . instrucciones instruccion
+    (3) instrucciones -> . instruccion
+    (4) instruccion -> . declaracion PUNTOCOMA
+    (5) instruccion -> . expresion PUNTOCOMA
+    (6) instruccion -> . SBreak
+    (7) instruccion -> . Procedimiento
+    (8) instruccion -> . Llamada PUNTOCOMA
+    (9) instruccion -> . asignacion PUNTOCOMA
+    (10) instruccion -> . bloque
+    (32) instruccion -> . sent_IF
+    (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
+    (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
+    (41) declaracion -> . tipos ID IGUAL expresion
+    (42) declaracion -> . tipos ID
+    (44) expresion -> . expresion MAS expresion
+    (45) expresion -> . expresion MENOS expresion
+    (46) expresion -> . expresion MULT expresion
+    (47) expresion -> . expresion DIVISION expresion
+    (48) expresion -> . expresion POTENCIA expresion
+    (49) expresion -> . expresion MODULO expresion
+    (50) expresion -> . ID
+    (51) expresion -> . MENOS expresion
+    (54) expresion -> . PAR1 expresion PAR2
+    (55) expresion -> . ENTERO
+    (56) expresion -> . DECIMAL
+    (57) expresion -> . CADENA
+    (58) expresion -> . TRUE
+    (59) expresion -> . FALSE
+    (60) expresion -> . BOOLEANO
+    (61) expresion -> . CHAR
+    (62) expresion -> . CARACTER
+    (63) expresion -> . expresion MENOR_IGUAL expresion
+    (64) expresion -> . expresion MAYOR_QUE expresion
+    (65) expresion -> . expresion MAYOR_IGUAL expresion
+    (66) expresion -> . expresion MENOR_QUE expresion
+    (67) expresion -> . expresion IGUAL_IGUAL expresion
+    (68) expresion -> . expresion DIFERENTE expresion
+    (12) SBreak -> . BREAK PUNTOCOMA
+    (13) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
+    (17) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
+    (43) asignacion -> . ID IGUAL expresion
+    (11) bloque -> . LLAVE1 instrucciones LLAVE2
+    (33) sent_IF -> . if_simple
+    (34) sent_IF -> . if_else
+    (35) sent_IF -> . if_elseif
+    (36) sent_IF -> . if_elseif_else
+    (69) tipos -> . INT
+    (70) tipos -> . DOUBLE
+    (71) tipos -> . STRING
+    (72) tipos -> . CHAR
+    (73) tipos -> . BOOL
+    (37) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (38) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (39) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (40) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
+
+    PRINT           shift and go to state 12
+    PRINTLN         shift and go to state 14
+    ID              shift and go to state 16
+    MENOS           shift and go to state 17
+    PAR1            shift and go to state 13
+    ENTERO          shift and go to state 18
+    DECIMAL         shift and go to state 19
+    CADENA          shift and go to state 20
+    TRUE            shift and go to state 21
+    FALSE           shift and go to state 22
+    BOOLEANO        shift and go to state 23
+    CHAR            shift and go to state 24
+    CARACTER        shift and go to state 25
+    BREAK           shift and go to state 26
+    PROC            shift and go to state 27
+    EXEC            shift and go to state 29
+    LLAVE1          shift and go to state 28
+    INT             shift and go to state 34
+    DOUBLE          shift and go to state 35
+    STRING          shift and go to state 36
+    BOOL            shift and go to state 37
+    IF              shift and go to state 38
+
+    instrucciones                  shift and go to state 66
+    instruccion                    shift and go to state 3
+    declaracion                    shift and go to state 4
+    expresion                      shift and go to state 5
+    SBreak                         shift and go to state 6
+    Procedimiento                  shift and go to state 7
+    Llamada                        shift and go to state 8
+    asignacion                     shift and go to state 9
+    bloque                         shift and go to state 10
+    sent_IF                        shift and go to state 11
+    tipos                          shift and go to state 15
+    if_simple                      shift and go to state 30
+    if_else                        shift and go to state 31
+    if_elseif                      shift and go to state 32
+    if_elseif_else                 shift and go to state 33
+
+state 29
+
+    (17) Llamada -> EXEC . ID PAR1 PARAMLLAMADA PAR2
+
+    ID              shift and go to state 67
+
+
+state 30
+
     (33) sent_IF -> if_simple .
 
     PRINT           reduce using rule 33 (sent_IF -> if_simple .)
@@ -867,7 +986,7 @@ state 26
     LLAVE2          reduce using rule 33 (sent_IF -> if_simple .)
 
 
-state 27
+state 31
 
     (34) sent_IF -> if_else .
 
@@ -897,7 +1016,7 @@ state 27
     LLAVE2          reduce using rule 34 (sent_IF -> if_else .)
 
 
-state 28
+state 32
 
     (35) sent_IF -> if_elseif .
 
@@ -927,7 +1046,7 @@ state 28
     LLAVE2          reduce using rule 35 (sent_IF -> if_elseif .)
 
 
-state 29
+state 33
 
     (36) sent_IF -> if_elseif_else .
 
@@ -955,125 +1074,6 @@ state 29
     IF              reduce using rule 36 (sent_IF -> if_elseif_else .)
     $end            reduce using rule 36 (sent_IF -> if_elseif_else .)
     LLAVE2          reduce using rule 36 (sent_IF -> if_elseif_else .)
-
-
-state 30
-
-    (13) SBreak -> BREAK . PUNTOCOMA
-
-    PUNTOCOMA       shift and go to state 64
-
-
-state 31
-
-    (14) Procedimiento -> PROC . ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-
-    ID              shift and go to state 65
-
-
-state 32
-
-    (12) bloque -> LLAVE1 . instrucciones LLAVE2
-    (2) instrucciones -> . instrucciones instruccion
-    (3) instrucciones -> . instruccion
-    (4) instruccion -> . declaracion PUNTOCOMA
-    (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
-    (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
-    (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
-    (41) declaracion -> . tipos ID IGUAL expresion
-    (42) declaracion -> . tipos ID
-    (44) expresion -> . expresion MAS expresion
-    (45) expresion -> . expresion MENOS expresion
-    (46) expresion -> . expresion MULT expresion
-    (47) expresion -> . expresion DIVISION expresion
-    (48) expresion -> . expresion POTENCIA expresion
-    (49) expresion -> . expresion MODULO expresion
-    (50) expresion -> . ID
-    (51) expresion -> . MENOS expresion
-    (54) expresion -> . PAR1 expresion PAR2
-    (55) expresion -> . ENTERO
-    (56) expresion -> . DECIMAL
-    (57) expresion -> . CADENA
-    (58) expresion -> . TRUE
-    (59) expresion -> . FALSE
-    (60) expresion -> . BOOLEANO
-    (61) expresion -> . CHAR
-    (62) expresion -> . CARACTER
-    (63) expresion -> . expresion MENOR_IGUAL expresion
-    (64) expresion -> . expresion MAYOR_QUE expresion
-    (65) expresion -> . expresion MAYOR_IGUAL expresion
-    (66) expresion -> . expresion MENOR_QUE expresion
-    (67) expresion -> . expresion IGUAL_IGUAL expresion
-    (68) expresion -> . expresion DIFERENTE expresion
-    (33) sent_IF -> . if_simple
-    (34) sent_IF -> . if_else
-    (35) sent_IF -> . if_elseif
-    (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
-    (69) tipos -> . INT
-    (70) tipos -> . DOUBLE
-    (71) tipos -> . STRING
-    (72) tipos -> . CHAR
-    (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    PRINT           shift and go to state 12
-    PRINTLN         shift and go to state 14
-    ID              shift and go to state 16
-    MENOS           shift and go to state 17
-    PAR1            shift and go to state 13
-    ENTERO          shift and go to state 18
-    DECIMAL         shift and go to state 19
-    CADENA          shift and go to state 20
-    TRUE            shift and go to state 21
-    FALSE           shift and go to state 22
-    BOOLEANO        shift and go to state 23
-    CHAR            shift and go to state 24
-    CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
-    INT             shift and go to state 34
-    DOUBLE          shift and go to state 35
-    STRING          shift and go to state 36
-    BOOL            shift and go to state 37
-    IF              shift and go to state 38
-
-    instrucciones                  shift and go to state 66
-    instruccion                    shift and go to state 3
-    declaracion                    shift and go to state 4
-    expresion                      shift and go to state 5
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
-    tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
-
-state 33
-
-    (18) Llamada -> EXEC . ID PAR1 PARAMLLAMADA PAR2
-
-    ID              shift and go to state 67
 
 
 state 34
@@ -1110,10 +1110,10 @@ state 37
 
 state 38
 
-    (37) if_simple -> IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (37) if_simple -> IF . PAR1 expresion PAR2 bloque
+    (38) if_else -> IF . PAR1 expresion PAR2 bloque ELSE bloque
+    (39) if_elseif -> IF . PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (40) if_elseif_else -> IF . PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
     PAR1            shift and go to state 68
 
@@ -1702,62 +1702,62 @@ state 53
 
 state 54
 
-    (9) instruccion -> Llamada PUNTOCOMA .
+    (8) instruccion -> Llamada PUNTOCOMA .
 
-    PRINT           reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    PRINTLN         reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    ID              reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    MENOS           reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    PAR1            reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    ENTERO          reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    DECIMAL         reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    CADENA          reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    TRUE            reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    FALSE           reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    BOOLEANO        reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    CHAR            reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    CARACTER        reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    BREAK           reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    PROC            reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    EXEC            reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    LLAVE1          reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    INT             reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    DOUBLE          reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    STRING          reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    BOOL            reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    IF              reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    $end            reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
-    LLAVE2          reduce using rule 9 (instruccion -> Llamada PUNTOCOMA .)
+    PRINT           reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    PRINTLN         reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    ID              reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    MENOS           reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    PAR1            reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    ENTERO          reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    DECIMAL         reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    CADENA          reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    TRUE            reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    FALSE           reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    BOOLEANO        reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    CHAR            reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    CARACTER        reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    BREAK           reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    PROC            reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    EXEC            reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    LLAVE1          reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    INT             reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    DOUBLE          reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    STRING          reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    BOOL            reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    IF              reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    $end            reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
+    LLAVE2          reduce using rule 8 (instruccion -> Llamada PUNTOCOMA .)
 
 
 state 55
 
-    (10) instruccion -> asignacion PUNTOCOMA .
+    (9) instruccion -> asignacion PUNTOCOMA .
 
-    PRINT           reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    PRINTLN         reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    ID              reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    MENOS           reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    PAR1            reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    ENTERO          reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    DECIMAL         reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    CADENA          reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    TRUE            reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    FALSE           reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    BOOLEANO        reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    CHAR            reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    CARACTER        reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    BREAK           reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    PROC            reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    EXEC            reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    LLAVE1          reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    INT             reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    DOUBLE          reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    STRING          reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    BOOL            reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    IF              reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    $end            reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
-    LLAVE2          reduce using rule 10 (instruccion -> asignacion PUNTOCOMA .)
+    PRINT           reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    PRINTLN         reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    ID              reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    MENOS           reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    PAR1            reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    ENTERO          reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    DECIMAL         reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    CADENA          reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    TRUE            reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    FALSE           reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    BOOLEANO        reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    CHAR            reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    CARACTER        reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    BREAK           reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    PROC            reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    EXEC            reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    LLAVE1          reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    INT             reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    DOUBLE          reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    STRING          reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    BOOL            reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    IF              reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    $end            reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
+    LLAVE2          reduce using rule 9 (instruccion -> asignacion PUNTOCOMA .)
 
 
 state 56
@@ -2010,53 +2010,53 @@ state 63
 
 state 64
 
-    (13) SBreak -> BREAK PUNTOCOMA .
+    (12) SBreak -> BREAK PUNTOCOMA .
 
-    PRINT           reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    PRINTLN         reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    ID              reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    MENOS           reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    PAR1            reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    ENTERO          reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    DECIMAL         reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    CADENA          reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    TRUE            reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    FALSE           reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    BOOLEANO        reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    CHAR            reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    CARACTER        reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    BREAK           reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    PROC            reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    EXEC            reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    LLAVE1          reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    INT             reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    DOUBLE          reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    STRING          reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    BOOL            reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    IF              reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    $end            reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
-    LLAVE2          reduce using rule 13 (SBreak -> BREAK PUNTOCOMA .)
+    PRINT           reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    PRINTLN         reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    ID              reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    MENOS           reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    PAR1            reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    ENTERO          reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    DECIMAL         reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    CADENA          reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    TRUE            reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    FALSE           reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    BOOLEANO        reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    CHAR            reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    CARACTER        reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    BREAK           reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    PROC            reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    EXEC            reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    LLAVE1          reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    INT             reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    DOUBLE          reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    STRING          reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    BOOL            reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    IF              reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    $end            reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
+    LLAVE2          reduce using rule 12 (SBreak -> BREAK PUNTOCOMA .)
 
 
 state 65
 
-    (14) Procedimiento -> PROC ID . PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
+    (13) Procedimiento -> PROC ID . PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
 
     PAR1            shift and go to state 86
 
 
 state 66
 
-    (12) bloque -> LLAVE1 instrucciones . LLAVE2
+    (11) bloque -> LLAVE1 instrucciones . LLAVE2
     (2) instrucciones -> instrucciones . instruccion
     (4) instruccion -> . declaracion PUNTOCOMA
     (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
+    (6) instruccion -> . SBreak
+    (7) instruccion -> . Procedimiento
+    (8) instruccion -> . Llamada PUNTOCOMA
+    (9) instruccion -> . asignacion PUNTOCOMA
+    (10) instruccion -> . bloque
+    (32) instruccion -> . sent_IF
     (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
     (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
     (41) declaracion -> . tipos ID IGUAL expresion
@@ -2084,24 +2084,24 @@ state 66
     (66) expresion -> . expresion MENOR_QUE expresion
     (67) expresion -> . expresion IGUAL_IGUAL expresion
     (68) expresion -> . expresion DIFERENTE expresion
+    (12) SBreak -> . BREAK PUNTOCOMA
+    (13) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
+    (17) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
+    (43) asignacion -> . ID IGUAL expresion
+    (11) bloque -> . LLAVE1 instrucciones LLAVE2
     (33) sent_IF -> . if_simple
     (34) sent_IF -> . if_else
     (35) sent_IF -> . if_elseif
     (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
     (69) tipos -> . INT
     (70) tipos -> . DOUBLE
     (71) tipos -> . STRING
     (72) tipos -> . CHAR
     (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (37) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (38) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (39) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (40) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
     LLAVE2          shift and go to state 87
     PRINT           shift and go to state 12
@@ -2117,10 +2117,10 @@ state 66
     BOOLEANO        shift and go to state 23
     CHAR            shift and go to state 24
     CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
+    BREAK           shift and go to state 26
+    PROC            shift and go to state 27
+    EXEC            shift and go to state 29
+    LLAVE1          shift and go to state 28
     INT             shift and go to state 34
     DOUBLE          shift and go to state 35
     STRING          shift and go to state 36
@@ -2130,31 +2130,31 @@ state 66
     instruccion                    shift and go to state 39
     declaracion                    shift and go to state 4
     expresion                      shift and go to state 5
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
+    SBreak                         shift and go to state 6
+    Procedimiento                  shift and go to state 7
+    Llamada                        shift and go to state 8
+    asignacion                     shift and go to state 9
+    bloque                         shift and go to state 10
+    sent_IF                        shift and go to state 11
     tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
+    if_simple                      shift and go to state 30
+    if_else                        shift and go to state 31
+    if_elseif                      shift and go to state 32
+    if_elseif_else                 shift and go to state 33
 
 state 67
 
-    (18) Llamada -> EXEC ID . PAR1 PARAMLLAMADA PAR2
+    (17) Llamada -> EXEC ID . PAR1 PARAMLLAMADA PAR2
 
     PAR1            shift and go to state 88
 
 
 state 68
 
-    (37) if_simple -> IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (37) if_simple -> IF PAR1 . expresion PAR2 bloque
+    (38) if_else -> IF PAR1 . expresion PAR2 bloque ELSE bloque
+    (39) if_elseif -> IF PAR1 . expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (40) if_elseif_else -> IF PAR1 . expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
     (44) expresion -> . expresion MAS expresion
     (45) expresion -> . expresion MENOS expresion
     (46) expresion -> . expresion MULT expresion
@@ -2889,23 +2889,23 @@ state 85
 
 state 86
 
-    (14) Procedimiento -> PROC ID PAR1 . PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (15) PARAMETROS -> . tipos PUNTOS ID
-    (16) PARAMETROS -> . tipos PUNTOS ID COMA PARAMETROS
-    (17) PARAMETROS -> . empty
+    (13) Procedimiento -> PROC ID PAR1 . PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
+    (14) PARAMETROS -> . tipos PUNTOS ID
+    (15) PARAMETROS -> . tipos PUNTOS ID COMA PARAMETROS
+    (16) PARAMETROS -> . empty
     (69) tipos -> . INT
     (70) tipos -> . DOUBLE
     (71) tipos -> . STRING
     (72) tipos -> . CHAR
     (73) tipos -> . BOOL
-    (32) empty -> .
+    (31) empty -> .
 
     INT             shift and go to state 34
     DOUBLE          shift and go to state 35
     STRING          shift and go to state 36
     CHAR            shift and go to state 96
     BOOL            shift and go to state 37
-    PAR2            reduce using rule 32 (empty -> .)
+    PAR2            reduce using rule 31 (empty -> .)
 
     PARAMETROS                     shift and go to state 93
     tipos                          shift and go to state 94
@@ -2913,51 +2913,52 @@ state 86
 
 state 87
 
-    (12) bloque -> LLAVE1 instrucciones LLAVE2 .
+    (11) bloque -> LLAVE1 instrucciones LLAVE2 .
 
-    PRINT           reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    PRINTLN         reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    ID              reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    MENOS           reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    PAR1            reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    ENTERO          reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    DECIMAL         reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    CADENA          reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    TRUE            reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    FALSE           reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    BOOLEANO        reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    CHAR            reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    CARACTER        reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    BREAK           reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    PROC            reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    EXEC            reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    LLAVE1          reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    INT             reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    DOUBLE          reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    STRING          reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    BOOL            reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    IF              reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    $end            reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
-    LLAVE2          reduce using rule 12 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    PRINT           reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    PRINTLN         reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    ID              reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    MENOS           reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    PAR1            reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    ENTERO          reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    DECIMAL         reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    CADENA          reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    TRUE            reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    FALSE           reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    BOOLEANO        reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    CHAR            reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    CARACTER        reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    BREAK           reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    PROC            reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    EXEC            reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    LLAVE1          reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    INT             reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    DOUBLE          reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    STRING          reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    BOOL            reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    IF              reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    $end            reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    LLAVE2          reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
+    ELSE            reduce using rule 11 (bloque -> LLAVE1 instrucciones LLAVE2 .)
 
 
 state 88
 
-    (18) Llamada -> EXEC ID PAR1 . PARAMLLAMADA PAR2
-    (19) PARAMLLAMADA -> . literal
-    (20) PARAMLLAMADA -> . ID
-    (21) PARAMLLAMADA -> . BOOLEANO
-    (22) PARAMLLAMADA -> . PARAMLLAMADA COMA literal
-    (23) PARAMLLAMADA -> . PARAMLLAMADA COMA ID
-    (24) PARAMLLAMADA -> . PARAMLLAMADA COMA BOOLEANO
-    (25) PARAMLLAMADA -> . empty
-    (26) literal -> . ENTERO
-    (27) literal -> . DECIMAL
-    (28) literal -> . CARACTER
-    (29) literal -> . CADENA
-    (30) literal -> . TRUE
-    (31) literal -> . FALSE
-    (32) empty -> .
+    (17) Llamada -> EXEC ID PAR1 . PARAMLLAMADA PAR2
+    (18) PARAMLLAMADA -> . literal
+    (19) PARAMLLAMADA -> . ID
+    (20) PARAMLLAMADA -> . BOOLEANO
+    (21) PARAMLLAMADA -> . PARAMLLAMADA COMA literal
+    (22) PARAMLLAMADA -> . PARAMLLAMADA COMA ID
+    (23) PARAMLLAMADA -> . PARAMLLAMADA COMA BOOLEANO
+    (24) PARAMLLAMADA -> . empty
+    (25) literal -> . ENTERO
+    (26) literal -> . DECIMAL
+    (27) literal -> . CARACTER
+    (28) literal -> . CADENA
+    (29) literal -> . TRUE
+    (30) literal -> . FALSE
+    (31) empty -> .
 
     ID              shift and go to state 97
     BOOLEANO        shift and go to state 100
@@ -2967,8 +2968,8 @@ state 88
     CADENA          shift and go to state 105
     TRUE            shift and go to state 106
     FALSE           shift and go to state 107
-    PAR2            reduce using rule 32 (empty -> .)
-    COMA            reduce using rule 32 (empty -> .)
+    PAR2            reduce using rule 31 (empty -> .)
+    COMA            reduce using rule 31 (empty -> .)
 
     PARAMLLAMADA                   shift and go to state 98
     literal                        shift and go to state 99
@@ -2976,10 +2977,10 @@ state 88
 
 state 89
 
-    (37) if_simple -> IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (37) if_simple -> IF PAR1 expresion . PAR2 bloque
+    (38) if_else -> IF PAR1 expresion . PAR2 bloque ELSE bloque
+    (39) if_elseif -> IF PAR1 expresion . PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (40) if_elseif_else -> IF PAR1 expresion . PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
     (44) expresion -> expresion . MAS expresion
     (45) expresion -> expresion . MENOS expresion
     (46) expresion -> expresion . MULT expresion
@@ -3055,24 +3056,24 @@ state 92
 
 state 93
 
-    (14) Procedimiento -> PROC ID PAR1 PARAMETROS . PAR2 LLAVE1 instrucciones LLAVE2
+    (13) Procedimiento -> PROC ID PAR1 PARAMETROS . PAR2 LLAVE1 instrucciones LLAVE2
 
     PAR2            shift and go to state 111
 
 
 state 94
 
-    (15) PARAMETROS -> tipos . PUNTOS ID
-    (16) PARAMETROS -> tipos . PUNTOS ID COMA PARAMETROS
+    (14) PARAMETROS -> tipos . PUNTOS ID
+    (15) PARAMETROS -> tipos . PUNTOS ID COMA PARAMETROS
 
     PUNTOS          shift and go to state 112
 
 
 state 95
 
-    (17) PARAMETROS -> empty .
+    (16) PARAMETROS -> empty .
 
-    PAR2            reduce using rule 17 (PARAMETROS -> empty .)
+    PAR2            reduce using rule 16 (PARAMETROS -> empty .)
 
 
 state 96
@@ -3084,18 +3085,18 @@ state 96
 
 state 97
 
-    (20) PARAMLLAMADA -> ID .
+    (19) PARAMLLAMADA -> ID .
 
-    PAR2            reduce using rule 20 (PARAMLLAMADA -> ID .)
-    COMA            reduce using rule 20 (PARAMLLAMADA -> ID .)
+    PAR2            reduce using rule 19 (PARAMLLAMADA -> ID .)
+    COMA            reduce using rule 19 (PARAMLLAMADA -> ID .)
 
 
 state 98
 
-    (18) Llamada -> EXEC ID PAR1 PARAMLLAMADA . PAR2
-    (22) PARAMLLAMADA -> PARAMLLAMADA . COMA literal
-    (23) PARAMLLAMADA -> PARAMLLAMADA . COMA ID
-    (24) PARAMLLAMADA -> PARAMLLAMADA . COMA BOOLEANO
+    (17) Llamada -> EXEC ID PAR1 PARAMLLAMADA . PAR2
+    (21) PARAMLLAMADA -> PARAMLLAMADA . COMA literal
+    (22) PARAMLLAMADA -> PARAMLLAMADA . COMA ID
+    (23) PARAMLLAMADA -> PARAMLLAMADA . COMA BOOLEANO
 
     PAR2            shift and go to state 113
     COMA            shift and go to state 114
@@ -3103,85 +3104,87 @@ state 98
 
 state 99
 
-    (19) PARAMLLAMADA -> literal .
+    (18) PARAMLLAMADA -> literal .
 
-    PAR2            reduce using rule 19 (PARAMLLAMADA -> literal .)
-    COMA            reduce using rule 19 (PARAMLLAMADA -> literal .)
+    PAR2            reduce using rule 18 (PARAMLLAMADA -> literal .)
+    COMA            reduce using rule 18 (PARAMLLAMADA -> literal .)
 
 
 state 100
 
-    (21) PARAMLLAMADA -> BOOLEANO .
+    (20) PARAMLLAMADA -> BOOLEANO .
 
-    PAR2            reduce using rule 21 (PARAMLLAMADA -> BOOLEANO .)
-    COMA            reduce using rule 21 (PARAMLLAMADA -> BOOLEANO .)
+    PAR2            reduce using rule 20 (PARAMLLAMADA -> BOOLEANO .)
+    COMA            reduce using rule 20 (PARAMLLAMADA -> BOOLEANO .)
 
 
 state 101
 
-    (25) PARAMLLAMADA -> empty .
+    (24) PARAMLLAMADA -> empty .
 
-    PAR2            reduce using rule 25 (PARAMLLAMADA -> empty .)
-    COMA            reduce using rule 25 (PARAMLLAMADA -> empty .)
+    PAR2            reduce using rule 24 (PARAMLLAMADA -> empty .)
+    COMA            reduce using rule 24 (PARAMLLAMADA -> empty .)
 
 
 state 102
 
-    (26) literal -> ENTERO .
+    (25) literal -> ENTERO .
 
-    PAR2            reduce using rule 26 (literal -> ENTERO .)
-    COMA            reduce using rule 26 (literal -> ENTERO .)
+    PAR2            reduce using rule 25 (literal -> ENTERO .)
+    COMA            reduce using rule 25 (literal -> ENTERO .)
 
 
 state 103
 
-    (27) literal -> DECIMAL .
+    (26) literal -> DECIMAL .
 
-    PAR2            reduce using rule 27 (literal -> DECIMAL .)
-    COMA            reduce using rule 27 (literal -> DECIMAL .)
+    PAR2            reduce using rule 26 (literal -> DECIMAL .)
+    COMA            reduce using rule 26 (literal -> DECIMAL .)
 
 
 state 104
 
-    (28) literal -> CARACTER .
+    (27) literal -> CARACTER .
 
-    PAR2            reduce using rule 28 (literal -> CARACTER .)
-    COMA            reduce using rule 28 (literal -> CARACTER .)
+    PAR2            reduce using rule 27 (literal -> CARACTER .)
+    COMA            reduce using rule 27 (literal -> CARACTER .)
 
 
 state 105
 
-    (29) literal -> CADENA .
+    (28) literal -> CADENA .
 
-    PAR2            reduce using rule 29 (literal -> CADENA .)
-    COMA            reduce using rule 29 (literal -> CADENA .)
+    PAR2            reduce using rule 28 (literal -> CADENA .)
+    COMA            reduce using rule 28 (literal -> CADENA .)
 
 
 state 106
 
-    (30) literal -> TRUE .
+    (29) literal -> TRUE .
 
-    PAR2            reduce using rule 30 (literal -> TRUE .)
-    COMA            reduce using rule 30 (literal -> TRUE .)
+    PAR2            reduce using rule 29 (literal -> TRUE .)
+    COMA            reduce using rule 29 (literal -> TRUE .)
 
 
 state 107
 
-    (31) literal -> FALSE .
+    (30) literal -> FALSE .
 
-    PAR2            reduce using rule 31 (literal -> FALSE .)
-    COMA            reduce using rule 31 (literal -> FALSE .)
+    PAR2            reduce using rule 30 (literal -> FALSE .)
+    COMA            reduce using rule 30 (literal -> FALSE .)
 
 
 state 108
 
-    (37) if_simple -> IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2
-    (38) if_else -> IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (37) if_simple -> IF PAR1 expresion PAR2 . bloque
+    (38) if_else -> IF PAR1 expresion PAR2 . bloque ELSE bloque
+    (39) if_elseif -> IF PAR1 expresion PAR2 . bloque ELSE IF PAR1 expresion PAR2 bloque
+    (40) if_elseif_else -> IF PAR1 expresion PAR2 . bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
+    (11) bloque -> . LLAVE1 instrucciones LLAVE2
 
-    LLAVE1          shift and go to state 115
+    LLAVE1          shift and go to state 28
 
+    bloque                         shift and go to state 115
 
 state 109
 
@@ -3245,37 +3248,37 @@ state 110
 
 state 111
 
-    (14) Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 . LLAVE1 instrucciones LLAVE2
+    (13) Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 . LLAVE1 instrucciones LLAVE2
 
     LLAVE1          shift and go to state 116
 
 
 state 112
 
-    (15) PARAMETROS -> tipos PUNTOS . ID
-    (16) PARAMETROS -> tipos PUNTOS . ID COMA PARAMETROS
+    (14) PARAMETROS -> tipos PUNTOS . ID
+    (15) PARAMETROS -> tipos PUNTOS . ID COMA PARAMETROS
 
     ID              shift and go to state 117
 
 
 state 113
 
-    (18) Llamada -> EXEC ID PAR1 PARAMLLAMADA PAR2 .
+    (17) Llamada -> EXEC ID PAR1 PARAMLLAMADA PAR2 .
 
-    PUNTOCOMA       reduce using rule 18 (Llamada -> EXEC ID PAR1 PARAMLLAMADA PAR2 .)
+    PUNTOCOMA       reduce using rule 17 (Llamada -> EXEC ID PAR1 PARAMLLAMADA PAR2 .)
 
 
 state 114
 
-    (22) PARAMLLAMADA -> PARAMLLAMADA COMA . literal
-    (23) PARAMLLAMADA -> PARAMLLAMADA COMA . ID
-    (24) PARAMLLAMADA -> PARAMLLAMADA COMA . BOOLEANO
-    (26) literal -> . ENTERO
-    (27) literal -> . DECIMAL
-    (28) literal -> . CARACTER
-    (29) literal -> . CADENA
-    (30) literal -> . TRUE
-    (31) literal -> . FALSE
+    (21) PARAMLLAMADA -> PARAMLLAMADA COMA . literal
+    (22) PARAMLLAMADA -> PARAMLLAMADA COMA . ID
+    (23) PARAMLLAMADA -> PARAMLLAMADA COMA . BOOLEANO
+    (25) literal -> . ENTERO
+    (26) literal -> . DECIMAL
+    (27) literal -> . CARACTER
+    (28) literal -> . CADENA
+    (29) literal -> . TRUE
+    (30) literal -> . FALSE
 
     ID              shift and go to state 119
     BOOLEANO        shift and go to state 120
@@ -3290,118 +3293,51 @@ state 114
 
 state 115
 
-    (37) if_simple -> IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2
-    (38) if_else -> IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (2) instrucciones -> . instrucciones instruccion
-    (3) instrucciones -> . instruccion
-    (4) instruccion -> . declaracion PUNTOCOMA
-    (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
-    (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
-    (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
-    (41) declaracion -> . tipos ID IGUAL expresion
-    (42) declaracion -> . tipos ID
-    (44) expresion -> . expresion MAS expresion
-    (45) expresion -> . expresion MENOS expresion
-    (46) expresion -> . expresion MULT expresion
-    (47) expresion -> . expresion DIVISION expresion
-    (48) expresion -> . expresion POTENCIA expresion
-    (49) expresion -> . expresion MODULO expresion
-    (50) expresion -> . ID
-    (51) expresion -> . MENOS expresion
-    (54) expresion -> . PAR1 expresion PAR2
-    (55) expresion -> . ENTERO
-    (56) expresion -> . DECIMAL
-    (57) expresion -> . CADENA
-    (58) expresion -> . TRUE
-    (59) expresion -> . FALSE
-    (60) expresion -> . BOOLEANO
-    (61) expresion -> . CHAR
-    (62) expresion -> . CARACTER
-    (63) expresion -> . expresion MENOR_IGUAL expresion
-    (64) expresion -> . expresion MAYOR_QUE expresion
-    (65) expresion -> . expresion MAYOR_IGUAL expresion
-    (66) expresion -> . expresion MENOR_QUE expresion
-    (67) expresion -> . expresion IGUAL_IGUAL expresion
-    (68) expresion -> . expresion DIFERENTE expresion
-    (33) sent_IF -> . if_simple
-    (34) sent_IF -> . if_else
-    (35) sent_IF -> . if_elseif
-    (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
-    (69) tipos -> . INT
-    (70) tipos -> . DOUBLE
-    (71) tipos -> . STRING
-    (72) tipos -> . CHAR
-    (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (37) if_simple -> IF PAR1 expresion PAR2 bloque .
+    (38) if_else -> IF PAR1 expresion PAR2 bloque . ELSE bloque
+    (39) if_elseif -> IF PAR1 expresion PAR2 bloque . ELSE IF PAR1 expresion PAR2 bloque
+    (40) if_elseif_else -> IF PAR1 expresion PAR2 bloque . ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
-    PRINT           shift and go to state 12
-    PRINTLN         shift and go to state 14
-    ID              shift and go to state 16
-    MENOS           shift and go to state 17
-    PAR1            shift and go to state 13
-    ENTERO          shift and go to state 18
-    DECIMAL         shift and go to state 19
-    CADENA          shift and go to state 20
-    TRUE            shift and go to state 21
-    FALSE           shift and go to state 22
-    BOOLEANO        shift and go to state 23
-    CHAR            shift and go to state 24
-    CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
-    INT             shift and go to state 34
-    DOUBLE          shift and go to state 35
-    STRING          shift and go to state 36
-    BOOL            shift and go to state 37
-    IF              shift and go to state 38
+    PRINT           reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    PRINTLN         reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    ID              reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    MENOS           reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    PAR1            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    ENTERO          reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    DECIMAL         reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    CADENA          reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    TRUE            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    FALSE           reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    BOOLEANO        reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    CHAR            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    CARACTER        reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    BREAK           reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    PROC            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    EXEC            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    LLAVE1          reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    INT             reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    DOUBLE          reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    STRING          reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    BOOL            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    IF              reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    $end            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    LLAVE2          reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 bloque .)
+    ELSE            shift and go to state 121
 
-    expresion                      shift and go to state 5
-    instrucciones                  shift and go to state 121
-    instruccion                    shift and go to state 3
-    declaracion                    shift and go to state 4
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
-    tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
 
 state 116
 
-    (14) Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 . instrucciones LLAVE2
+    (13) Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 . instrucciones LLAVE2
     (2) instrucciones -> . instrucciones instruccion
     (3) instrucciones -> . instruccion
     (4) instruccion -> . declaracion PUNTOCOMA
     (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
+    (6) instruccion -> . SBreak
+    (7) instruccion -> . Procedimiento
+    (8) instruccion -> . Llamada PUNTOCOMA
+    (9) instruccion -> . asignacion PUNTOCOMA
+    (10) instruccion -> . bloque
+    (32) instruccion -> . sent_IF
     (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
     (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
     (41) declaracion -> . tipos ID IGUAL expresion
@@ -3429,24 +3365,24 @@ state 116
     (66) expresion -> . expresion MENOR_QUE expresion
     (67) expresion -> . expresion IGUAL_IGUAL expresion
     (68) expresion -> . expresion DIFERENTE expresion
+    (12) SBreak -> . BREAK PUNTOCOMA
+    (13) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
+    (17) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
+    (43) asignacion -> . ID IGUAL expresion
+    (11) bloque -> . LLAVE1 instrucciones LLAVE2
     (33) sent_IF -> . if_simple
     (34) sent_IF -> . if_else
     (35) sent_IF -> . if_elseif
     (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
     (69) tipos -> . INT
     (70) tipos -> . DOUBLE
     (71) tipos -> . STRING
     (72) tipos -> . CHAR
     (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (37) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (38) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (39) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (40) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
     PRINT           shift and go to state 12
     PRINTLN         shift and go to state 14
@@ -3461,10 +3397,10 @@ state 116
     BOOLEANO        shift and go to state 23
     CHAR            shift and go to state 24
     CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
+    BREAK           shift and go to state 26
+    PROC            shift and go to state 27
+    EXEC            shift and go to state 29
+    LLAVE1          shift and go to state 28
     INT             shift and go to state 34
     DOUBLE          shift and go to state 35
     STRING          shift and go to state 36
@@ -3475,163 +3411,75 @@ state 116
     instruccion                    shift and go to state 3
     declaracion                    shift and go to state 4
     expresion                      shift and go to state 5
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
+    SBreak                         shift and go to state 6
+    Procedimiento                  shift and go to state 7
+    Llamada                        shift and go to state 8
+    asignacion                     shift and go to state 9
+    bloque                         shift and go to state 10
+    sent_IF                        shift and go to state 11
     tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
+    if_simple                      shift and go to state 30
+    if_else                        shift and go to state 31
+    if_elseif                      shift and go to state 32
+    if_elseif_else                 shift and go to state 33
 
 state 117
 
-    (15) PARAMETROS -> tipos PUNTOS ID .
-    (16) PARAMETROS -> tipos PUNTOS ID . COMA PARAMETROS
+    (14) PARAMETROS -> tipos PUNTOS ID .
+    (15) PARAMETROS -> tipos PUNTOS ID . COMA PARAMETROS
 
-    PAR2            reduce using rule 15 (PARAMETROS -> tipos PUNTOS ID .)
+    PAR2            reduce using rule 14 (PARAMETROS -> tipos PUNTOS ID .)
     COMA            shift and go to state 123
 
 
 state 118
 
-    (22) PARAMLLAMADA -> PARAMLLAMADA COMA literal .
+    (21) PARAMLLAMADA -> PARAMLLAMADA COMA literal .
 
-    PAR2            reduce using rule 22 (PARAMLLAMADA -> PARAMLLAMADA COMA literal .)
-    COMA            reduce using rule 22 (PARAMLLAMADA -> PARAMLLAMADA COMA literal .)
+    PAR2            reduce using rule 21 (PARAMLLAMADA -> PARAMLLAMADA COMA literal .)
+    COMA            reduce using rule 21 (PARAMLLAMADA -> PARAMLLAMADA COMA literal .)
 
 
 state 119
 
-    (23) PARAMLLAMADA -> PARAMLLAMADA COMA ID .
+    (22) PARAMLLAMADA -> PARAMLLAMADA COMA ID .
 
-    PAR2            reduce using rule 23 (PARAMLLAMADA -> PARAMLLAMADA COMA ID .)
-    COMA            reduce using rule 23 (PARAMLLAMADA -> PARAMLLAMADA COMA ID .)
+    PAR2            reduce using rule 22 (PARAMLLAMADA -> PARAMLLAMADA COMA ID .)
+    COMA            reduce using rule 22 (PARAMLLAMADA -> PARAMLLAMADA COMA ID .)
 
 
 state 120
 
-    (24) PARAMLLAMADA -> PARAMLLAMADA COMA BOOLEANO .
+    (23) PARAMLLAMADA -> PARAMLLAMADA COMA BOOLEANO .
 
-    PAR2            reduce using rule 24 (PARAMLLAMADA -> PARAMLLAMADA COMA BOOLEANO .)
-    COMA            reduce using rule 24 (PARAMLLAMADA -> PARAMLLAMADA COMA BOOLEANO .)
+    PAR2            reduce using rule 23 (PARAMLLAMADA -> PARAMLLAMADA COMA BOOLEANO .)
+    COMA            reduce using rule 23 (PARAMLLAMADA -> PARAMLLAMADA COMA BOOLEANO .)
 
 
 state 121
 
-    (37) if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2
-    (38) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (2) instrucciones -> instrucciones . instruccion
-    (4) instruccion -> . declaracion PUNTOCOMA
-    (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
-    (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
-    (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
-    (41) declaracion -> . tipos ID IGUAL expresion
-    (42) declaracion -> . tipos ID
-    (44) expresion -> . expresion MAS expresion
-    (45) expresion -> . expresion MENOS expresion
-    (46) expresion -> . expresion MULT expresion
-    (47) expresion -> . expresion DIVISION expresion
-    (48) expresion -> . expresion POTENCIA expresion
-    (49) expresion -> . expresion MODULO expresion
-    (50) expresion -> . ID
-    (51) expresion -> . MENOS expresion
-    (54) expresion -> . PAR1 expresion PAR2
-    (55) expresion -> . ENTERO
-    (56) expresion -> . DECIMAL
-    (57) expresion -> . CADENA
-    (58) expresion -> . TRUE
-    (59) expresion -> . FALSE
-    (60) expresion -> . BOOLEANO
-    (61) expresion -> . CHAR
-    (62) expresion -> . CARACTER
-    (63) expresion -> . expresion MENOR_IGUAL expresion
-    (64) expresion -> . expresion MAYOR_QUE expresion
-    (65) expresion -> . expresion MAYOR_IGUAL expresion
-    (66) expresion -> . expresion MENOR_QUE expresion
-    (67) expresion -> . expresion IGUAL_IGUAL expresion
-    (68) expresion -> . expresion DIFERENTE expresion
-    (33) sent_IF -> . if_simple
-    (34) sent_IF -> . if_else
-    (35) sent_IF -> . if_elseif
-    (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
-    (69) tipos -> . INT
-    (70) tipos -> . DOUBLE
-    (71) tipos -> . STRING
-    (72) tipos -> . CHAR
-    (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (38) if_else -> IF PAR1 expresion PAR2 bloque ELSE . bloque
+    (39) if_elseif -> IF PAR1 expresion PAR2 bloque ELSE . IF PAR1 expresion PAR2 bloque
+    (40) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (11) bloque -> . LLAVE1 instrucciones LLAVE2
 
-    LLAVE2          shift and go to state 124
-    PRINT           shift and go to state 12
-    PRINTLN         shift and go to state 14
-    ID              shift and go to state 16
-    MENOS           shift and go to state 17
-    PAR1            shift and go to state 13
-    ENTERO          shift and go to state 18
-    DECIMAL         shift and go to state 19
-    CADENA          shift and go to state 20
-    TRUE            shift and go to state 21
-    FALSE           shift and go to state 22
-    BOOLEANO        shift and go to state 23
-    CHAR            shift and go to state 24
-    CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
-    INT             shift and go to state 34
-    DOUBLE          shift and go to state 35
-    STRING          shift and go to state 36
-    BOOL            shift and go to state 37
-    IF              shift and go to state 38
+    IF              shift and go to state 124
+    LLAVE1          shift and go to state 28
 
-    expresion                      shift and go to state 5
-    instruccion                    shift and go to state 39
-    declaracion                    shift and go to state 4
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
-    tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
+    bloque                         shift and go to state 125
 
 state 122
 
-    (14) Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones . LLAVE2
+    (13) Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones . LLAVE2
     (2) instrucciones -> instrucciones . instruccion
     (4) instruccion -> . declaracion PUNTOCOMA
     (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
+    (6) instruccion -> . SBreak
+    (7) instruccion -> . Procedimiento
+    (8) instruccion -> . Llamada PUNTOCOMA
+    (9) instruccion -> . asignacion PUNTOCOMA
+    (10) instruccion -> . bloque
+    (32) instruccion -> . sent_IF
     (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
     (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
     (41) declaracion -> . tipos ID IGUAL expresion
@@ -3659,26 +3507,26 @@ state 122
     (66) expresion -> . expresion MENOR_QUE expresion
     (67) expresion -> . expresion IGUAL_IGUAL expresion
     (68) expresion -> . expresion DIFERENTE expresion
+    (12) SBreak -> . BREAK PUNTOCOMA
+    (13) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
+    (17) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
+    (43) asignacion -> . ID IGUAL expresion
+    (11) bloque -> . LLAVE1 instrucciones LLAVE2
     (33) sent_IF -> . if_simple
     (34) sent_IF -> . if_else
     (35) sent_IF -> . if_elseif
     (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
     (69) tipos -> . INT
     (70) tipos -> . DOUBLE
     (71) tipos -> . STRING
     (72) tipos -> . CHAR
     (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (37) if_simple -> . IF PAR1 expresion PAR2 bloque
+    (38) if_else -> . IF PAR1 expresion PAR2 bloque ELSE bloque
+    (39) if_elseif -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque
+    (40) if_elseif_else -> . IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque
 
-    LLAVE2          shift and go to state 125
+    LLAVE2          shift and go to state 126
     PRINT           shift and go to state 12
     PRINTLN         shift and go to state 14
     ID              shift and go to state 16
@@ -3692,10 +3540,10 @@ state 122
     BOOLEANO        shift and go to state 23
     CHAR            shift and go to state 24
     CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
+    BREAK           shift and go to state 26
+    PROC            shift and go to state 27
+    EXEC            shift and go to state 29
+    LLAVE1          shift and go to state 28
     INT             shift and go to state 34
     DOUBLE          shift and go to state 35
     STRING          shift and go to state 36
@@ -3705,233 +3553,121 @@ state 122
     instruccion                    shift and go to state 39
     declaracion                    shift and go to state 4
     expresion                      shift and go to state 5
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
+    SBreak                         shift and go to state 6
+    Procedimiento                  shift and go to state 7
+    Llamada                        shift and go to state 8
+    asignacion                     shift and go to state 9
+    bloque                         shift and go to state 10
+    sent_IF                        shift and go to state 11
     tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
+    if_simple                      shift and go to state 30
+    if_else                        shift and go to state 31
+    if_elseif                      shift and go to state 32
+    if_elseif_else                 shift and go to state 33
 
 state 123
 
-    (16) PARAMETROS -> tipos PUNTOS ID COMA . PARAMETROS
-    (15) PARAMETROS -> . tipos PUNTOS ID
-    (16) PARAMETROS -> . tipos PUNTOS ID COMA PARAMETROS
-    (17) PARAMETROS -> . empty
+    (15) PARAMETROS -> tipos PUNTOS ID COMA . PARAMETROS
+    (14) PARAMETROS -> . tipos PUNTOS ID
+    (15) PARAMETROS -> . tipos PUNTOS ID COMA PARAMETROS
+    (16) PARAMETROS -> . empty
     (69) tipos -> . INT
     (70) tipos -> . DOUBLE
     (71) tipos -> . STRING
     (72) tipos -> . CHAR
     (73) tipos -> . BOOL
-    (32) empty -> .
+    (31) empty -> .
 
     INT             shift and go to state 34
     DOUBLE          shift and go to state 35
     STRING          shift and go to state 36
     CHAR            shift and go to state 96
     BOOL            shift and go to state 37
-    PAR2            reduce using rule 32 (empty -> .)
+    PAR2            reduce using rule 31 (empty -> .)
 
     tipos                          shift and go to state 94
-    PARAMETROS                     shift and go to state 126
+    PARAMETROS                     shift and go to state 127
     empty                          shift and go to state 95
 
 state 124
 
-    (37) if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .
-    (38) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 . ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 . ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 . ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (39) if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF . PAR1 expresion PAR2 bloque
+    (40) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF . PAR1 expresion PAR2 bloque ELSE bloque
 
-    PRINT           reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    PRINTLN         reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    ID              reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    MENOS           reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    PAR1            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    ENTERO          reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    DECIMAL         reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CADENA          reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    TRUE            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    FALSE           reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    BOOLEANO        reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CHAR            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CARACTER        reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    BREAK           reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    PROC            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    EXEC            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    LLAVE1          reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    INT             reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    DOUBLE          reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    STRING          reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    BOOL            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    IF              reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    $end            reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    LLAVE2          reduce using rule 37 (if_simple -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    ELSE            shift and go to state 127
+    PAR1            shift and go to state 128
 
 
 state 125
 
-    (14) Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .
+    (38) if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .
 
-    PRINT           reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    PRINTLN         reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    ID              reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    MENOS           reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    PAR1            reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    ENTERO          reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    DECIMAL         reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CADENA          reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    TRUE            reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    FALSE           reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    BOOLEANO        reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CHAR            reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CARACTER        reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    BREAK           reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    PROC            reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    EXEC            reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    LLAVE1          reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    INT             reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    DOUBLE          reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    STRING          reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    BOOL            reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    IF              reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    $end            reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
-    LLAVE2          reduce using rule 14 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    PRINT           reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    PRINTLN         reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    ID              reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    MENOS           reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    PAR1            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    ENTERO          reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    DECIMAL         reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    CADENA          reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    TRUE            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    FALSE           reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    BOOLEANO        reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    CHAR            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    CARACTER        reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    BREAK           reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    PROC            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    EXEC            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    LLAVE1          reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    INT             reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    DOUBLE          reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    STRING          reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    BOOL            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    IF              reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    $end            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    LLAVE2          reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 bloque ELSE bloque .)
 
 
 state 126
 
-    (16) PARAMETROS -> tipos PUNTOS ID COMA PARAMETROS .
+    (13) Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .
 
-    PAR2            reduce using rule 16 (PARAMETROS -> tipos PUNTOS ID COMA PARAMETROS .)
+    PRINT           reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    PRINTLN         reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    ID              reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    MENOS           reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    PAR1            reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    ENTERO          reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    DECIMAL         reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    CADENA          reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    TRUE            reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    FALSE           reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    BOOLEANO        reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    CHAR            reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    CARACTER        reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    BREAK           reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    PROC            reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    EXEC            reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    LLAVE1          reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    INT             reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    DOUBLE          reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    STRING          reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    BOOL            reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    IF              reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    $end            reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
+    LLAVE2          reduce using rule 13 (Procedimiento -> PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2 .)
 
 
 state 127
 
-    (38) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE . LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (15) PARAMETROS -> tipos PUNTOS ID COMA PARAMETROS .
 
-    LLAVE1          shift and go to state 129
-    IF              shift and go to state 128
+    PAR2            reduce using rule 15 (PARAMETROS -> tipos PUNTOS ID COMA PARAMETROS .)
 
 
 state 128
 
-    (39) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF . PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    PAR1            shift and go to state 130
-
-
-state 129
-
-    (38) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 . instrucciones LLAVE2
-    (2) instrucciones -> . instrucciones instruccion
-    (3) instrucciones -> . instruccion
-    (4) instruccion -> . declaracion PUNTOCOMA
-    (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
-    (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
-    (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
-    (41) declaracion -> . tipos ID IGUAL expresion
-    (42) declaracion -> . tipos ID
-    (44) expresion -> . expresion MAS expresion
-    (45) expresion -> . expresion MENOS expresion
-    (46) expresion -> . expresion MULT expresion
-    (47) expresion -> . expresion DIVISION expresion
-    (48) expresion -> . expresion POTENCIA expresion
-    (49) expresion -> . expresion MODULO expresion
-    (50) expresion -> . ID
-    (51) expresion -> . MENOS expresion
-    (54) expresion -> . PAR1 expresion PAR2
-    (55) expresion -> . ENTERO
-    (56) expresion -> . DECIMAL
-    (57) expresion -> . CADENA
-    (58) expresion -> . TRUE
-    (59) expresion -> . FALSE
-    (60) expresion -> . BOOLEANO
-    (61) expresion -> . CHAR
-    (62) expresion -> . CARACTER
-    (63) expresion -> . expresion MENOR_IGUAL expresion
-    (64) expresion -> . expresion MAYOR_QUE expresion
-    (65) expresion -> . expresion MAYOR_IGUAL expresion
-    (66) expresion -> . expresion MENOR_QUE expresion
-    (67) expresion -> . expresion IGUAL_IGUAL expresion
-    (68) expresion -> . expresion DIFERENTE expresion
-    (33) sent_IF -> . if_simple
-    (34) sent_IF -> . if_else
-    (35) sent_IF -> . if_elseif
-    (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
-    (69) tipos -> . INT
-    (70) tipos -> . DOUBLE
-    (71) tipos -> . STRING
-    (72) tipos -> . CHAR
-    (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    PRINT           shift and go to state 12
-    PRINTLN         shift and go to state 14
-    ID              shift and go to state 16
-    MENOS           shift and go to state 17
-    PAR1            shift and go to state 13
-    ENTERO          shift and go to state 18
-    DECIMAL         shift and go to state 19
-    CADENA          shift and go to state 20
-    TRUE            shift and go to state 21
-    FALSE           shift and go to state 22
-    BOOLEANO        shift and go to state 23
-    CHAR            shift and go to state 24
-    CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
-    INT             shift and go to state 34
-    DOUBLE          shift and go to state 35
-    STRING          shift and go to state 36
-    BOOL            shift and go to state 37
-    IF              shift and go to state 38
-
-    expresion                      shift and go to state 5
-    instrucciones                  shift and go to state 131
-    instruccion                    shift and go to state 3
-    declaracion                    shift and go to state 4
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
-    tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
-
-state 130
-
-    (39) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 . expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (39) if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 . expresion PAR2 bloque
+    (40) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 . expresion PAR2 bloque ELSE bloque
     (44) expresion -> . expresion MAS expresion
     (45) expresion -> . expresion MENOS expresion
     (46) expresion -> . expresion MULT expresion
@@ -3968,109 +3704,12 @@ state 130
     CHAR            shift and go to state 59
     CARACTER        shift and go to state 25
 
-    expresion                      shift and go to state 132
+    expresion                      shift and go to state 129
 
-state 131
+state 129
 
-    (38) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones . LLAVE2
-    (2) instrucciones -> instrucciones . instruccion
-    (4) instruccion -> . declaracion PUNTOCOMA
-    (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
-    (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
-    (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
-    (41) declaracion -> . tipos ID IGUAL expresion
-    (42) declaracion -> . tipos ID
-    (44) expresion -> . expresion MAS expresion
-    (45) expresion -> . expresion MENOS expresion
-    (46) expresion -> . expresion MULT expresion
-    (47) expresion -> . expresion DIVISION expresion
-    (48) expresion -> . expresion POTENCIA expresion
-    (49) expresion -> . expresion MODULO expresion
-    (50) expresion -> . ID
-    (51) expresion -> . MENOS expresion
-    (54) expresion -> . PAR1 expresion PAR2
-    (55) expresion -> . ENTERO
-    (56) expresion -> . DECIMAL
-    (57) expresion -> . CADENA
-    (58) expresion -> . TRUE
-    (59) expresion -> . FALSE
-    (60) expresion -> . BOOLEANO
-    (61) expresion -> . CHAR
-    (62) expresion -> . CARACTER
-    (63) expresion -> . expresion MENOR_IGUAL expresion
-    (64) expresion -> . expresion MAYOR_QUE expresion
-    (65) expresion -> . expresion MAYOR_IGUAL expresion
-    (66) expresion -> . expresion MENOR_QUE expresion
-    (67) expresion -> . expresion IGUAL_IGUAL expresion
-    (68) expresion -> . expresion DIFERENTE expresion
-    (33) sent_IF -> . if_simple
-    (34) sent_IF -> . if_else
-    (35) sent_IF -> . if_elseif
-    (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
-    (69) tipos -> . INT
-    (70) tipos -> . DOUBLE
-    (71) tipos -> . STRING
-    (72) tipos -> . CHAR
-    (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    LLAVE2          shift and go to state 133
-    PRINT           shift and go to state 12
-    PRINTLN         shift and go to state 14
-    ID              shift and go to state 16
-    MENOS           shift and go to state 17
-    PAR1            shift and go to state 13
-    ENTERO          shift and go to state 18
-    DECIMAL         shift and go to state 19
-    CADENA          shift and go to state 20
-    TRUE            shift and go to state 21
-    FALSE           shift and go to state 22
-    BOOLEANO        shift and go to state 23
-    CHAR            shift and go to state 24
-    CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
-    INT             shift and go to state 34
-    DOUBLE          shift and go to state 35
-    STRING          shift and go to state 36
-    BOOL            shift and go to state 37
-    IF              shift and go to state 38
-
-    expresion                      shift and go to state 5
-    instruccion                    shift and go to state 39
-    declaracion                    shift and go to state 4
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
-    tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
-
-state 132
-
-    (39) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion . PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
+    (39) if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion . PAR2 bloque
+    (40) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion . PAR2 bloque ELSE bloque
     (44) expresion -> expresion . MAS expresion
     (45) expresion -> expresion . MENOS expresion
     (46) expresion -> expresion . MULT expresion
@@ -4084,7 +3723,7 @@ state 132
     (67) expresion -> expresion . IGUAL_IGUAL expresion
     (68) expresion -> expresion . DIFERENTE expresion
 
-    PAR2            shift and go to state 134
+    PAR2            shift and go to state 130
     MAS             shift and go to state 42
     MENOS           shift and go to state 43
     MULT            shift and go to state 44
@@ -4099,501 +3738,83 @@ state 132
     DIFERENTE       shift and go to state 53
 
 
+state 130
+
+    (39) if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 . bloque
+    (40) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 . bloque ELSE bloque
+    (11) bloque -> . LLAVE1 instrucciones LLAVE2
+
+    LLAVE1          shift and go to state 28
+
+    bloque                         shift and go to state 131
+
+state 131
+
+    (39) if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .
+    (40) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque . ELSE bloque
+
+    PRINT           reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    PRINTLN         reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    ID              reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    MENOS           reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    PAR1            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    ENTERO          reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    DECIMAL         reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    CADENA          reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    TRUE            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    FALSE           reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    BOOLEANO        reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    CHAR            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    CARACTER        reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    BREAK           reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    PROC            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    EXEC            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    LLAVE1          reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    INT             reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    DOUBLE          reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    STRING          reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    BOOL            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    IF              reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    $end            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    LLAVE2          reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque .)
+    ELSE            shift and go to state 132
+
+
+state 132
+
+    (40) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE . bloque
+    (11) bloque -> . LLAVE1 instrucciones LLAVE2
+
+    LLAVE1          shift and go to state 28
+
+    bloque                         shift and go to state 133
+
 state 133
 
-    (38) if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .
+    (40) if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .
 
-    PRINT           reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    PRINTLN         reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    ID              reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    MENOS           reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    PAR1            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    ENTERO          reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    DECIMAL         reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    CADENA          reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    TRUE            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    FALSE           reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    BOOLEANO        reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    CHAR            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    CARACTER        reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    BREAK           reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    PROC            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    EXEC            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    LLAVE1          reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    INT             reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    DOUBLE          reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    STRING          reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    BOOL            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    IF              reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    $end            reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    LLAVE2          reduce using rule 38 (if_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-
-
-state 134
-
-    (39) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 . LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    LLAVE1          shift and go to state 135
-
-
-state 135
-
-    (39) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 . instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (2) instrucciones -> . instrucciones instruccion
-    (3) instrucciones -> . instruccion
-    (4) instruccion -> . declaracion PUNTOCOMA
-    (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
-    (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
-    (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
-    (41) declaracion -> . tipos ID IGUAL expresion
-    (42) declaracion -> . tipos ID
-    (44) expresion -> . expresion MAS expresion
-    (45) expresion -> . expresion MENOS expresion
-    (46) expresion -> . expresion MULT expresion
-    (47) expresion -> . expresion DIVISION expresion
-    (48) expresion -> . expresion POTENCIA expresion
-    (49) expresion -> . expresion MODULO expresion
-    (50) expresion -> . ID
-    (51) expresion -> . MENOS expresion
-    (54) expresion -> . PAR1 expresion PAR2
-    (55) expresion -> . ENTERO
-    (56) expresion -> . DECIMAL
-    (57) expresion -> . CADENA
-    (58) expresion -> . TRUE
-    (59) expresion -> . FALSE
-    (60) expresion -> . BOOLEANO
-    (61) expresion -> . CHAR
-    (62) expresion -> . CARACTER
-    (63) expresion -> . expresion MENOR_IGUAL expresion
-    (64) expresion -> . expresion MAYOR_QUE expresion
-    (65) expresion -> . expresion MAYOR_IGUAL expresion
-    (66) expresion -> . expresion MENOR_QUE expresion
-    (67) expresion -> . expresion IGUAL_IGUAL expresion
-    (68) expresion -> . expresion DIFERENTE expresion
-    (33) sent_IF -> . if_simple
-    (34) sent_IF -> . if_else
-    (35) sent_IF -> . if_elseif
-    (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
-    (69) tipos -> . INT
-    (70) tipos -> . DOUBLE
-    (71) tipos -> . STRING
-    (72) tipos -> . CHAR
-    (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    PRINT           shift and go to state 12
-    PRINTLN         shift and go to state 14
-    ID              shift and go to state 16
-    MENOS           shift and go to state 17
-    PAR1            shift and go to state 13
-    ENTERO          shift and go to state 18
-    DECIMAL         shift and go to state 19
-    CADENA          shift and go to state 20
-    TRUE            shift and go to state 21
-    FALSE           shift and go to state 22
-    BOOLEANO        shift and go to state 23
-    CHAR            shift and go to state 24
-    CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
-    INT             shift and go to state 34
-    DOUBLE          shift and go to state 35
-    STRING          shift and go to state 36
-    BOOL            shift and go to state 37
-    IF              shift and go to state 38
-
-    expresion                      shift and go to state 5
-    instrucciones                  shift and go to state 136
-    instruccion                    shift and go to state 3
-    declaracion                    shift and go to state 4
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
-    tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
-
-state 136
-
-    (39) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones . LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (2) instrucciones -> instrucciones . instruccion
-    (4) instruccion -> . declaracion PUNTOCOMA
-    (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
-    (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
-    (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
-    (41) declaracion -> . tipos ID IGUAL expresion
-    (42) declaracion -> . tipos ID
-    (44) expresion -> . expresion MAS expresion
-    (45) expresion -> . expresion MENOS expresion
-    (46) expresion -> . expresion MULT expresion
-    (47) expresion -> . expresion DIVISION expresion
-    (48) expresion -> . expresion POTENCIA expresion
-    (49) expresion -> . expresion MODULO expresion
-    (50) expresion -> . ID
-    (51) expresion -> . MENOS expresion
-    (54) expresion -> . PAR1 expresion PAR2
-    (55) expresion -> . ENTERO
-    (56) expresion -> . DECIMAL
-    (57) expresion -> . CADENA
-    (58) expresion -> . TRUE
-    (59) expresion -> . FALSE
-    (60) expresion -> . BOOLEANO
-    (61) expresion -> . CHAR
-    (62) expresion -> . CARACTER
-    (63) expresion -> . expresion MENOR_IGUAL expresion
-    (64) expresion -> . expresion MAYOR_QUE expresion
-    (65) expresion -> . expresion MAYOR_IGUAL expresion
-    (66) expresion -> . expresion MENOR_QUE expresion
-    (67) expresion -> . expresion IGUAL_IGUAL expresion
-    (68) expresion -> . expresion DIFERENTE expresion
-    (33) sent_IF -> . if_simple
-    (34) sent_IF -> . if_else
-    (35) sent_IF -> . if_elseif
-    (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
-    (69) tipos -> . INT
-    (70) tipos -> . DOUBLE
-    (71) tipos -> . STRING
-    (72) tipos -> . CHAR
-    (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    LLAVE2          shift and go to state 137
-    PRINT           shift and go to state 12
-    PRINTLN         shift and go to state 14
-    ID              shift and go to state 16
-    MENOS           shift and go to state 17
-    PAR1            shift and go to state 13
-    ENTERO          shift and go to state 18
-    DECIMAL         shift and go to state 19
-    CADENA          shift and go to state 20
-    TRUE            shift and go to state 21
-    FALSE           shift and go to state 22
-    BOOLEANO        shift and go to state 23
-    CHAR            shift and go to state 24
-    CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
-    INT             shift and go to state 34
-    DOUBLE          shift and go to state 35
-    STRING          shift and go to state 36
-    BOOL            shift and go to state 37
-    IF              shift and go to state 38
-
-    expresion                      shift and go to state 5
-    instruccion                    shift and go to state 39
-    declaracion                    shift and go to state 4
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
-    tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
-
-state 137
-
-    (39) if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 . ELSE LLAVE1 instrucciones LLAVE2
-
-    PRINT           reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    PRINTLN         reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    ID              reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    MENOS           reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    PAR1            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    ENTERO          reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    DECIMAL         reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CADENA          reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    TRUE            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    FALSE           reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    BOOLEANO        reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CHAR            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    CARACTER        reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    BREAK           reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    PROC            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    EXEC            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    LLAVE1          reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    INT             reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    DOUBLE          reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    STRING          reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    BOOL            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    IF              reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    $end            reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    LLAVE2          reduce using rule 39 (if_elseif -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 .)
-    ELSE            shift and go to state 138
-
-
-state 138
-
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE . LLAVE1 instrucciones LLAVE2
-
-    LLAVE1          shift and go to state 139
-
-
-state 139
-
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 . instrucciones LLAVE2
-    (2) instrucciones -> . instrucciones instruccion
-    (3) instrucciones -> . instruccion
-    (4) instruccion -> . declaracion PUNTOCOMA
-    (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
-    (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
-    (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
-    (41) declaracion -> . tipos ID IGUAL expresion
-    (42) declaracion -> . tipos ID
-    (44) expresion -> . expresion MAS expresion
-    (45) expresion -> . expresion MENOS expresion
-    (46) expresion -> . expresion MULT expresion
-    (47) expresion -> . expresion DIVISION expresion
-    (48) expresion -> . expresion POTENCIA expresion
-    (49) expresion -> . expresion MODULO expresion
-    (50) expresion -> . ID
-    (51) expresion -> . MENOS expresion
-    (54) expresion -> . PAR1 expresion PAR2
-    (55) expresion -> . ENTERO
-    (56) expresion -> . DECIMAL
-    (57) expresion -> . CADENA
-    (58) expresion -> . TRUE
-    (59) expresion -> . FALSE
-    (60) expresion -> . BOOLEANO
-    (61) expresion -> . CHAR
-    (62) expresion -> . CARACTER
-    (63) expresion -> . expresion MENOR_IGUAL expresion
-    (64) expresion -> . expresion MAYOR_QUE expresion
-    (65) expresion -> . expresion MAYOR_IGUAL expresion
-    (66) expresion -> . expresion MENOR_QUE expresion
-    (67) expresion -> . expresion IGUAL_IGUAL expresion
-    (68) expresion -> . expresion DIFERENTE expresion
-    (33) sent_IF -> . if_simple
-    (34) sent_IF -> . if_else
-    (35) sent_IF -> . if_elseif
-    (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
-    (69) tipos -> . INT
-    (70) tipos -> . DOUBLE
-    (71) tipos -> . STRING
-    (72) tipos -> . CHAR
-    (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    PRINT           shift and go to state 12
-    PRINTLN         shift and go to state 14
-    ID              shift and go to state 16
-    MENOS           shift and go to state 17
-    PAR1            shift and go to state 13
-    ENTERO          shift and go to state 18
-    DECIMAL         shift and go to state 19
-    CADENA          shift and go to state 20
-    TRUE            shift and go to state 21
-    FALSE           shift and go to state 22
-    BOOLEANO        shift and go to state 23
-    CHAR            shift and go to state 24
-    CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
-    INT             shift and go to state 34
-    DOUBLE          shift and go to state 35
-    STRING          shift and go to state 36
-    BOOL            shift and go to state 37
-    IF              shift and go to state 38
-
-    expresion                      shift and go to state 5
-    instrucciones                  shift and go to state 140
-    instruccion                    shift and go to state 3
-    declaracion                    shift and go to state 4
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
-    tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
-
-state 140
-
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones . LLAVE2
-    (2) instrucciones -> instrucciones . instruccion
-    (4) instruccion -> . declaracion PUNTOCOMA
-    (5) instruccion -> . expresion PUNTOCOMA
-    (6) instruccion -> . sent_IF
-    (7) instruccion -> . SBreak
-    (8) instruccion -> . Procedimiento
-    (9) instruccion -> . Llamada PUNTOCOMA
-    (10) instruccion -> . asignacion PUNTOCOMA
-    (11) instruccion -> . bloque
-    (52) instruccion -> . PRINT PAR1 expresion PAR2 PUNTOCOMA
-    (53) instruccion -> . PRINTLN PAR1 expresion PAR2 PUNTOCOMA
-    (41) declaracion -> . tipos ID IGUAL expresion
-    (42) declaracion -> . tipos ID
-    (44) expresion -> . expresion MAS expresion
-    (45) expresion -> . expresion MENOS expresion
-    (46) expresion -> . expresion MULT expresion
-    (47) expresion -> . expresion DIVISION expresion
-    (48) expresion -> . expresion POTENCIA expresion
-    (49) expresion -> . expresion MODULO expresion
-    (50) expresion -> . ID
-    (51) expresion -> . MENOS expresion
-    (54) expresion -> . PAR1 expresion PAR2
-    (55) expresion -> . ENTERO
-    (56) expresion -> . DECIMAL
-    (57) expresion -> . CADENA
-    (58) expresion -> . TRUE
-    (59) expresion -> . FALSE
-    (60) expresion -> . BOOLEANO
-    (61) expresion -> . CHAR
-    (62) expresion -> . CARACTER
-    (63) expresion -> . expresion MENOR_IGUAL expresion
-    (64) expresion -> . expresion MAYOR_QUE expresion
-    (65) expresion -> . expresion MAYOR_IGUAL expresion
-    (66) expresion -> . expresion MENOR_QUE expresion
-    (67) expresion -> . expresion IGUAL_IGUAL expresion
-    (68) expresion -> . expresion DIFERENTE expresion
-    (33) sent_IF -> . if_simple
-    (34) sent_IF -> . if_else
-    (35) sent_IF -> . if_elseif
-    (36) sent_IF -> . if_elseif_else
-    (13) SBreak -> . BREAK PUNTOCOMA
-    (14) Procedimiento -> . PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2
-    (18) Llamada -> . EXEC ID PAR1 PARAMLLAMADA PAR2
-    (43) asignacion -> . ID IGUAL expresion
-    (12) bloque -> . LLAVE1 instrucciones LLAVE2
-    (69) tipos -> . INT
-    (70) tipos -> . DOUBLE
-    (71) tipos -> . STRING
-    (72) tipos -> . CHAR
-    (73) tipos -> . BOOL
-    (37) if_simple -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (38) if_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-    (39) if_elseif -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2
-    (40) if_elseif_else -> . IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2
-
-    LLAVE2          shift and go to state 141
-    PRINT           shift and go to state 12
-    PRINTLN         shift and go to state 14
-    ID              shift and go to state 16
-    MENOS           shift and go to state 17
-    PAR1            shift and go to state 13
-    ENTERO          shift and go to state 18
-    DECIMAL         shift and go to state 19
-    CADENA          shift and go to state 20
-    TRUE            shift and go to state 21
-    FALSE           shift and go to state 22
-    BOOLEANO        shift and go to state 23
-    CHAR            shift and go to state 24
-    CARACTER        shift and go to state 25
-    BREAK           shift and go to state 30
-    PROC            shift and go to state 31
-    EXEC            shift and go to state 33
-    LLAVE1          shift and go to state 32
-    INT             shift and go to state 34
-    DOUBLE          shift and go to state 35
-    STRING          shift and go to state 36
-    BOOL            shift and go to state 37
-    IF              shift and go to state 38
-
-    expresion                      shift and go to state 5
-    instruccion                    shift and go to state 39
-    declaracion                    shift and go to state 4
-    sent_IF                        shift and go to state 6
-    SBreak                         shift and go to state 7
-    Procedimiento                  shift and go to state 8
-    Llamada                        shift and go to state 9
-    asignacion                     shift and go to state 10
-    bloque                         shift and go to state 11
-    tipos                          shift and go to state 15
-    if_simple                      shift and go to state 26
-    if_else                        shift and go to state 27
-    if_elseif                      shift and go to state 28
-    if_elseif_else                 shift and go to state 29
-
-state 141
-
-    (40) if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .
-
-    PRINT           reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    PRINTLN         reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    ID              reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    MENOS           reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    PAR1            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    ENTERO          reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    DECIMAL         reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    CADENA          reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    TRUE            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    FALSE           reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    BOOLEANO        reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    CHAR            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    CARACTER        reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    BREAK           reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    PROC            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    EXEC            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    LLAVE1          reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    INT             reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    DOUBLE          reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    STRING          reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    BOOL            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    IF              reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    $end            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
-    LLAVE2          reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2 .)
+    PRINT           reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    PRINTLN         reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    ID              reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    MENOS           reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    PAR1            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    ENTERO          reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    DECIMAL         reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    CADENA          reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    TRUE            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    FALSE           reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    BOOLEANO        reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    CHAR            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    CARACTER        reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    BREAK           reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    PROC            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    EXEC            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    LLAVE1          reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    INT             reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    DOUBLE          reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    STRING          reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    BOOL            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    IF              reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    $end            reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
+    LLAVE2          reduce using rule 40 (if_elseif_else -> IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque .)
 

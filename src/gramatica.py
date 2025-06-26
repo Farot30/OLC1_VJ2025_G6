@@ -31,14 +31,14 @@ t_MODULO    = r'%'
 t_PAR1      = r'\('
 t_PAR2      = r'\)'
 t_IGUAL     = r'='
+t_LLAVE1    = r'\{'
+t_LLAVE2    = r'\}'
 t_MENOR_IGUAL = r"<="
 t_MAYOR_QUE = r">"
 t_MAYOR_IGUAL = r">="
 t_MENOR_QUE = r"<"
 t_IGUAL_IGUAL = r"=="
 t_DIFERENTE = r"!="
-t_LLAVE1    = r'\{'
-t_LLAVE2    = r'\}'
 t_ignore    = ' \t\r\f'
 
 reservadas = {
@@ -51,6 +51,7 @@ reservadas = {
     'false': 'FALSE',
     'booleano': 'BOOLEANO',
     'if' : 'IF',
+    'else':'ELSE',
     "print": "PRINT",
     "println": "PRINTLN",
     'break': 'BREAK',
@@ -70,7 +71,10 @@ def t_ID(t):
     r'[a-zA-Z][a-zA-Z0-9_]*'
     t_lower = t.value.lower()
     t.type = reservadas.get(t_lower, "ID")
-    t.value = t_lower if t.type != "ID" else t.value
+    if t.type in ['TRUE', 'FALSE']:
+        t.value = True if t_lower == 'true' else False
+    else:
+        t.value = t.value.lower()  # mantén original, o usa minúscula si prefieres
     return t
 
 def t_CARACTER(t):
@@ -168,6 +172,7 @@ precedence = (
 # Importar tus clases
 import ply.lex as lex
 
+from src.instrucciones.CCompuesta import Compuesta
 from src.instrucciones.CAsignacion import Asignacion
 from src.simbolo.CSimbolo import Simbolo
 from src.instrucciones.CProcedimientos import Procedimientos
@@ -194,20 +199,23 @@ def p_instrucciones(t):
     '''instrucciones : instrucciones instruccion
                      | instruccion'''
     if len(t) == 3:
-        t[0] = t[1] + ([t[2]] if t[2] is not None else [])
+        if t[2] is not None:
+            t[0] = t[1] + [t[2]]
+        else:
+            t[0] = t[1]
     else:
         t[0] = [t[1]] if t[1] is not None else []
 
 def p_instruccion(t):
     '''instruccion : declaracion PUNTOCOMA
-            | expresion PUNTOCOMA
-            | sent_IF
-            | SBreak
-            | Procedimiento
-            | Llamada PUNTOCOMA
-            | asignacion PUNTOCOMA
-            | bloque'''
+                    | expresion PUNTOCOMA
+                    | SBreak
+                    | Procedimiento
+                    | Llamada PUNTOCOMA
+                    | asignacion PUNTOCOMA
+                    | bloque'''
     t[0] = t[1]
+
 
 def p_bloque(t):
     'bloque : LLAVE1 instrucciones LLAVE2'
@@ -236,7 +244,7 @@ def p_PARAMETROS_empty(t):
     
 def p_Llamada(t):
     ''' Llamada : EXEC ID PAR1 PARAMLLAMADA PAR2'''
-    t[0] = Llamada(t[2], t[4],0,0)
+    t[0] = Llamada(t[2].lower(), t[4], t.lineno(1),0)
 
 def p_PARAMLLAMADA(t):
     '''PARAMLLAMADA : literal
@@ -283,24 +291,32 @@ def p_literal(t):
                | CADENA
                | TRUE 
                | FALSE '''
-    if isinstance(t[1], int):
+    if t.slice[1].type in ['TRUE', 'FALSE']:
+        valor = True if t.slice[1].type == 'TRUE' else False
+        tipo = Tipo(tipoDato.BOOL)
+    elif isinstance(t[1], int):
+        valor = t[1]
         tipo = Tipo(tipoDato.ENTERO)
     elif isinstance(t[1], float):
+        valor = t[1]
         tipo = Tipo(tipoDato.DECIMAL)
     elif isinstance(t[1], str) and len(t[1]) == 1:
+        valor = t[1]
         tipo = Tipo(tipoDato.CHAR)
-    elif t.slice[1].type in ['TRUE', 'FALSE']:
-        tipo = Tipo(tipoDato.BOOL)
-        t[1] = True if t.slice[1].type == 'TRUE' else False
     else:
+        valor = t[1]
         tipo = Tipo(tipoDato.STRING)
-    
-    t[0] = Nativo(tipo, t[1], 0, 0)
+
+    t[0] = Nativo(tipo, valor, t.lineno(1), 0)
     
 
 def p_empty(t):
     "empty :"
     t[0] = None
+
+def p_instruccion_if(t):
+    'instruccion : sent_IF'
+    t[0] = t[1]
 
 def p_sent_IF(t): 
     '''sent_IF : if_simple
@@ -311,37 +327,37 @@ def p_sent_IF(t):
 
 # if (expresion) { instrucciones }
 def p_if_simple(t):
-    '''if_simple : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2'''
-    t[0] = sentIF(t[3], t[6],0,0)
+    '''if_simple : IF PAR1 expresion PAR2 bloque'''
+    t[0] = sentIF(t[3], t[5],0,0)
 
 # if (expresion) { instrucciones } else { instrucciones }
 def p_if_else(t):
-    '''if_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2'''
-    t[0] = sentIF(t[3], t[6], 0, 0, sentIF(None, t[10], 0,0))  # else sin condición
+    '''if_else : IF PAR1 expresion PAR2 bloque ELSE bloque'''
+    t[0] = sentIF(t[3], t[5], 0, 0, sentIF(None, t[7], 0,0))  # else sin condición
 
 # if (expresion) { instrucciones } else if (expresion) { instrucciones }
 def p_if_elseif(t):
-    """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""  # Esta implementación maneja explícitamente la secuencia "ELSE IF"
+    """if_elseif : IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque"""  # Esta implementación maneja explícitamente la secuencia "ELSE IF"
     t[0] = sentIF(
         t[3],  # Condición del IF
-        t[6],  # Cuerpo del IF
+        t[5],  # Cuerpo del IF
         0,
         0,
-        sentIF(  t[11],  t[14],  0,  0),
+        sentIF(  t[9],  t[11],  0,  0),
     )
 
 def p_if_elseif_else(t):
-    """if_elseif_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""  # Maneja: IF (...) {...} ELSE IF (...) {...} ELSE {...}
+    """if_elseif_else : IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque"""  # Maneja: IF (...) {...} ELSE IF (...) {...} ELSE {...}
     elseif_node = sentIF(
-        t[11],  # Condición del ELSE IF
-        t[14],  # Cuerpo del ELSE IF
+        t[9],  # Condición del ELSE IF
+        t[11],  # Cuerpo del ELSE IF
         0,
         0,
     )
 
     else_node = sentIF(
         None,  # No hay condición en ELSE
-        t[18],  # Cuerpo del ELSE
+        t[13],  # Cuerpo del ELSE
         0,
         0,
     )
@@ -352,7 +368,7 @@ def p_if_elseif_else(t):
     # Crear el nodo principal IF con su rama ELSE IF+ELSE
     t[0] = sentIF(
         t[3],  # Condición del IF
-        t[6],  # Cuerpo del IF
+        t[5],  # Cuerpo del IF
         0,
        0,
         elseif_node,

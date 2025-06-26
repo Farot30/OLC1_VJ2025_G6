@@ -33,7 +33,8 @@ class Aritmeticas(Instruccion, ABC):
         op_der = self.operando2.interpretar(arbol, tabla)
         if isinstance(op_der, Errores):
             return op_der
-
+        print("Izquierdo:", op_izq)
+        print("Derecho:", op_der)  
         if self.operacion == Operadores.SUMA:
             return self.suma(op_izq, op_der)
         elif self.operacion == Operadores.RESTA:
@@ -308,21 +309,18 @@ class Aritmeticas(Instruccion, ABC):
         return Errores("SEMANTICO", "Modulo entre tipos no valida", self.linea, self.col)
     
 
-    def graficar(self, grafo: clasAST):
-        #Nodo principal 
+    def graficar(self, grafo: clasAST, padre=None, nivel=None, etiqueta=None):
         tipOperacion = self.getNOpe()
         nodoPrincipal = grafo.agregar_nodo(f"Aritmética: {tipOperacion}", fillcolor="white")
 
-        #operando 1
         nodoOp1 = self.operando1.graficar(grafo)
         grafo.agregar_arista(nodoPrincipal, nodoOp1)
 
-         #operando 2
         nodoOp2 = self.operando2.graficar(grafo)
         grafo.agregar_arista(nodoPrincipal, nodoOp2)
 
         return nodoPrincipal
-    
+            
     def getNOpe(self):
         if self.operacion == Operadores.SUMA:
             return '+'
