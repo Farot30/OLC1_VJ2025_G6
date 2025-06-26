@@ -1,12 +1,166 @@
-// Vector unidimensional de enteros
-//Vector[int] vec1D (3) = [1, 2, 3];
+// Pruebas de funciones nativas básicas
+println("Funciones nativas con números:");
+println(seno(0.5));
+println(coseno(0.5));
+println(inv(4));
 
-// Vector bidimensional (matriz 2x2)
-Vector[int] matriz (2, 2) = [[1, 2], [3, 4]];
+// Con variables
+float angulo = 3.14159 / 2;  // 90 grados en radianes
+println("seno(π/2) = " + seno(angulo));  // Debería ser cercano a 1
+println("coseno(π/2) = " + coseno(angulo));  // Debería ser cercano a 0
+println("inv(10) = " + inv(10));  // Debería ser 0.1
 
-matriz[0][0] = 5;  // Asignación de elementos
-matriz[0][1] = 10;
-matriz[1][0] = 20;
-matriz[1][1] = 30;
 
-println(matriz);  // Imprimir elemento
+// Vector de enteros
+vector[int] numeros (5) = [10, 20, 30, 40, 50];
+println("Vector original: " + numeros);
+
+// Modificar elementos
+numeros[2] = 300;
+println("Vector modificado: " + numeros);
+
+// Funciones con elementos de vector
+println("seno del primer elemento: " + seno(300));
+println("inverso del último elemento: " + inv(40));
+
+// Shuffle del vector completo
+println("Vector aleatorizado: " + shuffle(numeros));
+
+// Matriz 3x3
+vector[int] matriz (3, 3) = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+println("Matriz original:");
+println(matriz);
+
+// Modificar elementos específicos
+matriz[0][0] = 100;
+matriz[1][1] = 500;
+matriz[2][2] = 900;
+println("Matriz modificada:");
+println(matriz);
+
+// Vector 3D (cubo 2x2x2)
+vector[int] cubo (2, 2, 2) = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]];
+println("Cubo 3D:");
+println(cubo);
+cubo[1][0][1] = 60;  // Modificar un elemento interno
+println("Cubo modificado:");
+println(cubo);
+
+// Vector de flotantes
+vector[float] decimales (3) = [1.5, 2.7, 3.9];
+println("Vector de flotantes: " + decimales);
+
+// Vector de booleanos
+vector[bool] banderas (4) = [true, false, true, true];
+println("Vector de booleanos: " + banderas);
+
+// Vector de cadenas
+vector[str] palabras (3) = ["Hola", "Mundo", "Vectorial"];
+println("Vector de cadenas: " + palabras);
+
+/*
+// Guardar resultados de funciones en un vector
+vector[float] resultados (4);
+resultados[0] = seno(0.0);  // 0
+resultados[1] = seno(1.57);  // Aproximadamente 1 (π/2)
+resultados[2] = coseno(0.0);  // 1
+resultados[3] = inv(2);  // 0.5
+println("Vector de resultados: " + resultados);
+*/
+
+// Uso de shuffle en asignación
+vector[int] original (5) = [1, 2, 3, 4, 5];
+vector[int] mezclado (5) = shuffle(original);
+println("Original: " + original);
+println("Mezclado: " + mezclado);
+
+// Funciones anidadas
+println("Seno del inverso de 2: " + seno(inv(2)));  // seno(0.5)
+
+/*
+// Combinación de tipos (verificar si maneja errores)
+vector[int] enteros (3) = [1, 2, 3];
+// Descomentar para probar errores:
+// enteros[0] = 3.5;  // Error: asignar float a int
+// enteros[4] = 5;    // Error: índice fuera de rango
+
+// Función shuffle con una expresión
+println(shuffle(enteros));
+*/
+
+int a = 5;     // Primera declaración
+int a = 10;    // Redeclaración con el mismo tipo
+println(a);
+str a = "Hola";  // Redeclaración con tipo diferente
+
+println(a);
+
+// Procedimiento simple sin parámetros
+proc saludar() {
+    println("¡Hola mundo desde un procedimiento!");
+}
+
+// Llamar al procedimiento
+exec saludar();
+
+// Procedimiento con un parámetro
+proc mostrarNumero(int: valor) {
+    println("El número es: " + valor);
+}
+
+// Llamar con valor literal
+exec mostrarNumero(42);
+
+// Llamar con variable
+int numero = 100;
+exec mostrarNumero(numero);
+
+// Procedimiento con múltiples parámetros
+proc sumar(int: a, int: b) {
+    int resultado = a + b;
+    println("La suma de " + a + " y " + b + " es: " + resultado);
+}
+
+// Llamar con diferentes combinaciones
+exec sumar(5, 7);
+int x = 10;
+int y = 20;
+exec sumar(x, y);
+exec sumar(x, 30);
+
+// Procedimiento con diferentes tipos de parámetros
+proc mostrarInfo(str: nombre, int: edad, bool: activo) {
+    println("Nombre: " + nombre);
+    println("Edad: " + edad);
+    println("Activo: " + activo);
+}
+
+// Llamar con diferentes tipos
+exec mostrarInfo("Juan", 25, true);
+str nombre = "María";
+exec mostrarInfo(nombre, 30, false);
+
+// Procedimiento que modifica una variable global
+int contador = 0;
+
+proc incrementar() {
+    contador = contador + 1;
+    println("Contador incrementado a: " + contador);
+}
+
+exec incrementar();
+exec incrementar();
+println("Valor final del contador: " + contador);
+
+// Procedimientos anidados (uno llama a otro)
+proc mensaje() {
+    println("Mensaje desde procedimiento secundario");
+}
+
+proc principal() {
+    println("Iniciando procedimiento principal");
+    exec mensaje();
+    println("Finalizando procedimiento principal");
+}
+
+exec principal();

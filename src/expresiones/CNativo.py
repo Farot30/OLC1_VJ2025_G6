@@ -48,5 +48,8 @@ class Nativo(Instruccion):
                     return False
         return self.valor
 
+    def esDatoNativo(self):
+        return True
+
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         return grafo.agregar_nodo(str(self.valor))

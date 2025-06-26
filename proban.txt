@@ -1,6 +1,0 @@
-
-int s = 0;
-while("good") {
-    println("Esto es un error");
-    println("Esto tambien es un error");
-}

@@ -5,9 +5,11 @@ from src.simbolo.CArbol import Arbol
 from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
 from src.abstracto.CAST import generarGrafica
+from src.Vectores.ReporteVector import ReporteVectores
 
 
 app = Flask(__name__, static_folder="static")
+app.arbol_actual = None  # Variable global para almacenar el árbol actual
 
 
 @app.route("/report/<path:filename>")
@@ -28,6 +30,9 @@ def index():
             arbol = Arbol([])  # Crea un nuevo árbol
             instrucciones = parse_input(entrada, arbol)
             arbol.set_instrucciones(instrucciones)
+
+            # Guardar el árbol para usarlo en otras rutas
+            app.arbol_actual = arbol
 
             # AÑADIDO: Transferir errores sintácticos al árbol
             if errores_sintacticos_globales:
@@ -130,6 +135,23 @@ def mostrar_ast():
         return render_template("ast.html", ast_svg="ast_reporte.svg")
     else:
         return "AST no generado aún."
+
+
+# Modificar la ruta existente
+@app.route("/vectores")
+def mostrar_vectores():
+    # Obtener el árbol de la variable global de la app
+    arbol = getattr(app, "arbol_actual", None)
+
+    if arbol is None or not hasattr(arbol, "vectores") or not arbol.vectores:
+        return render_template("ReportVector.html", vectores={})
+
+    # Preparar los datos usando el método que ya tienes
+    reporte = ReporteVectores(arbol)
+    vectores_data = reporte.preparar_datos_vectores()
+
+    # Renderizar la plantilla con los datos
+    return render_template("ReportVector.html", vectores=vectores_data)
 
 
 if __name__ == "__main__":

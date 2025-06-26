@@ -1,164 +1,279 @@
-// Declaraciones de variables
+println("-----------------------");
+println("Vector de una dimension");
+println("-----------------------");
+
+Vector[int] ud(3) = [1,2,3];
+
+println(ud[0]);
+println(ud[1]);
+println(ud[2]);
+println(ud[3]); // Error semantico
+println(ud[0][1]); // Error semantico
+
+// Actualizacion del ultimo elemento
+
+ud[2] = "error semantico";
+
+println(ud[2]); // RES: 3
+
+ud[2]++;
+
+println(ud[2]);
+
+println("Valores por defecto");
+
+Vector[int] default_int(2);
+Vector[float] default_float(2);
+Vector[bool] default_bool(2);
+Vector[str] default_str(2);
+Vector[char] default_char(2);
+
+println(default_int[0]);
+println(default_float[0]);
+println(default_bool[0]);
+println(default_str[0]);
+println(default_char[0]);
+
+println("-------------------------");
+println("Vector de dos dimensiones");
+println("-------------------------");
+
+Vector[int] dd(3,2) = [[1,2,3],[1,2,3]]; // Los corchetes de la ultima dimension pueden o no venir, dependiendo de la gramatica trabajada
+
+println(dd[0][0]);
+println(dd[0][1]);
+println(dd[0][2]);
+println(dd[1][0]);
+println(dd[1][1]);
+println(dd[1][2]);
+println(dd[2][0]);
+println(dd[2][1]);
+println(dd[2][2]);
+println(dd[0][3]); // Error semantico
+println(dd[0][1][1]); // Error semantico
+
+// Actualizacion del ultimo elemento
+
+dd[2][2] = "error semantico";
+
+println(dd[2][2]); // RES: 3
+
+dd[2][2]++;
+
+println(dd[2][2]);
+
+println("Valores por defecto");
+
+Vector[int] default_int2(2,2);
+Vector[float] default_float2(2,2);
+Vector[bool] default_bool2(2,2);
+Vector[str] default_str2(2,2);
+Vector[char] default_char2(2,2);
+
+println(default_int2[0][0]);
+println(default_float2[0][1]);
+println(default_bool2[1][0]);
+println(default_str2[1][1]);
+println(default_char2[0][0]);
+
+println("-------------------------");
+println("Vector de tres dimensiones");
+println("-------------------------");
+
+Vector[int] t3(2,2,3) = [
+  [ [1,2], [3,4] ],
+  [ [5,6], [7,8] ],
+  [ [9,10], [11,12] ]
+];
+
+println(t3[0][0][0]);
+println(t3[0][1][1]);
+println(t3[1][0][1]);
+println(t3[2][1][1]);
+println(t3[3][0][0]); // Error semantico
+println(t3[0][2][0]); // Error semantico
+println(t3[0][0][1][1]); // Error semantico
+
+t3[2][1][1] = "error semantico";
+
+println(t3[2][1][1]); // RES: 12
+
+t3[2][1][1]++;
+
+println(t3[2][1][1]);
+
+println("Valores por defecto");
+
+Vector[int] default_t3(2,2,3);
+
+println(default_t3[0][0][0]);
+
+println("-------------------------");
+println("Vector de cuatro dimensiones");
+println("-------------------------");
+
+Vector[int] t4(2,2,2,2) = [
+  [
+    [ [1,2], [3,4] ],
+    [ [5,6], [7,8] ]
+  ],
+  [
+    [ [9,10], [11,12] ],
+    [ [13,14], [15,16] ]
+  ]
+];
+
+println(t4[0][0][0][0]);
+println(t4[0][1][1][1]);
+println(t4[1][0][1][0]);
+println(t4[1][1][1][1]);
+println(t4[2][0][0][0]); // Error semantico
+println(t4[0][1][0][2]); // Error semantico
+println(t4[1][1][1][1][0]); // Error semantico
+
+t4[1][1][1][1] = "error semantico";
+
+println(t4[1][1][1][1]); // RES: 16
+
+t4[1][1][1][1]--;
+
+println(t4[1][1][1][1]);
+
+println("Valores por defecto");
+
+Vector[int] default_t4(2,2,2,2);
+
+println(default_t4[0][0][0][0]);
+println(default_t4[1][1][1][1]);
+
+println("-----------------------");
+println("Procedimientos");
+println("-----------------------");
+
 int a;
-int b = 10;
-float c = 3.5;
-bool d = true;
-char e = 'x';
-str f = "Hola mundo";
 
-// Asignaciones
-a = 5;
-d = false;
-f = "Nuevo texto";
-
-// Incremento y decremento
-a++;
-b--;
-c++;
-c--;
-
-// Operaciones aritméticas
-int B1;
-a = a + 1;
-b = 2 - 3.5;
-B1 = 2 - 3.5;
-c = c * 2;
-c = c / 2;
-
-
-// Booleanos y reasignación
-d = true;
-d = false;
-
-// Prueba de caracteres y cadenas
-e = 'z';
-f = "Texto";
-
-// Comentarios
-// Esto es un comentario de línea
-/* Esto es un
-   comentario multilinea */
-
-// Asignacion de variables
-int j = 5;
-//b = b + 2;
-//c = c * 2.0;
-bool h = false;
-int p;
-
-j = false;
-
-int o;
-o = 5 + 7;
-int k;
-k = o - 1;
-
-p = k * 2;
-float x;
-float z;
-float w;
-
-x = p / 2;
-z = x % 2;
-w = p + 2;
-
-float q;
-q =  'b' +2;
-
-str s1;
-s1 = 'A' + "BC";  // Resultado esperado: "ABC"
-
-str s2;
-s2 = "Hola " + 'M';  // Resultado esperado: "Hola M"
-
-float f1;
-f1 = 'A' + 0.5;   // 65 + 0.5 = 65.5
-
-float f2;
-f2 = 1.5 + 'a';   // 1.5 + 97 = 98.5
-
-str s3;
-s3 = 3 + " pana";   // Debe dar error semántico
-
-char s4;
-s4 = 'A' + 'B';    // 65 + 66 = 131
-
-b = -(2 - 'a');
-
-a = 2.5 - 3;
-a = 4.5 - 'w';
-
-b = -5;
-
-bool resultado;
-resultado = a >= b;
-
-println(a + b);
-println("Hola mundo");
-
-println(true || 5);
-println(27 && c);
-println(true ^ false);
-println(!true);
-
-println("C:\\miCarpeta");
-println("\"esto es una cadena\"");
-println("\tEsto es una tabulacion");
-println("\'Estas son comillas simples\'");
-println("Hola\nMundo");
-
-println((2 + 3) * 4);
-println((true || false) && (5 > 2));
-println((a + b) / (c - w));
-
-int A = ( 5 + 5 ) * 4 ;
-
-println(5 < "hola");         // Error: int y string
-println("abc" > 10);         // Error: string y int
-println(true < 5);           // Error: bool y int
-println('a' == "a");         // Error: char y string
-println(3.5 != 3.5);
-
-println(5.5 < 5);
-println(5.5 < 'a');
-println("paco" != "hola");
-
-int x41;
-for(x41 = 0; x41 < 3; x41++) {
-    println("holas");
-    println("hola");
+PROC actualizar_a(int: b, bool: mult){
+	if (mult) {
+		a = a * b;
+	} else {
+		a = a + b;
+	}
 }
 
-println(x41);
+EXEC actualizar_a(1,False);
+println(a);
 
-if (0==0){
-    println("a"); 
-    println("hola");
-    if(2==3){
-        break;
-        println("aas"); 
+EXEC actualizar_a(2,True);
+println(a);
 
-    }
+
+PROC fibonacci(int: numero){
+	int a;
+	int b;
+	int temp;
+	int i;
+    	if (numero == 0) {
+        	a = 0;
+        	println(a);
+    	} else if (numero == 1) {
+        	a = 1;
+        	println(a);
+    	} else {
+        	a = 0;
+        	b = 1;
+        	i = 2;
+
+        	while (i <= numero) {
+            	temp = a + b;
+            	a = b;
+            	b = temp;
+            	i = i + 1;
+        	}
+
+        	println(b);
+    	}
 }
 
-int x4 = 2;
+EXEC Fibonacci(0); // Res: 0
+EXEC Fibonacci(1); // Res: 1
+EXEC Fibonacci(7); // Res: 13
 
-switch(x4) {
-    case 1:
-        println("Es uno");
-        break;
-    case 2:
-        println("Es dos");
-        break;
-    case 3:
-        println("Es tres");
-        println("sola");
-        break;
-    default:
-        println("No es uno, dos ni tres");
-        println(1+2);
-        println(x4 +b);
-        break;
-}
+println("-----------------------");
+println("Funciones Nativas");
+println("-----------------------");
 
-println("Fin del switch");
+println("Funcion seno");
+float sin = seno(1.75);
+println(sin);
+
+
+println("Funcion coseno");
+float cos = coseno(1.75);
+println(cos);
+
+
+println("Funcion inverso");
+int inverso = inv(123456);
+println(inverso);
+
+
+/*
+	Entrada:
+		1 2 3
+		4 5 6
+		7 8 9
+*/
+
+println("Funcion shuffle");
+vector[int] row_major(3,3) = [[1,2,3],[4,5,6],[7,8,9]];
+
+
+/*
+	Salida:
+		1 4 7
+		2 5 8
+		3 6 9
+*/
+vector[int] column_major(3,3) = shuffle(row_major);
+
+println(column_major[0][1]);
+println(column_major[1][0]);
+println(column_major[0][2]);
+println(column_major[2][0]);
+println(column_major[1][2]);
+println(column_major[2][1]);
+
+println("Funcion sort");
+vector[int] to_sort(4)= [8,9,4,3];
+vector[int] sorted(4) = sort(to_sort);
+
+println(sorted[0]);
+println(sorted[1]);
+println(sorted[2]);
+println(sorted[3]);
+
+println("Validaciones semanticas");
+// No se deberia imprimir ni guardar nada
+println("Funcion seno");
+float sin_err = seno("Hola");
+println(sin_err);
+
+
+println("Funcion coseno");
+float cos_err = coseno(True);
+println(cos_err);
+
+
+println("Funcion inverso");
+float inverso_err = inv(1.5);
+println(inverso_err);
+
+println("Funcion shuffle");
+vector[int] row_major_err(3,3) = [[1,2,3],[4,5,6],[7,8,9]]; // Este si se deberia guardar
+vector[int] column_major(3,4) = shuffle(row_major); 
+vector[str] column_major(3,3) = shuffle(row_major); 
+
+println("Funcion sort");
+vector[int] sorted(3,3) = sort(row_major_err);
+vector[str] sorted(9) = sort(row_major_err);
+vector[int] sorted(9) = sort(row_major_err);

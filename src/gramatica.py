@@ -1,19 +1,18 @@
 # 1. IMPORTS
-import re
+from src.simbolo.CTipo import Tipo, tipoDato
 from src.expresiones.CAritmeticas import Aritmeticas, Operadores
 from src.expresiones.CNativo import Nativo
-from src.instrucciones.CDeclaracion import Declaracion
-from src.simbolo.CTipo import Tipo, tipoDato
-from src.instrucciones.CAsignacion import Asignacion
-from src.instrucciones.CIncremento import Incremento, Decremento
 from src.expresiones.CUnitario import Unario
 from src.expresiones.CRelacionales import Relacional, OperadoresRel
-from src.instrucciones.CPrintln import Println
 from src.expresiones.COr import Or
 from src.expresiones.CAnd import And
 from src.expresiones.CXor import Xor
 from src.expresiones.CNot import Not
 from src.excepciones.CErrores import Errores
+from src.instrucciones.CDeclaracion import Declaracion
+from src.instrucciones.CAsignacion import Asignacion
+from src.instrucciones.CIncremento import Incremento, Decremento
+from src.instrucciones.CPrintln import Println
 from src.instrucciones.CFor import For
 from src.instrucciones.SetenciaIF import sentIF
 from src.instrucciones.CBreak import Break
@@ -21,8 +20,16 @@ from src.instrucciones.CWhile import While
 from src.instrucciones.CDoWhile import DoWhile
 from src.instrucciones.CSwitch import Switch, Case
 from src.instrucciones.CContinue import Continue
+from src.instrucciones.CLlamada import Llamada
+from src.instrucciones.CProcedimientos import Procedimientos
 from src.Vectores.DeclaracionVector import DeclaracionVector
 from src.Vectores.AsignacionVector import AsignacionVector
+from src.Vectores.AccesoVector import AccesoVector
+from src.F_nativas.seno import Seno
+from src.F_nativas.coseno import Coseno
+from src.F_nativas.inverso import Inverso
+from src.F_nativas.shuffle import Shuffle
+from src.F_nativas.Sort import FuncionSort
 
 # 2. TOKENS Y RESERVADAS
 tokens = [
@@ -79,6 +86,13 @@ tokens = [
     "LEFTCORCH",
     "RIGHTCORCH",
     "COMMA",
+    "SENO",
+    "COSENO",
+    "INV",
+    "SHUFFLE",
+    "PROC",
+    "EXEC",
+    "SORT",
 ]
 
 reservadas = {
@@ -101,6 +115,13 @@ reservadas = {
     "continue": "CONTINUE",
     "println": "PRINTLN",
     "vector": "VECTOR",
+    "seno": "SENO",
+    "coseno": "COSENO",
+    "inv": "INV",
+    "shuffle": "SHUFFLE",
+    "proc": "PROC",
+    "exec": "EXEC",
+    "sort": "SORT",
 }
 
 # 3. EXPRESIONES REGULARES DE TOKENS
@@ -227,17 +248,6 @@ def t_ENTERO(t):
     return t
 
 
-"""
-def t_NUMBER(t):
-    r"\d+(\.\d+)?"
-    if "." in t.value:
-        t.value = float(t.value)
-    else:
-        t.value = int(t.value)
-    return t
-"""
-
-
 def t_newline(t):
     r"\n+"
     t.lexer.lineno += len(t.value)
@@ -317,7 +327,7 @@ def p_instruccion(t):
     | asignacion PUNTOCOMA
     | incremento PUNTOCOMA
     | decremento PUNTOCOMA
-    | sent_if
+    | sent_IF
     | sent_while
     | sent_do_while
     | sent_for
@@ -325,7 +335,9 @@ def p_instruccion(t):
     | sent_break PUNTOCOMA
     | sent_continue PUNTOCOMA
     | sent_println PUNTOCOMA
-    | bloque"""
+    | bloque
+    | Procedimiento
+    | Llamada PUNTOCOMA"""
     if len(t) == 2:
         if t[1] == ";":
             t[0] = None  # Instrucción vacía
@@ -352,15 +364,26 @@ def p_declaracion_sinval(t):
 
 # Vectores
 def p_declaracion_vector(t):
-    """declaracion_vector : VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector PUNTOCOMA"""
-    t[0] = DeclaracionVector(
-        t[3],
-        t[5],
-        t[7],
-        t[10],
-        t.lineno(1),
-        find_column(t.lexer.lexdata, t.slice[1]),
-    )
+    """declaracion_vector : VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 IGUAL expresion_vector PUNTOCOMA
+    | VECTOR LEFTCORCH tipos RIGHTCORCH ID PAR1 dimensiones PAR2 PUNTOCOMA"""
+    if len(t) == 12:  # Con inicialización (PUNTOCOMA es el token 11)
+        t[0] = DeclaracionVector(
+            t[3],  # tipo
+            t[5],  # id
+            t[7],  # dimensiones
+            t[10],  # valores
+            t.lineno(1),
+            find_column(t.lexer.lexdata, t.slice[1]),
+        )
+    else:  # Sin inicialización (PUNTOCOMA es el token 9)
+        t[0] = DeclaracionVector(
+            t[3],  # tipo
+            t[5],  # id
+            t[7],  # dimensiones
+            None,  # sin valores iniciales
+            t.lineno(1),
+            find_column(t.lexer.lexdata, t.slice[1]),
+        )
 
 
 def p_asignacion_vector(t):
@@ -396,6 +419,13 @@ def p_dimensiones(t):
         t[0] = t[1] + [t[3]]
 
 
+def p_expresion_acceso_vector(t):
+    "expresion : ID dimension"
+    t[0] = AccesoVector(
+        t[1], t[2], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+    )
+
+
 def p_expresion_vector(t):
     """expresion_vector : LEFTCORCH contenido_vector RIGHTCORCH"""
     # El valor es el contenido entre los corchetes
@@ -423,13 +453,67 @@ def p_lista_valores(t):
 
 def p_lista_vectores(t):
     """lista_vectores : LEFTCORCH lista_valores RIGHTCORCH
-    | LEFTCORCH lista_valores RIGHTCORCH COMMA lista_vectores"""
+    | LEFTCORCH lista_vectores RIGHTCORCH
+    | LEFTCORCH lista_valores RIGHTCORCH COMMA lista_vectores
+    | LEFTCORCH lista_vectores RIGHTCORCH COMMA lista_vectores"""
     if len(t) == 4:
         # Un solo vector anidado
         t[0] = [t[2]]
     else:
         # Concatena el vector actual con el resto de vectores
         t[0] = [t[2]] + t[5]
+
+
+# ---FUNCIONES NATIVAS---
+def p_expresion_seno(t):
+    "expresion : SENO PAR1 expresion PAR2"
+    t[0] = Seno(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_expresion_coseno(t):
+    "expresion : COSENO PAR1 expresion PAR2"
+    t[0] = Coseno(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_expresion_inverso(t):
+    "expresion : INV PAR1 expresion PAR2"
+    t[0] = Inverso(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_expresion_shuffle(t):
+    "expresion_vector : SHUFFLE PAR1 ID PAR2"
+    t[0] = Shuffle(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_expresion_general_shuffle(t):
+    "expresion : SHUFFLE PAR1 ID PAR2"
+    t[0] = Shuffle(t[3], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_expresion_vector_sort(t):
+    """expresion_vector : SORT PAR1 expresion PAR2
+    | SORT PAR1 expresion COMMA expresion PAR2"""
+    if len(t) == 5:
+        t[0] = FuncionSort(
+            t[3], None, t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+        )
+    else:
+        t[0] = FuncionSort(
+            t[3], t[5], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+        )
+
+
+def p_expresion_general_sort(t):
+    """expresion : SORT PAR1 expresion PAR2
+    | SORT PAR1 expresion COMMA expresion PAR2"""
+    if len(t) == 5:
+        t[0] = FuncionSort(
+            t[3], None, t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+        )
+    else:
+        t[0] = FuncionSort(
+            t[3], t[5], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+        )
 
 
 # --- Asignación ---
@@ -440,13 +524,29 @@ def p_asignacion(t):
 
 # --- Incremento y decremento ---
 def p_incremento(t):
-    "incremento : ID INCREMENTO"
-    t[0] = Incremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+    """incremento : ID INCREMENTO
+    | ID dimension INCREMENTO"""
+    if len(t) == 3:
+        # Incremento de variable: x++
+        t[0] = Incremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+    else:
+        # Incremento de vector: vector[0]++
+        t[0] = Incremento(
+            t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]), t[2]
+        )
 
 
 def p_decremento(t):
-    "decremento : ID DECREMENTO"
-    t[0] = Decremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+    """decremento : ID DECREMENTO
+    | ID dimension DECREMENTO"""
+    if len(t) == 3:
+        # Decremento de variable: x--
+        t[0] = Decremento(t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+    else:
+        # Decremento de vector: vector[0]--
+        t[0] = Decremento(
+            t[1], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]), t[2]
+        )
 
 
 # --- Bloque ---
@@ -457,73 +557,69 @@ def p_bloque(t):
 
 # --- IF ---
 # 2. Mantén la función p_sent_if, pero ajusta las reglas para manejar IF en mayúsculas
-def p_sent_if(t):
-    """sent_if : if_simple
+
+
+def p_sent_IF(t):
+    """sent_IF : if_simple
     | if_else
     | if_elseif
-    | if_elseif_else"""  # Añadir esta línea
+    | if_elseif_else"""
     t[0] = t[1]
 
 
-# 3. Modifica la regla if_simple para usar IF en mayúsculas
+# if (expresion) { instrucciones }
 def p_if_simple(t):
-    """if_simple : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""
-    t[0] = sentIF(t[3], t[6], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+    """if_simple : IF PAR1 expresion PAR2 bloque"""
+    t[0] = sentIF(t[3], t[5], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
 
 
-# 4. Modifica la regla if_else para usar IF y ELSE en mayúsculas
+# if (expresion) { instrucciones } else { instrucciones }
 def p_if_else(t):
-    """if_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""
+    """if_else : IF PAR1 expresion PAR2 bloque ELSE bloque"""
     t[0] = sentIF(
         t[3],
-        t[6],
+        t[5],
         t.lineno(1),
         find_column(t.lexer.lexdata, t.slice[1]),
-        sentIF(None, t[10], t.lineno(8), find_column(t.lexer.lexdata, t.slice[8])),
-    )
+        sentIF(None, t[7], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])),
+    )  # else sin condición
 
 
-# 5. Añadir una nueva regla específica para ELSE IF (como se usa en tu código)
+# if (expresion) { instrucciones } else if (expresion) { instrucciones }
 def p_if_elseif(t):
-    """if_elseif : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2"""  # Esta implementación maneja explícitamente la secuencia "ELSE IF"
+    """if_elseif : IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque"""  # Esta implementación maneja explícitamente la secuencia "ELSE IF"
     t[0] = sentIF(
         t[3],  # Condición del IF
-        t[6],  # Cuerpo del IF
+        t[5],  # Cuerpo del IF
         t.lineno(1),
         find_column(t.lexer.lexdata, t.slice[1]),
-        sentIF(
-            t[11],  # Condición del ELSE IF
-            t[14],  # Cuerpo del ELSE IF
-            t.lineno(9),
-            find_column(t.lexer.lexdata, t.slice[9]),
-        ),
+        sentIF(t[9], t[11], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])),
     )
 
 
-# 6. Añadir una regla para IF-ELSE IF-ELSE completo
 def p_if_elseif_else(t):
-    """if_elseif_else : IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE IF PAR1 expresion PAR2 LLAVE1 instrucciones LLAVE2 ELSE LLAVE1 instrucciones LLAVE2"""  # Maneja: IF (...) {...} ELSE IF (...) {...} ELSE {...}
+    """if_elseif_else : IF PAR1 expresion PAR2 bloque ELSE IF PAR1 expresion PAR2 bloque ELSE bloque"""  # Maneja: IF (...) {...} ELSE IF (...) {...} ELSE {...}
     elseif_node = sentIF(
-        t[11],  # Condición del ELSE IF
-        t[14],  # Cuerpo del ELSE IF
-        t.lineno(9),
-        find_column(t.lexer.lexdata, t.slice[9]),
+        t[9],  # Condición del ELSE IF
+        t[11],  # Cuerpo del ELSE IF
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
     )
 
     else_node = sentIF(
         None,  # No hay condición en ELSE
-        t[18],  # Cuerpo del ELSE
-        t.lineno(16),
-        find_column(t.lexer.lexdata, t.slice[16]),
+        t[13],  # Cuerpo del ELSE
+        t.lineno(1),
+        find_column(t.lexer.lexdata, t.slice[1]),
     )
 
     # Conectar el ELSE al ELSE IF
-    elseif_node.else_st = else_node
+    elseif_node.sig = else_node
 
     # Crear el nodo principal IF con su rama ELSE IF+ELSE
     t[0] = sentIF(
         t[3],  # Condición del IF
-        t[6],  # Cuerpo del IF
+        t[5],  # Cuerpo del IF
         t.lineno(1),
         find_column(t.lexer.lexdata, t.slice[1]),
         elseif_node,
@@ -779,6 +875,96 @@ def p_expresion_relacional(t):
     )
 
 
+def p_Procedimiento(t):  # id: str, params:list, inst: list, linea: int, col: int):
+    """Procedimiento : PROC ID PAR1 PARAMETROS PAR2 LLAVE1 instrucciones LLAVE2"""
+    t[0] = Procedimientos(
+        t[2], t[4], t[7], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1])
+    )
+
+
+def p_PARAMETROS(t):
+    """PARAMETROS : tipos DOSPT ID
+    | tipos DOSPT ID COMMA PARAMETROS"""
+    if len(t) == 4:
+        t[0] = [(t[1], t[3])]
+    else:
+        t[5].insert(0, (t[1], t[3]))
+        t[0] = t[5]
+
+
+def p_PARAMETROS_empty(t):
+    """PARAMETROS : empty"""
+    t[0] = []
+
+
+def p_Llamada(t):
+    """Llamada : EXEC ID PAR1 PARAMLLAMADA PAR2"""
+    t[0] = Llamada(t[2], t[4], t.lineno(1), find_column(t.lexer.lexdata, t.slice[1]))
+
+
+def p_PARAMLLAMADA(t):
+    """PARAMLLAMADA : literal
+    | ID
+    | BOOLEANO
+    | PARAMLLAMADA COMMA literal
+    | PARAMLLAMADA COMMA ID
+    | PARAMLLAMADA COMMA BOOLEANO"""
+    if len(t) == 2:
+        # Si es un BOOLEANO, crea un Nativo con el valor booleano
+        if t.slice[1].type == "BOOLEANO":
+            t[0] = [
+                Nativo(
+                    Tipo(tipoDato.BOOL),
+                    t[1],
+                    t.lineno(1),
+                    find_column(t.lexer.lexdata, t.slice[1]),
+                )
+            ]
+        else:
+            t[0] = [t[1]]
+    else:
+        # Si es un BOOLEANO en una lista de parámetros
+        if t.slice[3].type == "BOOLEANO":
+            nodo = Nativo(
+                Tipo(tipoDato.BOOL),
+                t[3],
+                t.lineno(3),
+                find_column(t.lexer.lexdata, t.slice[3]),
+            )
+            t[1].append(nodo)
+        else:
+            t[1].append(t[3])
+        t[0] = t[1]
+
+
+def p_PARAMLLAMADA_empty(t):
+    """PARAMLLAMADA : empty"""
+    t[0] = []
+
+
+def p_literal(t):
+    """literal : ENTERO
+    | DECIMAL
+    | CARACTER
+    | CADENA
+    | TRUE
+    | FALSE"""
+
+    if isinstance(t[1], int):
+        tipo = Tipo(tipoDato.ENTERO)
+    elif isinstance(t[1], float):
+        tipo = Tipo(tipoDato.DECIMAL)
+    elif isinstance(t[1], str) and len(t[1]) == 1:
+        tipo = Tipo(tipoDato.CHAR)
+    elif t.slice[1].type in ["TRUE", "FALSE"]:
+        tipo = Tipo(tipoDato.BOOL)
+        t[1] = True if t.slice[1].type == "TRUE" else False
+    else:
+        tipo = Tipo(tipoDato.STRING)
+
+    t[0] = Nativo(tipo, t[1], 0, 0)
+
+
 # --- TIPOS ---
 def p_tipos(t):
     """tipos : INT
@@ -810,95 +996,123 @@ errores_sintacticos_globales = []
 
 def p_error(t):
     global errores_sintacticos_globales
-    if t:
-        try:
-            arbol = getattr(t.lexer, "arbol", None)
-        except Exception:
-            arbol = None
 
-        # Mensaje de error para el token encontrado
+    # Si no hay token (error al final del archivo)
+    if not t:
         error = Errores(
-            "Sintáctico",
-            f"Se encontró {t.type} ('{t.value}') y se esperaba una expresión o instrucción válida.",
-            t.lineno,
-            find_column(t.lexer.lexdata, t) if hasattr(t.lexer, "lexdata") else 1,
-        )
-
-        if arbol is not None:
-            arbol.errores.append(error)
-        else:
-            errores_sintacticos_globales.append(error)
-
-        print(error)
-
-        # Recuperación de errores más inteligente
-        # Intentamos sincronizar con el siguiente punto y coma, llave o final de bloque
-        next_token = t
-        while True:
-            next_token = parser.token()  # Obtener siguiente token
-            if not next_token or next_token.type in ["PUNTOCOMA", "LLAVE1", "LLAVE2"]:
-                break
-
-        # Indícale al parser que ya manejaste el error
-        parser.errok()
-
-        # Si encontramos un punto y coma, regresamos ese token para continuar
-        if next_token and next_token.type == "PUNTOCOMA":
-            return next_token
-    else:
-        # EOF
-        try:
-            lexer_obj = parser.lexer
-            arbol = getattr(lexer_obj, "arbol", None)
-            lexdata = getattr(lexer_obj, "lexdata", "")
-            lexpos = getattr(lexer_obj, "lexpos", len(lexdata))
-            lineno = lexdata.count("\n", 0, lexpos) + 1
-            last_cr = lexdata.rfind("\n", 0, lexpos)
-            if last_cr < 0:
-                last_cr = -1
-            col = lexpos - last_cr
-        except Exception:
-            arbol = None
-            lineno = 1
-            col = 1
-
-        error = Errores(
-            "Sintáctico",
+            "SINTACTICO",
             "Error de sintaxis al final del archivo. Se esperaba una expresión o instrucción válida.",
-            lineno,
-            col,
+            1,  # Línea predeterminada al final del archivo
+            1,  # Columna predeterminada al final del archivo
         )
-        if arbol is not None:
+        arbol = getattr(lexer, "arbol", None)
+        if arbol:
             arbol.errores.append(error)
         else:
             errores_sintacticos_globales.append(error)
         print(error)
+        return
 
+    # Inicializar variables para controlar errores múltiples
+    if not hasattr(parser, "ultimo_error_linea"):
+        parser.ultimo_error_linea = -1
+        parser.ultimo_error_columna = -1
+        parser.modo_recuperacion = False
+        parser.contador_errores = 0
 
-# Añade esta nueva regla para capturar identificadores sueltos como instrucciones inválidas
-def p_instruccion_invalida(t):
-    "instruccion : ID"
-    # Un ID suelto como instrucción es un error
-    error = Errores(
-        "Sintáctico",
-        f"La palabra '{t[1]}' no es una instrucción válida",
-        t.lineno(1),
-        find_column(t.lexer.lexdata, t.slice[1]),
-    )
+    # Obtener información de la posición
+    linea = t.lineno
+    columna = find_column(t.lexer.lexdata, t) if hasattr(t.lexer, "lexdata") else 0
 
-    # Registra el error
-    arbol = getattr(t.lexer, "arbol", None)
+    # Evitar reportar múltiples errores en la misma área
+    if (
+        abs(linea - parser.ultimo_error_linea) <= 1
+        and abs(columna - parser.ultimo_error_columna) <= 5
+    ):
+        parser.contador_errores += 1
+        if parser.contador_errores > 3:
+            # Si hay demasiados errores consecutivos, activar modo pánico avanzado
+            parser.modo_recuperacion = True
+
+        # Descartamos el token y continuamos
+        parser.errok()
+        parser.token()  # Avanzar al siguiente token
+        return
+
+    # Actualizar la última posición de error reportada
+    parser.ultimo_error_linea = linea
+    parser.ultimo_error_columna = columna
+    parser.contador_errores = 1
+
+    # Obtener el estado actual del parser para un mejor diagnóstico
+    estado = parser.state
+
+    # Crear mensaje de error más descriptivo basado en el contexto
+    token_esperado = "una expresión o instrucción válida"
+
+    # Podemos refinar esto basándonos en el estado del parser
+    if estado < 10:  # Ejemplo: estados iniciales
+        token_esperado = "una declaración o instrucción"
+    elif estado < 20:  # Ejemplo: dentro de expresiones
+        token_esperado = "un operador o valor"
+    elif estado < 30:  # Ejemplo: dentro de bloques
+        token_esperado = "una instrucción o fin de bloque"
+
+    error_msg = f"Se encontró {t.type} ('{t.value}') y se esperaba {token_esperado}."
+
+    # Crear y registrar el error
+    error = Errores("SINTACTICO", error_msg, linea, columna)
+    arbol = getattr(lexer, "arbol", None)
     if arbol:
         arbol.errores.append(error)
     else:
         errores_sintacticos_globales.append(error)
+    print(error)
 
-    print(
-        f"----- Error Sintáctico: La palabra '{t[1]}' no es una instrucción válida. en la linea {t.lineno(1)} y columna {find_column(t.lexer.lexdata, t.slice[1])} ----"
-    )
+    # ESTRATEGIA DE RECUPERACIÓN CONTEXTUAL:
+    # Diferentes tokens de sincronización según el contexto
+    stmt_sync = ["PUNTOCOMA", "LLAVE1", "LLAVE2", "IF", "WHILE", "FOR", "DO", "SWITCH"]
+    expr_sync = ["PUNTOCOMA", "COMMA", "PAR2", "RIGHTCORCH", "LLAVE2"]
 
-    # Devolvemos None para que no se agregue al AST
-    t[0] = None
+    # Seleccionar tokens de sincronización según el contexto
+    if parser.modo_recuperacion:
+        # En modo pánico avanzado, sincronizar solo con tokens de nivel superior
+        sync_tokens = ["LLAVE2", "PUNTOCOMA"]
+    elif estado < 10:
+        sync_tokens = stmt_sync
+    elif estado < 20:
+        sync_tokens = expr_sync
+    else:
+        sync_tokens = stmt_sync + expr_sync
+
+    # Descartar tokens hasta encontrar un punto de sincronización
+    contador_tokens = 0
+    max_tokens = 30  # Límite para evitar bucles infinitos
+
+    while contador_tokens < max_tokens:
+        contador_tokens += 1
+        token = parser.token()  # Obtener el siguiente token
+
+        if not token:
+            break  # Fin del archivo
+
+        if token.type in sync_tokens:
+            # Si encontramos un token de sincronización útil
+            if token.type == "PUNTOCOMA":
+                # Retornar punto y coma para terminar la instrucción actual
+                parser.errok()
+                return token
+            else:
+                # Para otros tokens, solo sincronizar
+                break
+
+    # Desactivar modo pánico si hemos avanzado lo suficiente
+    if contador_tokens >= 5:
+        parser.modo_recuperacion = False
+
+    # Informar al parser que hemos manejado el error
+    parser.errok()
+    return None  # No devolver ningún token
 
 
 # --- FUNCIONES AUXILIARES ---
