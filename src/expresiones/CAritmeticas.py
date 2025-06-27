@@ -138,25 +138,8 @@ class Aritmeticas(Instruccion, ABC):
                 )
 
         elif tipo1 == tipoDato.STRING:
-            if tipo2 == tipoDato.ENTERO:
-                self.tipoDato.setTipo(tipoDato.STRING)
-                return op1 + str(op2)
-            elif tipo2 == tipoDato.DECIMAL:
-                self.tipoDato.setTipo(tipoDato.STRING)
-                return op1 + str(op2)
-            elif tipo2 == tipoDato.BOOL:
-                self.tipoDato.setTipo(tipoDato.STRING)
-                return op1 + str(op2)
-            elif tipo2 == tipoDato.CHAR:
-                self.tipoDato.setTipo(tipoDato.STRING)
-                return op1 + str(op2)
-            elif tipo2 == tipoDato.STRING:
-                self.tipoDato.setTipo(tipoDato.STRING)
-                return op1 + op2
-            else:
-                return Errores(
-                    "SEMANTICO", "Suma entre tipos no permitidos", self.linea, self.col
-                )
+            self.tipoDato.setTipo(tipoDato.STRING)
+            return op1 + str(op2)
 
         return Errores("SEMANTICO", "Suma erronea", self.linea, self.col)
 

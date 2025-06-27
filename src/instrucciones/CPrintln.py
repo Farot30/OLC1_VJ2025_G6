@@ -16,6 +16,21 @@ class Println(Instruccion):
             arbol.errores.append(valor)
             self.valor_impreso = valor  # Guardar el error también
             return None
+
+        # Caso especial: si es un ID que es un vector
+
+        if (
+            hasattr(self.expresion, "es_identificador")
+            and self.expresion.es_identificador
+        ):
+            vector_id = self.expresion.valor
+            if hasattr(arbol, "vectores") and vector_id in arbol.vectores:
+                vector = arbol.vectores[vector_id]
+                valor_str = str(vector)  # Usar el método __str__ del vector
+                arbol.setConsola(arbol.getConsola() + valor_str + "\n")
+                self.valor_impreso = valor_str
+                return None
+
         arbol.setConsola(arbol.getConsola() + str(valor) + "\n")
         self.valor_impreso = valor
         return None

@@ -1,13 +1,59 @@
 digraph ReporteAST {
 	node1 [label=Reporte color=black fillcolor=lightgray style=filled]
-	node2 [label="Declaración" color=purple fillcolor=white style=filled]
-	node3 [label="ID: s" color=purple fillcolor=white style=filled]
+	node2 [label="Declaración Vector" color=purple fillcolor=white style=filled]
+	node3 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
 	node2 -> node3
-	node4 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node4 [label="ID: matriz3d" color=purple fillcolor=white style=filled]
 	node2 -> node4
-	node5 [label=Valor color=purple fillcolor=white style=filled]
+	node5 [label="Dimensiones: [2, 2, 2]" color=purple fillcolor=white style=filled]
 	node2 -> node5
-	node6 [label=0 color=purple fillcolor=white style=filled]
-	node5 -> node6
+	node6 [label=Valores color=purple fillcolor=white style=filled]
+	node2 -> node6
 	node1 -> node2
+	node7 [label=Println color=purple fillcolor=white style=filled]
+	node8 [label="[[[10, 20], [30, 40]], [[50, 60], [70, 80]]]" color=purple fillcolor=white style=filled]
+	node7 -> node8
+	node1 -> node7
+	node9 [label="Declaración Vector" color=purple fillcolor=white style=filled]
+	node10 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node9 -> node10
+	node11 [label="ID: dd" color=purple fillcolor=white style=filled]
+	node9 -> node11
+	node12 [label="Dimensiones: [2, 2, 2]" color=purple fillcolor=white style=filled]
+	node9 -> node12
+	node13 [label=Valores color=purple fillcolor=white style=filled]
+	node9 -> node13
+	node14 [label=Shuffle color=purple fillcolor=white style=filled]
+	node15 [label=matriz3d color=purple fillcolor=white style=filled]
+	node14 -> node15
+	node13 -> node14
+	node1 -> node9
+	node16 [label="Declaración Vector" color=purple fillcolor=white style=filled]
+	node17 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node16 -> node17
+	node18 [label="ID: mano" color=purple fillcolor=white style=filled]
+	node16 -> node18
+	node19 [label="Dimensiones: [2, 2] (columnas, filas)" color=purple fillcolor=white style=filled]
+	node16 -> node19
+	node20 [label=Valores color=purple fillcolor=white style=filled]
+	node16 -> node20
+	node1 -> node16
+	node21 [label=Println color=purple fillcolor=white style=filled]
+	node22 [label="[[1, 2], [3, 4]]" color=purple fillcolor=white style=filled]
+	node21 -> node22
+	node1 -> node21
+	node23 [label="Declaración" color=purple fillcolor=white style=filled]
+	node24 [label="ID: Pato" color=purple fillcolor=white style=filled]
+	node23 -> node24
+	node25 [label="Tipo: ENTERO" color=purple fillcolor=white style=filled]
+	node23 -> node25
+	node26 [label=Valor color=purple fillcolor=white style=filled]
+	node23 -> node26
+	node27 [label=1 color=purple fillcolor=white style=filled]
+	node26 -> node27
+	node1 -> node23
+	node28 [label=Println color=purple fillcolor=white style=filled]
+	node29 [label=1 color=purple fillcolor=white style=filled]
+	node28 -> node29
+	node1 -> node28
 }

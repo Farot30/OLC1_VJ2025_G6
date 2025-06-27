@@ -17,6 +17,10 @@ class Nativo(Instruccion):
     def interpretar(self, arbol, tabla):
         # Si es un identificador, busca el valor en la tabla de símbolos SIEMPRE
         if getattr(self, "es_identificador", False):
+            if hasattr(arbol, "vectores") and self.valor.lower() in arbol.vectores:
+                # Si es un vector, devuelve el vector completo
+                return arbol.vectores[self.valor.lower()]
+
             try:
                 simbolo = tabla.getVariable(self.valor)
                 self.tipoDato = simbolo.getTipo()
@@ -43,6 +47,9 @@ class Nativo(Instruccion):
                 if self.valor == 0:
                     return False
         return self.valor
+
+    def esDatoNativo(self):
+        return True
 
     def graficar(self, grafo: clasAST, arbol=None, tabla=None):
         return grafo.agregar_nodo(str(self.valor))

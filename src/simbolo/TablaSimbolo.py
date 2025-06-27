@@ -17,7 +17,9 @@ class tablaSimbolo(metaclass=SingletonMeta):
             self.scopes = ["global"]
             self.tabla_actual = []
             self.nombre_dato: str = ""
-            self.entorno_contadores = {}  # <-- Agrega esto
+            self.entorno_contadores = {}  # <-- Agrega esto.
+            self.procActual = None
+            self.tabla_Procedimientos = {}
 
     @property
     def current_scope(self):
@@ -89,7 +91,7 @@ class tablaSimbolo(metaclass=SingletonMeta):
                     and var.scope == current_scope
                 ):
                     return var
-            idx -= 1  # CORREGIDO: Ahora está dentro del while
+            idx -= 1
 
         # Si no se encontró, buscar en global explícitamente
         for var in self.tabla_actual:
@@ -100,12 +102,6 @@ class tablaSimbolo(metaclass=SingletonMeta):
         raise KeyError(
             f"La variable '{id_}' no ha sido declarada en el entorno '{scope}' ni en global"
         )
-        """if key in self.tabla_actual:
-            return self.tabla_actual[key]
-        elif self.padre is not None:
-            return self.padre.getVariable(key)
-        else:
-            return None"""
 
     def agregarVariable(self, id, tipo, valor=None, linea=None, columna=None):
         sym = Simbolo(
@@ -134,12 +130,39 @@ class tablaSimbolo(metaclass=SingletonMeta):
         self.tabla_actual.append(sym)
         return sym
 
-    def actualizarVariable(self, name, nevValor, scope=None):
+    def agregarVector(self, id, tipo, dimensiones, linea=None, columna=None):
+        """Agregar una referencia a un vector en la tabla de símbolos."""
+        sym = Simbolo(
+            tipo=tipo,
+            id=id,
+            entidad="vector",
+            valor=f"Vector{dimensiones}",  # Solo guardamos dimensiones como referencia
+            scope=self.current_scope,
+            linea=linea,
+            columna=columna,
+        )
+        self.tabla_actual.append(sym)
+        return sym
+
+    def actualizarVariable(
+        self, name, nevValor, nevTipo=None, linea=None, columna=None, scope=None
+    ):
+        name = name.lower()  # Normalizar el identificador
         scope = scope or self.current_scope
+
         for sym in reversed(self.tabla_actual):
             if sym.entidad == "variable" and sym.id == name and sym.scope == scope:
+                # Actualizar todos los campos proporcionados
                 sym.valor = nevValor
+                if nevTipo is not None:
+                    sym.tipo = nevTipo
+                if linea is not None:
+                    sym.linea = linea
+                if columna is not None:
+                    sym.columna = columna
                 return sym
+
+        # Si llegamos aquí, no se encontró la variable
         raise KeyError(f"Variable '{name}' no declarada en scope '{scope}'")
 
     def ImprimirTabla(self):
@@ -162,10 +185,25 @@ class tablaSimbolo(metaclass=SingletonMeta):
                 if hasattr(sym.tipo, "tipo") and hasattr(sym.tipo.tipo, "name")
                 else str(sym.tipo)
             )
+
             # Entorno: muestra el scope tal cual, solo cambia "global" por "Global"
             entorno_str = "Global" if sym.scope == "global" else str(sym.scope)
-            # Valor como string
-            valor_str = str(sym.valor)
+
+            # Valor como string, con formato especial para vectores
+            if sym.entidad == "vector":
+                # Obtener las dimensiones del string "Vector[2, 3, 2, 2]"
+                dims_str = str(sym.valor)
+                # Extraer solo los números entre corchetes
+                if "[" in dims_str and "]" in dims_str:
+                    dims_part = dims_str[dims_str.find("[") + 1 : dims_str.find("]")]
+                    # Reemplazar comas por símbolo de multiplicación
+                    dims_formatted = dims_part.replace(", ", "×")
+                    valor_str = f"Vector {dims_formatted}"
+                else:
+                    valor_str = str(sym.valor)
+            else:
+                valor_str = str(sym.valor)
+
             row = [
                 str(
                     getattr(sym, "nID", "")
@@ -200,6 +238,18 @@ class tablaSimbolo(metaclass=SingletonMeta):
                 else str(sym.tipo)
             )
             entorno_str = "Global" if sym.scope == "global" else str(sym.scope)
+
+            if sym.entidad == "vector":
+                dims_str = str(sym.valor)
+                if "[" in dims_str and "]" in dims_str:
+                    dims_part = dims_str[dims_str.find("[") + 1 : dims_str.find("]")]
+                    dims_formatted = dims_part.replace(", ", "×")
+                    valor_str = f"Vector {dims_formatted}"
+                else:
+                    valor_str = str(sym.valor)
+            else:
+                valor_str = str(sym.valor)
+
             valor_str = str(sym.valor)
             row = [
                 str(getattr(sym, "nID", "")),
@@ -226,3 +276,9 @@ class tablaSimbolo(metaclass=SingletonMeta):
         self.entorno_contadores = {}  # <-- Reinicia los contadores de scopes
 
         Simbolo._id_cc = 0  # Reinicia el contador de IDs
+
+    def setProc(self, nom):
+        self.procActual = nom
+
+    def getProc(self):
+        return self.procActual
