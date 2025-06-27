@@ -1,6 +1,13 @@
 from src.abstracto.CInstruccion import Instruccion
 from src.excepciones.CErrores import Errores
 from src.Vectores.Vector import Vector
+import itertools
+import functools
+import operator
+
+
+def _product(iterable):
+    return functools.reduce(operator.mul, iterable, 1)
 
 
 def _aplanar(valores):
@@ -12,25 +19,15 @@ def _aplanar(valores):
     return out
 
 
-def _reconstruir_anidado(lista, dimensiones):
-    # Reconstruye lista plana a lista anidada según dimensiones dadas
-    if len(dimensiones) == 1:
-        return lista
-    if len(dimensiones) == 2:
-        filas, columnas = dimensiones
-        if len(lista) != filas * columnas:
-            return lista
-        anidado = []
-        idx = 0
-        for f in range(filas):
-            fila = []
-            for c in range(columnas):
-                fila.append(lista[idx])
-                idx += 1
-            anidado.append(fila)
-        return anidado
-    # Para >2D no implementado
-    return lista
+def _reconstruir_anidado(flat, dims):
+    if len(dims) == 1:
+        return flat[:]
+    head, *tail = dims
+    size_tail = _product(tail)
+    return [
+        _reconstruir_anidado(flat[i * size_tail : (i + 1) * size_tail], tail)
+        for i in range(head)
+    ]
 
 
 class Shuffle(Instruccion):
@@ -41,15 +38,10 @@ class Shuffle(Instruccion):
         self.col = col
 
     def interpretar(self, arbol, tabla):
-        # 1. Obtener vector
-        vec = None
-        if hasattr(arbol, "vectores") and self.id_vec in arbol.vectores:
-            vec = arbol.vectores[self.id_vec]
-        else:
-            try:
-                vec = tabla.getVector(self.id_vec)
-            except:
-                vec = None
+        # 1) Recuperar vector
+        vec = getattr(arbol, "vectores", {}).get(self.id_vec) or tabla.getVector(
+            self.id_vec
+        )
         if vec is None:
             return Errores(
                 "SEMANTICO",
@@ -57,46 +49,59 @@ class Shuffle(Instruccion):
                 self.linea,
                 self.col,
             )
-        # 2. Verificar 2D
-        if not hasattr(vec, "dimensiones") or len(vec.dimensiones) != 2:
-            return Errores(
-                "SEMANTICO", "Shuffle requiere vectores 2D.", self.linea, self.col
-            )
-        filas, columnas = vec.dimensiones
-        # 3. Aplanar datos en row-major
-        datos = _aplanar(vec.valores)
-        if len(datos) != filas * columnas:
+
+        # 2) Obtener dimensiones y total de elementos
+        dims = getattr(vec, "dimensiones", None)
+        if not isinstance(dims, list) or any(
+            not isinstance(d, int) or d <= 0 for d in dims
+        ):
             return Errores(
                 "SEMANTICO",
-                f"Estructura interna inconsistente en '{self.id_vec}'.",
+                "Shuffle requiere vector con dimensiones positivas.",
                 self.linea,
                 self.col,
             )
-        # 4. Reordenar a column-major linear
-        nuevo_lineal = []
-        for c in range(columnas):
-            for f in range(filas):
-                nuevo_lineal.append(datos[f * columnas + c])
-        # 5. Invertir dimensiones para la reconstrucción: [columnas, filas]
-        nuevas_dims = [columnas, filas]
-        vals_anidado = _reconstruir_anidado(nuevo_lineal, nuevas_dims)
-        # 6. Crear nuevo Vector con dimensiones invertidas
+        total = _product(dims)
+
+        # 3) Aplanar en row-major
+        flat = _aplanar(vec.valores)
+        if len(flat) != total:
+            return Errores(
+                "SEMANTICO",
+                f"Estructura inconsistente en '{self.id_vec}'.",
+                self.linea,
+                self.col,
+            )
+
+        # 4) Reordenar a column-major
+        new_flat = []
+        for idx_rev in itertools.product(*(range(d) for d in reversed(dims))):
+            idx = idx_rev[::-1]  # invierte para mapear a row-major
+            offset = 0
+            for k, i in enumerate(idx):
+                mul = _product(dims[k + 1 :]) if k + 1 < len(dims) else 1
+                offset += i * mul
+            new_flat.append(flat[offset])
+        # 5) Invertir dimensiones
+        new_dims = list(reversed(dims))
+        # 6) Reconstruir estructura anidada
+        new_vals = _reconstruir_anidado(new_flat, new_dims)
+        # 7) Devolver nuevo Vector
         try:
-            nuevo_vec = Vector(
+            return Vector(
                 tipo=vec.tipo,
-                id=self.id_vec,  # id no importa o podrías usar otro
-                dimensiones=nuevas_dims,
-                valores=vals_anidado,
+                id=self.id_vec,
+                dimensiones=new_dims,
+                valores=new_vals,
                 linea=self.linea,
                 col=self.col,
                 scope=vec.scope,
             )
-            return nuevo_vec
         except Exception:
-            return vals_anidado
+            return new_vals
 
     def graficar(self, grafo, arbol=None, tabla=None):
         nodo = grafo.agregar_nodo("Shuffle")
-        nodoId = grafo.agregar_nodo(self.id_vec)
-        grafo.agregar_arista(nodo, nodoId)
+        hijo = grafo.agregar_nodo(self.id_vec)
+        grafo.agregar_arista(nodo, hijo)
         return nodo

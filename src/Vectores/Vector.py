@@ -225,3 +225,23 @@ class Vector:
 
         elementos = [self._formato_vector(v) for v in valores]
         return f"[{', '.join(elementos)}]"
+
+    @staticmethod
+    def buscar_vector(id_vector, arbol, tabla):
+        """
+        Método centralizado para buscar vectores por ID
+        """
+        id_vector = id_vector.lower()  # Normalizar a minúsculas
+
+        # Buscar primero en arbol.vectores (almacenamiento principal)
+        if hasattr(arbol, "vectores") and id_vector in arbol.vectores:
+            return arbol.vectores[id_vector]
+
+        # Buscar en la tabla de símbolos (alternativa)
+        if tabla and hasattr(tabla, "getVector"):
+            vector = tabla.getVector(id_vector)
+            if vector:
+                return vector
+
+        # No se encontró el vector
+        return None
