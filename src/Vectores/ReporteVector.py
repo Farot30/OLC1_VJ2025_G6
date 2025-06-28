@@ -72,7 +72,10 @@ class ReporteVectores:
                 ),
                 "dimensiones": vector.dimensiones,
                 "representacion_original": vector._formato_vector(vector.valores),
-                "entorno": vector.entorno,  # if hasattr(vector, "entorno") else None
+                # Usar getattr para manejar atributos que pueden no existir
+                "entorno": getattr(
+                    vector, "entorno", getattr(vector, "scope", "Global")
+                ),
                 "datos_lineales": [],
             }
 
