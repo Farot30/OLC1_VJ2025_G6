@@ -6,7 +6,7 @@ from src.simbolo.TablaSimbolo import tablaSimbolo
 from src.excepciones.CErrores import Errores
 from src.abstracto.CAST import generarGrafica
 from src.Vectores.ReporteVector import ReporteVectores
-
+from src.instrucciones.CProcedimientos import Procedimientos
 
 app = Flask(__name__, static_folder="static")
 app.arbol_actual = None  # Variable global para almacenar el árbol actual
@@ -24,38 +24,87 @@ def index():
     errores = ""
     tabla_simbolos = ""
     ast_svg = ""
+
     if request.method == "POST":
-        if "interpretar" in request.form:
+        # Caso 1: Solo cargar archivo (no interpretar)
+        if "cargar" in request.form and "archivo" in request.files:
+            archivo = request.files["archivo"]
+            if archivo and archivo.filename:
+                if archivo.filename.lower().endswith(".objc"):
+                    entrada = archivo.read().decode("utf-8")
+                else:
+                    errores = "Solo se permiten archivos con extensión .objc"
+            return render_template(
+                "index.html",
+                entrada=entrada,
+                salida=salida,
+                errores=errores,
+                tabla_simbolos=tabla_simbolos,
+                ast_svg=ast_svg,
+            )
+
+        # Caso 2: Interpretar (ya sea texto directo o archivo cargado previamente)
+        elif "interpretar" in request.form:
             entrada = request.form.get("entrada", "")
-            arbol = Arbol([])  # Crea un nuevo árbol
+
+            # Solo continuar si hay contenido para interpretar
+            if not entrada.strip():
+                errores = "No hay código para interpretar"
+                return render_template(
+                    "index.html",
+                    entrada=entrada,
+                    salida=salida,
+                    errores=errores,
+                    tabla_simbolos=tabla_simbolos,
+                    ast_svg=ast_svg,
+                )
+
+            # Proceso de interpretación (sin cambios)
+            arbol = Arbol([])
             instrucciones = parse_input(entrada, arbol)
             arbol.set_instrucciones(instrucciones)
 
-            # Guardar el árbol para usarlo en otras rutas
+            # PASO 1: Registro de procedimientos
+            for instr in arbol.getInstrucciones():
+                if isinstance(instr, Procedimientos):
+                    if arbol.getFuncion(instr.id) is None:
+                        arbol.setFuncion(instr)
+                    else:
+                        error = Errores(
+                            "SEMANTICO",
+                            f"El procedimiento '{instr.id}' ya ha sido declarado",
+                            instr.linea,
+                            instr.col,
+                        )
+                        arbol.errores.append(error)
+
+            # Guardar árbol para uso en otras rutas
             app.arbol_actual = arbol
 
-            # AÑADIDO: Transferir errores sintácticos al árbol
+            # Transferir errores sintácticos
             if errores_sintacticos_globales:
                 arbol.errores.extend(errores_sintacticos_globales)
                 errores_sintacticos_globales.clear()
 
-            # Reinicia la tabla de símbolos (nueva instancia)
+            # Inicializar tabla de símbolos
             tabla = tablaSimbolo()
             tabla.limpiar()
             arbol.setTablaGlobal(tabla)
             arbol.setConsola("")
-            # NO limpiar errores aquí: arbol.errores = []  <-- COMENTADO
 
-            # Ejecutar instrucciones
+            # PASO 2: Ejecución de instrucciones
             for instr in arbol.getInstrucciones():
                 if instr is None:
                     continue
-                resultado = instr.interpretar(arbol, tabla)
-                if isinstance(resultado, Errores):
-                    arbol.errores.append(resultado)
+                # Solo ejecutar instrucciones que no sean procedimientos
+                if not isinstance(instr, Procedimientos):
+                    resultado = instr.interpretar(arbol, tabla)
+                    if isinstance(resultado, Errores):
+                        arbol.errores.append(resultado)
+
             salida = arbol.getConsola()
 
-            # Mostrar todos los errores del árbol
+            # Formatear errores para mostrar
             if arbol.errores:
                 errores = "#\tTipo\tDescripcion\tLINEA\tCOLUMNA\n"
                 for idx, error in enumerate(arbol.errores, 1):
@@ -67,25 +116,20 @@ def index():
             else:
                 errores = "Sin errores."
 
-            # Generar tabla de símbolos usando el método de la clase
+            # Generar tabla de símbolos
             tabla_simbolos = tabla.tablaComoString()
 
-            # Generar el AST y el archivo .svg en static/
+            # Generar AST
             if arbol.getInstrucciones():
                 try:
+                    # Asegurar que el directorio de reportes existe
+                    os.makedirs("report", exist_ok=True)
                     generarGrafica(arbol, "report/ast_reporte")
                     ast_svg = "ast_reporte.svg"
                 except Exception as e:
                     ast_svg = ""
                     print(f"Error al generar AST: {e}")
 
-        elif "archivo" in request.files:
-            archivo = request.files["archivo"]
-            if archivo and archivo.filename:
-                if archivo.filename.lower().endswith(".objc"):
-                    entrada = archivo.read().decode("utf-8")
-                else:
-                    errores = "Solo se permiten archivos con extensión .objc"
     return render_template(
         "index.html",
         entrada=entrada,

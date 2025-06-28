@@ -47,7 +47,7 @@ class clasAST:
             return  # Evitar error si algún nodo es None
         self.graph.edge(str(padre_id), str(hijo_id))
 
-    def renderizar(self, nombre_archivo="reporteAST"):
+    def renderizar(self, nombre_archivo="ast_reporte"):
         try:
             self.graph.render(nombre_archivo, view=True)
             print(

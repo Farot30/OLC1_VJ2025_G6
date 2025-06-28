@@ -49,7 +49,9 @@ class Procedimientos(Instruccion):
         grafo.agregar_arista(nodo_procedimiento, nodo_instrucciones)
         for instruccion in self.instrucciones:
             if hasattr(instruccion, "graficar"):
-                hijo = instruccion.graficar(grafo)
-                grafo.agregar_arista(nodo_instrucciones, hijo)
+                # Pasar arbol y tabla para graficación recursiva correcta
+                hijo = instruccion.graficar(grafo, arbol, tabla)
+                if hijo is not None:  # Solo agregar si no es None
+                    grafo.agregar_arista(nodo_instrucciones, hijo)
 
         return nodo_procedimiento
