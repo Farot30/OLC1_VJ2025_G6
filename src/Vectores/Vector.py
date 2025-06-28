@@ -245,3 +245,8 @@ class Vector:
 
         # No se encontró el vector
         return None
+
+    @property
+    def entorno(self):
+        """Propiedad que retorna scope para compatibilidad con reportes"""
+        return self.scope
